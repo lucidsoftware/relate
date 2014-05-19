@@ -1,0 +1,6 @@
+Relate.sublime-project
+Relate.sublime-workspace
+.ensime
+
+#built files
+target/*
