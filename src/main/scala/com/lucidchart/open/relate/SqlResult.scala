@@ -115,10 +115,7 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   def strictURLOption(columnLabel: String): Option[URL] = Option(resultSet.getURL(columnLabel))
 
   protected[relate] def extractOption[A](columnLabel: String)(f: (Any) => A): Option[A] = {
-    resultSet.getObject(columnLabel).asInstanceOf[Any] match {
-      case x if (x == null) => None
-      case x => Some(f(x))
-    }
+    Option(resultSet.getObject(columnLabel)).map(f)
   }
 
   def safeString(columnLabel: String): String = safeStringOption(columnLabel).get
