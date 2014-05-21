@@ -32,8 +32,7 @@ object SqlTypes {
  * parameter values by name rather than by index. Provides methods for inserting
  * all necessary datatypes.
  */
-class SqlStatement(stmt: PreparedStatement, query: String, names: List[String]) {
-
+class SqlStatement(stmt: PreparedStatement, names: List[String]) {
   /**
    * Set a BigDecimal in the PreparedStatement
    * @param name the name of the parameter to put the BigDecimal in

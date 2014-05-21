@@ -10,7 +10,7 @@ case class SqlQuery(
 ) {
   
   /** The smart prepared statement that is used to fill in parameters */
-  val stmt = new SqlStatement(connection.prepareStatement(query), query, args)
+  val stmt = new SqlStatement(connection.prepareStatement(query), args)
 
   /**
    * Put in values for parameters in the query
