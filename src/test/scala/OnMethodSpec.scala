@@ -18,9 +18,9 @@ class OnMethodSpec extends Specification with Mockito {
       val (connection, stmt) = getMocks
       connection.prepareStatement(sql.format("?")) returns stmt
 
-      SQL(sql.format("{param}"))(connection).on { implicit statement =>
+      SQL(sql.format("{param}")).on { implicit statement =>
         int("param", 10)
-      }
+      }.executeQuery()(connection)
 
       there was one(stmt).setInt(1, 10)
     }
@@ -31,11 +31,11 @@ class OnMethodSpec extends Specification with Mockito {
       val (connection, stmt) = getMocks
       connection.prepareStatement(sql.format("?", "?")) returns stmt
 
-      SQL(sql.format("{param}", "{name}"))(connection).on { implicit statement =>
+      SQL(sql.format("{param}", "{name}")).on { implicit statement =>
         string("param", "string")
       }.on { implicit statement =>
         double("name", 20.1)
-      }
+      }.executeQuery()(connection)
 
       there was one(stmt).setString(1, "string") andThen one(stmt).setDouble(2, 20.1)
     }
@@ -45,10 +45,10 @@ class OnMethodSpec extends Specification with Mockito {
       val (connection, stmt) = getMocks
       connection.prepareStatement(sql.format("?", "?")) returns stmt
 
-      SQL(sql.format("{one}", "{two}"))(connection).on { implicit statement =>
+      SQL(sql.format("{one}", "{two}")).on { implicit statement =>
         float("two", 1.5f)
         string("one", "test")
-      }
+      }.executeQuery()(connection)
 
       there was one(stmt).setFloat(2, 1.5f) andThen one(stmt).setString(1, "test")
     }
@@ -58,9 +58,9 @@ class OnMethodSpec extends Specification with Mockito {
       val (connection, stmt) = getMocks
       connection.prepareStatement(sql.format("?")) returns stmt
 
-      SQL(sql.format("{param}"))(connection).on { implicit statement =>
+      SQL(sql.format("{param}")).on { implicit statement =>
         int("param", 10)
-      }
+      }.executeQuery()(connection)
 
       there was one(stmt).setInt(1, 10)
     }
@@ -70,10 +70,10 @@ class OnMethodSpec extends Specification with Mockito {
       val (connection, stmt) = getMocks
       connection.prepareStatement(sql.format("?", "?")) returns stmt
 
-      SQL(sql.format("{one}", "{two}"))(connection).on { implicit statement =>
+      SQL(sql.format("{one}", "{two}")).on { implicit statement =>
         int("one", 5)
         int("two", 6)
-      }
+      }.executeUpdate()(connection)
 
       there was one(stmt).setInt(1, 5) andThen one(stmt).setInt(2, 6)
     }
@@ -83,9 +83,9 @@ class OnMethodSpec extends Specification with Mockito {
       val (connection, stmt) = getMocks
       connection.prepareStatement(sql.format("?")) returns stmt
 
-      SQL(sql.format("{first}"))(connection).on { implicit statement =>
+      SQL(sql.format("{first}")).on { implicit statement =>
         int("first", 1)
-      }
+      }.executeUpdate()(connection)
 
       there was one(stmt).setInt(1, 1)
     }
@@ -95,17 +95,12 @@ class OnMethodSpec extends Specification with Mockito {
       val (connection, stmt) = getMocks
       connection.prepareStatement(sql.format("?")) returns stmt
 
-      SQL(sql.format("{one}"))(connection) on { implicit statement =>
+      SQL(sql.format("{one}")).on { implicit statement =>
         int("one", 2)
-      }
+      }.executeUpdate()(connection)
 
       there was one(stmt).setInt(1, 2)
     }
-
-    //work with all datatypes
-
-    //work with mixed datatypes
-
   }
 
 }

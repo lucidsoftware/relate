@@ -9,9 +9,9 @@ object Relate {
    * @param stmt the SQL statement
    * @return the corresponding SqlQuery object
    */
-  private[relate] def sql(stmt: String, connection: Connection): SqlQuery = {
+  private[relate] def sql(stmt: String): SqlQuery = {
     val (query, args) = SqlStatementParser.parse(stmt)
-    SqlQuery(connection, query, args)
+    SqlQuery(query, args)
   }
 
 }

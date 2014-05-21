@@ -1,53 +1,71 @@
 package com.lucidchart.open.relate
 
-import java.sql.{Connection, PreparedStatement}
+import java.sql.{Connection, PreparedStatement, Statement}
 
 /** A query object that has not had parameter values substituted in */
 case class SqlQuery(
-  connection: Connection,
   query: String,
-  args: List[String]
+  args: List[String],
+  params: List[SqlStatement=>Unit] = List()
 ) {
-  
-  /** The smart prepared statement that is used to fill in parameters */
-  val stmt = new SqlStatement(connection.prepareStatement(query), args)
-
   /**
    * Put in values for parameters in the query
    * @param f a function that takes a SqlStatement and sets parameter values using its methods
    * @return this SqlQuery
    */
   def on(f: SqlStatement => Unit): SqlQuery = {
-    f(stmt)
-    this
+    copy(params=(params ++ List(f)))
+  }
+
+  /**
+   * Get a completed SqlStatement objecct to execute
+   * @param getGeneratedKeys whether or not to get the generated keys
+   * @return the prepared SqlStatement
+   */
+  private def prepareSqlStatement(connection: Connection, getGeneratedKeys: Boolean = false): SqlStatement = {
+    val stmt = if (getGeneratedKeys) connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
+      else connection.prepareStatement(query)
+    applyParams(new SqlStatement(stmt, args))
+  }
+
+  /**
+   * Apply all the functions that put in parameters
+   * @param stmt the SqlStatement to apply the functions to
+   * @param the prepared SqlStatement
+   */
+  private def applyParams(stmt: SqlStatement): SqlStatement = {
+    params.foreach { f =>
+      f(stmt)
+    }
+    stmt
   }
 
   /**
    * Execute a statement
    */
-  def execute(): Boolean = {
-    stmt.execute()
+  def execute()(connection: Connection): Boolean = {
+    prepareSqlStatement(connection).execute()
   }
 
   /**
    * Execute an update
    */
-  def executeUpdate(): Int = {
-    stmt.executeUpdate()
+  def executeUpdate()(connection: Connection): Int = {
+    prepareSqlStatement(connection).executeUpdate()
   }
 
   /**
    * Execute a query
    */
-  def executeQuery(): SqlResult = {
-    stmt.executeQuery()
+  def executeQuery()(connection: Connection): SqlResult = {
+    prepareSqlStatement(connection).executeQuery()
   }
 
   /**
    * Execute an insert
    */
-  def executeInsert(): SqlResult = {
-    stmt.executeInsert()
+  def executeInsert()(connection: Connection): SqlResult = {
+    prepareSqlStatement(connection, true).executeInsert()
   }
 
 }
