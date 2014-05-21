@@ -1,6 +1,6 @@
 package com.lucidchart.open.relate
 
-import java.sql.{Date => SqlDate, PreparedStatement, Timestamp, Types}
+import java.sql.{Date => SqlDate, PreparedStatement, Statement, Timestamp, Types}
 import java.math.{BigDecimal => JBigDecimal, BigInteger => JBigInt}
 import java.util.{Date, UUID}
 
@@ -180,9 +180,33 @@ class SqlStatement(stmt: PreparedStatement, query: String, names: List[String]) 
     else stmt.setNull(names.indexOf(name) + 1, Types.VARCHAR)
   }
 
+  /**
+   * Execute a statement
+   */
+  def execute(): Boolean = {
+    stmt.execute()
+  }
 
-  def executeUpdate() {
+  /**
+   * Execute an update
+   */
+  def executeUpdate(): Int = {
     stmt.executeUpdate()
+  }
+
+  /**
+   * Execute a query
+   */
+  def executeQuery(): SqlResult = {
+    SqlResult(stmt.executeQuery())
+  }
+
+  /**
+   * Execute an insert
+   */
+  def executeInsert(): SqlResult = {
+    stmt.executeUpdate()
+    SqlResult(stmt.getGeneratedKeys())
   }
 
 }

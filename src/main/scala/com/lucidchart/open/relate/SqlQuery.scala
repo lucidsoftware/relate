@@ -23,10 +23,31 @@ case class SqlQuery(
   }
 
   /**
+   * Execute a statement
+   */
+  def execute(): Boolean = {
+    stmt.execute()
+  }
+
+  /**
    * Execute an update
    */
-  def executeUpdate(): Unit = {
+  def executeUpdate(): Int = {
     stmt.executeUpdate()
+  }
+
+  /**
+   * Execute a query
+   */
+  def executeQuery(): SqlResult = {
+    stmt.executeQuery()
+  }
+
+  /**
+   * Execute an insert
+   */
+  def executeInsert(): SqlResult = {
+    stmt.executeInsert()
   }
 
 }
