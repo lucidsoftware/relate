@@ -6,6 +6,7 @@ import java.net.URL
 import java.sql.Blob
 import java.sql.Clob
 import java.sql.Clob
+import java.sql.Connection
 import java.sql.NClob
 import java.sql.Ref
 import java.sql.RowId
@@ -18,11 +19,117 @@ import java.util.UUID
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
 import scala.collection.JavaConversions
+import SqlResultTypes._
+
+case class TestRecord(
+  id: Long,
+  name: String
+)
 
 class SqlResultSpec extends Specification with Mockito {
+  val parser = RowParser { implicit row =>
+    TestRecord(
+      long("id"),
+      string("name")
+    )
+  }
+
+  val pairparser = RowParser { implicit row =>
+    val id = long("id")
+    id -> TestRecord(
+      id,
+      string("name")
+    )
+  }
+
   def getMocks = {
     val rs = mock[java.sql.ResultSet]
     (rs, SqlResult(rs))
+  }
+
+  implicit val con: Connection = null
+
+  "asSingle" should {
+    "return a single row" in {
+      val (rs, result) = getMocks
+      implicit val con: Connection = null
+
+      rs.getRow returns 0 thenReturn 1
+      rs.next returns true thenReturns false
+      rs.getObject("id") returns (100L: java.lang.Long)
+      rs.getObject("name") returns "the name"
+
+      result.asSingle(parser) equals TestRecord(100L, "the name")
+    }
+  }
+
+  "asSingleOption" should {
+    def init(rs: java.sql.ResultSet, next: Boolean) = {
+      rs.getRow returns 0 thenReturn 1
+      rs.next returns next
+      rs.getObject("id") returns (100L: java.lang.Long)
+      rs.getObject("name") returns "the name"
+    }
+
+    "return a single row" in {
+      val (rs, result) = getMocks
+      init(rs, true)
+
+      result.asSingleOption(parser) must beSome(TestRecord(100L, "the name"))
+    }
+
+    "return a None" in {
+      val (rs, result) = getMocks
+      init(rs, false)
+
+      result.asSingleOption(parser) must beNone
+    }
+  }
+
+  "asList" should {
+    "return a list of 3 elements" in {
+      val (rs, result) = getMocks
+
+      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
+      rs.next   returns true thenReturn true thenReturn true thenReturn false
+      rs.getObject("id") returns (100L: java.lang.Long)
+      rs.getObject("name") returns "the name"
+
+      result.asList(parser) equals List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
+    }
+
+    "return an empty list" in {
+      val (rs, result) = getMocks
+
+      rs.getRow returns 0
+      rs.next returns false
+
+      result.asList(parser) equals List()
+    }
+  }
+
+  "asMap" should {
+    "return a map of 3 elements" in {
+      val (rs, result) = getMocks
+      import java.lang.{Long => L}
+
+      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
+      rs.next   returns true thenReturn true thenReturn true thenReturn false
+      rs.getObject("id") returns (1: L) thenReturns (2: L) thenReturns (3: L)
+      rs.getObject("name") returns "the name"
+
+      val res = result.asMap(pairparser)
+      res(1L) equals TestRecord(1L, "the name")
+      res(2L) equals TestRecord(2L, "the name")
+      res(3L) equals TestRecord(3L, "the name")
+    }
+
+    "return an empty map" in {
+      val (rs, result) = getMocks
+      rs.getRow returns 0
+      rs.next returns false
+      result.asMap(pairparser) equals Map()
+    }
   }
 
   "extractOption" should {
