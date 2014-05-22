@@ -52,7 +52,6 @@ class SqlResultSpec extends Specification with Mockito {
   "asSingle" should {
     "return a single row" in {
       val (rs, result) = getMocks
-      implicit val con: Connection = null
 
       rs.getRow returns 0 thenReturn 1
       rs.next returns true thenReturns false
