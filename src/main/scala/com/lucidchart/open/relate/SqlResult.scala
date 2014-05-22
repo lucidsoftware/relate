@@ -141,39 +141,39 @@ class SqlResult(resultSet: java.sql.ResultSet) {
     Option(resultSet.getObject(columnLabel)).map(f)
   }
 
-  def safeString(columnLabel: String): String = safeStringOption(columnLabel).get
-  def safeStringOption(columnLabel: String): Option[String] = {
+  def string(columnLabel: String): String = stringOption(columnLabel).get
+  def stringOption(columnLabel: String): Option[String] = {
     extractOption(columnLabel) {
       case x: String => x
       case x: java.sql.Clob => x.getSubString(1, x.length.asInstanceOf[Int])
     }
   }
 
-  def safeInt(columnLabel: String): Int = safeIntOption(columnLabel).get
-  def safeIntOption(columnLabel: String): Option[Int] = Option(resultSet.getInt(columnLabel))
+  def int(columnLabel: String): Int = intOption(columnLabel).get
+  def intOption(columnLabel: String): Option[Int] = Option(resultSet.getInt(columnLabel))
 
-  def safeDouble(columnLabel: String): Double = safeDoubleOption(columnLabel).get
-  def safeDoubleOption(columnLabel: String): Option[Double] = Option(resultSet.getDouble(columnLabel))
+  def double(columnLabel: String): Double = doubleOption(columnLabel).get
+  def doubleOption(columnLabel: String): Option[Double] = Option(resultSet.getDouble(columnLabel))
 
-  def safeShort(columnLabel: String): Short = safeShortOption(columnLabel).get
-  def safeShortOption(columnLabel: String): Option[Short] = Option(resultSet.getShort(columnLabel))
+  def short(columnLabel: String): Short = shortOption(columnLabel).get
+  def shortOption(columnLabel: String): Option[Short] = Option(resultSet.getShort(columnLabel))
 
-  def safeByte(columnLabel: String): Byte = safeByteOption(columnLabel).get
-  def safeByteOption(columnLabel: String): Option[Byte] = Option(resultSet.getByte(columnLabel))
+  def byte(columnLabel: String): Byte = byteOption(columnLabel).get
+  def byteOption(columnLabel: String): Option[Byte] = Option(resultSet.getByte(columnLabel))
 
-  def safeBoolean(columnLabel: String): Boolean = safeBooleanOption(columnLabel).get
-  def safeBooleanOption(columnLabel: String): Option[Boolean] = Option(resultSet.getBoolean(columnLabel))
+  def boolean(columnLabel: String): Boolean = booleanOption(columnLabel).get
+  def booleanOption(columnLabel: String): Option[Boolean] = Option(resultSet.getBoolean(columnLabel))
 
-  def safeLong(columnLabel: String): Long = safeLongOption(columnLabel).get
-  def safeLongOption(columnLabel: String): Option[Long] = {
+  def long(columnLabel: String): Long = longOption(columnLabel).get
+  def longOption(columnLabel: String): Option[Long] = {
     extractOption(columnLabel) {
       case x: Long => x
       case x: Int => x.toLong
     }
   }
 
-  def safeBigInt(columnLabel: String): BigInt = safeBigIntOption(columnLabel).get
-  def safeBigIntOption(columnLabel: String): Option[BigInt] = {
+  def bigInt(columnLabel: String): BigInt = bigIntOption(columnLabel).get
+  def bigIntOption(columnLabel: String): Option[BigInt] = {
     extractOption(columnLabel) {
       case x: Int => BigInt(x)
       case x: Long => BigInt(x)
@@ -182,8 +182,8 @@ class SqlResult(resultSet: java.sql.ResultSet) {
     }
   }
 
-  def safeBigDecimal(columnLabel: String): BigDecimal = safeBigDecimalOption(columnLabel).get
-  def safeBigDecimalOption(columnLabel: String): Option[BigDecimal] = {
+  def bigDecimal(columnLabel: String): BigDecimal = bigDecimalOption(columnLabel).get
+  def bigDecimalOption(columnLabel: String): Option[BigDecimal] = {
     extractOption(columnLabel) {
       case x: Int => BigDecimal(x)
       case x: Long => BigDecimal(x)
@@ -192,8 +192,8 @@ class SqlResult(resultSet: java.sql.ResultSet) {
     }
   }
 
-  def safeJavaBigInteger(columnLabel: String): java.math.BigInteger = safeJavaBigIntegerOption(columnLabel).get
-  def safeJavaBigIntegerOption(columnLabel: String): Option[java.math.BigInteger] = {
+  def javaBigInteger(columnLabel: String): java.math.BigInteger = javaBigIntegerOption(columnLabel).get
+  def javaBigIntegerOption(columnLabel: String): Option[java.math.BigInteger] = {
     extractOption(columnLabel) {
       case x: java.math.BigInteger => x
       case x: Int => java.math.BigInteger.valueOf(x)
@@ -201,19 +201,19 @@ class SqlResult(resultSet: java.sql.ResultSet) {
     }
   }
 
-  def safeJavaBigDecimal(columnLabel: String): java.math.BigDecimal = safeJavaBigDecimalOption(columnLabel).get
-  def safeJavaBigDecimalOption(columnLabel: String): Option[java.math.BigDecimal] = {
+  def javaBigDecimal(columnLabel: String): java.math.BigDecimal = javaBigDecimalOption(columnLabel).get
+  def javaBigDecimalOption(columnLabel: String): Option[java.math.BigDecimal] = {
     extractOption(columnLabel) {
       case x: java.math.BigDecimal => x
       case x: Double => new java.math.BigDecimal(x)
     }
   }
 
-  def safeDate(columnLabel: String): Date = safeDateOption(columnLabel).get
-  def safeDateOption(columnLabel: String): Option[Date] = Option(resultSet.getTimestamp(columnLabel))
+  def date(columnLabel: String): Date = dateOption(columnLabel).get
+  def dateOption(columnLabel: String): Option[Date] = Option(resultSet.getTimestamp(columnLabel))
 
-  def safeByteArray(columnLabel: String): Array[Byte] = safeByteArrayOption(columnLabel).get
-  def safeByteArrayOption(columnLabel: String): Option[Array[Byte]] = {
+  def byteArray(columnLabel: String): Array[Byte] = byteArrayOption(columnLabel).get
+  def byteArrayOption(columnLabel: String): Option[Array[Byte]] = {
     extractOption(columnLabel) {
       case x: Array[Byte] => x
       case x: Blob => x.getBytes(0, x.length.toInt)
@@ -222,9 +222,9 @@ class SqlResult(resultSet: java.sql.ResultSet) {
     }
   }
 
-  def safeUUIDFromByteArray(columnLabel: String): UUID = safeUUIDFromByteArrayOption(columnLabel).get
-  def safeUUIDFromByteArrayOption(columnLabel: String): Option[UUID] = {
-    safeByteArrayOption(columnLabel).map { bytes =>
+  def uuid(columnLabel: String): UUID = uuidOption(columnLabel).get
+  def uuidOption(columnLabel: String): Option[UUID] = {
+    byteArrayOption(columnLabel).map { bytes =>
       require(bytes.length == 16)
 
       val bb = ByteBuffer.wrap(bytes)
@@ -235,9 +235,9 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   }
 
   private val hexReplaceRegex = """[^a-fA-F0-9]""".r
-  def safeUUIDFromString(columnLabel: String): UUID = safeUUIDFromStringOption(columnLabel).get
-  def safeUUIDFromStringOption(columnLabel: String): Option[UUID] = {
-    safeStringOption(columnLabel).map { string =>
+  def uuidFromString(columnLabel: String): UUID = uuidFromStringOption(columnLabel).get
+  def uuidFromStringOption(columnLabel: String): Option[UUID] = {
+    stringOption(columnLabel).map { string =>
       val hex = hexReplaceRegex.replaceAllIn(string, "")
       require(hex.length == 32)
 
