@@ -44,34 +44,4 @@ object SqlStatementParser {
     }
     (query.toString, params.toList)
   } 
-  // def parse(stmt: String): (String, List[String]) = {
-    
-  //   val query = new StringBuilder(stmt.length)
-  //   val param = new StringBuilder(100)
-  //   val (ignored, params) = stmt.toCharArray.foldLeft((false, Array[String]())) { case ((inParam, params), c) =>  
-  //     if (!inParam) {
-  //       if (c == '{') {
-  //         (true, params)
-  //       }
-  //       else {
-  //         query.append(c)
-  //         (inParam, params)
-  //       }
-  //     }
-  //     else {
-  //       if (c == '}') {
-  //         query.append('?')
-  //         val ret = (false, params :+ param.toString)
-  //         param.clear
-  //         ret
-  //       }
-  //       else {
-  //         param.append(c)
-  //         (inParam, params)
-  //       }
-  //     }
-  //   }
-
-  //   (query.toString, params.toList)
-  // }
 }
