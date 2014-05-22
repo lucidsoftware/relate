@@ -43,28 +43,28 @@ case class SqlQuery(
   /**
    * Execute a statement
    */
-  def execute()(connection: Connection): Boolean = {
+  def execute()(implicit connection: Connection): Boolean = {
     prepareSqlStatement(connection).execute()
   }
 
   /**
    * Execute an update
    */
-  def executeUpdate()(connection: Connection): Int = {
+  def executeUpdate()(implicit connection: Connection): Int = {
     prepareSqlStatement(connection).executeUpdate()
   }
 
   /**
    * Execute a query
    */
-  def executeQuery()(connection: Connection): SqlResult = {
+  def executeQuery()(implicit connection: Connection): SqlResult = {
     prepareSqlStatement(connection).executeQuery()
   }
 
   /**
    * Execute an insert
    */
-  def executeInsert()(connection: Connection): SqlResult = {
+  def executeInsert()(implicit connection: Connection): SqlResult = {
     prepareSqlStatement(connection, true).executeInsert()
   }
 
