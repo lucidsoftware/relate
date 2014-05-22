@@ -17,6 +17,8 @@ import java.util.Calendar
 import java.util.Date
 import java.util.UUID
 import scala.collection.JavaConversions
+import scala.collection.generic.CanBuildFrom
+import scala.collection.mutable.Builder
 import scala.collection.mutable.MutableList
 
 object SqlResult {
@@ -36,16 +38,37 @@ class SqlResult(resultSet: java.sql.ResultSet) {
 
   def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = asList(parser, 1)(connection).head
   def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = asList(parser, 1)(connection).headOption
-  def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = asList(parser, Long.MaxValue)
 
-  def asList[A](parser: RowParser[A], maxRows: Long)(implicit connection: Connection): List[A] = {
-    val records = MutableList[A]()
+  def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = asCollection[A, List](parser, Long.MaxValue)
+  def asList[A](parser: RowParser[A], maxRows: Long)(implicit connection: Connection): List[A] = asCollection[A, List](parser, maxRows)
+
+  def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
+  def asMap[U, V](parser: RowParser[(U, V)], maxRows: Long)(implicit connection: Connection): Map[U, V] = asPairCollection[U, V, Map](parser, maxRows)
+
+  def asCollection[U, T[_]](parser: RowParser[U])(implicit connection: Connection, cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = asCollection(parser, Long.MaxValue)
+  def asCollection[U, T[_]](parser: RowParser[U], maxRows: Long)(implicit connection: Connection, cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = {
+    val collection = cbf()
+
     withResultSet { resultSet =>
       while (resultSet.getRow < maxRows && resultSet.next()) {
-        records += parser(this)
+        collection += parser(this)
       }
     }
-    records.toList
+
+    collection.result
+  }
+
+  def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)])(implicit connection: Connection, cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]]): T[U, V] = asPairCollection(parser, Long.MaxValue)
+  def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)], maxRows: Long)(implicit connection: Connection, cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]]): T[U, V] = {
+    val builder = cbf()
+
+    withResultSet { resultSet =>
+      while (resultSet.getRow < maxRows && resultSet.next()) {
+        builder += parser(this)
+      }
+    }
+
+    builder.result
   }
 
   def getRow(): Int = resultSet.getRow()
