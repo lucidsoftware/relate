@@ -39,6 +39,9 @@ class SqlResult(resultSet: java.sql.ResultSet) {
 
   def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = asCollection[A, Seq](parser, 1).head
   def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = asCollection[A, Seq](parser, 1).headOption
+  def asSet[A](parser: RowParser[A])(implicit connection: Connection): Set[A] = asCollection[A, Set](parser, Long.MaxValue)
+  def asSeq[A](parser: RowParser[A])(implicit connection: Connection): Seq[A] = asCollection[A, Seq](parser, Long.MaxValue)
+  def asIterable[A](parser: RowParser[A])(implicit connection: Connection): Iterable[A] = asCollection[A, Iterable](parser, Long.MaxValue)
   def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = asCollection[A, List](parser, Long.MaxValue)
   def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
 
