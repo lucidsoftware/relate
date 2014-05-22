@@ -47,15 +47,15 @@ class SqlResult(resultSet: java.sql.ResultSet) {
 
   def asCollection[U, T[_]](parser: RowParser[U])(implicit connection: Connection, cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = asCollection(parser, Long.MaxValue)
   def asCollection[U, T[_]](parser: RowParser[U], maxRows: Long)(implicit connection: Connection, cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = {
-    val collection = cbf()
+    val builder = cbf()
 
     withResultSet { resultSet =>
       while (resultSet.getRow < maxRows && resultSet.next()) {
-        collection += parser(this)
+        builder += parser(this)
       }
     }
 
-    collection.result
+    builder.result
   }
 
   def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)])(implicit connection: Connection, cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]]): T[U, V] = asPairCollection(parser, Long.MaxValue)
