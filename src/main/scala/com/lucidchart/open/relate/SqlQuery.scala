@@ -5,8 +5,8 @@ import java.sql.{Connection, PreparedStatement, Statement}
 /** A query object that has not had parameter values substituted in */
 case class SqlQuery(
   query: String,
-  args: List[String],
-  params: List[SqlStatement=>Unit] = List()
+  args: Map[String, Int],
+  params: List[SqlStatement=>Unit] = Nil
 ) {
   /**
    * Put in values for parameters in the query
@@ -14,7 +14,7 @@ case class SqlQuery(
    * @return this SqlQuery
    */
   def on(f: SqlStatement => Unit): SqlQuery = {
-    copy(params=(params ++ List(f)))
+    copy(params=(f +: params))
   }
 
   /**
@@ -34,7 +34,7 @@ case class SqlQuery(
    * @param the prepared SqlStatement
    */
   private def applyParams(stmt: SqlStatement): SqlStatement = {
-    params.foreach { f =>
+    params.reverse.foreach { f =>
       f(stmt)
     }
     stmt

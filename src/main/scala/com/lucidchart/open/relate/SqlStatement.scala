@@ -32,7 +32,7 @@ object SqlTypes {
  * parameter values by name rather than by index. Provides methods for inserting
  * all necessary datatypes.
  */
-class SqlStatement(stmt: PreparedStatement, names: List[String]) {
+class SqlStatement(stmt: PreparedStatement, names: Map[String, Int]) {
   /**
    * Set a BigDecimal in the PreparedStatement
    * @param name the name of the parameter to put the BigDecimal in
@@ -48,7 +48,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the BigDecimal to put in the query
    */
   def bigDecimal(name: String, value: JBigDecimal): Unit = {
-    stmt.setBigDecimal(names.indexOf(name) + 1, value)
+    stmt.setBigDecimal(names(name), value)
   }
 
   /**
@@ -57,7 +57,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the BigInt to put into the query
    */
   def bigInt(name: String, value: BigInt): Unit = {
-    stmt.setBigDecimal(names.indexOf(name) + 1, new JBigDecimal(value.bigInteger))
+    stmt.setBigDecimal(names(name), new JBigDecimal(value.bigInteger))
   }
 
   /**
@@ -66,7 +66,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the BigInteger to put in the query
    */
   def bigInt(name: String, value: JBigInt): Unit = {
-    stmt.setBigDecimal(names.indexOf(name) + 1, new JBigDecimal(value))
+    stmt.setBigDecimal(names(name), new JBigDecimal(value))
   }
 
   /**
@@ -75,7 +75,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the Boolean to put in the query
    */
   def bool(name: String, value: Boolean): Unit = {
-    stmt.setBoolean(names.indexOf(name) + 1, value)
+    stmt.setBoolean(names(name), value)
   }
 
   /**
@@ -84,7 +84,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the Byte to put in the query
    */
   def byte(name: String, value: Byte): Unit = {
-    stmt.setByte(names.indexOf(name) + 1, value)
+    stmt.setByte(names(name), value)
   }
 
   /**
@@ -93,7 +93,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the Char to put in the query
    */
   def char(name: String, value: Char): Unit = {
-    stmt.setString(names.indexOf(name) + 1, value.toString)
+    stmt.setString(names(name), value.toString)
   }
 
   /**
@@ -102,8 +102,8 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the Date to put in the query
    */
   def date(name: String, value: Date): Unit = {
-    if (value != null) stmt.setDate(names.indexOf(name) + 1, new SqlDate(value.getTime))
-    else stmt.setNull(names.indexOf(name) + 1, Types.DATE)
+    if (value != null) stmt.setDate(names(name), new SqlDate(value.getTime))
+    else stmt.setNull(names(name), Types.DATE)
   }
 
   /**
@@ -112,7 +112,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the Double to put in the query
    */
   def double(name: String, value: Double): Unit = {
-    stmt.setDouble(names.indexOf(name) + 1, value)
+    stmt.setDouble(names(name), value)
   }
 
   /**
@@ -121,7 +121,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the Float to put in the query
    */
   def float(name: String, value: Float): Unit = {
-    stmt.setFloat(names.indexOf(name) + 1, value)
+    stmt.setFloat(names(name), value)
   }
 
   /**
@@ -130,7 +130,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the int to put in the query
    */
   def int(name: String, value: Int): Unit = {
-    stmt.setInt(names.indexOf(name) + 1, value)
+    stmt.setInt(names(name), value)
   }
 
   /**
@@ -139,7 +139,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the Long to put in the query
    */
   def long(name: String, value: Long): Unit = {
-    stmt.setLong(names.indexOf(name) + 1, value)
+    stmt.setLong(names(name), value)
   }
 
   /**
@@ -148,7 +148,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the Short to put in the query
    */
   def short(name: String, value: Short): Unit = {
-    stmt.setShort(names.indexOf(name) + 1, value)
+    stmt.setShort(names(name), value)
   }
 
   /**
@@ -157,7 +157,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the value to put in the query
    */
   def string(name: String, value: String): Unit = {
-    stmt.setString(names.indexOf(name) + 1, value)
+    stmt.setString(names(name), value)
   }
 
   /**
@@ -166,7 +166,7 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the Timestamp to put into the query
    */
   def timestamp(name: String, value: Timestamp): Unit = {
-    stmt.setTimestamp(names.indexOf(name) + 1, value)
+    stmt.setTimestamp(names(name), value)
   }
 
   /**
@@ -175,8 +175,8 @@ class SqlStatement(stmt: PreparedStatement, names: List[String]) {
    * @param value the UUID to put in the query
    */
   def uuid(name: String, value: UUID): Unit = {
-    if (value != null) stmt.setString(names.indexOf(name) + 1, value.toString)
-    else stmt.setNull(names.indexOf(name) + 1, Types.VARCHAR)
+    if (value != null) stmt.setString(names(name), value.toString)
+    else stmt.setNull(names(name), Types.VARCHAR)
   }
 
   /**

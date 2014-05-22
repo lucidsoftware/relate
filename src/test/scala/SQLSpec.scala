@@ -24,7 +24,11 @@ class SQLSpec extends Specification {
 
     "get the correct parameter names and in order" in {
       val sql = SQL("INSERT INTO table (param1, param2, param3) VALUES ({name1}, {name2}, {name3})")
-      sql.args must_== List("name1", "name2", "name3")
+      val args = new Array[String](3)
+      sql.args.foreach { case (name, index) =>
+        args(index - 1) = name
+      }
+      args.toList must_== List("name1", "name2", "name3")
     }
 
     "have correct number of ?s in replaced query" in {
