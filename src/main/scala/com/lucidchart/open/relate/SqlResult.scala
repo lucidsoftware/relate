@@ -36,17 +36,13 @@ class SqlResult(resultSet: java.sql.ResultSet) {
     }
   }
 
-  def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = asList(parser, 1)(connection).head
-  def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = asList(parser, 1)(connection).headOption
-
+  def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = asCollection[A, Seq](parser, 1).head
+  def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = asCollection[A, Seq](parser, 1).headOption
   def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = asCollection[A, List](parser, Long.MaxValue)
-  def asList[A](parser: RowParser[A], maxRows: Long)(implicit connection: Connection): List[A] = asCollection[A, List](parser, maxRows)
-
   def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
-  def asMap[U, V](parser: RowParser[(U, V)], maxRows: Long)(implicit connection: Connection): Map[U, V] = asPairCollection[U, V, Map](parser, maxRows)
 
   def asCollection[U, T[_]](parser: RowParser[U])(implicit connection: Connection, cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = asCollection(parser, Long.MaxValue)
-  def asCollection[U, T[_]](parser: RowParser[U], maxRows: Long)(implicit connection: Connection, cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = {
+  protected def asCollection[U, T[_]](parser: RowParser[U], maxRows: Long)(implicit connection: Connection, cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = {
     val builder = cbf()
 
     withResultSet { resultSet =>
