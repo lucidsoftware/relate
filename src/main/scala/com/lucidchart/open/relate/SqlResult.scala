@@ -20,6 +20,7 @@ import scala.collection.JavaConversions
 import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable.Builder
 import scala.collection.mutable.MutableList
+import scala.util.Try
 
 object SqlResult {
   def apply(resultSet: java.sql.ResultSet) = new SqlResult(resultSet)
@@ -246,6 +247,12 @@ class SqlResult(resultSet: java.sql.ResultSet) {
       )
     }
   }
+
+  def enum(column: String, e: Enumeration) = enumOption(column, e).get
+  def enumOption(column: String, e: Enumeration): Option[e.Value] = for {
+    id <- intOption(column)
+    value <- Try(e(id)).toOption
+  } yield(value)
 }
 
 object SqlResultTypes {
@@ -342,4 +349,6 @@ object SqlResultTypes {
   def uuidOption(column: String)(implicit sr: SqlResult) = sr.uuidOption(column)
   def uuidFromString(column: String)(implicit sr: SqlResult) = sr.uuidFromString(column)
   def uuidFromStringOption(column: String)(implicit sr: SqlResult) = sr.uuidFromStringOption(column)
+  def enum(column: String, e: Enumeration)(implicit sr: SqlResult) = sr.enum(column, e)
+  def enumOption(column: String, e: Enumeration)(implicit sr: SqlResult) = sr.enumOption(column, e)
 }

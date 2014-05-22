@@ -735,6 +735,26 @@ class SqlResultSpec extends Specification with Mockito {
       val res = "000102030405060708090a0b0c0d0e0f"
       rs.getObject("uuidFromString") returns res
       result.uuidFromString("uuidFromString") equals new UUID(283686952306183L, 579005069656919567L)
+      result.uuidFromStringOption("uuidFromString") must beSome(new UUID(283686952306183L, 579005069656919567L))
+    }
+  }
+
+  "enum" should {
+    object Things extends Enumeration {
+      val one = Value(1, "one")
+      val two = Value(2, "two")
+      val three = Value(3, "three")
+    }
+
+    "return the correct value" in {
+      val (rs, result) = getMocks
+      import java.lang.{Integer => I}
+
+      rs.getInt("enum") returns 1 thenReturns 2 thenReturns 3 thenReturns 4
+      result.enum("enum", Things) equals Things.one
+      result.enum("enum", Things) equals Things.two
+      result.enumOption("enum", Things) must beSome(Things.three)
+      result.enumOption("enum", Things) must beNone
     }
   }
 }
