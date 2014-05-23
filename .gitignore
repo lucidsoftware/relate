@@ -1,7 +1,10 @@
 Relate.sublime-project
 Relate.sublime-workspace
 .ensime
+.history
+lib_managed/*
 
 #built files
 target/*
-project/*
+project/target/*
+project/project/*
