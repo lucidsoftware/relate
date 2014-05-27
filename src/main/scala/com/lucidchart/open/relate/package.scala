@@ -25,6 +25,6 @@ package object relate {
    * val query = SQL("SELECT * FROM users")
    * }}}
    */
-  def SQL(stmt: String): SqlQuery = Relate.sql(stmt)
+  def SQL(stmt: String): ExpandableQuery = Relate.sql(stmt)
 
 }

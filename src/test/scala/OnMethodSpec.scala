@@ -1,7 +1,7 @@
 package com.lucidchart.open.relate.test
 
 import com.lucidchart.open.relate._
-import com.lucidchart.open.relate.SqlTypes._
+import com.lucidchart.open.relate.Query._
 import java.sql.{Connection, PreparedStatement}
 import org.mockito.Matchers._
 import org.specs2.mutable._
@@ -100,6 +100,39 @@ class OnMethodSpec extends Specification with Mockito {
       }.executeUpdate()(connection)
 
       there was one(stmt).setInt(1, 2)
+    }
+
+    "work for list" in {
+      val sqlOriginal = "SELECT * FROM table WHERE id IN ({ids})"
+      val sql = "SELECT * FROM table WHERE id IN (?,?,?)"
+      val (connection, stmt) = getMocks
+      connection.prepareStatement(sql) returns stmt
+
+      SQL(sqlOriginal).expand { implicit query =>
+        commaSeparated("ids", 3)
+      }.on { implicit statement =>
+        int("ids", List(1, 2, 3))
+      }.executeUpdate()(connection)
+
+      there was one(stmt).setInt(1, 1) andThen one(stmt).setInt(2, 2) andThen one(stmt).setInt(3, 3)
+    }
+
+    "work for multiple lists" in {
+      val sqlOriginal = "SELECT * FROM table WHERE id IN ({ids}) AND value IN ({values})"
+      val sql = "SELECT * FROM table WHERE id IN (?,?,?) AND value IN (?,?)"
+      val (connection, stmt) = getMocks
+      connection.prepareStatement(sql) returns stmt
+
+      SQL(sqlOriginal).expand { implicit query =>
+        commaSeparated("ids", 3)
+        commaSeparated("values", 2)
+      }.on { implicit statement =>
+        string("values", List("one", "two"))
+        int("ids", List(1, 2, 3))
+      }.executeUpdate()(connection)
+
+      there was one(stmt).setString(4, "one") andThen one(stmt).setString(5, "two") andThen
+        one(stmt).setInt(1, 1) andThen one(stmt).setInt(2, 2) andThen one(stmt).setInt(3, 3)
     }
   }
 
