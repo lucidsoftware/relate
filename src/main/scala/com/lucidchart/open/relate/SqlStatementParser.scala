@@ -12,7 +12,7 @@ object SqlStatementParser {
    */
   def parse(stmt: String, listParams: Map[String, Int] = Map[String, Int]()): (String, Map[String, Int]) = {
     
-    val query = new StringBuilder(stmt.length)
+    val query = new StringBuilder(stmt.length + listParams.values.foldLeft(0) (_ + _))
     val param = new StringBuilder(100)
     
     var inParam = false
@@ -34,13 +34,14 @@ object SqlStatementParser {
         if (c == '}') {
           val name = param.toString
 
+          params(name) = index
           if (!listParams.isEmpty && listParams.contains(name)) {
-            params ++= insertCommaSeparated(name, listParams(name), query, index)
-            index += listParams(name)
+            val count = listParams(name)
+            insertCommaSeparated(count, query)
+            index += count
           }
           else {
             query.append('?')
-            params(name) = index
             index += 1
           }
           
@@ -59,30 +60,15 @@ object SqlStatementParser {
 
   /**
    * Insert a comma separated list of comma separated ? into the query
-   * @param name the identifier for the parameter
    * @param count the number of parameters in the list
    * @param query the current query in a StringBuilder
-   * @param currentIndex the current parameter index the parser is on
-   * @return the expanded parameter names and indexes
    */
-  def insertCommaSeparated(name: String, count: Int, query: StringBuilder, currentIndex: Int): Map[String, Int] = {
-    val params = mutable.Map[String, Int]()
-
-    val paramName = new StringBuilder(name.length + count.toString.length + 1)
-
+  def insertCommaSeparated(count: Int, query: StringBuilder): Unit = {
     var i = 0
     while (i < count) {
-      query += '?'
-      query += ','
-      paramName ++= name
-      paramName += '_'
-      paramName ++= i.toString
-      params(paramName.toString) = currentIndex + i
-      paramName.clear
+      query.append("?,")
       i += 1
     }
     query.deleteCharAt(query.length - 1)//drop off the last comma
-
-    params.toMap
   } 
 }
