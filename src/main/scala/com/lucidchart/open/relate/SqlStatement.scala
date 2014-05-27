@@ -4,13 +4,14 @@ import java.sql.{Date => SqlDate, PreparedStatement, Statement, Timestamp, Types
 import java.math.{BigDecimal => JBigDecimal, BigInteger => JBigInt}
 import java.util.{Date, UUID}
 import scala.reflect.ClassTag
+import java.nio.ByteBuffer
 
 /**
  * A smart wrapper around the PreparedStatement class that allows inserting
  * parameter values by name rather than by index. Provides methods for inserting
  * all necessary datatypes.
  */
-class SqlStatement(stmt: PreparedStatement, names: Map[String, Int]) {
+class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, Int]) {
 
   def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit) {
     var i = names(name)
@@ -230,10 +231,10 @@ class SqlStatement(stmt: PreparedStatement, names: Map[String, Int]) {
    * @param value the UUID to put in the query
    */
   def uuid(name: String, value: UUID): Unit = {
-    if (value != null) stmt.setString(names(name), value.toString)
+    if (value != null) stmt.setBytes(names(name), uuidToByteArray(value))
     else stmt.setNull(names(name), Types.VARCHAR)
   }
-  def uuid(name: String, values: TraversableOnce[UUID]): Unit = list[String](name, values.map(_.toString), stmt.setString _)
+  def uuid(name: String, values: TraversableOnce[UUID]): Unit = list[Array[Byte]](name, values.map(uuidToByteArray(_)), stmt.setBytes _)
 
   def uuidOption(name: String, value: Option[UUID]): Unit = {
     value.map(uuid(name, _)).getOrElse(stmt.setNull(names(name), Types.VARCHAR))
@@ -241,6 +242,13 @@ class SqlStatement(stmt: PreparedStatement, names: Map[String, Int]) {
 
   def setNull(name: String, typ: Int): Unit = {
     stmt.setNull(names(name), typ)
+  }
+
+  def uuidToByteArray(uuid: UUID): Array[Byte] = {
+    val bb = ByteBuffer.wrap(new Array[Byte](16))
+    bb.putLong(uuid.getMostSignificantBits)
+    bb.putLong(uuid.getLeastSignificantBits)
+    bb.array()
   }
 
   /**

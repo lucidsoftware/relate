@@ -137,3 +137,12 @@ trait Sql {
   }
 }
 
+// SQL("""insert into users (id, name, created) values {values}""").expand { implicit something =>
+//   // better name exists
+//   forInsert("values", List("id", "name", "created"), records.size)
+// }.onRecords(records) { record => implicit something =>
+//   int("id", record.id)
+//   string("name", record.name)
+//   timestamp("created", new Date())
+// }
+
