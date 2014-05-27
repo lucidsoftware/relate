@@ -9,9 +9,6 @@ object Relate {
    * @param stmt the SQL statement
    * @return the corresponding SqlQuery object
    */
-  private[relate] def sql(stmt: String): SqlQuery = {
-    val (query, args) = SqlStatementParser.parse(stmt)
-    SqlQuery(query, args)
-  }
+  private[relate] def sql(stmt: String) = ExpandableQuery(stmt)
 
 }
