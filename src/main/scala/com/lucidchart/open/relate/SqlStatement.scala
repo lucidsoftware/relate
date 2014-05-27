@@ -2,7 +2,7 @@ package com.lucidchart.open.relate
 
 import java.sql.{Date => SqlDate, PreparedStatement, Statement, Timestamp, Types}
 import java.math.{BigDecimal => JBigDecimal, BigInteger => JBigInt}
-import java.util.{Date, UUID}\
+import java.util.{Date, UUID}
 import scala.reflect.ClassTag
 
 /** 
