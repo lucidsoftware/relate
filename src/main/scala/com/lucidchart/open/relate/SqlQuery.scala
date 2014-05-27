@@ -90,7 +90,7 @@ trait Sql {
    * @return the prepared SqlStatement
    */
   private def prepareSqlStatement(connection: Connection, getGeneratedKeys: Boolean = false): SqlStatement = {
-    val (parsedQuery, parsedParams) = SqlStatementParser.parse(query, listParams.toMap)
+    val (parsedQuery, parsedParams) = SqlStatementParser.parse(query, listParams)
     val stmt = if (getGeneratedKeys) connection.prepareStatement(parsedQuery, Statement.RETURN_GENERATED_KEYS)
       else connection.prepareStatement(parsedQuery)
     applyParams(new SqlStatement(stmt, parsedParams))

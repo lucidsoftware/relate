@@ -204,7 +204,6 @@ class SqlStatement(stmt: PreparedStatement, names: Map[String, Int]) {
   def string(name: String, value: String): Unit = {
     stmt.setString(names(name), value)
   }
-
   def string(name: String, values: TraversableOnce[String]): Unit = list[String](name, values, stmt.setString _)
 
   def stringOption(name: String, value: Option[String]): Unit = {

@@ -1,6 +1,7 @@
 package com.lucidchart.open.relate
 
 import scala.collection.mutable
+import scala.collection.Map
 
 object SqlStatementParser {
 
@@ -12,7 +13,7 @@ object SqlStatementParser {
    */
   def parse(stmt: String, listParams: Map[String, Int] = Map[String, Int]()): (String, Map[String, Int]) = {
     
-    val query = new StringBuilder(stmt.length + listParams.values.foldLeft(0) (_ + _))
+    val query = new StringBuilder(stmt.length + 2 * listParams.values.foldLeft(0) (_ + _))
     val param = new StringBuilder(100)
     
     var inParam = false
@@ -64,11 +65,13 @@ object SqlStatementParser {
    * @param query the current query in a StringBuilder
    */
   def insertCommaSeparated(count: Int, query: StringBuilder): Unit = {
-    var i = 0
+    if (count > 0) {
+      query += '?'
+    }
+    var i = 1
     while (i < count) {
-      query.append("?,")
+      query.append(",?")
       i += 1
     }
-    query.deleteCharAt(query.length - 1)//drop off the last comma
   } 
 }
