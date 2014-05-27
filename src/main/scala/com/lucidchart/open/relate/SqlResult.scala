@@ -161,8 +161,8 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   def byte(column: String): Byte = byteOption(column).get
   def byteOption(column: String): Option[Byte] = Option(resultSet.getByte(column))
 
-  def boolean(column: String): Boolean = booleanOption(column).get
-  def booleanOption(column: String): Option[Boolean] = Option(resultSet.getBoolean(column))
+  def bool(column: String): Boolean = boolOption(column).get
+  def boolOption(column: String): Option[Boolean] = Option(resultSet.getBoolean(column))
 
   def long(column: String): Long = longOption(column).get
   def longOption(column: String): Option[Long] = {
@@ -332,8 +332,8 @@ object SqlResultTypes {
   def shortOption(column: String)(implicit sr: SqlResult) = sr.shortOption(column)
   def byte(column: String)(implicit sr: SqlResult) = sr.byte(column)
   def byteOption(column: String)(implicit sr: SqlResult) = sr.byteOption(column)
-  def boolean(column: String)(implicit sr: SqlResult) = sr.boolean(column)
-  def booleanOption(column: String)(implicit sr: SqlResult) = sr.booleanOption(column)
+  def bool(column: String)(implicit sr: SqlResult) = sr.bool(column)
+  def boolOption(column: String)(implicit sr: SqlResult) = sr.boolOption(column)
   def long(column: String)(implicit sr: SqlResult) = sr.long(column)
   def longOption(column: String)(implicit sr: SqlResult) = sr.longOption(column)
   def bigInt(column: String)(implicit sr: SqlResult) = sr.bigInt(column)

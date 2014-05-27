@@ -42,4 +42,43 @@ object Query {
   def string(name: String, values: TraversableOnce[String])(implicit stmt: SqlStatement) = stmt.string(name, values)
   def timestamp(name: String, values: TraversableOnce[Timestamp])(implicit stmt: SqlStatement) = stmt.timestamp(name, values)
   def uuid(name: String, values: TraversableOnce[UUID])(implicit stmt: SqlStatement) = stmt.uuid(name, values)
+
+  def bigDecimalOption[A](name: String, value: Option[A])(implicit stmt: SqlStatement, bd: BigDecimalLike[A]) = stmt.bigDecimalOption(name, value)
+  def bigIntOption[A](name: String, value: Option[A])(implicit stmt: SqlStatement, bi: BigIntLike[A]) = stmt.bigIntOption(name, value)
+  def boolOption[A](name: String, value: Option[Boolean])(implicit stmt: SqlStatement) = stmt.boolOption(name, value)
+  def byteOption(name: String, value: Option[Byte])(implicit stmt: SqlStatement) = stmt.byteOption(name, value)
+  def charOption(name: String, value: Option[Char])(implicit stmt: SqlStatement) = stmt.charOption(name, value)
+  def dateOption(name: String, value: Option[Date])(implicit stmt: SqlStatement) = stmt.dateOption(name, value)
+  def doubleOption(name: String, value: Option[Double])(implicit stmt: SqlStatement) = stmt.doubleOption(name, value)
+  def floatOption(name: String, value: Option[Float])(implicit stmt: SqlStatement) = stmt.floatOption(name, value)
+  def intOption(name: String, value: Option[Int])(implicit stmt: SqlStatement) = stmt.intOption(name, value)
+  def longOption(name: String, value: Option[Long])(implicit stmt: SqlStatement) = stmt.longOption(name, value)
+  def shortOption(name: String, value: Option[Short])(implicit stmt: SqlStatement) = stmt.shortOption(name, value)
+  def stringOption(name: String, value: Option[String])(implicit stmt: SqlStatement) = stmt.stringOption(name, value)
+  def timestampOption(name: String, value: Option[Timestamp])(implicit stmt: SqlStatement) = stmt.timestampOption(name, value)
+  def uuidOption(name: String, value: Option[UUID])(implicit stmt: SqlStatement) = stmt.uuidOption(name, value)
+
+  trait BigDecimalLike[A] {
+    def get(value: A): JBigDecimal
+  }
+
+  implicit object BigDecimalWrap extends BigDecimalLike[BigDecimal] {
+    def get(value: BigDecimal): JBigDecimal = value.bigDecimal
+  }
+
+  implicit object JBigDecimalWrap extends BigDecimalLike[JBigDecimal] {
+    def get(value: JBigDecimal): JBigDecimal = value
+  }
+
+  trait BigIntLike[A] {
+    def get(value: A): JBigInt
+  }
+
+  implicit object BigIntWrap extends BigIntLike[BigInt] {
+    def get(value: BigInt): JBigInt = value.bigInteger
+  }
+
+  implicit object JBigIntWrap extends BigIntLike[JBigInt] {
+    def get(value: JBigInt): JBigInt = value
+  }
 }
