@@ -11,13 +11,13 @@ object SqlStatementParser {
    * @param listParams a mapping of list parameter names to their sizes
    * @return a tuple containing the revised SQL statement and the parameter names to their index
    */
-  def parse(stmt: String, listParams: Map[String, Int] = Map[String, Int]()): (String, Map[String, Int]) = {
+  def parse(stmt: String, listParams: Map[String, Int] = Map[String, Int]()): (String, Map[String, List[Int]]) = {
     
     val query = new StringBuilder(stmt.length + 2 * listParams.values.foldLeft(0) (_ + _))
     val param = new StringBuilder(100)
     
     var inParam = false
-    val params = mutable.Map[String, Int]()
+    val params = mutable.Map[String, List[Int]]()
     var index = 1
     var i = 0
     val chars = stmt.toCharArray
@@ -35,7 +35,7 @@ object SqlStatementParser {
         if (c == '}') {
           val name = param.toString
 
-          params(name) = index
+          params(name) = if (params contains name) params(name) :+ index else List(index)
           if (!listParams.isEmpty && listParams.contains(name)) {
             val count = listParams(name)
             insertCommaSeparated(count, query)

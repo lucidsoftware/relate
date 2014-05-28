@@ -102,6 +102,20 @@ class OnMethodSpec extends Specification with Mockito {
       there was one(stmt).setInt(1, 2)
     }
 
+    "work for multiple instances of same parameter name" in {
+      val sql = "SELECT * FROM table WHERE column1=%s AND column2=%s AND column3=%s"
+      val (connection, stmt) = getMocks
+      connection.prepareStatement(sql.format("?", "?", "?")) returns stmt
+
+      SQL(sql.format("{same}", "{another}", "{same}")).on { implicit statement =>
+        int("same", 2)
+        string("another", "value")
+      }.executeUpdate()(connection)
+
+      there was one(stmt).setInt(1, 2) andThen one(stmt).setInt(3, 2) andThen 
+        one(stmt).setString(2, "value")
+    }
+
     "work for list" in {
       val sqlOriginal = "SELECT * FROM table WHERE id IN ({ids})"
       val sql = "SELECT * FROM table WHERE id IN (?,?,?)"

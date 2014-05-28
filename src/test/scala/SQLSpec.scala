@@ -26,7 +26,7 @@ class SQLSpec extends Specification {
       val (query, params) = SqlStatementParser.parse("INSERT INTO table (param1, param2, param3) VALUES ({name1}, {name2}, {name3})")
       val args = new Array[String](3)
       params.foreach { case (name, index) =>
-        args(index - 1) = name
+        args(index(0) - 1) = name
       }
       args.toList must_== List("name1", "name2", "name3")
     }
