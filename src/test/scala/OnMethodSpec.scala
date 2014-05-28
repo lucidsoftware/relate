@@ -3,6 +3,7 @@ package com.lucidchart.open.relate.test
 import com.lucidchart.open.relate._
 import com.lucidchart.open.relate.Query._
 import java.sql.{Connection, PreparedStatement}
+import java.util.Date
 import org.mockito.Matchers._
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
@@ -66,16 +67,20 @@ class OnMethodSpec extends Specification with Mockito {
     }
 
     "work for insert" in {
-      val sql = """INSERT INTO table (one, two) VALUES (%s, %s)"""
+      val sql = """INSERT INTO table (one, two, date, optDate) VALUES (%s, %s, %s, %s)"""
       val (connection, stmt) = getMocks
-      connection.prepareStatement(sql.format("?", "?")) returns stmt
+      connection.prepareStatement(sql.format("?", "?", "?", "?")) returns stmt
 
-      SQL(sql.format("{one}", "{two}")).on { implicit statement =>
+      val d = new Date
+      SQL(sql.format("{one}", "{two}", "{date}", "{optDate}")).on { implicit statement =>
         int("one", 5)
         int("two", 6)
+        date("date", d)
+        dateOption("optDate", Some(d))
       }.executeUpdate()(connection)
 
-      there was one(stmt).setInt(1, 5) andThen one(stmt).setInt(2, 6)
+      there was one(stmt).setInt(1, 5) andThen one(stmt).setInt(2, 6) andThen one(stmt).setTimestamp(3, new java.sql.Timestamp(d.getTime)) andThen
+        one(stmt).setTimestamp(4, new java.sql.Timestamp(d.getTime))
     }
 
     "work for update" in {

@@ -75,7 +75,7 @@ class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, 
    * @param name the name of the parameter to put the Boolean in
    * @param value the Boolean to put in the query
    */
-  def bool(name: String, value: Boolean) = (name, value, stmt.setBoolean _)
+  def bool(name: String, value: Boolean) = insert(name, value, stmt.setBoolean _)
   def bool(name: String, values: TraversableOnce[Boolean]): Unit = list[Boolean](name, values, stmt.setBoolean _)
   def boolOption(name: String, value: Option[Boolean]): Unit = {
     value.map(bool(name, _)).getOrElse(insert(name, Types.BOOLEAN, stmt.setNull _))
@@ -108,8 +108,8 @@ class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, 
    * @param name the name of the parameter to put the Date in
    * @param value the Date to put in the query
    */
-  def date(name: String, value: Date) = insert(name, new SqlDate(value.getTime), stmt.setDate _)
-  def date(name: String, values: TraversableOnce[Date]): Unit = list[SqlDate](name, values.map{ d: Date => new SqlDate(d.getTime)}, stmt.setDate _)
+  def date(name: String, value: Date) = insert(name, new Timestamp(value.getTime), stmt.setTimestamp _)
+  def date(name: String, values: TraversableOnce[Date]): Unit = list[Timestamp](name, values.map{ d: Date => new Timestamp(d.getTime)}, stmt.setTimestamp _)
   def dateOption(name: String, value: Option[Date]): Unit = {
     value.map(date(name, _)).getOrElse(insert(name, Types.DATE, stmt.setNull _))
   }
