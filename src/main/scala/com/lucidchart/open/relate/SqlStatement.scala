@@ -268,7 +268,7 @@ class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, 
 }
 
 /** This class is used to insert tuple data into a prepared statement */
-private case class TupleStatement(
+private[relate] case class TupleStatement(
   stmt: PreparedStatement,
   params: Map[String, Int],
   index: Int // the index in the prepared statement that this tuple starts at

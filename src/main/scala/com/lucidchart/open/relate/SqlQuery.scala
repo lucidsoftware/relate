@@ -4,7 +4,7 @@ import java.sql.{Connection, PreparedStatement, Statement}
 import scala.collection.mutable
 
 /** A query object that can be expanded */
-case class ExpandableQuery(
+private[relate] case class ExpandableQuery(
   query: String,
   listParams: mutable.Map[String, ListParam] = mutable.Map[String, ListParam]()
 ) extends Sql with Expandable {
@@ -15,12 +15,12 @@ case class ExpandableQuery(
    * The copy method used by the Sql Trait
    * Returns a SqlQuery object so that expansion can only occur before the 'on' method
    */
-  def getCopy(p: List[SqlStatement => Unit]): SqlQuery = SqlQuery(query, p, listParams)
+  protected def getCopy(p: List[SqlStatement => Unit]): SqlQuery = SqlQuery(query, p, listParams)
 }
 
 
 /** A query object that has not had parameter values substituted in */
-case class SqlQuery(
+private[relate] case class SqlQuery(
   query: String,
   params: List[SqlStatement => Unit] = Nil,
   listParams: mutable.Map[String, ListParam] = mutable.Map[String, ListParam]()
@@ -29,7 +29,7 @@ case class SqlQuery(
   /**
    * Copy method for the Sql trait
    */
-  def getCopy(p: List[SqlStatement => Unit]): SqlQuery = copy(params = p)
+  protected def getCopy(p: List[SqlStatement => Unit]): SqlQuery = copy(params = p)
 
 }
 
@@ -59,7 +59,7 @@ private[relate] case class Tupled(
 ) extends ListParam
 
 /** A trait for SQL queries that can be expanded */
-trait Expandable extends Sql {
+sealed trait Expandable extends Sql {
 
   /** The names of list params mapped to their size */
   val listParams: mutable.Map[String, ListParam]
@@ -107,7 +107,7 @@ trait Expandable extends Sql {
 }
 
 /** A trait for queries */
-trait Sql {
+sealed trait Sql {
 
   val query: String
   val params: List[SqlStatement => Unit]
@@ -117,7 +117,7 @@ trait Sql {
    * Classes that inherit the Sql trait will have to implement a method to copy
    * themselves given just a different set of parameters. HINT: Use a case class!
    */
-  def getCopy(params: List[SqlStatement => Unit]): Sql
+  protected def getCopy(params: List[SqlStatement => Unit]): Sql
 
   /**
    * Put in values for parameters in the query
