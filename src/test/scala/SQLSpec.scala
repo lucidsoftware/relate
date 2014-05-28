@@ -42,6 +42,13 @@ class SQLSpec extends Specification {
       val originalsRemoved = !((query contains '{') || (query contains '}'))
       originalsRemoved must beTrue
     }
+
+    "handle repeated parameters" in {
+      val (_, params) = SqlStatementParser.parse("INSERT INTO table (param1, param2) VALUES ({name1}, {name2}) ON DUPLICATE KEY UPDATE param1={name1}")
+
+      params must have size(2)
+      params("name1") must have size(2)
+    }
   }
 
 }

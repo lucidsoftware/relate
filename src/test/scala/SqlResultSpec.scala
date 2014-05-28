@@ -747,7 +747,6 @@ class SqlResultSpec extends Specification with Mockito {
 
     "return the correct value" in {
       val (rs, result) = getMocks
-      import java.lang.{Integer => I}
 
       rs.getInt("enum") returns 1 thenReturns 2 thenReturns 3 thenReturns 4
       result.enum("enum", Things) equals Things.one
