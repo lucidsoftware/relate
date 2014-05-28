@@ -38,18 +38,21 @@ inserted params) */
 sealed trait ListParam {
   val name: String
   val count: Int
+  val charCount: Int
 }
 
 /** ListParam type that represents a comma separated list of parameters */
 private[relate] case class CommaSeparated(
   name: String,
-  count: Int
+  count: Int,
+  charCount: Int
 ) extends ListParam
 
 /** ListParam type that represents a comma separated list of tuples */
 private[relate] case class Tupled(
   name: String,
   count: Int,
+  charCount: Int,
   params: Map[String, Int],
   numTuples: Int,
   tupleSize: Int
@@ -78,7 +81,7 @@ trait Expandable extends Sql {
    * @param count the count of parameters in the list
    */
   def commaSeparated(name: String, count: Int) {
-    listParams(name) = CommaSeparated(name, count)
+    listParams(name) = CommaSeparated(name, count, count * 2)
   }
 
   /**
@@ -91,7 +94,14 @@ trait Expandable extends Sql {
    */
   def tupled(name: String, columns: Seq[String], count: Int) {
     val namesToIndexes = columns.zipWithIndex.toMap
-    listParams(name) = Tupled(name, count * columns.size, namesToIndexes, count, columns.size)
+    listParams(name) = Tupled(
+      name,
+      count * columns.size,
+      count * 3 + count * columns.size * 2,
+      namesToIndexes,
+      count,
+      columns.size
+    )
   }
 
 }

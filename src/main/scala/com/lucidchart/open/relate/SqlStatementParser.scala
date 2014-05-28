@@ -14,7 +14,7 @@ object SqlStatementParser {
   def parse(stmt: String, listParams: Map[String, ListParam] = Map[String, ListParam]()):
     (String, Map[String, List[Int]]) = {
     
-    val query = new StringBuilder(stmt.length + 2 * listParams.values.foldLeft(0) (_ + _.count))
+    val query = new StringBuilder(stmt.length + listParams.values.foldLeft(0) (_ + _.charCount))
     val param = new StringBuilder(100)
     
     var inParam = false
