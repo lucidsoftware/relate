@@ -153,6 +153,32 @@ class OnMethodSpec extends Specification with Mockito {
       there was one(stmt).setString(4, "one") andThen one(stmt).setString(5, "two") andThen
         one(stmt).setInt(1, 1) andThen one(stmt).setInt(2, 2) andThen one(stmt).setInt(3, 3)
     }
+
+    "work for tuple list" in {
+      val sqlOriginal = "INSERT INTO table (one, two, three) VALUES {tuples}"
+      val sql = "INSERT INTO table (one, two, three) VALUES (?,?,?),(?,?,?)"
+      val (connection, stmt) = getMocks
+      connection.prepareStatement(sql) returns stmt
+
+      val records = List(
+        (2, "string", 1.5),
+        (3, "value", .75)
+      )
+
+      SQL(sqlOriginal).expand { implicit query =>
+        tupled("tuples", List("one", "two", "three"), records.size)
+      }.on { implicit statement =>
+        tuples("tuples", records) { case (tuple, tupleStmt) =>
+          tupleStmt.string("two", tuple._2)
+          tupleStmt.int("one", tuple._1)
+          tupleStmt.double("three", tuple._3)
+        }
+      }.executeUpdate()(connection)
+
+      there was one(stmt).setInt(1, 2) andThen one(stmt).setString(2, "string") andThen
+        one(stmt).setDouble(3, 1.5) andThen one(stmt).setInt(4, 3) andThen 
+        one(stmt).setString(5, "value") andThen one(stmt).setDouble(6, .75)
+    }
   }
 
 }

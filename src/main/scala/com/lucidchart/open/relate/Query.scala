@@ -8,6 +8,7 @@ import scala.reflect.ClassTag
 /** Provide implicit method calls for syntactic sugar */
 object Query {
   def commaSeparated(name: String, count: Int)(implicit e: Expandable) = e.commaSeparated(name, count)
+  def tupled(name: String, columns: Seq[String], count: Int)(implicit e: Expandable) = e.tupled(name, columns, count)
   def bigDecimal(name: String, value: BigDecimal)(implicit stmt: SqlStatement) = stmt.bigDecimal(name, value)
   def bigDecimal(name: String, value: JBigDecimal)(implicit stmt: SqlStatement) = stmt.bigDecimal(name, value)
   def bigInt(name: String, value: BigInt)(implicit stmt: SqlStatement) = stmt.bigInt(name, value)
@@ -25,6 +26,7 @@ object Query {
   def string(name: String, value: String)(implicit stmt: SqlStatement) = stmt.string(name, value)
   def timestamp(name: String, value: Timestamp)(implicit stmt: SqlStatement) = stmt.timestamp(name, value)
   def uuid(name: String, value: UUID)(implicit stmt: SqlStatement) = stmt.uuid(name, value)
+  def tuples[A](name: String, tuples: TraversableOnce[A])(callback: (A, TupleStatement) => Unit)(implicit stmt: SqlStatement) = stmt.tuples[A](name, tuples)(callback)
 
   // list version
   def bigDecimal(name: String, values: TraversableOnce[BigDecimal])(implicit stmt: SqlStatement) = stmt.bigDecimal(name, values)

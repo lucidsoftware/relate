@@ -6,7 +6,7 @@ import scala.collection.mutable
 /** A query object that can be expanded */
 case class ExpandableQuery(
   query: String,
-  listParams: mutable.Map[String, Int] = mutable.Map[String, Int]()
+  listParams: mutable.Map[String, ListParam] = mutable.Map[String, ListParam]()
 ) extends Sql with Expandable {
 
   val params = Nil
@@ -23,7 +23,7 @@ case class ExpandableQuery(
 case class SqlQuery(
   query: String,
   params: List[SqlStatement => Unit] = Nil,
-  listParams: mutable.Map[String, Int] = mutable.Map[String, Int]()
+  listParams: mutable.Map[String, ListParam] = mutable.Map[String, ListParam]()
 ) extends Sql {
 
   /**
@@ -33,12 +33,33 @@ case class SqlQuery(
 
 }
 
+/** The base class for all list type parameters. Contains a name and a count (total number of 
+inserted params) */
+sealed trait ListParam {
+  val name: String
+  val count: Int
+}
+
+/** ListParam type that represents a comma separated list of parameters */
+private[relate] case class CommaSeparated(
+  name: String,
+  count: Int
+) extends ListParam
+
+/** ListParam type that represents a comma separated list of tuples */
+private[relate] case class Tupled(
+  name: String,
+  count: Int,
+  params: Map[String, Int],
+  numTuples: Int,
+  tupleSize: Int
+) extends ListParam
 
 /** A trait for SQL queries that can be expanded */
 trait Expandable extends Sql {
 
   /** The names of list params mapped to their size */
-  val listParams: mutable.Map[String, Int]
+  val listParams: mutable.Map[String, ListParam]
 
   /**
    * Expand out the query by turning an Iterable into several parameters
@@ -52,12 +73,25 @@ trait Expandable extends Sql {
 
   /**
    * Replace the provided identifier with a comma separated list of parameters
-   * WARNING: modifies this Expandable's query in place
+   * WARNING: modifies this Expandable in place
    * @param name the identifier for the parameter
    * @param count the count of parameters in the list
    */
   def commaSeparated(name: String, count: Int) {
-    listParams(name) = count
+    listParams(name) = CommaSeparated(name, count)
+  }
+
+  /**
+   * Replace the provided identifier with a comma separated list of tuples
+   * WARNING: modifies this Expandable in place
+   * @param name the identifier for the tuples
+   * @param columns a list of the column names in the order they should be inserted into
+   * the tuples
+   * @param count the number of tuples to insert
+   */
+  def tupled(name: String, columns: Seq[String], count: Int) {
+    val namesToIndexes = columns.zipWithIndex.toMap
+    listParams(name) = Tupled(name, count * columns.size, namesToIndexes, count, columns.size)
   }
 
 }
@@ -67,7 +101,7 @@ trait Sql {
 
   val query: String
   val params: List[SqlStatement => Unit]
-  val listParams: mutable.Map[String, Int]
+  val listParams: mutable.Map[String, ListParam]
 
   /**
    * Classes that inherit the Sql trait will have to implement a method to copy
@@ -89,11 +123,16 @@ trait Sql {
    * @param getGeneratedKeys whether or not to get the generated keys
    * @return the prepared SqlStatement
    */
-  private def prepareSqlStatement(connection: Connection, getGeneratedKeys: Boolean = false): SqlStatement = {
+  private def prepareSqlStatement(connection: Connection, getGeneratedKeys: Boolean = false): 
+    SqlStatement = {
     val (parsedQuery, parsedParams) = SqlStatementParser.parse(query, listParams)
-    val stmt = if (getGeneratedKeys) connection.prepareStatement(parsedQuery, Statement.RETURN_GENERATED_KEYS)
-      else connection.prepareStatement(parsedQuery)
-    applyParams(new SqlStatement(stmt, parsedParams))
+    val stmt = if (getGeneratedKeys) {
+      connection.prepareStatement(parsedQuery, Statement.RETURN_GENERATED_KEYS)
+    }
+    else {
+      connection.prepareStatement(parsedQuery)
+    }
+    applyParams(new SqlStatement(stmt, parsedParams, listParams))
   }
 
   /**
@@ -138,11 +177,12 @@ trait Sql {
 }
 
 // SQL("""insert into users (id, name, created) values {values}""").expand { implicit something =>
-//   // better name exists
-//   forInsert("values", List("id", "name", "created"), records.size)
-// }.onRecords(records) { record => implicit something =>
+//   tupled("values", List("id", "name", "created"), records.size)
+// }.onTuples(records) { record => implicit something =>
 //   int("id", record.id)
 //   string("name", record.name)
 //   timestamp("created", new Date())
 // }
 
+//the implicit is a "record" object, which then knows which method to call on the
+//statement based upon its own index

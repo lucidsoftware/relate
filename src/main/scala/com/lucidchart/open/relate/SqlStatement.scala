@@ -4,17 +4,19 @@ import java.sql.{Date => SqlDate, PreparedStatement, Statement, Timestamp, Types
 import java.math.{BigDecimal => JBigDecimal, BigInteger => JBigInt}
 import java.io.ByteArrayInputStream
 import java.util.{Date, UUID}
-import scala.reflect.ClassTag
 import java.nio.ByteBuffer
+import scala.collection.mutable
+import scala.reflect.ClassTag
 
 /**
  * A smart wrapper around the PreparedStatement class that allows inserting
  * parameter values by name rather than by index. Provides methods for inserting
  * all necessary datatypes.
  */
-class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, List[Int]]) {
+class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, List[Int]],
+  private val listParams: mutable.Map[String, ListParam]) {
 
-  def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit) {
+  private def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit) {
     var iterator1 = names(name).toIterator
     while(iterator1.hasNext) {
       var i = iterator1.next
@@ -26,7 +28,7 @@ class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, 
     }
   }
 
-  def insert[A](name: String, value: A, rule: (Int, A) => Unit) {
+  private def insert[A](name: String, value: A, rule: (Int, A) => Unit) {
     val iterator = names(name).toIterator
     while(iterator.hasNext) {
       rule(iterator.next, value)
@@ -208,17 +210,30 @@ class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, 
    * @param name the name of the parameter to put the UUID in
    * @param value the UUID to put in the query
    */
-  def uuid(name: String, value: UUID) = insert(name, uuidToByteArray(value), stmt.setBytes _)
-  def uuid(name: String, values: TraversableOnce[UUID]): Unit = list[Array[Byte]](name, values.map(uuidToByteArray(_)), stmt.setBytes _)
+  def uuid(name: String, value: UUID) = insert(name, ByteHelper.uuidToByteArray(value), stmt.setBytes _)
+  def uuid(name: String, values: TraversableOnce[UUID]): Unit = list[Array[Byte]](name, values.map(ByteHelper.uuidToByteArray(_)), stmt.setBytes _)
   def uuidOption(name: String, value: Option[UUID]): Unit = {
     value.map(uuid(name, _)).getOrElse(insert(name, Types.VARCHAR, stmt.setNull _))
   }
 
-  def uuidToByteArray(uuid: UUID): Array[Byte] = {
-    val bb = ByteBuffer.wrap(new Array[Byte](16))
-    bb.putLong(uuid.getMostSignificantBits)
-    bb.putLong(uuid.getLeastSignificantBits)
-    bb.array()
+  /** 
+   * Set a list of tuples in the PreparedStatement
+   * @param name the identifier to put the tuples in
+   * @param tuples the tuples to put in the query
+   * @param callback a callback function that says what to do with each tuple
+   */
+  def tuples[A](name: String, tuples: TraversableOnce[A])(callback: (A, TupleStatement) => Unit) {
+    var iterator1 = names(name).toIterator
+    val tupleData = listParams(name).asInstanceOf[Tupled]
+
+    while (iterator1.hasNext) {
+      var i = iterator1.next
+      val iterator2 = tuples.toIterator
+      while (iterator2.hasNext) {
+        callback(iterator2.next, TupleStatement(stmt, tupleData.params, i))
+        i += tupleData.tupleSize
+      }
+    }
   }
 
   /**
@@ -248,6 +263,52 @@ class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, 
   def executeInsert(): SqlResult = {
     stmt.executeUpdate()
     SqlResult(stmt.getGeneratedKeys())
+  }
+
+}
+
+/** This class is used to insert tuple data into a prepared statement */
+private case class TupleStatement(
+  stmt: PreparedStatement,
+  params: Map[String, Int],
+  index: Int // the index in the prepared statement that this tuple starts at
+) {
+  
+  /** 
+   * Insert a value into the PreparedStatement
+   * @param name the identifier for the value
+   * @param value the value to insert
+   * @param rule the rule to use on the PreparedStatement
+   */
+  private def insert[A](name: String, value: A, rule: (Int, A) => Unit) {
+    rule(index + params(name), value)
+  }
+
+  def bigDecimal(name: String, value: BigDecimal) = insert(name, value.bigDecimal, stmt.setBigDecimal _)
+  def bigDecimal(name: String, value: JBigDecimal) = insert(name, value, stmt.setBigDecimal _)
+  def bigInt(name: String, value: BigInt) = insert(name, new JBigDecimal(value.bigInteger), stmt.setBigDecimal _)
+  def bigInt(name: String, value: JBigInt) = insert(name, new JBigDecimal(value), stmt.setBigDecimal _)
+  def bool(name: String, value: Boolean) = insert(name, value, stmt.setBoolean _)
+  def byte(name: String, value: Byte) = insert(name, value, stmt.setByte _)
+  def char(name: String, value: Char) = insert(name, value.toString, stmt.setString _)
+  def date(name: String, value: Date) = insert(name, new SqlDate(value.getTime), stmt.setDate _)
+  def double(name: String, value: Double) = insert(name, value, stmt.setDouble _)
+  def float(name: String, value: Float) = insert(name, value, stmt.setFloat _)
+  def int(name: String, value: Int) = insert(name, value, stmt.setInt _)
+  def long(name: String, value: Long) = insert(name, value, stmt.setLong _)
+  def short(name: String, value: Short) = insert(name, value, stmt.setShort _)
+  def string(name: String, value: String) = insert(name, value, stmt.setString _)
+  def timestamp(name: String, value: Timestamp) = insert(name, value, stmt.setTimestamp _)
+  def uuid(name: String, value: UUID) = insert(name, ByteHelper.uuidToByteArray(value), stmt.setBytes _)
+}
+
+object ByteHelper {
+
+  def uuidToByteArray(uuid: UUID): Array[Byte] = {
+    val bb = ByteBuffer.wrap(new Array[Byte](16))
+    bb.putLong(uuid.getMostSignificantBits)
+    bb.putLong(uuid.getLeastSignificantBits)
+    bb.array()
   }
 
 }
