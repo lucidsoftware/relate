@@ -567,8 +567,8 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = true
       rs.getBoolean("boolean") returns res
-      result.boolean("boolean") equals res
-      result.booleanOption("boolean") must beSome(res)
+      result.bool("boolean") equals res
+      result.boolOption("boolean") must beSome(res)
     }
   }
 
