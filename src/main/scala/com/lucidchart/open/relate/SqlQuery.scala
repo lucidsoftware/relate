@@ -209,14 +209,3 @@ sealed trait Sql {
     prepareSqlStatement(connection, true).executeInsert()
   }
 }
-
-// SQL("""insert into users (id, name, created) values {values}""").expand { implicit something =>
-//   tupled("values", List("id", "name", "created"), records.size)
-// }.onTuples(records) { record => implicit something =>
-//   int("id", record.id)
-//   string("name", record.name)
-//   timestamp("created", new Date())
-// }
-
-//the implicit is a "record" object, which then knows which method to call on the
-//statement based upon its own index
