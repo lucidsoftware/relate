@@ -125,7 +125,31 @@ sealed trait Sql {
    * @return a copy of this Sql with the new params
    */
   def on(f: SqlStatement => Unit): Sql = {
-    getCopy(params = (f +: params))
+    getCopy(f +: params)
+  }
+
+  /**
+   * Put in values for tuple parameters in the query
+   * @param name the tuple identifier in the query
+   * @param tuples the objects to loop over and use to insert data into the query
+   * @param f a function that takes a TupleStatement and sets parameter values using its methods
+   * @return a copy of this Sql with the new tuple params
+   */
+  def onTuples[A](name: String, tuples: TraversableOnce[A])(f: (A, TupleStatement) => Unit): Sql = {
+    val callback: SqlStatement => Unit = { statement =>
+      val iterator1 = statement.names(name).toIterator
+      val tupleData = statement.listParams(name).asInstanceOf[Tupled]
+
+      while(iterator1.hasNext) {
+        var i = iterator1.next
+        val iterator2 = tuples.toIterator
+        while(iterator2.hasNext) {
+          f(iterator2.next, TupleStatement(statement.stmt, tupleData.params, i))
+          i += tupleData.tupleSize
+        }
+      }
+    }
+    getCopy(callback +: params)
   }
 
   /**

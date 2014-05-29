@@ -167,12 +167,10 @@ class OnMethodSpec extends Specification with Mockito {
 
       SQL(sqlOriginal).expand { implicit query =>
         tupled("tuples", List("one", "two", "three"), records.size)
-      }.on { implicit statement =>
-        tuples("tuples", records) { case (tuple, tupleStmt) =>
-          tupleStmt.string("two", tuple._2)
-          tupleStmt.int("one", tuple._1)
-          tupleStmt.double("three", tuple._3)
-        }
+      }.onTuples("tuples", records) { (tuple, statement) =>
+          statement.string("two", tuple._2)
+          statement.int("one", tuple._1)
+          statement.double("three", tuple._3)
       }.executeUpdate()(connection)
 
       there was one(stmt).setInt(1, 2) andThen one(stmt).setString(2, "string") andThen

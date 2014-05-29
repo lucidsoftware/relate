@@ -13,8 +13,8 @@ import scala.reflect.ClassTag
  * parameter values by name rather than by index. Provides methods for inserting
  * all necessary datatypes.
  */
-class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, List[Int]],
-  private val listParams: mutable.Map[String, ListParam]) {
+class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[String, List[Int]],
+  val listParams: mutable.Map[String, ListParam]) {
 
   private def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit) {
     var iterator1 = names(name).toIterator
@@ -214,26 +214,6 @@ class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, 
   def uuid(name: String, values: TraversableOnce[UUID]): Unit = list[Array[Byte]](name, values.map(ByteHelper.uuidToByteArray(_)), stmt.setBytes _)
   def uuidOption(name: String, value: Option[UUID]): Unit = {
     value.map(uuid(name, _)).getOrElse(insert(name, Types.VARCHAR, stmt.setNull _))
-  }
-
-  /** 
-   * Set a list of tuples in the PreparedStatement
-   * @param name the identifier to put the tuples in
-   * @param tuples the tuples to put in the query
-   * @param callback a callback function that says what to do with each tuple
-   */
-  def tuples[A](name: String, tuples: TraversableOnce[A])(callback: (A, TupleStatement) => Unit) {
-    var iterator1 = names(name).toIterator
-    val tupleData = listParams(name).asInstanceOf[Tupled]
-
-    while (iterator1.hasNext) {
-      var i = iterator1.next
-      val iterator2 = tuples.toIterator
-      while (iterator2.hasNext) {
-        callback(iterator2.next, TupleStatement(stmt, tupleData.params, i))
-        i += tupleData.tupleSize
-      }
-    }
   }
 
   /**

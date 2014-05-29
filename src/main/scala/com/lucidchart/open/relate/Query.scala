@@ -26,7 +26,6 @@ object Query {
   def string(name: String, value: String)(implicit stmt: SqlStatement) = stmt.string(name, value)
   def timestamp(name: String, value: Timestamp)(implicit stmt: SqlStatement) = stmt.timestamp(name, value)
   def uuid(name: String, value: UUID)(implicit stmt: SqlStatement) = stmt.uuid(name, value)
-  def tuples[A](name: String, tuples: TraversableOnce[A])(callback: (A, TupleStatement) => Unit)(implicit stmt: SqlStatement) = stmt.tuples[A](name, tuples)(callback)
 
   // list version
   def bigDecimal(name: String, values: TraversableOnce[BigDecimal])(implicit stmt: SqlStatement) = stmt.bigDecimal(name, values)
