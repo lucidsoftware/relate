@@ -2,6 +2,7 @@ package com.lucidchart.open.relate
 
 import java.sql.{Date => SqlDate, PreparedStatement, Statement, Timestamp, Types}
 import java.math.{BigDecimal => JBigDecimal, BigInteger => JBigInt}
+import java.io.ByteArrayInputStream
 import java.util.{Date, UUID}
 import scala.reflect.ClassTag
 import java.nio.ByteBuffer
@@ -90,6 +91,17 @@ class SqlStatement(stmt: PreparedStatement, names: scala.collection.Map[String, 
   def byte(name: String, values: TraversableOnce[Byte]): Unit = list[Byte](name, values, stmt.setByte _)
   def byteOption(name: String, value: Option[Byte]): Unit = {
     value.map(byte(name, _)).getOrElse(insert(name, Types.TINYINT, stmt.setNull _))
+  }
+
+  /**
+   * Set a ByteArray in the PreparedStatement
+   * @param name the name of the parameter to put the ArrayByte in
+   * @param value the ByteArray to put in the query
+   */
+  def byteArray(name: String, value: Array[Byte]) = insert(name, new ByteArrayInputStream(value), stmt.setBinaryStream _)
+  def byteArray(name: String, values: TraversableOnce[Array[Byte]]) = list(name, values.map(new ByteArrayInputStream(_)), stmt.setBinaryStream _)
+  def byteArrayOption(name: String, value: Option[Array[Byte]]) = {
+    value.map(byteArray(name, _)).getOrElse(insert(name, Types.BLOB, stmt.setNull _))
   }
 
   /**
