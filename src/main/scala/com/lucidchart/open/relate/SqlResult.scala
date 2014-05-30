@@ -44,6 +44,14 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   def asIterable[A](parser: RowParser[A])(implicit connection: Connection): Iterable[A] = asCollection[A, Iterable](parser, Long.MaxValue)
   def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = asCollection[A, List](parser, Long.MaxValue)
   def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
+  def scalar[A](): Option[A] = {
+    if (resultSet.next()) {
+      Some(resultSet.getObject(1).asInstanceOf[A])
+    }
+    else {
+      None
+    }
+  }
 
   def asCollection[U, T[_]](parser: RowParser[U])(implicit connection: Connection, cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = asCollection(parser, Long.MaxValue)
   protected def asCollection[U, T[_]](parser: RowParser[U], maxRows: Long)(implicit connection: Connection, cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = {

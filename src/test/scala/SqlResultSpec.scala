@@ -131,6 +131,35 @@ class SqlResultSpec extends Specification with Mockito {
     }
   }
 
+  "scalar" should {
+    "return the correct type" in {
+      val (rs, result) = getMocks
+
+      rs.next returns true
+      rs.getObject(1) returns (2: java.lang.Long)
+
+      result.scalar[Long].get must_== 2L
+    }
+
+    "ignore other result values" in {
+      val (rs, result) = getMocks
+
+      rs.next returns true
+      rs.getObject(1) returns ("test": java.lang.String)
+      rs.getObject(2) returns (2L: java.lang.Long)
+
+      result.scalar[String].get must_== "test"
+    }
+
+    "return null if there are no rows" in {
+      val (rs, result) = getMocks
+
+      rs.next returns false
+
+      result.scalar[Long] must_== None
+    }
+  }
+
   "extractOption" should {
     "Extract a Some" in {
       val (rs, result) = getMocks
