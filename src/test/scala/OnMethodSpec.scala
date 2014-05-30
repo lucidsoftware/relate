@@ -130,7 +130,7 @@ class OnMethodSpec extends Specification with Mockito {
       SQL(sqlOriginal).expand { implicit query =>
         commaSeparated("ids", 3)
       }.on { implicit statement =>
-        int("ids", List(1, 2, 3))
+        ints("ids", List(1, 2, 3))
       }.executeUpdate()(connection)
 
       there was one(stmt).setInt(1, 1) andThen one(stmt).setInt(2, 2) andThen one(stmt).setInt(3, 3)
@@ -146,8 +146,8 @@ class OnMethodSpec extends Specification with Mockito {
         commaSeparated("ids", 3)
         commaSeparated("values", 2)
       }.on { implicit statement =>
-        string("values", List("one", "two"))
-        int("ids", List(1, 2, 3))
+        strings("values", List("one", "two"))
+        ints("ids", List(1, 2, 3))
       }.executeUpdate()(connection)
 
       there was one(stmt).setString(4, "one") andThen one(stmt).setString(5, "two") andThen
