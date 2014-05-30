@@ -17,21 +17,29 @@ class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[
   val listParams: mutable.Map[String, ListParam]) {
 
   private def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit) {
-    var iterator1 = names(name).toIterator
-    while(iterator1.hasNext) {
-      var i = iterator1.next
-      val iterator2 = values.toIterator
-      while (iterator2.hasNext) {
-        rule(i, iterator2.next())
-        i += 1
+    for {
+      nameData <- names.get(name)
+    } yield {
+      var iterator1 = nameData.toIterator
+      while(iterator1.hasNext) {
+        var i = iterator1.next
+        val iterator2 = values.toIterator
+        while (iterator2.hasNext) {
+          rule(i, iterator2.next())
+          i += 1
+        }
       }
     }
   }
 
   private def insert[A](name: String, value: A, rule: (Int, A) => Unit) {
-    val iterator = names(name).toIterator
-    while(iterator.hasNext) {
-      rule(iterator.next, value)
+    for {
+      nameData <- names.get(name)
+    } yield {
+      val iterator = nameData.toIterator
+      while(iterator.hasNext) {
+        rule(iterator.next, value)
+      }
     }
   }
 

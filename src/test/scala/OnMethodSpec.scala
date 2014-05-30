@@ -177,6 +177,19 @@ class OnMethodSpec extends Specification with Mockito {
         one(stmt).setDouble(3, 1.5) andThen one(stmt).setInt(4, 3) andThen 
         one(stmt).setString(5, "value") andThen one(stmt).setDouble(6, .75)
     }
+
+    "work when a parameter is missing" in {
+      val sql = "SELECT * FROM table WHERE param=%s"
+      val (connection, stmt) = getMocks
+      connection.prepareStatement(sql.format("?")) returns stmt
+
+      SQL(sql.format("{param}")).on { implicit statement =>
+        int("param", 10)
+        int("no_param", 1000)
+      }.executeQuery()(connection)
+
+      there was one(stmt).setInt(1, 10)
+    }
   }
 
 }
