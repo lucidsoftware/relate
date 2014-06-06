@@ -1,11 +1,14 @@
 package com.lucidchart.open.relate
 
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 import java.sql.{Date => SqlDate, PreparedStatement, Statement, Timestamp, Types}
 import java.math.{BigDecimal => JBigDecimal, BigInteger => JBigInt}
 import java.io.ByteArrayInputStream
 import java.util.{Date, UUID}
 import java.nio.ByteBuffer
 import scala.collection.mutable
+import scala.io.Source
 import scala.reflect.ClassTag
 
 /**
@@ -77,6 +80,15 @@ class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[
   def bigInts[X: ClassTag](name: String, values: TraversableOnce[JBigInt]): Unit = list[JBigDecimal](name, values.map(new JBigDecimal(_)), stmt.setBigDecimal _)
   def bigIntOption[A](name: String, value: Option[A])(implicit bd: Query.BigIntLike[A]): Unit = {
     value.map(i => bigInt(name, bd.get(i))).getOrElse(insert(name, Types.BIGINT, stmt.setNull _))
+  }
+
+  def blob(name: String, value: String): Unit = {
+    val func: (Int, InputStream) => Unit = stmt.setBlob _
+    insert(name, new ByteArrayInputStream(value.getBytes), func)
+  }
+  def blobs(name: String, values: TraversableOnce[String]): Unit = list[InputStream](name, values.map(x => new ByteArrayInputStream(x.getBytes)), stmt.setBlob _)
+  def blobOption(name: String, value: Option[String]): Unit = {
+    value.map(blob(name, _)).getOrElse(insert(name, Types.BLOB, stmt.setNull _))
   }
 
   /**

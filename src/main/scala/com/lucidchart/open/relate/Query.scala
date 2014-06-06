@@ -13,6 +13,7 @@ object Query {
   def bigDecimal(name: String, value: JBigDecimal)(implicit stmt: SqlStatement) = stmt.bigDecimal(name, value)
   def bigInt(name: String, value: BigInt)(implicit stmt: SqlStatement) = stmt.bigInt(name, value)
   def bigInt(name: String, value: JBigInt)(implicit stmt: SqlStatement) = stmt.bigInt(name, value)
+  def blob(name: String, value: String)(implicit stmt: SqlStatement) = stmt.blob(name, value)
   def bool(name: String, value: Boolean)(implicit stmt: SqlStatement) = stmt.bool(name, value)
   def byte(name: String, value: Byte)(implicit stmt: SqlStatement) = stmt.byte(name, value)
   def byteArray(name: String, value: Array[Byte])(implicit stmt: SqlStatement) = stmt.byteArray(name, value)
@@ -32,6 +33,7 @@ object Query {
   def bigDecimals[X: ClassTag](name: String, values: TraversableOnce[JBigDecimal])(implicit stmt: SqlStatement) = stmt.bigDecimals(name, values)
   def bigInts(name: String, values: TraversableOnce[BigInt])(implicit stmt: SqlStatement) = stmt.bigInts(name, values)
   def bigInts[X: ClassTag](name: String, values: TraversableOnce[JBigInt])(implicit stmt: SqlStatement) = stmt.bigInts(name, values)
+  def blobs(name: String, values: TraversableOnce[String])(implicit stmt: SqlStatement) = stmt.blobs(name, values)
   def bools(name: String, values: TraversableOnce[Boolean])(implicit stmt: SqlStatement) = stmt.bools(name, values)
   def bytes(name: String, values: TraversableOnce[Byte])(implicit stmt: SqlStatement) = stmt.bytes(name, values)
   def chars(name: String, values: TraversableOnce[Char])(implicit stmt: SqlStatement) = stmt.chars(name, values)
@@ -47,6 +49,7 @@ object Query {
 
   def bigDecimalOption[A](name: String, value: Option[A])(implicit stmt: SqlStatement, bd: BigDecimalLike[A]) = stmt.bigDecimalOption(name, value)
   def bigIntOption[A](name: String, value: Option[A])(implicit stmt: SqlStatement, bi: BigIntLike[A]) = stmt.bigIntOption(name, value)
+  def blobOption(name: String, value: Option[String])(implicit stmt: SqlStatement) = stmt.blobOption(name, value)
   def boolOption[A](name: String, value: Option[Boolean])(implicit stmt: SqlStatement) = stmt.boolOption(name, value)
   def byteOption(name: String, value: Option[Byte])(implicit stmt: SqlStatement) = stmt.byteOption(name, value)
   def byteArrayOption(name: String, value: Option[Array[Byte]])(implicit stmt: SqlStatement) = stmt.byteArrayOption(name, value)
