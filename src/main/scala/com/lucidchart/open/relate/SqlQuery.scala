@@ -84,6 +84,11 @@ sealed trait Expandable extends Sql {
     listParams(name) = CommaSeparated(name, count, count * 2)
   }
 
+  def commas(name: String, count: Int): Expandable = {
+    expand(_.commaSeparated(name, count))
+    this
+  }
+
   /**
    * Replace the provided identifier with a comma separated list of tuples
    * WARNING: modifies this Expandable in place
