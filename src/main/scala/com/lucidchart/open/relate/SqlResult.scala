@@ -8,7 +8,9 @@ import java.sql.Blob
 import java.sql.Clob
 import java.sql.NClob
 import java.sql.Ref
+import java.sql.ResultSetMetaData
 import java.sql.RowId
+import java.sql.SQLException
 import java.sql.SQLXML
 import java.sql.Time
 import java.sql.Timestamp
@@ -78,7 +80,18 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   }
 
   def getRow(): Int = resultSet.getRow()
+  def getMetaData(): ResultSetMetaData = resultSet.getMetaData()
   def wasNull(): Boolean = resultSet.wasNull()
+
+  def hasColumn(column: String): Boolean = {
+    try {
+      resultSet.findColumn(column)
+      true
+    }
+    catch {
+      case e: SQLException => false
+    }
+  }
 
   def strictArray(column: String): java.sql.Array = resultSet.getArray(column)
   def strictArrayOption(column: String): Option[java.sql.Array] = Option(resultSet.getArray(column))
