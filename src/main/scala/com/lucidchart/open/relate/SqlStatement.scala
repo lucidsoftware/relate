@@ -119,7 +119,7 @@ class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[
    * @param value the ByteArray to put in the query
    */
   def byteArray(name: String, value: Array[Byte]) = insert(name, new ByteArrayInputStream(value), stmt.setBinaryStream _)
-  def byteArray(name: String, values: TraversableOnce[Array[Byte]]) = list(name, values.map(new ByteArrayInputStream(_)), stmt.setBinaryStream _)
+  def byteArrays(name: String, values: TraversableOnce[Array[Byte]]) = list(name, values.map(new ByteArrayInputStream(_)), stmt.setBinaryStream _)
   def byteArrayOption(name: String, value: Option[Array[Byte]]) = {
     value.map(byteArray(name, _)).getOrElse(insert(name, Types.BLOB, stmt.setNull _))
   }
