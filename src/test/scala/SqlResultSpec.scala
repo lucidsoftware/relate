@@ -377,6 +377,26 @@ class SqlResultSpec extends Specification with Mockito {
     }
   }
 
+  "strictIntOption" should {
+    "return None when the value in the database is null" in {
+      val (rs, result) = getMocks
+
+      val res = 0
+      rs.getInt("strictInt") returns res
+      rs.wasNull returns true
+      result.strictIntOption("strictInt") must beNone
+    }
+
+    "return Some when the value in the database is not null" in {
+      val (rs, result) = getMocks
+
+      val res = 0
+      rs.getInt("strictInt") returns res
+      rs.wasNull returns false
+      result.strictIntOption("strictInt") must beSome(res)
+    }
+  }
+
   "strictLong" should {
     "properly pass through the call to ResultSet" in {
       val (rs, result) = getMocks
@@ -553,6 +573,24 @@ class SqlResultSpec extends Specification with Mockito {
       val res = 10: java.lang.Integer
       rs.getInt("int") returns res
       result.int("int") equals res
+      result.intOption("int") must beSome(res)
+    }
+  }
+
+  "intOption" should {
+    "return None if the value in the database is null" in {
+      val (rs, result) = getMocks
+
+      rs.wasNull returns true
+      result.intOption("int") must beNone
+    }
+
+    "return Some(0) if the value in the database was really 0" in {
+      val (rs, result) = getMocks
+
+      val res = 0 : java.lang.Integer
+      rs.getInt("int") returns res
+      rs.wasNull returns false
       result.intOption("int") must beSome(res)
     }
   }

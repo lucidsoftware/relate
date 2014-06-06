@@ -94,70 +94,80 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   }
 
   def strictArray(column: String): java.sql.Array = resultSet.getArray(column)
-  def strictArrayOption(column: String): Option[java.sql.Array] = Option(resultSet.getArray(column))
+  def strictArrayOption(column: String): Option[java.sql.Array] = getResultSetOption(resultSet.getArray(column))
   def strictAsciiStream(column: String): InputStream = resultSet.getAsciiStream(column)
-  def strictAsciiStreamOption(column: String): Option[InputStream] = Option(resultSet.getAsciiStream(column))
+  def strictAsciiStreamOption(column: String): Option[InputStream] = getResultSetOption(resultSet.getAsciiStream(column))
   def strictBigDecimal(column: String): BigDecimal = resultSet.getBigDecimal(column)
-  def strictBigDecimalOption(column: String): Option[BigDecimal] = Option(resultSet.getBigDecimal(column))
+  def strictBigDecimalOption(column: String): Option[BigDecimal] = getResultSetOption(resultSet.getBigDecimal(column))
   def strictBinaryStream(column: String): InputStream = resultSet.getBinaryStream(column)
-  def strictBinaryStreamOption(column: String): Option[InputStream] = Option(resultSet.getBinaryStream(column))
+  def strictBinaryStreamOption(column: String): Option[InputStream] = getResultSetOption(resultSet.getBinaryStream(column))
   def strictBlob(column: String): Blob = resultSet.getBlob(column)
-  def strictBlobOption(column: String): Option[Blob] = Option(resultSet.getBlob(column))
+  def strictBlobOption(column: String): Option[Blob] = getResultSetOption(resultSet.getBlob(column))
   def strictBoolean(column: String): Boolean = resultSet.getBoolean(column)
-  def strictBooleanOption(column: String): Option[Boolean] = Option(resultSet.getBoolean(column))
+  def strictBooleanOption(column: String): Option[Boolean] = getResultSetOption(resultSet.getBoolean(column))
   def strictByte(column: String): Byte = resultSet.getByte(column)
-  def strictByteOption(column: String): Option[Byte] = Option(resultSet.getByte(column))
+  def strictByteOption(column: String): Option[Byte] = getResultSetOption(resultSet.getByte(column))
   def strictBytes(column: String): Array[Byte] = resultSet.getBytes(column)
-  def strictBytesOption(column: String): Option[Array[Byte]] = Option(resultSet.getBytes(column))
+  def strictBytesOption(column: String): Option[Array[Byte]] = getResultSetOption(resultSet.getBytes(column))
   def strictCharacterStream(column: String): Reader = resultSet.getCharacterStream(column)
-  def strictCharacterStreamOption(column: String): Option[Reader] = Option(resultSet.getCharacterStream(column))
+  def strictCharacterStreamOption(column: String): Option[Reader] = getResultSetOption(resultSet.getCharacterStream(column))
   def strictClob(column: String): Clob = resultSet.getClob(column)
-  def strictClobOption(column: String): Option[Clob] = Option(resultSet.getClob(column))
+  def strictClobOption(column: String): Option[Clob] = getResultSetOption(resultSet.getClob(column))
   def strictDate(column: String): Date = resultSet.getDate(column)
-  def strictDateOption(column: String): Option[Date] = Option(resultSet.getDate(column))
+  def strictDateOption(column: String): Option[Date] = getResultSetOption(resultSet.getDate(column))
   def strictDate(column: String, cal: Calendar): Date = resultSet.getDate(column, cal)
-  def strictDateOption(column: String, cal: Calendar): Option[Date] = Option(resultSet.getDate(column, cal))
+  def strictDateOption(column: String, cal: Calendar): Option[Date] = getResultSetOption(resultSet.getDate(column, cal))
   def strictDouble(column: String): Double = resultSet.getDouble(column)
-  def strictDoubleOption(column: String): Option[Double] = Option(resultSet.getDouble(column))
+  def strictDoubleOption(column: String): Option[Double] = getResultSetOption(resultSet.getDouble(column))
   def strictFloat(column: String): Float = resultSet.getFloat(column)
-  def strictFloatOption(column: String): Option[Float] = Option(resultSet.getFloat(column))
+  def strictFloatOption(column: String): Option[Float] = getResultSetOption(resultSet.getFloat(column))
   def strictInt(column: String): Int = resultSet.getInt(column)
-  def strictIntOption(column: String): Option[Int] = Option(resultSet.getInt(column))
+  def strictIntOption(column: String): Option[Int] = getResultSetOption(resultSet.getInt(column))
   def strictLong(column: String): Long = resultSet.getLong(column)
-  def strictLongOption(column: String): Option[Long] = Option(resultSet.getLong(column))
+  def strictLongOption(column: String): Option[Long] = getResultSetOption(resultSet.getLong(column))
   def strictNCharacterStream(column: String): Reader = resultSet.getNCharacterStream(column)
-  def strictNCharacterStreamOption(column: String): Option[Reader] = Option(resultSet.getNCharacterStream(column))
+  def strictNCharacterStreamOption(column: String): Option[Reader] = getResultSetOption(resultSet.getNCharacterStream(column))
   def strictNClob(column: String): NClob = resultSet.getNClob(column)
-  def strictNClobOption(column: String): Option[NClob] = Option(resultSet.getNClob(column))
+  def strictNClobOption(column: String): Option[NClob] = getResultSetOption(resultSet.getNClob(column))
   def strictNString(column: String): String = resultSet.getNString(column)
-  def strictNStringOption(column: String): Option[String] = Option(resultSet.getNString(column))
+  def strictNStringOption(column: String): Option[String] = getResultSetOption(resultSet.getNString(column))
   def strictObject(column: String): Object = resultSet.getObject(column)
-  def strictObjectOption(column: String): Option[Object] = Option(resultSet.getObject(column))
+  def strictObjectOption(column: String): Option[Object] = getResultSetOption(resultSet.getObject(column))
   def strictObject(column: String, map: Map[String, Class[_]]): Object = resultSet.getObject(column, JavaConversions.mapAsJavaMap(map))
   def strictObjectOption(column: String, map: Map[String, Class[_]]): Option[Object] = Option(resultSet.getObject(column, JavaConversions.mapAsJavaMap(map)))
   def strictRef(column: String): Ref = resultSet.getRef(column)
-  def strictRefOption(column: String): Option[Ref] = Option(resultSet.getRef(column))
+  def strictRefOption(column: String): Option[Ref] = getResultSetOption(resultSet.getRef(column))
   def strictRowId(column: String): RowId = resultSet.getRowId(column)
-  def strictRowIdOption(column: String): Option[RowId] = Option(resultSet.getRowId(column))
+  def strictRowIdOption(column: String): Option[RowId] = getResultSetOption(resultSet.getRowId(column))
   def strictShort(column: String): Short = resultSet.getShort(column)
-  def strictShortOption(column: String): Option[Short] = Option(resultSet.getShort(column))
+  def strictShortOption(column: String): Option[Short] = getResultSetOption(resultSet.getShort(column))
   def strictSQLXML(column: String): SQLXML = resultSet.getSQLXML(column)
-  def strictSQLXMLOption(column: String): Option[SQLXML] = Option(resultSet.getSQLXML(column))
+  def strictSQLXMLOption(column: String): Option[SQLXML] = getResultSetOption(resultSet.getSQLXML(column))
   def strictString(column: String): String = resultSet.getString(column)
-  def strictStringOption(column: String): Option[String] = Option(resultSet.getString(column))
+  def strictStringOption(column: String): Option[String] = getResultSetOption(resultSet.getString(column))
   def strictTime(column: String): Time = resultSet.getTime(column)
-  def strictTimeOption(column: String): Option[Time] = Option(resultSet.getTime(column))
+  def strictTimeOption(column: String): Option[Time] = getResultSetOption(resultSet.getTime(column))
   def strictTime(column: String, cal: Calendar): Time = resultSet.getTime(column, cal)
-  def strictTimeOption(column: String, cal: Calendar): Option[Time] = Option(resultSet.getTime(column, cal))
+  def strictTimeOption(column: String, cal: Calendar): Option[Time] = getResultSetOption(resultSet.getTime(column, cal))
   def strictTimestamp(column: String): Timestamp = resultSet.getTimestamp(column)
-  def strictTimestampOption(column: String): Option[Timestamp] = Option(resultSet.getTimestamp(column))
+  def strictTimestampOption(column: String): Option[Timestamp] = getResultSetOption(resultSet.getTimestamp(column))
   def strictTimestamp(column: String, cal: Calendar): Timestamp = resultSet.getTimestamp(column, cal)
-  def strictTimestampOption(column: String, cal: Calendar): Option[Timestamp] = Option(resultSet.getTimestamp(column, cal))
+  def strictTimestampOption(column: String, cal: Calendar): Option[Timestamp] = getResultSetOption(resultSet.getTimestamp(column, cal))
   def strictURL(column: String): URL = resultSet.getURL(column)
-  def strictURLOption(column: String): Option[URL] = Option(resultSet.getURL(column))
+  def strictURLOption(column: String): Option[URL] = getResultSetOption(resultSet.getURL(column))
 
   protected[relate] def extractOption[A](column: String)(f: (Any) => A): Option[A] = {
-    Option(resultSet.getObject(column)).map(f)
+    resultSet.getObject(column).asInstanceOf[Any] match {
+      case x if (x == null || resultSet.wasNull()) => None
+      case x => Some(f(x))
+    }
+  }
+
+  protected def getResultSetOption[A](f: => A): Option[A] = {
+    f match {
+      case x if (x == null || resultSet.wasNull()) => None
+      case x => Some(x)
+    }
   }
 
   def string(column: String): String = stringOption(column).get
@@ -169,19 +179,19 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   }
 
   def int(column: String): Int = intOption(column).get
-  def intOption(column: String): Option[Int] = Option(resultSet.getInt(column))
+  def intOption(column: String): Option[Int] = getResultSetOption(resultSet.getInt(column))
 
   def double(column: String): Double = doubleOption(column).get
-  def doubleOption(column: String): Option[Double] = Option(resultSet.getDouble(column))
+  def doubleOption(column: String): Option[Double] = getResultSetOption(resultSet.getDouble(column))
 
   def short(column: String): Short = shortOption(column).get
-  def shortOption(column: String): Option[Short] = Option(resultSet.getShort(column))
+  def shortOption(column: String): Option[Short] = getResultSetOption(resultSet.getShort(column))
 
   def byte(column: String): Byte = byteOption(column).get
-  def byteOption(column: String): Option[Byte] = Option(resultSet.getByte(column))
+  def byteOption(column: String): Option[Byte] = getResultSetOption(resultSet.getByte(column))
 
   def bool(column: String): Boolean = boolOption(column).get
-  def boolOption(column: String): Option[Boolean] = Option(resultSet.getBoolean(column))
+  def boolOption(column: String): Option[Boolean] = getResultSetOption(resultSet.getBoolean(column))
 
   def long(column: String): Long = longOption(column).get
   def longOption(column: String): Option[Long] = {
@@ -229,7 +239,7 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   }
 
   def date(column: String): Date = dateOption(column).get
-  def dateOption(column: String): Option[Date] = Option(resultSet.getTimestamp(column))
+  def dateOption(column: String): Option[Date] = getResultSetOption(resultSet.getTimestamp(column))
 
   def byteArray(column: String): Array[Byte] = byteArrayOption(column).get
   def byteArrayOption(column: String): Option[Array[Byte]] = {
