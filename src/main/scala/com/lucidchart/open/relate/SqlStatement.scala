@@ -82,15 +82,6 @@ class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[
     value.map(i => bigInt(name, bd.get(i))).getOrElse(insert(name, Types.BIGINT, stmt.setNull _))
   }
 
-  def blob(name: String, value: String): Unit = {
-    val func: (Int, InputStream) => Unit = stmt.setBlob _
-    insert(name, new ByteArrayInputStream(value.getBytes), func)
-  }
-  def blobs(name: String, values: TraversableOnce[String]): Unit = list[InputStream](name, values.map(x => new ByteArrayInputStream(x.getBytes)), stmt.setBlob _)
-  def blobOption(name: String, value: Option[String]): Unit = {
-    value.map(blob(name, _)).getOrElse(insert(name, Types.BLOB, stmt.setNull _))
-  }
-
   /**
    * Set a Boolean in the PreparedStatement
    * @param name the name of the parameter to put the Boolean in
@@ -118,8 +109,8 @@ class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[
    * @param name the name of the parameter to put the ArrayByte in
    * @param value the ByteArray to put in the query
    */
-  def byteArray(name: String, value: Array[Byte]) = insert(name, new ByteArrayInputStream(value), stmt.setBinaryStream _)
-  def byteArrays(name: String, values: TraversableOnce[Array[Byte]]) = list(name, values.map(new ByteArrayInputStream(_)), stmt.setBinaryStream _)
+  def byteArray(name: String, value: Array[Byte]) = insert(name, value, stmt.setObject _)
+  def byteArrays(name: String, values: TraversableOnce[Array[Byte]]) = list(name, values, stmt.setObject _)
   def byteArrayOption(name: String, value: Option[Array[Byte]]) = {
     value.map(byteArray(name, _)).getOrElse(insert(name, Types.BLOB, stmt.setNull _))
   }
