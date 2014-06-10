@@ -8,7 +8,6 @@ Relate is a lightweight database access layer for Scala that simplifies database
 * Works with all JDBC connection types
 * Works with all database engines
 * Performance
-* 
 
 ### Constraints – What Relate Doesn't Do
 
@@ -240,101 +239,80 @@ SQL("""
 The following is a list of all parameter insertion methods. Each takes a parameter name and a value.
 
 * bigDecimal
-* bigDecimals
 * bigDecimalOption
-
+* bigDecimals
 * bigInt
-* bigInts
 * bigIntOption
-
+* bigInts
 * bool
-* bools
 * boolOption
-
+* bools
 * byte
-* bytes
-* byteOption
-
 * byteArray
 * byteArrayOption
-
+* byteOption
+* bytes
 * char
-* chars
 * charOption
-
+* chars
 * date
-* dates
 * dateOption
-
+* dates
 * double
-* doubles
 * doubleOption
-
+* doubles
 * float
-* floats
 * floatOption
-
+* floats
 * int
-* ints
 * intOption
-
+* ints
 * long
-* longs
 * longOption
-
+* longs
 * short
-* shorts
 * shortOption
-
+* shorts
 * string
-* strings
 * stringOption
-
+* strings
 * timestamp
-* timestamps
 * timestampOption
-
+* timestamps
 * uuid
-* uuids
 * uuidOption
+* uuids
 
 ### Data Extraction Methods
 
 The following is a list of methods for extracting data from a row in the result. Each takes the name of the column to extract as a parameter.
 
-* string
-* stringOption
-* int
-* intOption
-* double
-* doubleOption
-* short
-* shortOption
-* byte
-* byteOption
-* bool
-* boolOption
-* long
-* longOption
-* bigInt
-* bigIntOption
 * bigDecimal
 * bigDecimalOption
-* javaBigInteger
-* javaBigIntegerOption
-* javaBigDecimal
-* javaBigDecimalOption
-* date
-* dateOption
+* bigInt
+* bigIntOption
+* bool
+* boolOption
+* byte
 * byteArray
 * byteArrayOption
-* uuid
-* uuidOption
-* uuidFromString
-* uuidFromStringOption
+* byteOption
+* date
+* dateOption
+* double
+* doubleOption
 * enum
 * enumOption
-
+* int
+* intOption
+* javaBigDecimal
+* javaBigDecimalOption
+* javaBigInteger
+* javaBigIntegerOption
+* long
+* longOption
+* short
+* shortOption
 * strictArray
 * strictArrayOption
 * strictAsciiStream
@@ -356,8 +334,8 @@ The following is a list of methods for extracting data from a row in the result.
 * strictClob
 * strictClobOption
 * strictDate
-* strictDateOption
 * strictDate
+* strictDateOption
 * strictDateOption
 * strictDouble
 * strictDoubleOption
@@ -374,8 +352,8 @@ The following is a list of methods for extracting data from a row in the result.
 * strictNString
 * strictNStringOption
 * strictObject
-* strictObjectOption
 * strictObject
+* strictObjectOption
 * strictObjectOption
 * strictRef
 * strictRefOption
@@ -388,12 +366,18 @@ The following is a list of methods for extracting data from a row in the result.
 * strictString
 * strictStringOption
 * strictTime
-* strictTimeOption
 * strictTime
 * strictTimeOption
+* strictTimeOption
+* strictTimestamp
 * strictTimestamp
 * strictTimestampOption
-* strictTimestamp
 * strictTimestampOption
 * strictURL
 * strictURLOption
+* string
+* stringOption
+* uuid
+* uuidFromString
+* uuidFromStringOption
+* uuidOption
