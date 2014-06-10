@@ -23,14 +23,14 @@ The core action in using Relate is writing SQL queries that contain named parame
 import com.lucidchart.open.relate._
 import com.lucidchart.open.relate.Query._
 
-SQL(“””
+SQL("""
   UPDATE pokemon
   SET move2={move}
   WHERE id={id} AND name={name}
-“””).on { implicit query =>
-  int(“id”, 25)
-  string(“name”, “Pikachu”)
-  string(“move”, “Thundershock”)
+""").on { implicit query =>
+  int("id", 25)
+  string("name", "Pikachu")
+  string("move", "Thundershock")
 }.executeUpdate()(connection)
 
 ```
@@ -44,20 +44,20 @@ Finally, executing the query requires a java.sql.Connection parameter in a secon
 WARNING: Because Relate uses curly braces as parameter delimiters, and to avoid additional overhead in query parsing, query strings containing curly braces will not work. However, curly braces can be used in values inserted in the on method. For example,
 
 ```
-SQL(“””
+SQL("""
   UPDATE pack
-  SET items= “[{\”name\” : \”Pokeball\”, \”quantity\” : 2}]”
-“””)
+  SET items= "[{\"name\" : \"Pokeball\", \"quantity\" : 2}]"
+""")
 ```
 
 will result in errors, but 
 
 ```
-SQL(“””
+SQL("""
   UPDATE pack
   SET items={value}
-“””).on { implicit query =>
-  string(“value”, “[{\”name\” : \”Pokeball\”, \”quantity\” : 2}]”)
+""").on { implicit query =>
+  string("value", "[{\"name\" : \"Pokeball\", \"quantity\" : 2}]")
 }
 ```
 
@@ -80,16 +80,16 @@ case class Pokemon(
 
 val pokemonParser = RowParser { row =>
   Pokemon(
-    row.string(“name”),
-    row.short(“level”),
-    row.longOption(“trainer_id”)
+    row.string("name"),
+    row.short("level"),
+    row.longOption("trainer_id")
   )
 }
 ```
 
-In this example, the created parser takes the value from the “name” column of the row as a string, the value of “level” as a short, and the value from the “trainer_id” column as a long option to instantiate a Pokemon object. The row object has numerous methods to extract data from the row with the desired data type.
+In this example, the created parser takes the value from the "name" column of the row as a string, the value of "level" as a short, and the value from the "trainer_id" column as a long option to instantiate a Pokemon object. The row object has numerous methods to extract data from the row with the desired data type.
 
-Some of the methods that can be called on the row object are prepended with the word “strict.” These methods are faster than their non strict counterparts, but do no type checking, and do not handle null values in the database.
+Some of the methods that can be called on the row object are prepended with the word "strict." These methods are faster than their non strict counterparts, but do no type checking, and do not handle null values in the database.
 
 The function passed to RowParser can return any value, so it does necessarily need to be an instance of a case class. A Tuple, Seq, etc. would work equally well.
 
@@ -98,12 +98,12 @@ The function passed to RowParser can return any value, so it does necessarily ne
 Applying a parser to a query only requires specifying the desired collection type to return. The following is an example using the parser created in the previous section:
 
 ```
-SQL(“””
+SQL("""
   SELECT *
   FROM professor_oaks_pokemon
   WHERE pokemon_type={type}
-“””).on { implicit query =>
-  string(“type”, “starter”)
+""").on { implicit query =>
+  string("type", "starter")
 }.executeQuery()(connection).asList(pokemonParser)
 ```
 
@@ -114,19 +114,19 @@ Parsers that return a Tuple of size 2 can also be passed to the asMap method to 
 ```
 val nameToPokemonParser  = RowParser { row =>
   val pokemon = Pokemon(
-    row.string(“name”),
-    row.short(“level”),
-    row.longOption(“trainer_id”)
+    row.string("name"),
+    row.short("level"),
+    row.longOption("trainer_id")
   )
   (pokemon.name, pokemon)
 }
 
-SQL(“””
+SQL("""
   SELECT *
   FROM professor_oaks_pokemon
   WHERE pokemon_type={type}
-“””).on { implicit query =>
-  string(“type”, “starter”)
+""").on { implicit query =>
+  string("type", "starter")
 }.executeQuery()(connection).asMap(nameToPokemonParser)
 ```
 
@@ -135,11 +135,11 @@ SQL(“””
 Sometimes a query retrieves only one column. Convenience methods are defined in RowParser for creating single column row parsers in these occasions. Below is an example of their use:
 
 ```
-SQL(“””
+SQL("""
   SELECT id
   FROM trainers
-  WHERE name=”Red”
-“””).executeQuery()(connection).asList(RowParser.long(“id”))
+  WHERE name="Red"
+""").executeQuery()(connection).asList(RowParser.long("id"))
 ```
 
 The RowParser object also contains definitions for bigInt, date, int, and string.
@@ -149,11 +149,11 @@ The RowParser object also contains definitions for bigInt, date, int, and string
 In other cases, only one value is desired as the result of a query. For these scenarios, Relate provides a scalar method with which the desired type of the returned single value can be defined. The return value is wrapped as an Option. An example of its use is as follows:
 
 ```
-SQL(“””
+SQL("""
   SELECT hp
   FROM pokemon
-  WHERE name=”Squirtle”
-“””).executeQuery().scalar[Int].get
+  WHERE name="Squirtle"
+""").executeQuery().scalar[Int].get
 ```
 
 ##### Retrieving Auto Increment Values on Insert
@@ -161,10 +161,10 @@ SQL(“””
 The scalar method can be used to retrieve auto increment values. Given a table where the primary key was a long, here's an example:
 
 ```
-SQL(“””
+SQL("""
   INSERT INTO badges(name)
-  VALUES (“Boulder Badge”)
-“””).executeInsert().scalar[Long].get
+  VALUES ("Boulder Badge")
+""").executeInsert().scalar[Long].get
 ```
 
 ### .expand – Efficient Parameter Insertion
@@ -186,14 +186,14 @@ import com.lucidchart.open.relate.Query._
 
 val ids = (0 until 150 by 10).map { i => i.toLong }
 
-SQL(“””
+SQL("""
   SELECT *
   FROM pokedex
   WHERE id IN ({ids})
-“””).expand { implicit query =>
-  commaSeparated(“ids”, ids.size)
+""").expand { implicit query =>
+  commaSeparated("ids", ids.size)
 }.on { implicit query =>
-  longs(“ids”, ids)
+  longs("ids", ids)
 }
 ```
 
@@ -219,19 +219,19 @@ onTuples will iterate through the collection, passing each value into the anonym
 case class Trainer(name: String, catchPhrase: String)
 
 val route1Trainers = List(
-  (“Youngster Jimmy”, “My Rattata loves berries.”),
-  (“Lass Haley”, “If you make eye contact, you have to battle!”),
-  (“Pokemon Breeder Rocco”, “Soar high, my little Pidgey!”)
+  ("Youngster Jimmy", "My Rattata loves berries."),
+  ("Lass Haley", "If you make eye contact, you have to battle!"),
+  ("Pokemon Breeder Rocco", "Soar high, my little Pidgey!")
 )
 
-SQL(“””
+SQL("""
   INSERT INTO trainers
   VALUES {tuples}
-“””).expand { implicit query =>
-  tupled(“tuples”, List(“name”, “catchPhrase”), route1Trainers.size)
-}.onTuples(“tuples”, route1Trainers) { (trainer, query) =>
-  query.string(“name”, trainer.name)
-  query.string(“catchPhrase”, trainer.catchPhrase)
+""").expand { implicit query =>
+  tupled("tuples", List("name", "catchPhrase"), route1Trainers.size)
+}.onTuples("tuples", route1Trainers) { (trainer, query) =>
+  query.string("name", trainer.name)
+  query.string("catchPhrase", trainer.catchPhrase)
 }.executeUpdate()(connection)
 ```
 
