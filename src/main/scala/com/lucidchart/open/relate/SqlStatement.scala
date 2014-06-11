@@ -20,16 +20,20 @@ class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[
   val listParams: mutable.Map[String, ListParam]) {
 
   private def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit) {
+    val valueIterator = values.toIterator
     val nameData = names.get(name)
+
     if (nameData.isDefined) {
-      var iterator1 = nameData.get.toIterator
-      while(iterator1.hasNext) {
-        var i = iterator1.next
-        val iterator2 = values.toIterator
-        while (iterator2.hasNext) {
-          rule(i, iterator2.next())
-          i += 1
+      var i = 0
+      while (valueIterator.hasNext) {
+        val value = valueIterator.next
+        val parameterIterator = nameData.get.toIterator
+
+        while (parameterIterator.hasNext) {
+          rule(parameterIterator.next + i, value)
         }
+
+        i += 1
       }
     }
   }
