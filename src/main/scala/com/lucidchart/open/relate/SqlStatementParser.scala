@@ -26,7 +26,17 @@ object SqlStatementParser {
       val c = chars(i)
       if (!inParam) {
         if (c == '{') {
-          inParam = true
+          if (i + 1 < chars.size && chars(i + 1) == '{') {
+            i += 1
+            query.append(c)
+          }
+          else {
+            inParam = true
+          }
+        }
+        else if (c == '}' && i + 1 < chars.size && chars(i + 1) == '}') {
+          i += 1
+          query.append(c)
         }
         else {
           query.append(c)

@@ -49,6 +49,18 @@ class SQLSpec extends Specification {
       params must have size(2)
       params("name1") must have size(2)
     }
+
+    "handle curly braces escaped with {{ and }}" in {
+      val (query, _) = SqlStatementParser.parse("""INSERT INTO table VALUES ("{{\"test\" : \"value\"}}")""")
+
+      query must_== """INSERT INTO table VALUES ("{\"test\" : \"value\"}")"""
+    }
+
+    "handle a mix of escaped curly braces and parameters" in {
+      val (query, _) = SqlStatementParser.parse("""INSERT INTO table VALUES ({test}, "{{\"test\" : \"value\"}}")""")
+
+      query must_== """INSERT INTO table VALUES (?, "{\"test\" : \"value\"}")"""
+    }
   }
 
 }
