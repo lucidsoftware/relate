@@ -28,6 +28,20 @@ pomExtra := (
     <url>git@github.com:lucidsoftware/relate.git</url>
     <connection>scm:git:git@github.com:lucidsoftware/relate.git</connection>
   </scm>
+  <developers>
+    <developer>
+      <id>msiebert</id>
+      <name>Mark Siebert</name>
+    </developer>
+    <developer>
+      <id>gregghz</id>
+      <name>Gregg Hernandez</name>
+    </developer>
+    <developer>
+      <id>matthew-lucidchart</id>
+      <name>Matthew Barlocker</name>
+    </developer>
+  </developers>
 )
 
 pomIncludeRepository := { _ => false }
