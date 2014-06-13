@@ -285,6 +285,13 @@ class SqlResult(resultSet: java.sql.ResultSet) {
     id <- intOption(column)
     value <- Try(e(id)).toOption
   } yield(value)
+
+  /**
+   * Close the underlying ResultSet
+   */
+  def close() {
+    resultSet.close()
+  }
 }
 
 object SqlResultTypes {

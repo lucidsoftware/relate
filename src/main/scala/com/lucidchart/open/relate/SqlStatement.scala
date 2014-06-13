@@ -233,29 +233,49 @@ class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[
    * Execute a statement
    */
   def execute(): Boolean = {
-    stmt.execute()
+    try {
+      stmt.execute()
+    }
+    finally {
+      stmt.close()
+    }
   }
 
   /**
    * Execute an update
    */
   def executeUpdate(): Int = {
-    stmt.executeUpdate()
+    try {
+      stmt.executeUpdate()
+    }
+    finally {
+      stmt.close()
+    }
   }
 
   /**
    * Execute a query
    */
   def executeQuery(): SqlResult = {
-    SqlResult(stmt.executeQuery())
+    try {
+      SqlResult(stmt.executeQuery())
+    }
+    finally {
+      stmt.close()
+    }
   }
 
   /**
    * Execute an insert
    */
   def executeInsert(): SqlResult = {
-    stmt.executeUpdate()
-    SqlResult(stmt.getGeneratedKeys())
+    try {
+      stmt.executeUpdate()
+      SqlResult(stmt.getGeneratedKeys())
+    }
+    finally {
+      stmt.close()
+    }
   }
 
 }
