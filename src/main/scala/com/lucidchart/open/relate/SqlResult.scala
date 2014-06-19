@@ -57,7 +57,11 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   def asIterable[A](parser: RowParser[A]): Iterable[A] = asCollection[A, Iterable](parser, Long.MaxValue)
   def asList[A](parser: RowParser[A]): List[A] = asCollection[A, List](parser, Long.MaxValue)
   def asMap[U, V](parser: RowParser[(U, V)]): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
-  def scalar[A](): Option[A] = {
+
+  @deprecated("Use asScalarOption instead. same signature", "1.1")
+  def scalar[A](): Option[A] = asScalarOption[A]()
+  def asScalar[A](): A = asScalarOption.get
+  def asScalarOption[A](): Option[A] = {
     if (resultSet.next()) {
       Some(resultSet.getObject(1).asInstanceOf[A])
     }
