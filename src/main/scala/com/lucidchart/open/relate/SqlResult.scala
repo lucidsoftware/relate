@@ -41,7 +41,7 @@ class SqlResult(resultSet: java.sql.ResultSet) {
     }
   }
 
-  def withResultSet[A](f: (java.sql.ResultSet) => A) = {
+  protected def withResultSet[A](f: (java.sql.ResultSet) => A) = {
     try {
       f(resultSet)
     }
