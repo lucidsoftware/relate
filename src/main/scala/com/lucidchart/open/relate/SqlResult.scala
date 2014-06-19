@@ -28,6 +28,19 @@ object SqlResult {
 }
 
 class SqlResult(resultSet: java.sql.ResultSet) {
+  override protected def finalize() {
+    // This is a failsafe to clean up the result set.
+    //
+    // It's possible that people unfamiliar with the API may do something like
+    // SQL("insert into....").on(...).executeInsert()
+    //
+    // As of the time I'm writing this comment, that would leave a result set
+    // open, and leak the resource.
+    if (!resultSet.isClosed()) {
+      resultSet.close()
+    }
+  }
+
   def withResultSet[A](f: (java.sql.ResultSet) => A) = {
     try {
       f(resultSet)
@@ -285,13 +298,6 @@ class SqlResult(resultSet: java.sql.ResultSet) {
     id <- intOption(column)
     value <- Try(e(id)).toOption
   } yield(value)
-
-  /**
-   * Close the underlying ResultSet
-   */
-  def close() {
-    resultSet.close()
-  }
 }
 
 object SqlResultTypes {

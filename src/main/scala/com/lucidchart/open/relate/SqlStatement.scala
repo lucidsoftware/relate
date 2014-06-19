@@ -19,6 +19,19 @@ import scala.reflect.ClassTag
 class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[String, List[Int]],
   val listParams: mutable.Map[String, ListParam]) {
 
+  override protected def finalize() {
+    // This is a failsafe to clean up the prepared statement
+    //
+    // It's possible that people unfamiliar with the API may do something like
+    // SQL("insert into....").on(...)
+    //
+    // As of the time I'm writing this comment, that would leave a statement
+    // open, and leak the resource.
+    if (!stmt.isClosed()) {
+      stmt.close()
+    }
+  }
+
   private def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit) {
     val valueIterator = values.toIterator
     val nameData = names.get(name)
