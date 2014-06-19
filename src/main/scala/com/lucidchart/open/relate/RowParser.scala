@@ -11,4 +11,7 @@ object RowParser {
   def int(columnLabel: String) = RowParser { row => row.int(columnLabel) }
   def long(columnLabel: String) = RowParser { row => row.long(columnLabel) }
   def string(columnLabel: String) = RowParser { row => row.string(columnLabel) }
+
+  val insertInt = RowParser { row => row.strictInt(1) }
+  val insertLong = RowParser { row => row.strictLong(1) }
 }

@@ -7,6 +7,7 @@ import java.math.{BigDecimal => JBigDecimal, BigInteger => JBigInt}
 import java.io.ByteArrayInputStream
 import java.util.{Date, UUID}
 import java.nio.ByteBuffer
+import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
 import scala.io.Source
 import scala.reflect.ClassTag
@@ -269,27 +270,61 @@ class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[
   /**
    * Execute a query
    */
+  @deprecated("Use asList, asMap, or one of the other as* functions instead. This executeQuery function may leak connections", "1.1")
   def executeQuery(): SqlResult = {
+    SqlResult(stmt.executeQuery())
+  }
+
+  /**
+   * Execute an insert
+   */
+  @deprecated("Use executeInsertLong, executeInsertSingle, or one of the other executeInsert* functions instead. This executeInsert function may leak connections.", "1.1")
+  def executeInsert(): SqlResult = {
+    stmt.executeUpdate()
+    SqlResult(stmt.getGeneratedKeys())
+  }
+
+  def executeInsertInt(): Int = withExecutedResults(true)(_.asSingle(RowParser.insertInt))
+  def executeInsertInts(): List[Int] = withExecutedResults(true)(_.asList(RowParser.insertInt))
+  def executeInsertLong(): Long = withExecutedResults(true)(_.asSingle(RowParser.insertLong))
+  def executeInsertLongs(): List[Long] = withExecutedResults(true)(_.asList(RowParser.insertLong))
+
+  def executeInsertSingle[U](parser: RowParser[U]): U = withExecutedResults(true)(_.asSingle(parser))
+  def executeInsertCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = withExecutedResults(true)(_.asCollection(parser))
+
+  protected def withExecutedResults[A](insert: Boolean)(callback: (SqlResult) => A): A = {
     try {
-      SqlResult(stmt.executeQuery())
+      val resultSet = if (insert) {
+        stmt.executeUpdate()
+        stmt.getGeneratedKeys()
+      }
+      else {
+        stmt.executeQuery()
+      }
+
+      try {
+        callback(SqlResult(resultSet))
+      }
+      finally {
+        resultSet.close()
+      }
     }
     finally {
       stmt.close()
     }
   }
 
-  /**
-   * Execute an insert
-   */
-  def executeInsert(): SqlResult = {
-    try {
-      stmt.executeUpdate()
-      SqlResult(stmt.getGeneratedKeys())
-    }
-    finally {
-      stmt.close()
-    }
-  }
+  def asSingle[A](parser: RowParser[A]): A = withExecutedResults(false)(_.asSingle(parser))
+  def asSingleOption[A](parser: RowParser[A]): Option[A] = withExecutedResults(false)(_.asSingleOption(parser))
+  def asSet[A](parser: RowParser[A]): Set[A] = withExecutedResults(false)(_.asSet(parser))
+  def asSeq[A](parser: RowParser[A]): Seq[A] = withExecutedResults(false)(_.asSeq(parser))
+  def asIterable[A](parser: RowParser[A]): Iterable[A] = withExecutedResults(false)(_.asIterable(parser))
+  def asList[A](parser: RowParser[A]): List[A] = withExecutedResults(false)(_.asList(parser))
+  def asMap[U, V](parser: RowParser[(U, V)]): Map[U, V] = withExecutedResults(false)(_.asMap(parser))
+  def asScalar[A](): A = withExecutedResults(false)(_.asScalar[A]())
+  def asScalarOption[A](): Option[A] = withExecutedResults(false)(_.asScalarOption[A]())
+  def asCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]]): T[U] = withExecutedResults(false)(_.asCollection(parser))
+  def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)])(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]]): T[U, V] = withExecutedResults(false)(_.asPairCollection(parser))
 
 }
 
