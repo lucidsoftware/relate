@@ -229,6 +229,7 @@ sealed trait Sql {
   @deprecated("Use executeInsertLong, executeInsertSingle, or one of the other executeInsert* functions instead. This executeInsert function may leak connections.", "1.1")
   def executeInsert()(implicit connection: Connection): SqlResult = {
     val stmt = prepareSqlStatement(connection, true)
+    stmt.executeUpdate()
     SqlResult(stmt.getGeneratedKeys())
   }
 
