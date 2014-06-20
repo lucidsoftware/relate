@@ -20,3 +20,12 @@ CREATE TABLE pokemon (
 	PRIMARY KEY(id),
 	KEY trainer_key (trainer_id)
 ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+#create a table that will be used for updating
+CREATE TABLE professor_oaks_pokemon (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	trainer_id BIGINT,
+	PRIMARY KEY(id),
+	KEY trainer_key (trainer_id)
+) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_general_ci;

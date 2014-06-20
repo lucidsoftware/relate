@@ -46,6 +46,20 @@ class RelateITSpec extends Specification {
     )
   }
 
+  case class Starter(
+    id: Long,
+    name: String,
+    trainerId: Option[Long]
+  )
+
+  val starterParser = RowParser { row =>
+    Starter(
+      row.long("id"),
+      row.string("name"),
+      row.longOption("trainer_id")
+    )
+  }
+
   //check if statements all closed in all tests stmt.isClosed
 
   "insert" should {
@@ -321,8 +335,29 @@ class RelateITSpec extends Specification {
   }
 
   "update" should {
-    //update matched rows
-    //not update unmatched rows
+    "update matched rows and not update unmatched rows" in {
+      val correct = List(
+        Starter(1L, "Squirtle", Some(1L)),
+        Starter(2L, "Bulbasaur", None),
+        Starter(3L, "Charmander", None)
+      )
+
+      SQL("""
+        UPDATE professor_oaks_pokemon
+        SET trainer_id = {id}
+        WHERE name = {name}
+      """).on { implicit query =>
+        long("id", 1L)
+        string("name", "Squirtle")
+      }.executeUpdate()
+
+      val pokemon = SQL("""
+        SELECT id, name, trainer_id
+        FROM professor_oaks_pokemon
+      """).executeQuery().asList(starterParser)
+
+      pokemon must_== correct
+    }
   }
 
   "delete" should {

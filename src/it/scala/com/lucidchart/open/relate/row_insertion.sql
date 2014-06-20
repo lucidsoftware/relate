@@ -3,6 +3,7 @@ USE relate_it_tests;
 
 TRUNCATE TABLE pokedex;
 TRUNCATE TABLE pokemon;
+TRUNCATE TABLE professor_oaks_pokemon;
 
 #populate the pokedex
 INSERT INTO pokedex VALUES
@@ -22,3 +23,9 @@ INSERT INTO pokemon VALUES
 	(4, 6, 2, 1),
 	(6, 3, 36, 1),
 	(7, 4, 3, NULL);
+
+#create pokemon for professor oak
+INSERT INTO professor_oaks_pokemon VALUES
+	(1, "Squirtle", NULL),
+	(2, "Bulbasaur", NULL),
+	(3, "Charmander", NULL);
