@@ -1,6 +1,7 @@
 package com.lucidchart.open.relate
 
 import java.sql.{Connection, PreparedStatement, Statement}
+import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
 
 /** A query object that can be expanded */
@@ -163,7 +164,7 @@ sealed trait Sql {
    * @return the prepared SqlStatement
    */
   private def prepareSqlStatement(connection: Connection, getGeneratedKeys: Boolean = false): 
-    SqlStatement = {
+    PreparedStatement = {
     val (parsedQuery, parsedParams) = SqlStatementParser.parse(query, listParams)
     val stmt = if (getGeneratedKeys) {
       connection.prepareStatement(parsedQuery, Statement.RETURN_GENERATED_KEYS)
@@ -172,6 +173,7 @@ sealed trait Sql {
       connection.prepareStatement(parsedQuery)
     }
     applyParams(new SqlStatement(stmt, parsedParams, listParams))
+    stmt
   }
 
   /**
@@ -190,27 +192,87 @@ sealed trait Sql {
    * Execute a statement
    */
   def execute()(implicit connection: Connection): Boolean = {
-    prepareSqlStatement(connection).execute()
+    val stmt = prepareSqlStatement(connection)
+    try {
+      stmt.execute()
+    }
+    finally {
+      stmt.close()
+    }
   }
 
   /**
    * Execute an update
    */
   def executeUpdate()(implicit connection: Connection): Int = {
-    prepareSqlStatement(connection).executeUpdate()
+    val stmt = prepareSqlStatement(connection)
+    try {
+      stmt.executeUpdate()
+    }
+    finally {
+      stmt.close()
+    }
   }
 
   /**
    * Execute a query
    */
+  @deprecated("Use asList, asMap, or one of the other as* functions instead. This executeQuery function may leak connections", "1.1")
   def executeQuery()(implicit connection: Connection): SqlResult = {
-    prepareSqlStatement(connection).executeQuery()
+    val stmt = prepareSqlStatement(connection)
+    SqlResult(stmt.executeQuery())
   }
 
   /**
    * Execute an insert
    */
+  @deprecated("Use executeInsertLong, executeInsertSingle, or one of the other executeInsert* functions instead. This executeInsert function may leak connections.", "1.1")
   def executeInsert()(implicit connection: Connection): SqlResult = {
-    prepareSqlStatement(connection, true).executeInsert()
+    val stmt = prepareSqlStatement(connection, true)
+    SqlResult(stmt.getGeneratedKeys())
   }
+
+  def executeInsertInt()(implicit connection: Connection): Int = withExecutedResults(true)(_.asSingle(RowParser.insertInt))
+  def executeInsertInts()(implicit connection: Connection): List[Int] = withExecutedResults(true)(_.asList(RowParser.insertInt))
+  def executeInsertLong()(implicit connection: Connection): Long = withExecutedResults(true)(_.asSingle(RowParser.insertLong))
+  def executeInsertLongs()(implicit connection: Connection): List[Long] = withExecutedResults(true)(_.asList(RowParser.insertLong))
+
+  def executeInsertSingle[U](parser: RowParser[U])(implicit connection: Connection): U = withExecutedResults(true)(_.asSingle(parser))
+  def executeInsertCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = withExecutedResults(true)(_.asCollection(parser))
+
+  protected def withExecutedResults[A](getGeneratedKeys: Boolean)(callback: (SqlResult) => A)(implicit connection: Connection): A = {
+    val stmt = prepareSqlStatement(connection, getGeneratedKeys)
+    try {
+      val resultSet = if (getGeneratedKeys) {
+        stmt.executeUpdate()
+        stmt.getGeneratedKeys()
+      }
+      else {
+        stmt.executeQuery()
+      }
+
+      try {
+        callback(SqlResult(resultSet))
+      }
+      finally {
+        resultSet.close()
+      }
+    }
+    finally {
+      stmt.close()
+    }
+  }
+
+  def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = withExecutedResults(false)(_.asSingle(parser))
+  def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = withExecutedResults(false)(_.asSingleOption(parser))
+  def asSet[A](parser: RowParser[A])(implicit connection: Connection): Set[A] = withExecutedResults(false)(_.asSet(parser))
+  def asSeq[A](parser: RowParser[A])(implicit connection: Connection): Seq[A] = withExecutedResults(false)(_.asSeq(parser))
+  def asIterable[A](parser: RowParser[A])(implicit connection: Connection): Iterable[A] = withExecutedResults(false)(_.asIterable(parser))
+  def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = withExecutedResults(false)(_.asList(parser))
+  def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = withExecutedResults(false)(_.asMap(parser))
+  def asScalar[A]()(implicit connection: Connection): A = withExecutedResults(false)(_.asScalar[A]())
+  def asScalarOption[A]()(implicit connection: Connection): Option[A] = withExecutedResults(false)(_.asScalarOption[A]())
+  def asCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = withExecutedResults(false)(_.asCollection(parser))
+  def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)])(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = withExecutedResults(false)(_.asPairCollection(parser))
+
 }
