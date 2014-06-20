@@ -1,7 +1,7 @@
 package com.lucidchart.open.relate
 
 import com.lucidchart.open.relate.Query._
-import java.sql.{DriverManager, Connection}
+import java.sql.{DriverManager, Connection, SQLException}
 import org.specs2.mutable._
 
 class RelateITSpec extends Specification {
@@ -144,6 +144,50 @@ class RelateITSpec extends Specification {
     
       //not totally implemented yet
       ids.size must_== newEntries.size
+    }
+
+    "ignore parameters not in the query" in {
+      val pokemonName = "Mewtwo"
+      val pokemonDesc = "an angst filled Pokemon"
+
+      SQL("""
+        INSERT INTO pokedex (name, description) VALUES ({name}, {description})
+      """).on { implicit query =>
+        string("name", pokemonName)
+        string("description", pokemonDesc)
+        string("ignored", "should be ignored")
+      }.execute()
+
+      //now check if that record was correctly inserted
+      val entries = SQL("""
+       SELECT id, name, description FROM pokedex WHERE name = {name}
+      """).on { implicit query =>
+       string("name", pokemonName)
+      }.asList(pokedexParser)
+
+      (entries.size must_== 1) and (entries(0).name must_== pokemonName) and (entries(0).description must_== pokemonDesc)
+    }
+
+    "fail to work if a parameter is not provided" in {
+      def failure = SQL("""
+        INSERT INTO pokedex VALUES (1, {name} "a description")
+      """).executeInsertLong
+
+      failure must throwA[SQLException]
+    }
+
+    "fail to work if a wrong list is provided" in {
+      def failure = SQL("""
+        INSERT INTO pokedex VALUES {tuples}
+      """).expand { implicit query =>
+        tupled("tuples", List("id", "name", "description"), 2)
+      }.onTuples("wrong", List((1, "name", "description"), (2, "name", "description"))) { (tuple, query) =>
+        query.long("id", tuple._1)
+        query.string("name", tuple._2)
+        query.string("description", tuple._3)
+      }.executeInsertLongs
+
+      failure must throwA[java.util.NoSuchElementException]
     }
   }
 
@@ -314,9 +358,6 @@ class RelateITSpec extends Specification {
       pokemon.size must_== 0
     }
 
-    //scalar
-    //scalarOption
-
     "work using expand for the IN clause" in {
       val ids = Array(1L, 2L, 3L)
 
@@ -331,6 +372,29 @@ class RelateITSpec extends Specification {
       }.asList(pokedexParser).map(_.name)
 
       (pokemonNames must contain("Squirtle")) and (pokemonNames must contain("Wartortle")) and (pokemonNames must contain("Blastoise"))
+    }
+
+    "fail to insert if given a select query" in {
+      def insertOnSelect = SQL("""
+        SELECT id, name, description
+        FROM pokedex
+      """).executeInsertLong
+
+      insertOnSelect must throwA[SQLException]
+    }
+
+    "fail if given a list with the wrong name" in {
+      def failure = SQL("""
+        SELECT id, name, description
+        FROM pokedex
+        WHERE id in ({ids})
+      """).expand { implicit query =>
+        commaSeparated("ids", 3)
+      }.on { implicit query =>
+        longs("wrong", List(2L, 3L, 4L))
+      }.asList(pokedexParser)
+
+      failure must throwA[SQLException]
     }
   }
 
