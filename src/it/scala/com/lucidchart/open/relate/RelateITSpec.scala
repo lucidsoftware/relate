@@ -361,8 +361,22 @@ class RelateITSpec extends Specification {
   }
 
   "delete" should {
-    //delete matched rows
-    //not delete matched rows
+    "delete matched rows and not delete unmatched rows" in {
+      val correct = List("Lass Haley", "Youngster Jimmy")
+
+      SQL("""
+        DELETE FROM undefeated_trainers
+        WHERE name = {name}
+      """).on { implicit query =>
+        string("name", "Gym Leader Brock")
+      }.execute()
+
+      val trainers = SQL("""
+        SELECT name FROM undefeated_trainers
+      """).executeQuery().asList(RowParser.string("name"))
+
+      trainers must_== correct
+    }
   }
 
 }

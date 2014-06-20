@@ -29,3 +29,9 @@ INSERT INTO professor_oaks_pokemon VALUES
 	(1, "Squirtle", NULL),
 	(2, "Bulbasaur", NULL),
 	(3, "Charmander", NULL);
+
+#create undefeated trainers
+INSERT INTO undefeated_trainers VALUES
+	(1, "Lass Haley"),
+	(2, "Youngster Jimmy"),
+	(3, "Gym Leader Brock");

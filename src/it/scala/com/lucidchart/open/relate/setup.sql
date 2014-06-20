@@ -29,3 +29,10 @@ CREATE TABLE professor_oaks_pokemon (
 	PRIMARY KEY(id),
 	KEY trainer_key (trainer_id)
 ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+#create a table that will be used for deleting
+CREATE TABLE undefeated_trainers (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	PRIMARY KEY(id)
+) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_general_ci;
