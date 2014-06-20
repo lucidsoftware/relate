@@ -4,6 +4,7 @@ USE relate_it_tests;
 TRUNCATE TABLE pokedex;
 TRUNCATE TABLE pokemon;
 TRUNCATE TABLE professor_oaks_pokemon;
+TRUNCATE TABLE undefeated_trainers;
 
 #populate the pokedex
 INSERT INTO pokedex VALUES
