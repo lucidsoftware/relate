@@ -4,7 +4,7 @@ USE relate_it_tests;
 
 #create a table with an auto incremented bigint id
 CREATE TABLE pokedex (
-	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	id BIGINT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL,
 	description VARCHAR(200) NOT NULL,
 	PRIMARY KEY (id),
@@ -13,8 +13,8 @@ CREATE TABLE pokedex (
 
 #create a table with nullable fields
 CREATE TABLE pokemon (
-	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	pokedex_id BIGINT UNSIGNED NOT NULL,
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	pokedex_id BIGINT NOT NULL,
 	level INT NOT NULL,
 	trainer_id BIGINT,
 	PRIMARY KEY(id),
