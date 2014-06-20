@@ -214,24 +214,6 @@ sealed trait Sql {
     }
   }
 
-  /**
-   * Execute a query
-   */
-  @deprecated("Use asList, asMap, or one of the other as* functions instead. This executeQuery function may leak connections", "1.1")
-  def executeQuery()(implicit connection: Connection): SqlResult = {
-    val stmt = prepareSqlStatement(connection)
-    SqlResult(stmt.executeQuery())
-  }
-
-  /**
-   * Execute an insert
-   */
-  @deprecated("Use executeInsertLong, executeInsertSingle, or one of the other executeInsert* functions instead. This executeInsert function may leak connections.", "1.1")
-  def executeInsert()(implicit connection: Connection): SqlResult = {
-    val stmt = prepareSqlStatement(connection, true)
-    SqlResult(stmt.getGeneratedKeys())
-  }
-
   def executeInsertInt()(implicit connection: Connection): Int = withExecutedResults(true)(_.asSingle(RowParser.insertInt))
   def executeInsertInts()(implicit connection: Connection): List[Int] = withExecutedResults(true)(_.asList(RowParser.insertInt))
   def executeInsertLong()(implicit connection: Connection): Long = withExecutedResults(true)(_.asSingle(RowParser.insertLong))
