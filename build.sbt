@@ -14,7 +14,10 @@ autoScalaLibrary := true
 
 retrieveManaged := true
 
-libraryDependencies += "org.specs2" %% "specs2" % "2.3.12" % "test"
+libraryDependencies ++= Seq(
+  "org.specs2" %% "specs2" % "2.3.12" % "test",
+  "mysql" % "mysql-connector-java" % "5.1.23"
+)
 
 pomExtra := (
   <url>https://github.com/lucidsoftware/relate</url>
