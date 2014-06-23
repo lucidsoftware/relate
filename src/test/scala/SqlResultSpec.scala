@@ -138,7 +138,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.next returns true
       rs.getObject(1) returns (2: java.lang.Long)
 
-      result.scalar[Long].get must_== 2L
+      result.asScalar[Long] must_== 2L
     }
 
     "ignore other result values" in {
@@ -148,7 +148,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject(1) returns ("test": java.lang.String)
       rs.getObject(2) returns (2L: java.lang.Long)
 
-      result.scalar[String].get must_== "test"
+      result.asScalar[String] must_== "test"
     }
 
     "return null if there are no rows" in {
@@ -156,7 +156,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       rs.next returns false
 
-      result.scalar[Long] must_== None
+      result.asScalarOption[Long] must_== None
     }
   }
 

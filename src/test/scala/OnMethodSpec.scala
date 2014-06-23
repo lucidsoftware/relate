@@ -2,7 +2,7 @@ package com.lucidchart.open.relate.test
 
 import com.lucidchart.open.relate._
 import com.lucidchart.open.relate.Query._
-import java.sql.{Connection, PreparedStatement}
+import java.sql.{Connection, PreparedStatement, ResultSet}
 import java.util.Date
 import org.mockito.Matchers._
 import org.specs2.mutable._
@@ -10,7 +10,12 @@ import org.specs2.mock.Mockito
 
 class OnMethodSpec extends Specification with Mockito {
   
-  def getMocks = (mock[Connection], mock[PreparedStatement])
+  def getMocks = {
+    val (connection, stmt) = (mock[Connection], mock[PreparedStatement])
+    val rs = mock[ResultSet]
+    stmt.executeQuery returns rs
+    (connection, stmt)
+  }
 
   "The on method" should {
 
@@ -21,8 +26,7 @@ class OnMethodSpec extends Specification with Mockito {
 
       SQL(sql.format("{param}")).on { implicit statement =>
         int("param", 10)
-      }.executeQuery()(connection)
-
+      }.asSingleOption(RowParser.long("id"))(connection)
       there was one(stmt).setInt(1, 10)
     }
 
@@ -36,7 +40,7 @@ class OnMethodSpec extends Specification with Mockito {
         string("param", "string")
       }.on { implicit statement =>
         double("name", 20.1)
-      }.executeQuery()(connection)
+      }.asSingleOption(RowParser.long("id"))(connection)
 
       there was one(stmt).setString(1, "string") andThen one(stmt).setDouble(2, 20.1)
     }
@@ -49,7 +53,7 @@ class OnMethodSpec extends Specification with Mockito {
       SQL(sql.format("{one}", "{two}")).on { implicit statement =>
         float("two", 1.5f)
         string("one", "test")
-      }.executeQuery()(connection)
+      }.asSingleOption(RowParser.long("id"))(connection)
 
       there was one(stmt).setFloat(2, 1.5f) andThen one(stmt).setString(1, "test")
     }
@@ -61,7 +65,7 @@ class OnMethodSpec extends Specification with Mockito {
 
       SQL(sql.format("{param}")).on { implicit statement =>
         int("param", 10)
-      }.executeQuery()(connection)
+      }.asSingleOption(RowParser.long("id"))(connection)
 
       there was one(stmt).setInt(1, 10)
     }
@@ -115,7 +119,7 @@ class OnMethodSpec extends Specification with Mockito {
       SQL(sql.format("{same}", "{another}", "{same}")).on { implicit statement =>
         int("same", 2)
         string("another", "value")
-      }.executeUpdate()(connection)
+      }.asSingleOption(RowParser.long("id"))(connection)
 
       there was one(stmt).setInt(1, 2) andThen one(stmt).setInt(3, 2) andThen 
         one(stmt).setString(2, "value")
@@ -186,7 +190,7 @@ class OnMethodSpec extends Specification with Mockito {
       SQL(sql.format("{param}")).on { implicit statement =>
         int("param", 10)
         int("no_param", 1000)
-      }.executeQuery()(connection)
+      }.asSingleOption(RowParser.long("id"))(connection)
 
       there was one(stmt).setInt(1, 10)
     }
