@@ -27,7 +27,7 @@ object SqlResult {
   def apply(resultSet: java.sql.ResultSet) = new SqlResult(resultSet)
 }
 
-class SqlResult(resultSet: java.sql.ResultSet) {
+class SqlResult(val resultSet: java.sql.ResultSet) {
   
   protected def withResultSet[A](f: (java.sql.ResultSet) => A) = {
     try {
@@ -85,6 +85,7 @@ class SqlResult(resultSet: java.sql.ResultSet) {
   def getRow(): Int = resultSet.getRow()
   def getMetaData(): ResultSetMetaData = resultSet.getMetaData()
   def wasNull(): Boolean = resultSet.wasNull()
+  private[relate] def next(): Boolean = resultSet.next()
 
   def hasColumn(column: String): Boolean = {
     try {

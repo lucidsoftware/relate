@@ -1,6 +1,6 @@
 package com.lucidchart.open.relate
 
-import java.sql.{Connection, PreparedStatement, Statement}
+import java.sql.{Connection, PreparedStatement, ResultSet, Statement}
 import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
 
@@ -159,102 +159,199 @@ sealed trait Sql {
   }
 
   /**
-   * Get a completed SqlStatement objecct to execute
-   * @param getGeneratedKeys whether or not to get the generated keys
-   * @return the prepared SqlStatement
-   */
-  private def prepareSqlStatement(connection: Connection, getGeneratedKeys: Boolean = false): 
-    PreparedStatement = {
-    val (parsedQuery, parsedParams) = SqlStatementParser.parse(query, listParams)
-    val stmt = if (getGeneratedKeys) {
-      connection.prepareStatement(parsedQuery, Statement.RETURN_GENERATED_KEYS)
-    }
-    else {
-      connection.prepareStatement(parsedQuery)
-    }
-    applyParams(new SqlStatement(stmt, parsedParams, listParams))
-    stmt
-  }
-
-  /**
-   * Apply all the functions that put in parameters
-   * @param stmt the SqlStatement to apply the functions to
-   * @param the prepared SqlStatement
-   */
-  private def applyParams(stmt: SqlStatement): SqlStatement = {
-    params.reverse.foreach { f =>
-      f(stmt)
-    }
-    stmt
-  }
-
-  /**
    * Execute a statement
    */
   def execute()(implicit connection: Connection): Boolean = {
-    val stmt = prepareSqlStatement(connection)
-    try {
-      stmt.execute()
-    }
-    finally {
-      stmt.close()
-    }
+    NormalStatementPreparer(connection).execute()
   }
 
   /**
    * Execute an update
    */
   def executeUpdate()(implicit connection: Connection): Int = {
-    val stmt = prepareSqlStatement(connection)
-    try {
-      stmt.executeUpdate()
-    }
-    finally {
-      stmt.close()
-    }
+    NormalStatementPreparer(connection).executeUpdate()
   }
 
-  def executeInsertInt()(implicit connection: Connection): Int = withExecutedResults(true)(_.asSingle(RowParser.insertInt))
-  def executeInsertInts()(implicit connection: Connection): List[Int] = withExecutedResults(true)(_.asList(RowParser.insertInt))
-  def executeInsertLong()(implicit connection: Connection): Long = withExecutedResults(true)(_.asSingle(RowParser.insertLong))
-  def executeInsertLongs()(implicit connection: Connection): List[Long] = withExecutedResults(true)(_.asList(RowParser.insertLong))
+  def executeInsertInt()(implicit connection: Connection): Int = InsertionStatementPreparer(connection).execute(_.asSingle(RowParser.insertInt))
+  def executeInsertInts()(implicit connection: Connection): List[Int] = InsertionStatementPreparer(connection).execute(_.asList(RowParser.insertInt))
+  def executeInsertLong()(implicit connection: Connection): Long = InsertionStatementPreparer(connection).execute(_.asSingle(RowParser.insertLong))
+  def executeInsertLongs()(implicit connection: Connection): List[Long] = InsertionStatementPreparer(connection).execute(_.asList(RowParser.insertLong))
 
-  def executeInsertSingle[U](parser: RowParser[U])(implicit connection: Connection): U = withExecutedResults(true)(_.asSingle(parser))
-  def executeInsertCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = withExecutedResults(true)(_.asCollection(parser))
+  def executeInsertSingle[U](parser: RowParser[U])(implicit connection: Connection): U = InsertionStatementPreparer(connection).execute(_.asSingle(parser))
+  def executeInsertCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = InsertionStatementPreparer(connection).execute(_.asCollection(parser))
 
-  protected def withExecutedResults[A](getGeneratedKeys: Boolean)(callback: (SqlResult) => A)(implicit connection: Connection): A = {
-    val stmt = prepareSqlStatement(connection, getGeneratedKeys)
-    try {
-      val resultSet = if (getGeneratedKeys) {
-        stmt.executeUpdate()
-        stmt.getGeneratedKeys()
-      }
-      else {
-        stmt.executeQuery()
-      }
+  def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = NormalStatementPreparer(connection).execute(_.asSingle(parser))
+  def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = NormalStatementPreparer(connection).execute(_.asSingleOption(parser))
+  def asSet[A](parser: RowParser[A])(implicit connection: Connection): Set[A] = NormalStatementPreparer(connection).execute(_.asSet(parser))
+  def asSeq[A](parser: RowParser[A])(implicit connection: Connection): Seq[A] = NormalStatementPreparer(connection).execute(_.asSeq(parser))
+  def asIterable[A](parser: RowParser[A])(implicit connection: Connection): Iterable[A] = NormalStatementPreparer(connection).execute(_.asIterable(parser))
+  def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = NormalStatementPreparer(connection).execute(_.asList(parser))
+  def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = NormalStatementPreparer(connection).execute(_.asMap(parser))
+  def asScalar[A]()(implicit connection: Connection): A = NormalStatementPreparer(connection).execute(_.asScalar[A]())
+  def asScalarOption[A]()(implicit connection: Connection): Option[A] = NormalStatementPreparer(connection).execute(_.asScalarOption[A]())
+  def asCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = NormalStatementPreparer(connection).execute(_.asCollection(parser))
+  def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)])(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = NormalStatementPreparer(connection).execute(_.asPairCollection(parser))
+  
+  /**
+   * The asIterator method returns an Iterator that will stream data out of the database.
+   * This avoids an OutOfMemoryError when dealing with large datasets
+   * @param parser the RowParser to parse rows with
+   * @param fetchSize the number of rows to fetch at a time, defaults to 100. If the JDBC Driver
+   * is MySQL, the fetchSize will always default to Int.MinValue, as MySQL's JDBC implementation
+   * ignores all other fetchSize values and only streams if fetchSize is Int.MinValue
+   */
+  def asIterator[A](parser: RowParser[A], fetchSize: Int = 100)(implicit connection: Connection): Iterator[A] = {
+    val prepared = StreamedStatementPreparer(connection, fetchSize)
+    prepared.execute(RowIterator(parser, prepared.stmt, _))
+  }
 
+  private trait StatementPreparer {
+
+    protected val (parsedQuery, parsedParams) = SqlStatementParser.parse(query, listParams)
+    val stmt = prepare()
+
+    protected def prepare(): PreparedStatement
+    protected def results(): ResultSet
+    def connection: Connection
+
+    /**
+     * Execute the statement and close all resources
+     * @param callback the function to call on the results of the query
+     * @return whatever the callback returns
+     */
+    def execute[A](callback: (SqlResult) => A): A = {
       try {
-        callback(SqlResult(resultSet))
+        val resultSet = results()
+        try {
+          callback(SqlResult(resultSet))
+        }
+        finally {
+          resultSet.close()
+        }
       }
       finally {
-        resultSet.close()
+        stmt.close()
       }
     }
-    finally {
-      stmt.close()
+
+    /**
+     * Execute the query and close
+     * @return if the query succeeded or not
+     */
+    def execute(): Boolean = {
+      try {
+        stmt.execute()
+      }
+      finally {
+        stmt.close()
+      }
+    }
+
+    /**
+     * Execute the query and close
+     * @return the number of rows affected by the query
+     */
+    def executeUpdate(): Int = {
+      try {
+        stmt.executeUpdate()
+      }
+      finally {
+        stmt.close()
+      }
+    }
+
+    /**
+     * Apply all the functions that put in parameters
+     * @param stmt the PreparedStatement to apply the functions to
+     * @return the PreparedStatement
+     */
+    protected def applyParams(stmt: PreparedStatement): PreparedStatement = {
+      val sqlStmt = new SqlStatement(stmt, parsedParams, listParams)
+      params.reverse.foreach { f =>
+        f(sqlStmt)
+      }
+      stmt
     }
   }
 
-  def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = withExecutedResults(false)(_.asSingle(parser))
-  def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = withExecutedResults(false)(_.asSingleOption(parser))
-  def asSet[A](parser: RowParser[A])(implicit connection: Connection): Set[A] = withExecutedResults(false)(_.asSet(parser))
-  def asSeq[A](parser: RowParser[A])(implicit connection: Connection): Seq[A] = withExecutedResults(false)(_.asSeq(parser))
-  def asIterable[A](parser: RowParser[A])(implicit connection: Connection): Iterable[A] = withExecutedResults(false)(_.asIterable(parser))
-  def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = withExecutedResults(false)(_.asList(parser))
-  def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = withExecutedResults(false)(_.asMap(parser))
-  def asScalar[A]()(implicit connection: Connection): A = withExecutedResults(false)(_.asScalar[A]())
-  def asScalarOption[A]()(implicit connection: Connection): Option[A] = withExecutedResults(false)(_.asScalarOption[A]())
-  def asCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = withExecutedResults(false)(_.asCollection(parser))
-  def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)])(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = withExecutedResults(false)(_.asPairCollection(parser))
+  private case class NormalStatementPreparer(connection: Connection) extends StatementPreparer {
+    /**
+     * Get a PreparedStatement from this query with inserted parameters
+     * @return the PreparedStatement
+     */
+    protected override def prepare(): PreparedStatement = {
+      val stmt = connection.prepareStatement(parsedQuery)
+      applyParams(stmt)
+      stmt
+    }
+    
+    /**
+     * Get the results of excutioning this statement
+     * @return the resulting ResultSet
+     */
+    protected override def results(): ResultSet = {
+      stmt.executeQuery()
+    }
+  }
 
+  private case class InsertionStatementPreparer(connection: Connection) extends StatementPreparer {
+    /**
+     * Get a PreparedStatement from this query that will return generated keys
+     * @return the PreparedStatement
+     */
+    protected override def prepare(): PreparedStatement = {
+      val stmt = connection.prepareStatement(parsedQuery, Statement.RETURN_GENERATED_KEYS)
+      applyParams(stmt)
+      stmt
+    }
+
+    /**
+     * Get the results of executing this insertion statement
+     * @return the ResultSet
+     */
+    protected override def results(): ResultSet = {
+      stmt.executeUpdate()
+      stmt.getGeneratedKeys()
+    }
+  }
+
+  private case class StreamedStatementPreparer(connection: Connection, fetchSize: Int) extends StatementPreparer {
+    /**
+     * Get a PreparedStatement from this query that will stream the resulting rows
+     * @return the PreparedStatement
+     */
+    protected override def prepare(): PreparedStatement = {
+      val stmt = connection.prepareStatement(
+        parsedQuery,
+        ResultSet.TYPE_FORWARD_ONLY,
+        ResultSet.CONCUR_READ_ONLY
+      )
+      val driver = connection.getMetaData().getDriverName()
+      if (driver.toLowerCase.contains("mysql")) {
+        stmt.setFetchSize(Int.MinValue)
+      }
+      else {
+        stmt.setFetchSize(fetchSize)
+      }
+      applyParams(stmt)
+      stmt
+    }
+    
+    /**
+     * Override the default execute method so that it does not close the resources
+     * @param callback the function to call on the results of the query
+     * @return whatever the callback returns
+     */
+    override def execute[A](callback: (SqlResult) => A): A = {
+      callback(SqlResult(results()))
+    }
+
+    /**
+     * Get the results of executing this statement with a streaming ResultSet
+     * @return the ResultSet
+     */
+    protected override def results(): ResultSet = {
+      stmt.executeQuery()
+    }
+  }
 }

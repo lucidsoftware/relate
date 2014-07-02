@@ -11,8 +11,14 @@ class RelateITSpec extends Specification {
   val driver = "com.mysql.jdbc.Driver"
   val user = "dev"
   val pass = "dev"
+  Class.forName(driver)
   implicit val connection = try {
-    Class.forName(driver)
+    DriverManager.getConnection(url + dbName, user, pass)
+  }
+  val streamConnection = try {
+    DriverManager.getConnection(url + dbName, user, pass)
+  }
+  val streamConnection2 = try {
     DriverManager.getConnection(url + dbName, user, pass)
   }
 
@@ -358,6 +364,32 @@ class RelateITSpec extends Specification {
       pokemon.size must_== 0
     }
 
+    "work for asIterator" in {
+      val wartortle = PokedexEntry(2, "Wartortle", "Squirtle's more sassy evolved form")
+      val blastoise = PokedexEntry(3, "Blastoise", "an awesome turtle with water cannons")
+
+      val pokemon = SQL("""
+        SELECT id, name, description
+        FROM pokedex
+        WHERE name = {name1} OR name = {name2}
+      """).on { implicit query =>
+        string("name1", wartortle.name)
+        string("name2", blastoise.name)
+      }.asIterator(pokedexParser)(streamConnection).toList
+
+      (pokemon.size must_== 2) and (pokemon must contain(wartortle)) and (pokemon must contain(blastoise))
+    }
+
+    "work for empty asIterator" in {
+      val pokemon = SQL("""
+        SELECT id, name, description
+        FROM pokedex
+        WHERE id = -1
+      """).asIterator(pokedexParser)(streamConnection2).toList
+
+      pokemon.size must_== 0
+    }
+    
     "work using expand for the IN clause" in {
       val ids = Array(1L, 2L, 3L)
 
