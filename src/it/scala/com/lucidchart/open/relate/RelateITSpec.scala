@@ -389,6 +389,70 @@ class RelateITSpec extends Specification {
 
       pokemon.size must_== 0
     }
+
+    "work for the limit offset implementation of paginated" in {
+      val ids = List(1L, 2L, 3L)
+      val correctPokemonNames = List("Squirtle", "Wartortle", "Blastoise")
+
+      val pokemonNames = PaginatedQuery(pokedexParser, 2, 0) {
+        SQL("""
+          SELECT id, name, description
+          FROM pokedex
+          WHERE id IN ({ids})
+          ORDER BY id
+        """).expand { implicit query =>
+          commaSeparated("ids", ids.size)
+        }.on { implicit query =>
+          longs("ids", ids)
+        }
+      }.foldLeft(List[String]()) { case (result, current) =>
+        current.name :: result
+      }.reverse
+
+      pokemonNames must_== correctPokemonNames
+    }
+
+    "work for the limit offset implementation of paginated when empty" in {
+      val pokemonNames = PaginatedQuery(pokedexParser, 2, 0) {
+        SQL("""
+          SELECT id, name, description
+          FROM pokedex
+          WHERE id = -1
+        """)
+      }.foldLeft(List[String]()) { case (result, current) =>
+        current.name :: result
+      }
+
+      pokemonNames.size must_== 0
+    }
+
+    case class Result(
+      id: Long,
+      value: Int
+    )
+
+    "work for PaginatedQuery" in {
+      val parser = RowParser { row =>
+        Result(row.long("id"), row.int("value"))
+      }
+
+      val sums = PaginatedQuery(parser) { lastRecordOption =>
+        SQL("""
+          SELECT id, value
+          FROM pagination
+          WHERE id > {id} AND cond={cond}
+          ORDER BY id ASC
+          LIMIT 5
+        """).on {implicit query =>
+          long("id", lastRecordOption.map(_.id).getOrElse(0))
+          bool("cond", true)
+        }
+      }.foldLeft(0) { case (result, current) =>
+        result + current.value
+      }
+
+      sums must_== 15
+    }
     
     "work using expand for the IN clause" in {
       val ids = Array(1L, 2L, 3L)

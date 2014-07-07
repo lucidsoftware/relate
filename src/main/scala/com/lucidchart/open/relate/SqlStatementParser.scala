@@ -3,7 +3,7 @@ package com.lucidchart.open.relate
 import scala.collection.mutable
 import scala.collection.Map
 
-object SqlStatementParser {
+private[relate] object SqlStatementParser {
 
   /**
    * Parse a SQL statement into parameters and replace all parameters with ?

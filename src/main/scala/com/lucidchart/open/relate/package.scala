@@ -10,7 +10,7 @@ import java.util.UUID
  * Use the SQL method to start an SQL query
  *
  * {{{
- * import relate._
+ * import com.lucidchart.open.relate._
  *
  * SQL("Select 1")
  * }}}

@@ -5,7 +5,22 @@ import java.math.{BigDecimal => JBigDecimal, BigInteger => JBigInt}
 import java.util.{Date, UUID}
 import scala.reflect.ClassTag
 
-/** Provide implicit method calls for syntactic sugar */
+/** 
+ * Provide implicit method calls for syntactic sugar
+ *
+ * These functions should be used in the [[com.lucidchart.open.relate.Sql#on on]] and [[com.lucidchart.open.relate.Expandable#expand expand]] methods.
+ * {{{
+ * import com.lucidchart.open.relate._
+ * import com.lucidchart.open.relate.Query._
+ * 
+ * SQL("SELECT * FROM users WHERE id={id}").on { implicit query =>
+ *  long("id", 1L)
+ * }
+ *
+ * }}}
+ *
+ * See the <a href="https://github.com/lucidsoftware/relate/wiki" target="_blank">Relate Wiki</a> for more information.
+ */
 object Query {
   def commaSeparated(name: String, count: Int)(implicit e: Expandable) = e.commaSeparated(name, count)
   def tupled(name: String, columns: Seq[String], count: Int)(implicit e: Expandable) = e.tupled(name, columns, count)

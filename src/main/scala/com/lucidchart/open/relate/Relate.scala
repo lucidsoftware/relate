@@ -2,7 +2,7 @@ package com.lucidchart.open.relate
 
 import java.sql.Connection
 
-object Relate {
+private[relate] object Relate {
 
   /**
    * Create a SqlQuery object from a SQL statement

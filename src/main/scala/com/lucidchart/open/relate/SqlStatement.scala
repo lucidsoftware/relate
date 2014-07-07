@@ -281,7 +281,7 @@ private[relate] case class TupleStatement(
   def uuidOption(name: String, value: Option[UUID]) = value.map(uuid(name, _)).getOrElse(insert(name, Types.VARCHAR, stmt.setNull _))
 }
 
-object ByteHelper {
+private[relate] object ByteHelper {
 
   def uuidToByteArray(uuid: UUID): Array[Byte] = {
     val bb = ByteBuffer.wrap(new Array[Byte](16))

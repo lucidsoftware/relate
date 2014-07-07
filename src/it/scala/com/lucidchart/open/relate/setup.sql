@@ -36,3 +36,13 @@ CREATE TABLE undefeated_trainers (
 	name VARCHAR(50) NOT NULL,
 	PRIMARY KEY(id)
 ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_general_ci;
+
+#create a table for pagination
+CREATE TABLE pagination (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	value INT NOT NULL,
+	cond BOOL NOT NULL,
+	other_key BIGINT NOT NULL,
+	PRIMARY KEY(id),
+	KEY other_key (other_key)
+) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_general_ci;

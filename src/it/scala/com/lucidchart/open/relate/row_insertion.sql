@@ -5,6 +5,7 @@ TRUNCATE TABLE pokedex;
 TRUNCATE TABLE pokemon;
 TRUNCATE TABLE professor_oaks_pokemon;
 TRUNCATE TABLE undefeated_trainers;
+TRUNCATE TABLE pagination;
 
 #populate the pokedex
 INSERT INTO pokedex VALUES
@@ -36,3 +37,16 @@ INSERT INTO undefeated_trainers VALUES
 	(1, "Lass Haley"),
 	(2, "Youngster Jimmy"),
 	(3, "Gym Leader Brock");
+
+#populate pagination table
+INSERT INTO pagination VALUES
+	(1, 2, TRUE, 1),
+	(2, 1, TRUE, 1),
+	(3, 10, FALSE, 3),
+	(4, 3, TRUE, 5),
+	(5, 1, TRUE, 6),
+	(6, 2, TRUE, 9),
+	(7, 1, TRUE, 1),
+	(8, 2, FALSE, 3),
+	(9, 2, TRUE, 5),
+	(10, 3, TRUE, 2);
