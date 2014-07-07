@@ -120,6 +120,23 @@ sealed trait Expandable extends Sql {
     listParams(name) = CommaSeparated(name, count, count * 2)
   }
 
+  /**
+   * Shorthand for calling [[com.lucidchart.open.relate.Expandable#commaSeparated commaSeparated]]
+   * within an [[com.lucidchart.open.relate.Expandable#expand expand]] block.
+   * {{{
+   * SQL("SELECT * FROM users WHERE id IN ({ids})").commas("ids", 10)
+   * }}}
+   * is equivalent to
+   * {{{
+   * SQL("SELECT * FROM users WHERE id IN ({ids})").expand { implicit query =>
+   *   commaSeparated("ids", 10)
+   * }
+   * }}}
+   * WARNING: modifies this Expandable in place
+   * @param name the parameter name to expand
+   * @param count the number of items in the comma separated list
+   * @return this Expandable with the added list parameters
+   */
   def commas(name: String, count: Int): Expandable = {
     expand(_.commaSeparated(name, count))
     this
@@ -147,18 +164,43 @@ sealed trait Expandable extends Sql {
 
 }
 
+/** A case class that bundles all parameters associated with a query for easy parameter passing */
 private[relate] case class QueryParams(
   query: String,
   params: List[SqlStatement => Unit],
   listParams: mutable.Map[String, ListParam]
 )
 
-/** A trait for queries */
+/** 
+ * Sql is a trait for basic SQL queries.
+ *
+ * It provides methods for parameter insertion and query execution.
+ * {{{
+ * import com.lucidchart.open.relate._
+ * import com.lucidchart.open.relate.Query._
+ *
+ * case class User(id: Long, name: String)
+ *
+ * SQL("""
+ *   SELECT id, name
+ *   FROM users
+ *   WHERE id={id}
+ * """).on { implicit query =>
+ *   long("id", 1L)
+ * }.asSingle(RowParser { row =>
+ *   User(row.long("id"), row.string("name"))
+ * })
+ * }}}
+ */
 sealed trait Sql {
 
+  /** The query string associated with the query */
   val query: String
+  /** A list of anonymous functions that insert parameters into a SqlStatement */
   val params: List[SqlStatement => Unit]
+  /** A collection of list type parameters mapped to their names */
   val listParams: mutable.Map[String, ListParam]
+  /** The query, params, and listParams bundled together in a case class */
   val queryParams: QueryParams
 
   /**
@@ -202,6 +244,7 @@ sealed trait Sql {
 
   /**
    * Execute a statement
+   * @param connection the db connection to use when executing the query
    * @return whether the query succeeded in its execution
    */
   def execute()(implicit connection: Connection): Boolean = {
@@ -210,30 +253,147 @@ sealed trait Sql {
 
   /**
    * Execute an update
+   * @param connection the db connection to use when executing the query
    * @return the number of rows update by the query
    */
   def executeUpdate()(implicit connection: Connection): Int = {
     NormalStatementPreparer(queryParams, connection).executeUpdate()
   }
 
+  /**
+   * Execute the query and get the auto-incremented key as an Int
+   * @param connection the connection to use when executing the query
+   * @return the auto-incremented key as an Int
+   */
   def executeInsertInt()(implicit connection: Connection): Int = InsertionStatementPreparer(queryParams, connection).execute(_.asSingle(RowParser.insertInt))
+  
+  /**
+   * Execute the query and get the auto-incremented keys as a List of Ints
+   * @param connection the connection to use when executing the query
+   * @return the auto-incremented keys as a List of Ints
+   */
   def executeInsertInts()(implicit connection: Connection): List[Int] = InsertionStatementPreparer(queryParams, connection).execute(_.asList(RowParser.insertInt))
+  
+  /**
+   * Execute the query and get the auto-incremented key as a Long
+   * @param connection the connection to use when executing the query
+   * @return the auto-incremented key as a Long
+   */
   def executeInsertLong()(implicit connection: Connection): Long = InsertionStatementPreparer(queryParams, connection).execute(_.asSingle(RowParser.insertLong))
+  
+  /**
+   * Execute the query and get the auto-incremented keys as a a List of Longs
+   * @param connection the connection to use when executing the query
+   * @return the auto-incremented keys as a a List of Longs
+   */
   def executeInsertLongs()(implicit connection: Connection): List[Long] = InsertionStatementPreparer(queryParams, connection).execute(_.asList(RowParser.insertLong))
 
+  /**
+   * Execute the query and get the auto-incremented key using a RowParser. Provided for the case
+   * that a primary key is not an Int or BigInt
+   * @param parser the RowParser that can parse the returned key
+   * @param connection the connection to use when executing the query
+   * @return the auto-incremented key
+   */
   def executeInsertSingle[U](parser: RowParser[U])(implicit connection: Connection): U = InsertionStatementPreparer(queryParams, connection).execute(_.asSingle(parser))
+  
+  /**
+   * Execute the query and get the auto-incremented keys using a RowParser. Provided for the case
+   * that a primary key is not an Int or BigInt
+   * @param parser the RowParser that can parse the returned keys
+   * @param connection the connection to use when executing the query
+   * @return the auto-incremented keys
+   */
   def executeInsertCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = InsertionStatementPreparer(queryParams, connection).execute(_.asCollection(parser))
 
+  /**
+   * Execute this query and get back the result as a single record
+   * @param parser the RowParser to use when parsing the result set
+   * @param connection the connection to use when executing the query
+   * @return the results as a single record
+   */
   def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = NormalStatementPreparer(queryParams, connection).execute(_.asSingle(parser))
+  
+  /**
+   * Execute this query and get back the result as an optional single record
+   * @param parser the RowParser to use when parsing the result set
+   * @param connection the connection to use when executing the query
+   * @return the results as an optional single record
+   */
   def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = NormalStatementPreparer(queryParams, connection).execute(_.asSingleOption(parser))
+  
+  /**
+   * Execute this query and get back the result as a Set of records
+   * @param parser the RowParser to use when parsing the result set
+   * @param connection the connection to use when executing the query
+   * @return the results as a Set of records
+   */
   def asSet[A](parser: RowParser[A])(implicit connection: Connection): Set[A] = NormalStatementPreparer(queryParams, connection).execute(_.asSet(parser))
+  
+  /**
+   * Execute this query and get back the result as a sequence of records
+   * @param parser the RowParser to use when parsing the result set
+   * @param connection the connection to use when executing the query
+   * @return the results as a sequence of records
+   */
   def asSeq[A](parser: RowParser[A])(implicit connection: Connection): Seq[A] = NormalStatementPreparer(queryParams, connection).execute(_.asSeq(parser))
+  
+  /**
+   * Execute this query and get back the result as an iterable of records
+   * @param parser the RowParser to use when parsing the result set
+   * @param connection the connection to use when executing the query
+   * @return the results as an iterable of records
+   */
   def asIterable[A](parser: RowParser[A])(implicit connection: Connection): Iterable[A] = NormalStatementPreparer(queryParams, connection).execute(_.asIterable(parser))
+  
+  /**
+   * Execute this query and get back the result as a List of records
+   * @param parser the RowParser to use when parsing the result set
+   * @param connection the connection to use when executing the query
+   * @return the results as a List of records
+   */
   def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = NormalStatementPreparer(queryParams, connection).execute(_.asList(parser))
+  
+  /**
+   * Execute this query and get back the result as a Map of records
+   * @param parser the RowParser to use when parsing the result set. The RowParser should return a Tuple
+   * of size 2 containing the key and value
+   * @param connection the connection to use when executing the query
+   * @return the results as a Map of records
+   */
   def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = NormalStatementPreparer(queryParams, connection).execute(_.asMap(parser))
+  
+  /**
+   * Execute this query and get back the result as a single value. Assumes that there is only one
+   * row and one value in the result set.
+   * @param connection the connection to use when executing the query
+   * @return the results as a single value
+   */
   def asScalar[A]()(implicit connection: Connection): A = NormalStatementPreparer(queryParams, connection).execute(_.asScalar[A]())
+  
+  /**
+   * Execute this query and get back the result as an optional single value. Assumes that there is 
+   * only one row and one value in the result set.
+   * @param parser the RowParser to use when parsing the result set
+   * @param connection the connection to use when executing the query
+   * @return the results as an optional single value
+   */
   def asScalarOption[A]()(implicit connection: Connection): Option[A] = NormalStatementPreparer(queryParams, connection).execute(_.asScalarOption[A]())
+  
+  /**
+   * Execute this query and get back the result as an arbitrary collection of records
+   * @param parser the RowParser to use when parsing the result set
+   * @param connection the connection to use when executing the query
+   * @return the results as an arbitrary collection of records
+   */
   def asCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = NormalStatementPreparer(queryParams, connection).execute(_.asCollection(parser))
+  
+  /**
+   * Execute this query and get back the result as an arbitrary collection of key value pairs
+   * @param parser the RowParser to use when parsing the result set
+   * @param connection the connection to use when executing the query
+   * @return the results as an arbitrary collection of key value pairs
+   */
   def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)])(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = NormalStatementPreparer(queryParams, connection).execute(_.asPairCollection(parser))
   
   /**

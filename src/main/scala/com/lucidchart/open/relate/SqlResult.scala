@@ -27,6 +27,19 @@ object SqlResult {
   def apply(resultSet: java.sql.ResultSet) = new SqlResult(resultSet)
 }
 
+/**
+ * The SqlResult class is a wrapper around Java's ResultSet class.
+ *
+ * It provides methods to allows users to retrieve specific columns by name and datatype,
+ * but also provides methods that can, given a [[com.lucidchart.open.relate.RowParser RowParser]],
+ * parse the entire result set as a collection of records returned by the parser. These methods are
+ * also defined in the Sql trait, and are most conveniently used when chained with parameter
+ * insertion. For how to do this, see the [[com.lucidchart.open.relate.Sql Sql]] trait
+ * documentation.
+ *
+ * The extraction methods (int, string, long, etc.) also have "strict" counterparts. The "strict"
+ * methods are slightly faster, but do not do type checking or handle null values.
+ */
 class SqlResult(val resultSet: java.sql.ResultSet) {
   
   protected def withResultSet[A](f: (java.sql.ResultSet) => A) = {
@@ -82,11 +95,30 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
     builder.result
   }
 
+  /**
+   * Get the number of the row the SqlResult is currently on
+   * @return the current row number
+   */
   def getRow(): Int = resultSet.getRow()
+  
+  /**
+   * Get the metadata for the java.sql.ResultSet that underlies this SqlResult
+   * @return the metadata
+   */
   def getMetaData(): ResultSetMetaData = resultSet.getMetaData()
+  
+  /**
+   * Determine if the last value extracted from the result set was null
+   * @return whether the last value was null
+   */
   def wasNull(): Boolean = resultSet.wasNull()
   private[relate] def next(): Boolean = resultSet.next()
 
+  /**
+   * Determine if the result set contains the given column name
+   * @param column the column name to check
+   * @return whether or not the result set contains that column name
+   */
   def hasColumn(column: String): Boolean = {
     try {
       resultSet.findColumn(column)
@@ -293,6 +325,20 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
   } yield(value)
 }
 
+/**
+ * The SqlResultTypes object provides syntactic sugar for RowParser creation.
+ * {{{
+ * import com.lucidchart.open.relate._
+ * import com.lucidchart.open.relate.SqlResultTypes._
+ *
+ * val rowParser = RowParser { implicit row =>
+ *   (long("id"), string("name"))
+ * }
+ * }}}
+ *
+ * In this example, declaring "row" as implicit precludes the need to explicitly use the long and
+ * string methods on "row".
+ */
 object SqlResultTypes {
   def strictArray(column: String)(implicit sr: SqlResult) = sr.strictArray(column)
   def strictArrayOption(column: String)(implicit sr: SqlResult) = sr.strictArrayOption(column)

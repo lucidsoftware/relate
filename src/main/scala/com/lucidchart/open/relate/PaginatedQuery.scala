@@ -2,9 +2,17 @@ package com.lucidchart.open.relate
 
 import java.sql.Connection
 import scala.collection.mutable.ArrayBuffer
+
 /**
- * The PaginatedQuery companion object supplies an apply method that will create a new
- * PaginatedQuery and execute it.
+ * The PaginatedQuery companion object supplies apply methods that will create new
+ * PaginatedQuery's and execute them to get Streams of results.
+ *
+ * PaginatedQuery provides two pagination methods: 
+ *  - Using LIMIT and OFFSET
+ *  - Allowing the user to specify the next query based on the last record in the previous page
+ *
+ * The latter method is provided because the LIMIT/OFFSET method has poor performance when result
+ * sets get large.
  */
 object PaginatedQuery {
   /**
