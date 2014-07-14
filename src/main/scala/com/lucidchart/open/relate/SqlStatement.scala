@@ -453,7 +453,7 @@ private[relate] case class TupleStatement(
   def byteOption(name: String, value: Option[Byte]) = value.map(byte(name, _)).getOrElse(insert(name, Types.TINYINT, stmt.setNull _))
   def char(name: String, value: Char) = insert(name, value.toString, stmt.setString _)
   def charOption(name: String, value: Option[Char]) = value.map(char(name, _)).getOrElse(insert(name, Types.CHAR, stmt.setNull _))
-  def date(name: String, value: Date) = insert(name, new SqlDate(value.getTime), stmt.setDate _)
+  def date(name: String, value: Date) = insert(name, new Timestamp(value.getTime), stmt.setTimestamp _)
   def dateOption(name: String, value: Option[Date]) = value.map(date(name, _)).getOrElse(insert(name, Types.DATE, stmt.setNull _))
   def double(name: String, value: Double) = insert(name, value, stmt.setDouble _)
   def doubleOption(name: String, value: Option[Double]) = value.map(double(name, _)).getOrElse(insert(name, Types.DOUBLE, stmt.setNull _))
