@@ -15,6 +15,7 @@ autoScalaLibrary := true
 retrieveManaged := true
 
 libraryDependencies ++= Seq(
+  "org.specs2" %% "specs2" % "2.3.12" % "it",
   "org.specs2" %% "specs2" % "2.3.12" % "test",
   "mysql" % "mysql-connector-java" % "5.1.23"
 )
