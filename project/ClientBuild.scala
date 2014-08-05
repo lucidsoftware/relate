@@ -10,7 +10,7 @@ object ClientBuild extends Build {
       .settings(libraryDependencies += specs)
       .settings(
         testOptions in IntegrationTest += Tests.Setup( () => {
-          println("Make sure you're running these tests from this script: src/it/test.sh")
+          println("Make sure you're running these tests from this script: it-test.sh")
         })
       )
 
