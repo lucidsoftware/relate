@@ -1,6 +1,6 @@
 package com.lucidchart.open.relate
 
-import java.sql.{Connection, PreparedStatement}
+import java.sql.{Connection, PreparedStatement, ResultSet}
 import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
 
@@ -240,6 +240,22 @@ sealed trait Sql {
       }
     }
     getCopy(callback +: params)
+  }
+
+  /**
+    * Provides direct access to the underlying java.sql.ResultSet.
+    * Note that this ResultSet must be closed manually or by wrapping it in SqlResult.
+    * {{{
+    * val results = SQL(query).results()
+    * . . .
+    * SqlResult(results).asList[A](parser)
+    * // or
+    * results.close()
+    * }}}
+    * @return java.sql.ResultSet
+   */
+  def results()(implicit connection: Connection): ResultSet = {
+    NormalStatementPreparer(queryParams, connection).results()
   }
 
   /**

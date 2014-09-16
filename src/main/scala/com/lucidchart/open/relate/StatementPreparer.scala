@@ -10,7 +10,7 @@ private[relate] sealed trait StatementPreparer {
   val stmt = prepare()
 
   protected def prepare(): PreparedStatement
-  protected def results(): ResultSet
+  def results(): ResultSet
   def connection: Connection
 
   /**
@@ -88,7 +88,7 @@ private[relate] case class NormalStatementPreparer(queryParams: QueryParams, con
    * Get the results of excutioning this statement
    * @return the resulting ResultSet
    */
-  protected override def results(): ResultSet = {
+  override def results(): ResultSet = {
     stmt.executeQuery()
   }
 }
@@ -108,7 +108,7 @@ private[relate] case class InsertionStatementPreparer(queryParams: QueryParams, 
    * Get the results of executing this insertion statement
    * @return the ResultSet
    */
-  protected override def results(): ResultSet = {
+  override def results(): ResultSet = {
     stmt.executeUpdate()
     stmt.getGeneratedKeys()
   }
@@ -149,7 +149,7 @@ private[relate] case class StreamedStatementPreparer(queryParams: QueryParams, c
    * Get the results of executing this statement with a streaming ResultSet
    * @return the ResultSet
    */
-  protected override def results(): ResultSet = {
+  override def results(): ResultSet = {
     stmt.executeQuery()
   }
 }
