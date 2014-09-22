@@ -8,10 +8,10 @@ import scala.collection.mutable
 private[relate] case class ExpandableQuery(
   query: String,
   listParams: mutable.Map[String, ListParam] = mutable.Map[String, ListParam]()
-) extends Sql with Expandable {
+) extends ParameterizableSql with Expandable {
 
   val params = Nil
-  val queryParams = QueryParams(
+  protected[relate] def queryParams = QueryParams(
     query,
     params,
     listParams
@@ -30,9 +30,9 @@ private[relate] case class SqlQuery(
   query: String,
   params: List[SqlStatement => Unit] = Nil,
   listParams: mutable.Map[String, ListParam] = mutable.Map[String, ListParam]()
-) extends Sql {
+) extends ParameterizableSql {
 
-  val queryParams = QueryParams(
+  protected[relate] def queryParams = QueryParams(
     query,
     params,
     listParams
@@ -95,7 +95,7 @@ private[relate] case class Tupled(
  * }
  * }}}
  */
-sealed trait Expandable extends Sql {
+sealed trait Expandable extends ParameterizableSql {
 
   /** The names of list params mapped to their size */
   val listParams: mutable.Map[String, ListParam]
@@ -171,7 +171,67 @@ private[relate] case class QueryParams(
   listParams: mutable.Map[String, ListParam]
 )
 
-/** 
+trait ParameterizedSql extends Sql {
+
+  protected[relate] def queryParams: QueryParams
+
+  protected val (parsedQuery, parsedParams) = SqlStatementParser.parse(queryParams.query, queryParams.listParams)
+
+  protected def applyParams(stmt: PreparedStatement) {
+    val sqlStmt = new SqlStatement(stmt, parsedParams, queryParams.listParams)
+    queryParams.params.reverse.foreach { f =>
+      f(sqlStmt)
+    }
+  }
+
+}
+
+trait ParameterizableSql extends ParameterizedSql {
+
+  /** A list of anonymous functions that insert parameters into a SqlStatement */
+  protected val params: List[SqlStatement => Unit]
+
+  /**
+   * Classes that inherit the Sql trait will have to implement a method to copy
+   * themselves given just a different set of parameters. HINT: Use a case class!
+   */
+  protected def getCopy(params: List[SqlStatement => Unit]): ParameterizableSql
+
+  /**
+   * Put in values for parameters in the query
+   * @param f a function that takes a SqlStatement and sets parameter values using its methods
+   * @return a copy of this Sql with the new params
+   */
+  def on(f: SqlStatement => Unit): ParameterizableSql = {
+    getCopy(f +: params)
+  }
+
+  /**
+   * Put in values for tuple parameters in the query
+   * @param name the tuple identifier in the query
+   * @param tuples the objects to loop over and use to insert data into the query
+   * @param f a function that takes a TupleStatement and sets parameter values using its methods
+   * @return a copy of this Sql with the new tuple params
+   */
+  def onTuples[A](name: String, tuples: TraversableOnce[A])(f: (A, TupleStatement) => Unit): ParameterizableSql = {
+    val callback: SqlStatement => Unit = { statement =>
+      val iterator1 = statement.names(name).toIterator
+      val tupleData = statement.listParams(name).asInstanceOf[Tupled]
+
+      while(iterator1.hasNext) {
+        var i = iterator1.next
+        val iterator2 = tuples.toIterator
+        while(iterator2.hasNext) {
+          f(iterator2.next, TupleStatement(statement.stmt, tupleData.params, i))
+          i += tupleData.tupleSize
+        }
+      }
+    }
+    getCopy(callback +: params)
+  }
+}
+
+/**
  * Sql is a trait for basic SQL queries.
  *
  * It provides methods for parameter insertion and query execution.
@@ -192,54 +252,26 @@ private[relate] case class QueryParams(
  * })
  * }}}
  */
-sealed trait Sql {
+trait Sql {
+  self =>
 
-  /** The query string associated with the query */
-  val query: String
-  /** A list of anonymous functions that insert parameters into a SqlStatement */
-  val params: List[SqlStatement => Unit]
-  /** A collection of list type parameters mapped to their names */
-  val listParams: mutable.Map[String, ListParam]
-  /** The query, params, and listParams bundled together in a case class */
-  val queryParams: QueryParams
+  protected val parsedQuery: String
+  protected def applyParams(stmt: PreparedStatement)
 
-  /**
-   * Classes that inherit the Sql trait will have to implement a method to copy
-   * themselves given just a different set of parameters. HINT: Use a case class!
-   */
-  protected def getCopy(params: List[SqlStatement => Unit]): Sql
-
-  /**
-   * Put in values for parameters in the query
-   * @param f a function that takes a SqlStatement and sets parameter values using its methods
-   * @return a copy of this Sql with the new params
-   */
-  def on(f: SqlStatement => Unit): Sql = {
-    getCopy(f +: params)
+  private class BaseStatement(val connection: Connection) {
+    protected val parsedQuery = self.parsedQuery
+    protected def applyParams(stmt: PreparedStatement) = self.applyParams(stmt)
   }
 
-  /**
-   * Put in values for tuple parameters in the query
-   * @param name the tuple identifier in the query
-   * @param tuples the objects to loop over and use to insert data into the query
-   * @param f a function that takes a TupleStatement and sets parameter values using its methods
-   * @return a copy of this Sql with the new tuple params
-   */
-  def onTuples[A](name: String, tuples: TraversableOnce[A])(f: (A, TupleStatement) => Unit): Sql = {
-    val callback: SqlStatement => Unit = { statement =>
-      val iterator1 = statement.names(name).toIterator
-      val tupleData = statement.listParams(name).asInstanceOf[Tupled]
+  private def normalStatement(implicit connection: Connection) = new BaseStatement(connection) with NormalStatementPreparer
 
-      while(iterator1.hasNext) {
-        var i = iterator1.next
-        val iterator2 = tuples.toIterator
-        while(iterator2.hasNext) {
-          f(iterator2.next, TupleStatement(statement.stmt, tupleData.params, i))
-          i += tupleData.tupleSize
-        }
-      }
+  private def insertionStatement(implicit connection: Connection) = new BaseStatement(connection) with InsertionStatementPreparer
+
+  private def streamedStatement(fetchSize: Int)(implicit connection: Connection) = {
+    val fetchSize_ = fetchSize
+    new BaseStatement(connection) with StreamedStatementPreparer {
+      protected val fetchSize = fetchSize_
     }
-    getCopy(callback +: params)
   }
 
   /**
@@ -254,55 +286,49 @@ sealed trait Sql {
     * }}}
     * @return java.sql.ResultSet
    */
-  def results()(implicit connection: Connection): ResultSet = {
-    NormalStatementPreparer(queryParams, connection).results()
-  }
+  def results()(implicit connection: Connection): ResultSet = normalStatement.results()
 
   /**
    * Execute a statement
    * @param connection the db connection to use when executing the query
    * @return whether the query succeeded in its execution
    */
-  def execute()(implicit connection: Connection): Boolean = {
-    NormalStatementPreparer(queryParams, connection).execute()
-  }
+  def execute()(implicit connection: Connection): Boolean = normalStatement.execute()
 
   /**
    * Execute an update
    * @param connection the db connection to use when executing the query
    * @return the number of rows update by the query
    */
-  def executeUpdate()(implicit connection: Connection): Int = {
-    NormalStatementPreparer(queryParams, connection).executeUpdate()
-  }
+  def executeUpdate()(implicit connection: Connection): Int = normalStatement.executeUpdate()
 
   /**
    * Execute the query and get the auto-incremented key as an Int
    * @param connection the connection to use when executing the query
    * @return the auto-incremented key as an Int
    */
-  def executeInsertInt()(implicit connection: Connection): Int = InsertionStatementPreparer(queryParams, connection).execute(_.asSingle(RowParser.insertInt))
+  def executeInsertInt()(implicit connection: Connection): Int = insertionStatement.execute(_.asSingle(RowParser.insertInt))
   
   /**
    * Execute the query and get the auto-incremented keys as a List of Ints
    * @param connection the connection to use when executing the query
    * @return the auto-incremented keys as a List of Ints
    */
-  def executeInsertInts()(implicit connection: Connection): List[Int] = InsertionStatementPreparer(queryParams, connection).execute(_.asList(RowParser.insertInt))
+  def executeInsertInts()(implicit connection: Connection): List[Int] = insertionStatement.execute(_.asList(RowParser.insertInt))
   
   /**
    * Execute the query and get the auto-incremented key as a Long
    * @param connection the connection to use when executing the query
    * @return the auto-incremented key as a Long
    */
-  def executeInsertLong()(implicit connection: Connection): Long = InsertionStatementPreparer(queryParams, connection).execute(_.asSingle(RowParser.insertLong))
+  def executeInsertLong()(implicit connection: Connection): Long = insertionStatement.execute(_.asSingle(RowParser.insertLong))
   
   /**
    * Execute the query and get the auto-incremented keys as a a List of Longs
    * @param connection the connection to use when executing the query
    * @return the auto-incremented keys as a a List of Longs
    */
-  def executeInsertLongs()(implicit connection: Connection): List[Long] = InsertionStatementPreparer(queryParams, connection).execute(_.asList(RowParser.insertLong))
+  def executeInsertLongs()(implicit connection: Connection): List[Long] = insertionStatement.execute(_.asList(RowParser.insertLong))
 
   /**
    * Execute the query and get the auto-incremented key using a RowParser. Provided for the case
@@ -311,7 +337,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the auto-incremented key
    */
-  def executeInsertSingle[U](parser: RowParser[U])(implicit connection: Connection): U = InsertionStatementPreparer(queryParams, connection).execute(_.asSingle(parser))
+  def executeInsertSingle[U](parser: RowParser[U])(implicit connection: Connection): U = insertionStatement.execute(_.asSingle(parser))
   
   /**
    * Execute the query and get the auto-incremented keys using a RowParser. Provided for the case
@@ -320,7 +346,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the auto-incremented keys
    */
-  def executeInsertCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = InsertionStatementPreparer(queryParams, connection).execute(_.asCollection(parser))
+  def executeInsertCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = insertionStatement.execute(_.asCollection(parser))
 
   /**
    * Execute this query and get back the result as a single record
@@ -328,7 +354,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a single record
    */
-  def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = NormalStatementPreparer(queryParams, connection).execute(_.asSingle(parser))
+  def asSingle[A](parser: RowParser[A])(implicit connection: Connection): A = normalStatement.execute(_.asSingle(parser))
   
   /**
    * Execute this query and get back the result as an optional single record
@@ -336,7 +362,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as an optional single record
    */
-  def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = NormalStatementPreparer(queryParams, connection).execute(_.asSingleOption(parser))
+  def asSingleOption[A](parser: RowParser[A])(implicit connection: Connection): Option[A] = normalStatement.execute(_.asSingleOption(parser))
   
   /**
    * Execute this query and get back the result as a Set of records
@@ -344,7 +370,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a Set of records
    */
-  def asSet[A](parser: RowParser[A])(implicit connection: Connection): Set[A] = NormalStatementPreparer(queryParams, connection).execute(_.asSet(parser))
+  def asSet[A](parser: RowParser[A])(implicit connection: Connection): Set[A] = normalStatement.execute(_.asSet(parser))
   
   /**
    * Execute this query and get back the result as a sequence of records
@@ -352,7 +378,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a sequence of records
    */
-  def asSeq[A](parser: RowParser[A])(implicit connection: Connection): Seq[A] = NormalStatementPreparer(queryParams, connection).execute(_.asSeq(parser))
+  def asSeq[A](parser: RowParser[A])(implicit connection: Connection): Seq[A] = normalStatement.execute(_.asSeq(parser))
   
   /**
    * Execute this query and get back the result as an iterable of records
@@ -360,7 +386,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as an iterable of records
    */
-  def asIterable[A](parser: RowParser[A])(implicit connection: Connection): Iterable[A] = NormalStatementPreparer(queryParams, connection).execute(_.asIterable(parser))
+  def asIterable[A](parser: RowParser[A])(implicit connection: Connection): Iterable[A] = normalStatement.execute(_.asIterable(parser))
   
   /**
    * Execute this query and get back the result as a List of records
@@ -368,7 +394,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a List of records
    */
-  def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = NormalStatementPreparer(queryParams, connection).execute(_.asList(parser))
+  def asList[A](parser: RowParser[A])(implicit connection: Connection): List[A] = normalStatement.execute(_.asList(parser))
   
   /**
    * Execute this query and get back the result as a Map of records
@@ -377,7 +403,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a Map of records
    */
-  def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = NormalStatementPreparer(queryParams, connection).execute(_.asMap(parser))
+  def asMap[U, V](parser: RowParser[(U, V)])(implicit connection: Connection): Map[U, V] = normalStatement.execute(_.asMap(parser))
   
   /**
    * Execute this query and get back the result as a single value. Assumes that there is only one
@@ -385,7 +411,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a single value
    */
-  def asScalar[A]()(implicit connection: Connection): A = NormalStatementPreparer(queryParams, connection).execute(_.asScalar[A]())
+  def asScalar[A]()(implicit connection: Connection): A = normalStatement.execute(_.asScalar[A]())
   
   /**
    * Execute this query and get back the result as an optional single value. Assumes that there is 
@@ -394,7 +420,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as an optional single value
    */
-  def asScalarOption[A]()(implicit connection: Connection): Option[A] = NormalStatementPreparer(queryParams, connection).execute(_.asScalarOption[A]())
+  def asScalarOption[A]()(implicit connection: Connection): Option[A] = normalStatement.execute(_.asScalarOption[A]())
   
   /**
    * Execute this query and get back the result as an arbitrary collection of records
@@ -402,7 +428,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as an arbitrary collection of records
    */
-  def asCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = NormalStatementPreparer(queryParams, connection).execute(_.asCollection(parser))
+  def asCollection[U, T[_]](parser: RowParser[U])(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = normalStatement.execute(_.asCollection(parser))
   
   /**
    * Execute this query and get back the result as an arbitrary collection of key value pairs
@@ -410,7 +436,7 @@ sealed trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as an arbitrary collection of key value pairs
    */
-  def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)])(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = NormalStatementPreparer(queryParams, connection).execute(_.asPairCollection(parser))
+  def asPairCollection[U, V, T[_, _]](parser: RowParser[(U, V)])(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = normalStatement.execute(_.asPairCollection(parser))
   
   /**
    * The asIterator method returns an Iterator that will stream data out of the database.
@@ -423,7 +449,7 @@ sealed trait Sql {
    * ignores all other fetchSize values and only streams if fetchSize is Int.MinValue
    */
   def asIterator[A](parser: RowParser[A], fetchSize: Int = 100)(implicit connection: Connection): Iterator[A] = {
-    val prepared = StreamedStatementPreparer(queryParams, connection, fetchSize)
+    val prepared = streamedStatement(fetchSize)
     prepared.execute(RowIterator(parser, prepared.stmt, _))
   }
 }

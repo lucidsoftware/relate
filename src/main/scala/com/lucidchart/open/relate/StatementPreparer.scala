@@ -4,9 +4,6 @@ import java.sql.{Connection, PreparedStatement, ResultSet, Statement}
 
 private[relate] sealed trait StatementPreparer {
 
-  def queryParams: QueryParams
-
-  protected val (parsedQuery, parsedParams) = SqlStatementParser.parse(queryParams.query, queryParams.listParams)
   val stmt = prepare()
 
   protected def prepare(): PreparedStatement
@@ -59,21 +56,15 @@ private[relate] sealed trait StatementPreparer {
     }
   }
 
-  /**
-   * Apply all the functions that put in parameters
-   * @param stmt the PreparedStatement to apply the functions to
-   * @return the PreparedStatement
-   */
-  protected def applyParams(stmt: PreparedStatement): PreparedStatement = {
-    val sqlStmt = new SqlStatement(stmt, parsedParams, queryParams.listParams)
-    queryParams.params.reverse.foreach { f =>
-      f(sqlStmt)
-    }
-    stmt
-  }
 }
 
-private[relate] case class NormalStatementPreparer(queryParams: QueryParams, connection: Connection) extends StatementPreparer {
+private[relate] trait BaseStatementPreparer extends StatementPreparer {
+  protected def applyParams(stmt: PreparedStatement)
+  protected def parsedQuery: String
+}
+
+private[relate] trait NormalStatementPreparer extends BaseStatementPreparer {
+
   /**
    * Get a PreparedStatement from this query with inserted parameters
    * @return the PreparedStatement
@@ -93,7 +84,7 @@ private[relate] case class NormalStatementPreparer(queryParams: QueryParams, con
   }
 }
 
-private[relate] case class InsertionStatementPreparer(queryParams: QueryParams, connection: Connection) extends StatementPreparer {
+private[relate] trait InsertionStatementPreparer extends BaseStatementPreparer {
   /**
    * Get a PreparedStatement from this query that will return generated keys
    * @return the PreparedStatement
@@ -114,7 +105,9 @@ private[relate] case class InsertionStatementPreparer(queryParams: QueryParams, 
   }
 }
 
-private[relate] case class StreamedStatementPreparer(queryParams: QueryParams, connection: Connection, fetchSize: Int) extends StatementPreparer {
+private[relate] trait StreamedStatementPreparer extends BaseStatementPreparer {
+  protected val fetchSize: Int
+
   /**
    * Get a PreparedStatement from this query that will stream the resulting rows
    * @return the PreparedStatement
