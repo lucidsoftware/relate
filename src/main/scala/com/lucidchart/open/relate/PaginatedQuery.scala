@@ -44,7 +44,7 @@ object PaginatedQuery {
    * @return a Stream over all the records returned by the query, getting a new page of results
    * when the current one is exhausted
    */
-  def apply[A](parser: RowParser[A], limit: Int, startingOffset: Long)(query: Sql)(implicit connection: Connection): Stream[A] = {
+  def apply[A](parser: RowParser[A], limit: Int, startingOffset: Long)(query: ParameterizedSql)(implicit connection: Connection): Stream[A] = {
     new PaginatedQuery(parser, connection).withLimitAndOffset(limit, startingOffset, query)
   }
 }
@@ -53,6 +53,7 @@ object PaginatedQuery {
  * A query object that will execute a query in a paginated format and return the results in a Stream
  */
 private[relate] class PaginatedQuery[A](parser: RowParser[A], connection: Connection) {
+  self =>
 
   /**
    * Create a lazily evaluated stream of results
@@ -98,7 +99,7 @@ private[relate] class PaginatedQuery[A](parser: RowParser[A], connection: Connec
    * @param query the Sql object to use as the query (should have all parameters substituted in already)
    * @return whatever the callback returns
    */
-  private def withLimitAndOffset(limit: Int, startingOffset: Long, query: Sql): Stream[A] = {
+  private def withLimitAndOffset(limit: Int, startingOffset: Long, query: ParameterizedSql): Stream[A] = {
     val queryParams = query.queryParams
     val queryString = query.queryParams.query
     /**
@@ -108,7 +109,11 @@ private[relate] class PaginatedQuery[A](parser: RowParser[A], connection: Connec
      */
     def page(offset: Long): Stream[A] = {
       val newParams = queryParams.copy(query = queryString + " LIMIT " + limit + " OFFSET " + offset)
-      NormalStatementPreparer(newParams, connection).execute(_.asIterable(parser)).toStream
+      new ParameterizedSql with NormalStatementPreparer {
+        def connection = self.connection
+        val query = queryString
+        def queryParams = newParams
+      }.execute(_.asIterable(parser)).toStream
     }
 
     /**
