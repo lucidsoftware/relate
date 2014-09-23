@@ -7,7 +7,6 @@ import java.util.UUID
 
 /*
  * Does not support
- *   - setArray(Array)
  *   - setAsciiStream(InputStream)
  *   - setAsciiStream(InputStream, int)
  *   - setAsciiStream(InputStream, long)
@@ -86,12 +85,56 @@ object Parameter {
   implicit def fromOptionalUuid(value: Option[UUID]) = value.map(fromUuid).getOrElse(NullVarBinaryParameter)
 
   implicit def fromSeq[A <% SingleParameter](seq: Seq[A]) = new TupleParameter(seq.map(elem => elem: SingleParameter))
+  type SP = SingleParameter
+  implicit def fromTuple1[T1 <% SP](t: Tuple1[T1]) = TupleParameter(t._1: SP)
+  implicit def fromTuple2[T1 <% SP,T2 <% SP](t: Tuple2[T1,T2]) = TupleParameter(t._1: SP, t._2: SP)
+  implicit def fromTuple3[T1 <% SP,T2 <% SP,T3 <% SP](t: Tuple3[T1,T2,T3]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP)
+  implicit def fromTuple4[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP](t: Tuple4[T1,T2,T3,T4]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP)
+  implicit def fromTuple5[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP](t: Tuple5[T1,T2,T3,T4,T5]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP)
+  implicit def fromTuple6[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP](t: Tuple6[T1,T2,T3,T4,T5,T6]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP)
+  implicit def fromTuple7[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP](t: Tuple7[T1,T2,T3,T4,T5,T6,T7]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP)
+  implicit def fromTuple8[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP](t: Tuple8[T1,T2,T3,T4,T5,T6,T7,T8]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP)
+  implicit def fromTuple9[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP](t: Tuple9[T1,T2,T3,T4,T5,T6,T7,T8,T9]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP)
+  implicit def fromTuple10[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP](t: Tuple10[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP)
+  implicit def fromTuple11[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP](t: Tuple11[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP)
+  implicit def fromTuple12[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP](t: Tuple12[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP)
+  implicit def fromTuple13[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP](t: Tuple13[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP)
+  implicit def fromTuple14[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP](t: Tuple14[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP, t._14: SP)
+  implicit def fromTuple15[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP](t: Tuple15[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP, t._14: SP, t._15: SP)
+  implicit def fromTuple16[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP](t: Tuple16[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP, t._14: SP, t._15: SP, t._16: SP)
+  implicit def fromTuple17[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP](t: Tuple17[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP, t._14: SP, t._15: SP, t._16: SP, t._17: SP)
+  implicit def fromTuple18[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP](t: Tuple18[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP, t._14: SP, t._15: SP, t._16: SP, t._17: SP, t._18: SP)
+  implicit def fromTuple19[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP,T19 <% SP](t: Tuple19[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP, t._14: SP, t._15: SP, t._16: SP, t._17: SP, t._18: SP, t._19: SP)
+  implicit def fromTuple20[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP,T19 <% SP,T20 <% SP](t: Tuple20[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP, t._14: SP, t._15: SP, t._16: SP, t._17: SP, t._18: SP, t._19: SP, t._20: SP)
+  implicit def fromTuple21[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP,T19 <% SP,T20 <% SP,T21 <% SP](t: Tuple21[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP, t._14: SP, t._15: SP, t._16: SP, t._17: SP, t._18: SP, t._19: SP, t._20: SP, t._21: SP)
+  implicit def fromTuple22[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP,T19 <% SP,T20 <% SP,T21 <% SP,T22 <% SP](t: Tuple22[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21,T22]) = TupleParameter(t._1: SP, t._2: SP, t._3: SP, t._4: SP, t._5: SP, t._6: SP, t._7: SP, t._8: SP, t._9: SP, t._10: SP, t._11: SP, t._12: SP, t._13: SP, t._14: SP, t._15: SP, t._16: SP, t._17: SP, t._18: SP, t._19: SP, t._20: SP, t._21: SP, t._22: SP)
 
   // can't combine into [A <% TupleParameter](seq: Seq[A]) until Scala 2.11.x; see https://issues.scala-lang.org/browse/SI-3346
   implicit def fromTupleParameters(seq: Seq[TupleParameter]) = new TuplesParameter(seq)
+  implicit def fromSeqTuple1[T1 <% SP](seq: Seq[Tuple1[T1]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple2[T1 <% SP,T2 <% SP](seq: Seq[Tuple2[T1,T2]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple3[T1 <% SP,T2 <% SP,T3 <% SP](seq: Seq[Tuple3[T1,T2,T3]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple4[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP](seq: Seq[Tuple4[T1,T2,T3,T4]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple5[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP](seq: Seq[Tuple5[T1,T2,T3,T4,T5]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple6[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP](seq: Seq[Tuple6[T1,T2,T3,T4,T5,T6]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple7[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP](seq: Seq[Tuple7[T1,T2,T3,T4,T5,T6,T7]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple8[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP](seq: Seq[Tuple8[T1,T2,T3,T4,T5,T6,T7,T8]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple9[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP](seq: Seq[Tuple9[T1,T2,T3,T4,T5,T6,T7,T8,T9]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple10[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP](seq: Seq[Tuple10[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple11[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP](seq: Seq[Tuple11[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple12[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP](seq: Seq[Tuple12[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple13[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP](seq: Seq[Tuple13[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple14[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP](seq: Seq[Tuple14[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple15[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP](seq: Seq[Tuple15[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple16[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP](seq: Seq[Tuple16[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple17[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP](seq: Seq[Tuple17[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple18[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP](seq: Seq[Tuple18[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple19[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP,T19 <% SP](seq: Seq[Tuple19[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple20[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP,T19 <% SP,T20 <% SP](seq: Seq[Tuple20[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple21[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP,T19 <% SP,T20 <% SP,T21 <% SP](seq: Seq[Tuple21[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
+  implicit def fromSeqTuple22[T1 <% SP,T2 <% SP,T3 <% SP,T4 <% SP,T5 <% SP,T6 <% SP,T7 <% SP,T8 <% SP,T9 <% SP,T10 <% SP,T11 <% SP,T12 <% SP,T13 <% SP,T14 <% SP,T15 <% SP,T16 <% SP,T17 <% SP,T18 <% SP,T19 <% SP,T20 <% SP,T21 <% SP,T22 <% SP](seq: Seq[Tuple22[T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21,T22]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
   implicit def fromSeqSeq[A <% SingleParameter](seq: Seq[Seq[A]]): TuplesParameter = seq.map(elem => elem: TupleParameter)
 
-  // TODO(paul): Add Tuple1, Tuple2, etc.
 }
 
 trait SingleParameter extends Parameter {
@@ -125,6 +168,10 @@ class TupleParameter(val params: Seq[SingleParameter]) extends MultipleParameter
       }
     }
   }
+}
+
+object TupleParameter {
+  def apply(params: SingleParameter*) = new TupleParameter(params)
 }
 
 class TuplesParameter(val params: Seq[TupleParameter]) extends MultipleParameter {
