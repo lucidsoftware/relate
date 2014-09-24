@@ -4,9 +4,15 @@ import com.lucidchart.open.relate.Sql
 import java.sql.PreparedStatement
 
 class InterpolatedQuery(protected val parsedQuery: String, protected val params: Seq[Parameter]) extends Sql with MultipleParameter {
+
+  def +(query: InterpolatedQuery) = new InterpolatedQuery(parsedQuery + query.parsedQuery, params ++ query.params)
+
   protected def applyParams(stmt: PreparedStatement) = parameterize(stmt, 1)
 
   def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder ++= parsedQuery
+
+  override def toString = s"""sql"$parsedQuery""""
+
 }
 
 object InterpolatedQuery {
