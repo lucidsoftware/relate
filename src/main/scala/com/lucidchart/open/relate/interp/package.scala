@@ -2,7 +2,11 @@ package com.lucidchart.open.relate
 
 package object interp {
 
-  implicit class SqlHelper(stringContext: StringContext) {
+  implicit class SqlString(string: String) {
+    def toSql = InterpolatedQuery.fromParts(Seq(string), Seq())
+  }
+
+  implicit class SqlStringContext(stringContext: StringContext) {
     def sql(args: Parameter*) = InterpolatedQuery.fromParts(stringContext.parts, args)
   }
 
