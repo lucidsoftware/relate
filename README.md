@@ -23,7 +23,7 @@ Relate is for developers who care about their database. It chooses not to sacrif
 
 * SQL is already the best domain-specific language for querying relational databases. We don't need another. Ultimately, ORMs obscure the underlying queries and cause lots of headache.
 
-* In production situations, every millsecond matters. And while Relate may not be the prettiest face in the crowd, it does the best at managing large queries and large results.
+* In production situations, every millisecond matters. And while Relate may not be the prettiest face in the crowd, it does the best at managing large queries and large results.
 
 With Relate, you can write your queries in the language nature intended, while interacting with the inputs and results in a high-level and performant way.
 
