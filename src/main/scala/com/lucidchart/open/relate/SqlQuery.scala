@@ -275,6 +275,24 @@ trait Sql {
   }
 
   /**
+   * Returns the SQL query, before parameter substitution.
+   */
+  override def toString = parsedQuery
+
+  /**
+   * Calls [[PreparedStatement#toString]], which for many JDBC implementations is the SQL query after parameter substitution.
+   * This is intended primarily for ad-hoc debugging.
+   *
+   * For more routine logging, consider other solutions, such as [[https://code.google.com/p/log4jdbc/ log4jdbc]].
+   */
+  def statementString(implicit connection: Connection) = {
+    val stmt = normalStatement.stmt
+    val string = stmt.toString
+    stmt.close()
+    string
+  }
+
+  /**
     * Provides direct access to the underlying java.sql.ResultSet.
     * Note that this ResultSet must be closed manually or by wrapping it in SqlResult.
     * {{{
