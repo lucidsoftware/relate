@@ -11,8 +11,6 @@ class InterpolatedQuery(protected val parsedQuery: String, protected val params:
 
   def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder ++= parsedQuery
 
-  override def toString = s"""sql"$parsedQuery""""
-
 }
 
 object InterpolatedQuery {
