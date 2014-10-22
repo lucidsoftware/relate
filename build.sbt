@@ -14,6 +14,8 @@ exportJars in Test := false
 
 autoScalaLibrary := true
 
+scalacOptions += "-deprecation"
+
 retrieveManaged := true
 
 libraryDependencies ++= Seq(

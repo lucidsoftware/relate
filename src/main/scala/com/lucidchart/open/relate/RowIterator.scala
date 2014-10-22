@@ -3,10 +3,10 @@ package com.lucidchart.open.relate
 import java.sql.PreparedStatement
 
 private[relate] object RowIterator {
-  def apply[A](parser: RowParser[A], stmt: PreparedStatement, resultSet: SqlResult) = new RowIterator(parser, stmt, resultSet)
+  def apply[A](parser: SqlResult => A, stmt: PreparedStatement, resultSet: SqlResult) = new RowIterator(parser, stmt, resultSet)
 }
 
-private[relate] class RowIterator[A](parser: RowParser[A], stmt: PreparedStatement, result: SqlResult) extends Iterator[A] {
+private[relate] class RowIterator[A](parser: SqlResult => A, stmt: PreparedStatement, result: SqlResult) extends Iterator[A] {
 
   private var _hasNext = result.next()
 

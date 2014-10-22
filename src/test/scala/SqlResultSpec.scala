@@ -27,14 +27,14 @@ case class TestRecord(
 )
 
 class SqlResultSpec extends Specification with Mockito {
-  val parser = RowParser { implicit row =>
+  val parser = { implicit row: SqlResult =>
     TestRecord(
       long("id"),
       string("name")
     )
   }
 
-  val pairparser = RowParser { implicit row =>
+  val pairparser = { implicit row: SqlResult =>
     val id = long("id")
     id -> TestRecord(
       id,

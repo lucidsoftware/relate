@@ -28,7 +28,7 @@ object PaginatedQuery {
    * @return a Stream over all the records returned by the query, getting a new page of results
    * when the current one is exhausted
    */
-  def apply[A](parser: RowParser[A])(getNextStmt: Option[A] => Sql)(implicit connection: Connection): Stream[A] = {
+  def apply[A](parser: SqlResult => A)(getNextStmt: Option[A] => Sql)(implicit connection: Connection): Stream[A] = {
     new PaginatedQuery(parser, connection).withQuery(getNextStmt)
   }
 
@@ -44,7 +44,7 @@ object PaginatedQuery {
    * @return a Stream over all the records returned by the query, getting a new page of results
    * when the current one is exhausted
    */
-  def apply[A](parser: RowParser[A], limit: Int, startingOffset: Long)(query: ParameterizedSql)(implicit connection: Connection): Stream[A] = {
+  def apply[A](parser: SqlResult => A, limit: Int, startingOffset: Long)(query: ParameterizedSql)(implicit connection: Connection): Stream[A] = {
     new PaginatedQuery(parser, connection).withLimitAndOffset(limit, startingOffset, query)
   }
 }
@@ -52,7 +52,7 @@ object PaginatedQuery {
 /**
  * A query object that will execute a query in a paginated format and return the results in a Stream
  */
-private[relate] class PaginatedQuery[A](parser: RowParser[A], connection: Connection) {
+private[relate] class PaginatedQuery[A](parser: SqlResult => A, connection: Connection) {
   self =>
 
   /**
