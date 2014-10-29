@@ -8,15 +8,11 @@ scalaVersion := "2.10.4"
 
 crossScalaVersions := Seq("2.10.4", "2.11.2")
 
-exportJars := true
-
-exportJars in Test := false
-
-autoScalaLibrary := true
-
-scalacOptions += "-deprecation"
-
-retrieveManaged := true
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-feature",
+  "-language:higherKinds"
+)
 
 libraryDependencies ++= Seq(
   "org.specs2" %% "specs2" % "2.3.12" % "it",

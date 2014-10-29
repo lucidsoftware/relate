@@ -4,6 +4,7 @@ import com.lucidchart.open.relate.ByteHelper
 import java.net.URL
 import java.sql.{Blob, Clob, Date, NClob, PreparedStatement, Ref, RowId, SQLXML, Timestamp, Time, Types}
 import java.util.UUID
+import scala.language.implicitConversions
 
 /*
  * Does not support
