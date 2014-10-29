@@ -6,9 +6,9 @@ Relate is a lightweight, blazing-fast database access layer for Scala that abstr
 
 ```scala
 val ids = Seq(1, 2, 3)
-sql"SELECT email FROM users WHERE id in ($ids)".asMap(RowParser { row =>
+sql"SELECT email FROM users WHERE id in ($ids)".asMap { row =>
   row.long("id") -> row.string("email")
-})
+}
 ```
 
 ```scala
@@ -32,7 +32,7 @@ With Relate, you can write your queries in the language nature intended, while i
 To use Relate with sbt, add this to your build.sbt or Build.scala:
 
 ```scala
-libraryDependencies += "com.lucidchart" %% "relate" % "1.6.0"
+libraryDependencies += "com.lucidchart" %% "relate" % "1.7.0"
 
 resolvers += "Sonatype release repository" at "https://oss.sonatype.org/content/repositories/releases/"
 ```
