@@ -2,7 +2,7 @@ name := "Relate"
 
 organization := "com.lucidchart"
 
-version := "1.7.1-SNAPSHOT"
+version := "1.7.1"
 
 scalaVersion := "2.11.4"
 
