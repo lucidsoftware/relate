@@ -42,6 +42,7 @@ object Parameter {
   implicit def fromArray(value: java.sql.Array) = new ArrayParameter(value)
   implicit def fromBigDecimal(value: java.math.BigDecimal) = new BigDecimalParameter(value)
   implicit def fromBlob(value: Blob) = new BlobParameter(value)
+  implicit def fromBoolean(value: Boolean) = new BooleanParameter(value)
   implicit def fromByte(value: Byte) = new ByteParameter(value)
   implicit def fromByteArray(value: Array[Byte]) = new ByteArrayParameter(value)
   implicit def fromClob(value: Clob) = new ClobParameter(value)
