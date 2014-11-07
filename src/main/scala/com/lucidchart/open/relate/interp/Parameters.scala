@@ -62,6 +62,7 @@ object Parameter {
   implicit def fromOptionalArray(value: Option[java.sql.Array]) = value.map(fromArray).getOrElse(NullArrayParameter)
   implicit def fromOptionalBigDecimal(value: Option[java.math.BigDecimal]) = value.map(fromBigDecimal).getOrElse(NullNumericParameter)
   implicit def fromOptionalBlob(value: Option[Blob]) = value.map(fromBlob).getOrElse(NullBlobParameter)
+  implicit def fromOptionalBoolean(value: Option[Boolean]) = value.map(fromBoolean).getOrElse(NullBooleanParameter)
   implicit def fromOptionalByte(value: Option[Byte]) = value.map(fromByte).getOrElse(NullTinyIntParameter)
   implicit def fromOptionalByteArray(value: Option[Array[Byte]]) = value.map(fromByteArray).getOrElse(NullVarBinaryParameter)
   implicit def fromOptionalClob(value: Option[Clob]) = value.map(fromClob).getOrElse(NullClobParameter)
