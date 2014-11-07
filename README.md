@@ -32,7 +32,7 @@ With Relate, you can write your queries in the language nature intended, while i
 To use Relate with sbt, add this to your build.sbt or Build.scala:
 
 ```scala
-libraryDependencies += "com.lucidchart" %% "relate" % "1.7.0"
+libraryDependencies += "com.lucidchart" %% "relate" % "1.7.1"
 
 resolvers += "Sonatype release repository" at "https://oss.sonatype.org/content/repositories/releases/"
 ```
