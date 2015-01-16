@@ -194,6 +194,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, result) = getMocks
 
       rs.getObject("null") returns null
+      rs.wasNull returns true
 
       val nullOpt = result.extractOption("null") { _ => "hello" }
 
@@ -733,7 +734,7 @@ class SqlResultSpec extends Specification with Mockito {
     "return the correct value" in {
       val (rs, result) = getMocks
 
-      val number = 1
+      val number = 1d
 
       val double: Object = number.toDouble: java.lang.Double
       rs.getObject("javaBigDecimal") returns double
