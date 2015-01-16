@@ -157,9 +157,11 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
   def strictDoubleOption(column: String): Option[Double] = getResultSetOption(resultSet.getDouble(column))
   def strictFloat(column: String): Float = resultSet.getFloat(column)
   def strictFloatOption(column: String): Option[Float] = getResultSetOption(resultSet.getFloat(column))
+  @deprecated("Use stringInt(String) instead", "1.8.0")
   def strictInt(index: Int): Int = resultSet.getInt(index)
   def strictInt(column: String): Int = resultSet.getInt(column)
   def strictIntOption(column: String): Option[Int] = getResultSetOption(resultSet.getInt(column))
+  @deprecated("Use stringLong(String) instead", "1.8.0")
   def strictLong(index: Int): Long = resultSet.getLong(index)
   def strictLong(column: String): Long = resultSet.getLong(column)
   def strictLongOption(column: String): Option[Long] = getResultSetOption(resultSet.getLong(column))
@@ -195,15 +197,15 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
   def strictURLOption(column: String): Option[URL] = getResultSetOption(resultSet.getURL(column))
 
   protected[relate] def extractOption[A](column: String)(f: (Any) => A): Option[A] = {
-    resultSet.getObject(column).asInstanceOf[Any] match {
-      case x if (x == null || resultSet.wasNull()) => None
+    resultSet.getObject(column) match {
+      case x if resultSet.wasNull => None
       case x => Some(f(x))
     }
   }
 
-  protected def getResultSetOption[A](f: => A): Option[A] = {
+  protected def getResultSetOption[A](f: A): Option[A] = {
     f match {
-      case x if (x == null || resultSet.wasNull()) => None
+      case x if resultSet.wasNull => None
       case x => Some(x)
     }
   }
@@ -245,7 +247,7 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
       case x: Int => BigInt(x)
       case x: Long => BigInt(x)
       case x: String => BigInt(x)
-      case x: java.math.BigInteger => BigInt(x.toString)
+      case x: java.math.BigInteger => BigInt(x)
     }
   }
 
@@ -255,7 +257,7 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
       case x: Int => BigDecimal(x)
       case x: Long => BigDecimal(x)
       case x: String => BigDecimal(x)
-      case x: java.math.BigDecimal => BigDecimal(x.toString)
+      case x: java.math.BigDecimal => BigDecimal(x)
     }
   }
 
