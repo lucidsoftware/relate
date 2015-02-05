@@ -62,7 +62,7 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
   def asMultiMap[U, V](parser: SqlResult => (U, V)): Map[U, Set[V]] = {
     val mm: mutable.MultiMap[U, V] = new mutable.HashMap[U, mutable.Set[V]] with mutable.MultiMap[U, V]
     withResultSet { resultSet =>
-      while (resultSet.getRow < Long.MaxValue && resultSet.next()) {
+      while (resultSet.next()) {
         val parsed = parser(this)
         mm.addBinding(parsed._1, parsed._2)
       }
