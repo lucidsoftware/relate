@@ -19,6 +19,7 @@ import java.util.Date
 import java.util.UUID
 import scala.collection.JavaConversions
 import scala.collection.generic.CanBuildFrom
+import scala.collection.mutable
 import scala.collection.mutable.Builder
 import scala.collection.mutable.MutableList
 import scala.util.Try
@@ -41,7 +42,7 @@ object SqlResult {
  * methods are slightly faster, but do not do type checking or handle null values.
  */
 class SqlResult(val resultSet: java.sql.ResultSet) {
-  
+
   protected def withResultSet[A](f: (java.sql.ResultSet) => A) = {
     try {
       f(resultSet)
@@ -58,7 +59,17 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
   def asIterable[A](parser: SqlResult => A): Iterable[A] = asCollection[A, Iterable](parser, Long.MaxValue)
   def asList[A](parser: SqlResult => A): List[A] = asCollection[A, List](parser, Long.MaxValue)
   def asMap[U, V](parser: SqlResult => (U, V)): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
-  
+  def asMultiMap[U, V](parser: SqlResult => (U, V)): Map[U, Set[V]] = {
+    val mm: mutable.MultiMap[U, V] = new mutable.HashMap[U, mutable.Set[V]] with mutable.MultiMap[U, V]
+    withResultSet { resultSet =>
+      while (resultSet.next()) {
+        val parsed = parser(this)
+        mm.addBinding(parsed._1, parsed._2)
+      }
+    }
+    mm.toMap.map(x => x._1 -> x._2.toSet)
+  }
+
   def asScalar[A](): A = asScalarOption.get
   def asScalarOption[A](): Option[A] = {
     if (resultSet.next()) {
@@ -100,13 +111,13 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
    * @return the current row number
    */
   def getRow(): Int = resultSet.getRow()
-  
+
   /**
    * Get the metadata for the java.sql.ResultSet that underlies this SqlResult
    * @return the metadata
    */
   def getMetaData(): ResultSetMetaData = resultSet.getMetaData()
-  
+
   /**
    * Determine if the last value extracted from the result set was null
    * @return whether the last value was null

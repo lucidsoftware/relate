@@ -131,6 +131,25 @@ class SqlResultSpec extends Specification with Mockito {
     }
   }
 
+  "asMultiMap" should {
+    "return a multimap of 2 keys with 2 entries in each" in {
+      val (rs, result) = getMocks
+      import java.lang.{Long => L}
+
+      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3 thenReturn     4
+      rs.next   returns true thenReturn true thenReturn true thenReturn true thenReturn false
+      rs.getObject("id") returns "1" thenReturns "2" thenReturns "1" thenReturns "2"
+      rs.getObject("name") returns "one" thenReturns "two" thenReturns "three" thenReturns "four"
+
+      val res = result.asMultiMap[String, String] { row =>
+        row.string("id") -> row.string("name")
+      }
+      res.keys must containTheSameElementsAs(Seq("1", "2"))
+      res("1") must containTheSameElementsAs(Seq("one", "three"))
+      res("2") must containTheSameElementsAs(Seq("two", "four"))
+    }
+  }
+
   "scalar" should {
     "return the correct type" in {
       val (rs, result) = getMocks
