@@ -59,7 +59,7 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
   def asIterable[A](parser: SqlResult => A): Iterable[A] = asCollection[A, Iterable](parser, Long.MaxValue)
   def asList[A](parser: SqlResult => A): List[A] = asCollection[A, List](parser, Long.MaxValue)
   def asMap[U, V](parser: SqlResult => (U, V)): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
-  def asMultiMap[U, V](parser: SqlResult => (U, V)): mutable.MultiMap[U, V] = {
+  def asMultiMap[U, V](parser: SqlResult => (U, V)): Map[U, Set[V]] = {
     val mm: mutable.MultiMap[U, V] = new mutable.HashMap[U, mutable.Set[V]] with mutable.MultiMap[U, V]
     withResultSet { resultSet =>
       while (resultSet.getRow < Long.MaxValue && resultSet.next()) {
@@ -67,7 +67,7 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
         mm.addBinding(parsed._1, parsed._2)
       }
     }
-    mm
+    mm.toMap.map(x => x._1 -> x._2.toSet)
   }
 
   def asScalar[A](): A = asScalarOption.get
