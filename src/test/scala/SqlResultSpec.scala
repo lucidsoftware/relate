@@ -26,6 +26,15 @@ case class TestRecord(
   name: String
 )
 
+object TestRecord{
+  implicit val TestRecordParseable = new Parseable[TestRecord] {
+    def parse(row: SqlResult): TestRecord = TestRecord(
+      row.long("id"),
+      row.string("name")
+    )
+  }
+}
+
 class SqlResultSpec extends Specification with Mockito {
   val parser = { implicit row: SqlResult =>
     TestRecord(
@@ -50,7 +59,7 @@ class SqlResultSpec extends Specification with Mockito {
   implicit val con: Connection = null
 
   "asSingle" should {
-    "return a single row" in {
+    "return a single row with an explicit parser" in {
       val (rs, result) = getMocks
 
       rs.getRow returns 0 thenReturn 1
@@ -59,6 +68,17 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("name") returns "the name"
 
       result.asSingle(parser) equals TestRecord(100L, "the name")
+    }
+
+    "return a single row with an implicit parser" in {
+      val (rs, result) = getMocks
+
+      rs.getRow returns 0 thenReturn 1
+      rs.next returns true thenReturns false
+      rs.getObject("id") returns (100L: java.lang.Long)
+      rs.getObject("name") returns "the name"
+
+      result.asSingle[TestRecord] equals TestRecord(100L, "the name")
     }
   }
 
@@ -70,23 +90,37 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("name") returns "the name"
     }
 
-    "return a single row" in {
+    "return a single row with an explicit parser" in {
       val (rs, result) = getMocks
       init(rs, true)
 
       result.asSingleOption(parser) must beSome(TestRecord(100L, "the name"))
     }
 
-    "return a None" in {
+    "return a None with an explicit parser" in {
       val (rs, result) = getMocks
       init(rs, false)
 
       result.asSingleOption(parser) must beNone
     }
+
+    "return a single row with an implicit parser" in {
+      val (rs, result) = getMocks
+      init(rs, true)
+
+      result.asSingleOption[TestRecord] must beSome(TestRecord(100L, "the name"))
+    }
+
+    "return a None with an implicit parser" in {
+      val (rs, result) = getMocks
+      init(rs, false)
+
+      result.asSingleOption[TestRecord] must beNone
+    }
   }
 
   "asList" should {
-    "return a list of 3 elements" in {
+    "return a list of 3 elements with an explicit parser" in {
       val (rs, result) = getMocks
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
@@ -97,7 +131,7 @@ class SqlResultSpec extends Specification with Mockito {
       result.asList(parser) equals List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
     }
 
-    "return an empty list" in {
+    "return an empty list with an explicit parser" in {
       val (rs, result) = getMocks
 
       rs.getRow returns 0
@@ -105,10 +139,30 @@ class SqlResultSpec extends Specification with Mockito {
 
       result.asList(parser) equals List()
     }
+
+    "return a list of 3 elements with an implicit parser" in {
+      val (rs, result) = getMocks
+
+      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
+      rs.next   returns true thenReturn true thenReturn true thenReturn false
+      rs.getObject("id") returns (100L: java.lang.Long)
+      rs.getObject("name") returns "the name"
+
+      result.asList[TestRecord] equals List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
+    }
+
+    "return an empty list with an implicit parser" in {
+      val (rs, result) = getMocks
+
+      rs.getRow returns 0
+      rs.next returns false
+
+      result.asList[TestRecord] equals List()
+    }
   }
 
   "asMap" should {
-    "return a map of 3 elements" in {
+    "return a map of 3 elements with an explicit parser" in {
       val (rs, result) = getMocks
       import java.lang.{Long => L}
 
@@ -123,11 +177,40 @@ class SqlResultSpec extends Specification with Mockito {
       res(3L) equals TestRecord(3L, "the name")
     }
 
-    "return an empty map" in {
+    "return an empty map with an explicit parser" in {
       val (rs, result) = getMocks
       rs.getRow returns 0
       rs.next returns false
       result.asMap(pairparser) equals Map()
+    }
+
+    implicit val a: Parseable[(Long, TestRecord)] = new Parseable[(Long, TestRecord)] {
+      def parse(row: SqlResult) = {
+        val id = row.long("id")
+        id -> TestRecord(id, row.string("name"))
+      }
+    }
+
+    "return a map of 3 elements with an implicit parser" in {
+      val (rs, result) = getMocks
+      import java.lang.{Long => L}
+
+      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
+      rs.next   returns true thenReturn true thenReturn true thenReturn false
+      rs.getObject("id") returns (1: L) thenReturns (2: L) thenReturns (3: L)
+      rs.getObject("name") returns "the name"
+
+      val res = result.asMap[Long, TestRecord]
+      res(1L) equals TestRecord(1L, "the name")
+      res(2L) equals TestRecord(2L, "the name")
+      res(3L) equals TestRecord(3L, "the name")
+    }
+
+    "return an empty map with an implicit parser" in {
+      val (rs, result) = getMocks
+      rs.getRow returns 0
+      rs.next returns false
+      result.asMap[Long, TestRecord] equals Map()
     }
   }
 

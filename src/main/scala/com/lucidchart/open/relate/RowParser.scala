@@ -1,5 +1,9 @@
 package com.lucidchart.open.relate
 
+trait Parseable[A] {
+  def parse(row: SqlResult): A
+}
+
 /**
  * A RowParser is a function that takes a SqlResult as a parameter and parses it to
  * return a concrete type
