@@ -373,7 +373,8 @@ trait Sql {
    * @return the results as a single record
    */
   def asSingle[A](parser: SqlResult => A)(implicit connection: Connection): A = normalStatement.execute(_.asSingle(parser))
-  
+  def asSingle[A: Parseable]()(implicit connection: Connection): A = normalStatement.execute(_.asSingle[A])
+
   /**
    * Execute this query and get back the result as an optional single record
    * @param parser the RowParser to use when parsing the result set
@@ -381,7 +382,8 @@ trait Sql {
    * @return the results as an optional single record
    */
   def asSingleOption[A](parser: SqlResult => A)(implicit connection: Connection): Option[A] = normalStatement.execute(_.asSingleOption(parser))
-  
+  def asSingleOption[A: Parseable]()(implicit connection: Connection): Option[A] = normalStatement.execute(_.asSingleOption[A])
+
   /**
    * Execute this query and get back the result as a Set of records
    * @param parser the RowParser to use when parsing the result set
@@ -389,7 +391,8 @@ trait Sql {
    * @return the results as a Set of records
    */
   def asSet[A](parser: SqlResult => A)(implicit connection: Connection): Set[A] = normalStatement.execute(_.asSet(parser))
-  
+  def asSet[A: Parseable]()(implicit connection: Connection): Set[A] = normalStatement.execute(_.asSet[A])
+
   /**
    * Execute this query and get back the result as a sequence of records
    * @param parser the RowParser to use when parsing the result set
@@ -397,7 +400,8 @@ trait Sql {
    * @return the results as a sequence of records
    */
   def asSeq[A](parser: SqlResult => A)(implicit connection: Connection): Seq[A] = normalStatement.execute(_.asSeq(parser))
-  
+  def asSeq[A: Parseable]()(implicit connection: Connection): Seq[A] = normalStatement.execute(_.asSeq[A])
+
   /**
    * Execute this query and get back the result as an iterable of records
    * @param parser the RowParser to use when parsing the result set
@@ -405,7 +409,8 @@ trait Sql {
    * @return the results as an iterable of records
    */
   def asIterable[A](parser: SqlResult => A)(implicit connection: Connection): Iterable[A] = normalStatement.execute(_.asIterable(parser))
-  
+  def asIterable[A: Parseable]()(implicit connection: Connection): Iterable[A] = normalStatement.execute(_.asIterable[A])
+
   /**
    * Execute this query and get back the result as a List of records
    * @param parser the RowParser to use when parsing the result set
@@ -413,7 +418,8 @@ trait Sql {
    * @return the results as a List of records
    */
   def asList[A](parser: SqlResult => A)(implicit connection: Connection): List[A] = normalStatement.execute(_.asList(parser))
-  
+  def asList[A: Parseable]()(implicit connection: Connection): List[A] = normalStatement.execute(_.asList[A])
+
   /**
    * Execute this query and get back the result as a Map of records
    * @param parser the RowParser to use when parsing the result set. The RowParser should return a Tuple
@@ -422,7 +428,8 @@ trait Sql {
    * @return the results as a Map of records
    */
   def asMap[U, V](parser: SqlResult => (U, V))(implicit connection: Connection): Map[U, V] = normalStatement.execute(_.asMap(parser))
-  
+  def asMap[U, V]()(implicit connection: Connection, p: Parseable[(U, V)]): Map[U, V] = normalStatement.execute(_.asMap[U, V])
+
   /**
    * Execute this query and get back the result as a single value. Assumes that there is only one
    * row and one value in the result set.
@@ -447,7 +454,8 @@ trait Sql {
    * @return the results as an arbitrary collection of records
    */
   def asCollection[U, T[_]](parser: SqlResult => U)(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = normalStatement.execute(_.asCollection(parser))
-  
+  def asCollection[U: Parseable, T[_]]()(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = normalStatement.execute(_.asCollection[U, T])
+
   /**
    * Execute this query and get back the result as an arbitrary collection of key value pairs
    * @param parser the RowParser to use when parsing the result set
@@ -455,7 +463,8 @@ trait Sql {
    * @return the results as an arbitrary collection of key value pairs
    */
   def asPairCollection[U, V, T[_, _]](parser: SqlResult => (U, V))(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = normalStatement.execute(_.asPairCollection(parser))
-  
+  def asPairCollection[U, V, T[_, _]]()(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection, p: Parseable[(U, V)]): T[U, V] = normalStatement.execute(_.asPairCollection[U, V, T])
+
   /**
    * The asIterator method returns an Iterator that will stream data out of the database.
    * This avoids an OutOfMemoryError when dealing with large datasets. Bear in mind that many
