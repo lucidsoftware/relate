@@ -430,6 +430,9 @@ trait Sql {
   def asMap[U, V](parser: SqlResult => (U, V))(implicit connection: Connection): Map[U, V] = normalStatement.execute(_.asMap(parser))
   def asMap[U, V]()(implicit connection: Connection, p: Parseable[(U, V)]): Map[U, V] = normalStatement.execute(_.asMap[U, V])
 
+  def asMultiMap[U, V](parser: SqlResult => (U, V))(implicit connection: Connection): Map[U, Set[V]] = normalStatement.execute(_.asMultiMap(parser))
+  def asMultiMap[U, V]()(implicit connection: Connection, p: Parseable[(U, V)]): Map[U, Set[V]] = normalStatement.execute(_.asMultiMap[U, V])
+
   /**
    * Execute this query and get back the result as a single value. Assumes that there is only one
    * row and one value in the result set.

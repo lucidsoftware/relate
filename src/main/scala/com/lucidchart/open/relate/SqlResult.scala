@@ -66,6 +66,7 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
   def asList[A](parser: SqlResult => A): List[A] = asCollection[A, List](parser, Long.MaxValue)
   def asMap[U, V]()(implicit p: Parseable[(U, V)]): Map[U, V] = asPairCollection[U, V, Map](Long.MaxValue)
   def asMap[U, V](parser: SqlResult => (U, V)): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
+  def asMultiMap[U, V]()(implicit p: Parseable[(U, V)]): Map[U, Set[V]] = asMultiMap(p.parse)
   def asMultiMap[U, V](parser: SqlResult => (U, V)): Map[U, Set[V]] = {
     val mm: mutable.MultiMap[U, V] = new mutable.HashMap[U, mutable.Set[V]] with mutable.MultiMap[U, V]
     withResultSet { resultSet =>
