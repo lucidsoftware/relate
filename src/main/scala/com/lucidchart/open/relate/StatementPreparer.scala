@@ -61,6 +61,12 @@ private[relate] sealed trait StatementPreparer {
 private[relate] trait BaseStatementPreparer extends StatementPreparer {
   protected def applyParams(stmt: PreparedStatement)
   protected def parsedQuery: String
+  protected def timeout: Option[Int] = None
+
+  protected def setTimeout(stmt: PreparedStatement): Unit = for {
+    seconds <- timeout
+    stmt <- Option(stmt)
+  } yield (stmt.setQueryTimeout(seconds))
 }
 
 private[relate] trait NormalStatementPreparer extends BaseStatementPreparer {
@@ -71,6 +77,7 @@ private[relate] trait NormalStatementPreparer extends BaseStatementPreparer {
    */
   protected override def prepare(): PreparedStatement = {
     val stmt = connection.prepareStatement(parsedQuery)
+    setTimeout(stmt)
     applyParams(stmt)
     stmt
   }
@@ -91,6 +98,7 @@ private[relate] trait InsertionStatementPreparer extends BaseStatementPreparer {
    */
   protected override def prepare(): PreparedStatement = {
     val stmt = connection.prepareStatement(parsedQuery, Statement.RETURN_GENERATED_KEYS)
+    setTimeout(stmt)
     applyParams(stmt)
     stmt
   }
@@ -118,6 +126,7 @@ private[relate] trait StreamedStatementPreparer extends BaseStatementPreparer {
       ResultSet.TYPE_FORWARD_ONLY,
       ResultSet.CONCUR_READ_ONLY
     )
+    setTimeout(stmt)
     val driver = connection.getMetaData().getDriverName()
     if (driver.toLowerCase.contains("mysql")) {
       stmt.setFetchSize(Int.MinValue)

@@ -17,7 +17,17 @@ private[relate] case class ExpandableQuery(
     listParams
   )
 
-  /** 
+  def withTimeout(seconds: Int): ExpandableQuery = new ExpandableQuery(query, listParams) {
+    override def applyParams(stmt: PreparedStatement) {
+      if (stmt != null) {
+        stmt.setQueryTimeout(seconds)
+      }
+
+      super.applyParams(stmt)
+    }
+  }
+
+  /**
    * The copy method used by the Sql Trait
    * Returns a SqlQuery object so that expansion can only occur before the 'on' method
    */
@@ -258,16 +268,16 @@ trait Sql {
   protected val parsedQuery: String
   protected def applyParams(stmt: PreparedStatement)
 
-  private class BaseStatement(val connection: Connection) {
+  protected[relate] class BaseStatement(val connection: Connection) {
     protected val parsedQuery = self.parsedQuery
     protected def applyParams(stmt: PreparedStatement) = self.applyParams(stmt)
   }
 
-  private def normalStatement(implicit connection: Connection) = new BaseStatement(connection) with NormalStatementPreparer
+  protected def normalStatement(implicit connection: Connection) = new BaseStatement(connection) with NormalStatementPreparer
 
-  private def insertionStatement(implicit connection: Connection) = new BaseStatement(connection) with InsertionStatementPreparer
+  protected def insertionStatement(implicit connection: Connection) = new BaseStatement(connection) with InsertionStatementPreparer
 
-  private def streamedStatement(fetchSize: Int)(implicit connection: Connection) = {
+  protected def streamedStatement(fetchSize: Int)(implicit connection: Connection) = {
     val fetchSize_ = fetchSize
     new BaseStatement(connection) with StreamedStatementPreparer {
       protected val fetchSize = fetchSize_
