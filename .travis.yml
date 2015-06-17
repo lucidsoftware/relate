@@ -1,0 +1,29 @@
+after_success:
+  - |
+    if [ -n "$TRAVIS_TAG" ]; then
+        mkdir ~/.pgp
+        echo $PGP_PUBLIC | base64 --decode > ~/.pgp/pubring
+        echo $PGP_SECRET | base64 --decode > ~/.pgp/secring
+        sbt ++$TRAVIS_SCALA_VERSION publishSigned
+    elif [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$TRAVIS_BRANCH" == master ]; then
+        mkdir ~/.pgp
+        echo $PGP_PUBLIC | base64 --decode > ~/.pgp/pubring
+        echo $PGP_SECRET | base64 --decode > ~/.pgp/secring
+        sbt ++$TRAVIS_SCALA_VERSION publishSigned
+    fi
+deploy:
+  api_key: $GITHUB_AUTH
+  file: target/**/*.jar
+  file_glob: true
+  on:
+    tags: true
+  provider: releases
+  skip_cleanup: true
+jdk:
+  - openjdk6
+language: scala
+scala:
+  - 2.10.5
+  - 2.11.6
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION test package

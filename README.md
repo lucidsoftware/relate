@@ -38,3 +38,5 @@ resolvers += "Sonatype release repository" at "https://oss.sonatype.org/content/
 ```
 
 [Continue to Documentation](https://github.com/lucidsoftware/relate/wiki)
+
+[![Build Status](https://travis-ci.org/lucidsoftware/relate.svg)](https://travis-ci.org/lucidsoftware/relate)
