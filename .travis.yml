@@ -4,12 +4,12 @@ after_success:
         mkdir ~/.pgp
         echo $PGP_PUBLIC | base64 --decode > ~/.pgp/pubring
         echo $PGP_SECRET | base64 --decode > ~/.pgp/secring
-        sbt ++$TRAVIS_SCALA_VERSION publishSigned
+        sbt ++$TRAVIS_SCALA_VERSION publishSigned sonatypeRelease
     elif [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$TRAVIS_BRANCH" == master ]; then
         mkdir ~/.pgp
         echo $PGP_PUBLIC | base64 --decode > ~/.pgp/pubring
         echo $PGP_SECRET | base64 --decode > ~/.pgp/secring
-        sbt ++$TRAVIS_SCALA_VERSION publishSigned
+        sbt ++$TRAVIS_SCALA_VERSION publishSigned sonatypeRelease
     fi
 deploy:
   api_key: $GITHUB_AUTH
