@@ -10,6 +10,8 @@ private[relate] case class ExpandableQuery(
   listParams: mutable.Map[String, ListParam] = mutable.Map[String, ListParam]()
 ) extends ParameterizableSql with Expandable {
 
+  val timeout: Option[Int] = None
+
   val params = Nil
   protected[relate] def queryParams = QueryParams(
     query,
@@ -17,7 +19,24 @@ private[relate] case class ExpandableQuery(
     listParams
   )
 
-  /** 
+  protected def setTimeout(stmt: PreparedStatement): Unit = {
+    for {
+      seconds <- timeout
+      stmt <- Option(stmt)
+    } yield (stmt.setQueryTimeout(seconds))
+  }
+
+  def withTimeout(seconds: Int): ExpandableQuery = new ExpandableQuery(query, listParams) {
+    override val timeout: Option[Int] = Some(seconds)
+
+    override def applyParams(stmt: PreparedStatement) {
+      setTimeout(stmt)
+
+      super.applyParams(stmt)
+    }
+  }
+
+  /**
    * The copy method used by the Sql Trait
    * Returns a SqlQuery object so that expansion can only occur before the 'on' method
    */
@@ -258,16 +277,16 @@ trait Sql {
   protected val parsedQuery: String
   protected def applyParams(stmt: PreparedStatement)
 
-  private class BaseStatement(val connection: Connection) {
+  protected[relate] class BaseStatement(val connection: Connection) {
     protected val parsedQuery = self.parsedQuery
     protected def applyParams(stmt: PreparedStatement) = self.applyParams(stmt)
   }
 
-  private def normalStatement(implicit connection: Connection) = new BaseStatement(connection) with NormalStatementPreparer
+  protected def normalStatement(implicit connection: Connection) = new BaseStatement(connection) with NormalStatementPreparer
 
-  private def insertionStatement(implicit connection: Connection) = new BaseStatement(connection) with InsertionStatementPreparer
+  protected def insertionStatement(implicit connection: Connection) = new BaseStatement(connection) with InsertionStatementPreparer
 
-  private def streamedStatement(fetchSize: Int)(implicit connection: Connection) = {
+  protected def streamedStatement(fetchSize: Int)(implicit connection: Connection) = {
     val fetchSize_ = fetchSize
     new BaseStatement(connection) with StreamedStatementPreparer {
       protected val fetchSize = fetchSize_

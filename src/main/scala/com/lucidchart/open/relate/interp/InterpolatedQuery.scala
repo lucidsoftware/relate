@@ -1,6 +1,8 @@
 package com.lucidchart.open.relate.interp
 
+import com.lucidchart.open.relate._
 import com.lucidchart.open.relate.Sql
+import java.sql.Connection
 import java.sql.PreparedStatement
 
 class InterpolatedQuery(protected val parsedQuery: String, protected val params: Seq[Parameter]) extends Sql with MultipleParameter {
@@ -10,6 +12,24 @@ class InterpolatedQuery(protected val parsedQuery: String, protected val params:
   protected def applyParams(stmt: PreparedStatement) = parameterize(stmt, 1)
 
   def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder ++= parsedQuery
+
+  def withTimeout(seconds: Int): InterpolatedQuery = new InterpolatedQuery(parsedQuery, params) {
+    override protected def normalStatement(implicit conn: Connection) = new BaseStatement(conn) with NormalStatementPreparer {
+      override def timeout = Some(seconds)
+    }
+
+    override protected def insertionStatement(implicit conn: Connection) = new BaseStatement(conn) with InsertionStatementPreparer {
+      override def timeout = Some(seconds)
+    }
+
+    override protected def streamedStatement(fetchSize: Int)(implicit conn: Connection) = {
+      val fetchSize_ = fetchSize
+      new BaseStatement(conn) with StreamedStatementPreparer {
+        protected val fetchSize = fetchSize_
+        override def timeout = Some(seconds)
+      }
+    }
+  }
 
 }
 
