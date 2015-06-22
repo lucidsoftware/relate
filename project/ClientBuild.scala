@@ -7,9 +7,4 @@ object ClientBuild extends Build {
     Project("root", file("."))
       .configs(IntegrationTest)
       .settings(Defaults.itSettings: _*)
-      .settings(
-        testOptions in IntegrationTest += Tests.Setup( () => {
-          println("Make sure you're running these tests from this script: it-test.sh")
-        })
-      )
 }
