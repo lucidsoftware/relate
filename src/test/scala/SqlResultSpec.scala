@@ -224,7 +224,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("id") returns "1" thenReturns "2" thenReturns "1" thenReturns "2"
       rs.getObject("name") returns "one" thenReturns "two" thenReturns "three" thenReturns "four"
 
-      val res = result.asMultiMap[String, String] { row =>
+      val res = result.asMultiMap { row =>
         row.string("id") -> row.string("name")
       }
       res.keys must containTheSameElementsAs(Seq("1", "2"))
