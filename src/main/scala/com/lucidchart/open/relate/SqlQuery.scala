@@ -10,6 +10,8 @@ private[relate] case class ExpandableQuery(
   listParams: mutable.Map[String, ListParam] = mutable.Map[String, ListParam]()
 ) extends ParameterizableSql with Expandable {
 
+  val timeout: Option[Int] = None
+
   val params = Nil
   protected[relate] def queryParams = QueryParams(
     query,
@@ -17,11 +19,18 @@ private[relate] case class ExpandableQuery(
     listParams
   )
 
+  protected def setTimeout(stmt: PreparedStatement): Unit = {
+    for {
+      seconds <- timeout
+      stmt <- Option(stmt)
+    } yield (stmt.setQueryTimeout(seconds))
+  }
+
   def withTimeout(seconds: Int): ExpandableQuery = new ExpandableQuery(query, listParams) {
+    override val timeout: Option[Int] = Some(seconds)
+
     override def applyParams(stmt: PreparedStatement) {
-      if (stmt != null) {
-        stmt.setQueryTimeout(seconds)
-      }
+      setTimeout(stmt)
 
       super.applyParams(stmt)
     }
