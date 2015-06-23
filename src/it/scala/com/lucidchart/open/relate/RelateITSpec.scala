@@ -11,8 +11,10 @@ trait Db {
   val url = "jdbc:mysql://localhost/"
   val dbName = "relate_it_tests"
   val driver = "com.mysql.jdbc.Driver"
-  val user = "dev"
-  val pass = "dev"
+  // a little weird because Travis won't set empty env variable
+  protected[this] val (user, pass) = Option(System.getenv("MYSQL_USER")).fold(("dev", "dev")) {
+    (_, Option(System.getenv("MYSQL_PASSWORD")).getOrElse(""))
+  }
 
   Class.forName(driver)
 

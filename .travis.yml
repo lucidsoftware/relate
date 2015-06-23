@@ -19,6 +19,10 @@ deploy:
     tags: true
   provider: releases
   skip_cleanup: true
+env:
+  global:
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=
 jdk:
   - openjdk6
 language: scala
@@ -26,4 +30,4 @@ scala:
   - 2.10.5
   - 2.11.6
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION test package
+  - sbt ++$TRAVIS_SCALA_VERSION test it:test package
