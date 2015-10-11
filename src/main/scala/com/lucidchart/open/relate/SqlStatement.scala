@@ -18,33 +18,20 @@ import scala.reflect.ClassTag
 class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[String, List[Int]],
   val listParams: mutable.Map[String, ListParam]) {
 
-  private def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit) {
-    val valueIterator = values.toIterator
-    val nameData = names.get(name)
-
-    if (nameData.isDefined) {
-      var i = 0
-      while (valueIterator.hasNext) {
-        val value = valueIterator.next
-        val parameterIterator = nameData.get.toIterator
-
-        while (parameterIterator.hasNext) {
-          rule(parameterIterator.next + i, value)
+  private def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit): Unit = {
+    names.get(name).map { nameData: List[Int] =>
+      values.toSeq.zipWithIndex.map { zip: (A, Int) =>
+        zip match {
+          case (value, index) => nameData.map { nameDataIndex: Int =>
+            rule(nameDataIndex + index, value)
+          }
         }
-
-        i += 1
       }
     }
   }
 
-  private def insert[A](name: String, value: A, rule: (Int, A) => Unit) {
-    val nameData = names.get(name)
-    if (nameData.isDefined) {
-      val iterator = nameData.get.toIterator
-      while(iterator.hasNext) {
-        rule(iterator.next, value)
-      }
-    }
+  private def insert[A](name: String, value: A, rule: (Int, A) => Unit): Unit = {
+    names.get(name).map(_.map(rule(_, value)))
   }
 
   /**

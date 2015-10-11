@@ -108,7 +108,7 @@ private[relate] class PaginatedQuery[A](parser: SqlResult => A, connection: Conn
      * @return a stream of the records in the page
      */
     def page(offset: Long): Stream[A] = {
-      val newParams = queryParams.copy(query = queryString + " LIMIT " + limit + " OFFSET " + offset)
+      val newParams = queryParams.copy(query = s"$queryString LIMIT $limit OFFSET $offset")
       new ParameterizedSql with NormalStatementPreparer {
         def connection = self.connection
         val query = queryString
