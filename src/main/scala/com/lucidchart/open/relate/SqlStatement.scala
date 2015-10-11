@@ -20,18 +20,17 @@ class SqlStatement(val stmt: PreparedStatement, val names: scala.collection.Map[
 
   private def list[A](name: String, values: TraversableOnce[A], rule: (Int, A) => Unit): Unit = {
     names.get(name).map { nameData: List[Int] =>
-      values.toSeq.zipWithIndex.map { zip: (A, Int) =>
-        zip match {
-          case (value, index) => nameData.map { nameDataIndex: Int =>
+      values.toIterator.zipWithIndex.foreach {
+        case (value, index) =>
+          nameData.foreach { nameDataIndex: Int =>
             rule(nameDataIndex + index, value)
           }
-        }
       }
     }
   }
 
   private def insert[A](name: String, value: A, rule: (Int, A) => Unit): Unit = {
-    names.get(name).map(_.map(rule(_, value)))
+    names.get(name).foreach(_.foreach(rule(_, value)))
   }
 
   /**
