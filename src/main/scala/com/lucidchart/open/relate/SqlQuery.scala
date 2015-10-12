@@ -87,8 +87,8 @@ private[relate] case class Tupled(
   numTuples: Int,
   tupleSize: Int
 ) extends ListParam {
-  override val count: Int = count * tupleSize
-  override val charCount: Int = count * 3 + count * tupleSize * 2 
+  override val count: Int = numTuples * tupleSize
+  override val charCount: Int = numTuples * 3 + numTuples * tupleSize * 2
 }
 
 /** 
