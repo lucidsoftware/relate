@@ -7,7 +7,6 @@ import org.specs2.mock.Mockito
 
 class SqlQuerySpec extends Specification with Mockito {
 
-
   "ExpandableQuery.withTimeout" should {
     class TestEq extends ExpandableQuery("")
 
@@ -16,9 +15,10 @@ class SqlQuerySpec extends Specification with Mockito {
       eq.timeout must beSome(10)
     }
 
-    "not set the timtout" in {
+    "not set the timeout" in {
       val eq = new TestEq()
       eq.timeout must beNone
     }
   }
+  
 }
