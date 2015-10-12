@@ -94,7 +94,7 @@ private[relate] object SqlStatementParser {
    * @param query the current query in a StringBuilder
    */
   private def insertTuples(numTuples: Int, tupleSize: Int, query: StringBuilder): Unit = {
-    for (i <- 0 to numTuples - 1) {
+    for (i <- 0 to numTuples) {
       if (i > 0) query append ','
       insertTuple(tupleSize, query)
     }
