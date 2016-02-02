@@ -43,7 +43,7 @@ object SqlResult {
  */
 class SqlResult(val resultSet: java.sql.ResultSet) {
 
-  protected def withResultSet[A](f: (java.sql.ResultSet) => A) = {
+  protected[relate] def withResultSet[A](f: (java.sql.ResultSet) => A) = {
     try {
       f(resultSet)
     }
@@ -51,6 +51,8 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
       resultSet.close()
     }
   }
+
+  def as[A: Parseable](): A = implicitly[Parseable[A]].parse(this)
 
   def asSingle[A: Parseable](): A = asCollection[A, Seq](1).head
   def asSingle[A](parser: SqlResult => A): A = asCollection[A, Seq](parser, 1).head
