@@ -95,4 +95,98 @@ object Regressions extends DbRegression {
       }
     }
   }
+
+  type ThreeCol = (Int, Int, Int)
+  implicit val threeColParseable = new Parseable[ThreeCol] {
+    def parse(row: SqlResult): ThreeCol = (
+      row.int("col1"),
+      row.int("col2"),
+      row.int("col3")
+    )
+  }
+
+  type TwentyTwoCol = (Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int)
+  implicit val twentyTwoColParseable = new Parseable[TwentyTwoCol] {
+    def parse(row: SqlResult): TwentyTwoCol = (
+      row.int("col1"),
+      row.int("col2"),
+      row.int("col3"),
+      row.int("col4"),
+      row.int("col5"),
+      row.int("col6"),
+      row.int("col7"),
+      row.int("col8"),
+      row.int("col9"),
+      row.int("col10"),
+      row.int("col11"),
+      row.int("col12"),
+      row.int("col13"),
+      row.int("col14"),
+      row.int("col15"),
+      row.int("col16"),
+      row.int("col17"),
+      row.int("col18"),
+      row.int("col19"),
+      row.int("col20"),
+      row.int("col21"),
+      row.int("col22")
+    )
+  }
+
+  val query = sql"SELECT * FROM sel_50"
+  val parserIterations = (0 until 10000)
+
+  performance of "parsers" in {
+    performance of "three columns" in {
+      measure method "asList(parser)" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.asList(threeColParseable.parse)
+          }
+        }
+      }
+
+      measure method "asList[Type]" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.asList[ThreeCol]
+          }
+        }
+      }
+
+      measure method "as[List[Type]]" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.as[List[ThreeCol]]
+          }
+        }
+      }
+    }
+
+    performance of "thirty columns" in {
+      measure method "asList(parser)" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.asList(twentyTwoColParseable.parse)
+          }
+        }
+      }
+
+      measure method "asList[Type]" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.asList[TwentyTwoCol]
+          }
+        }
+      }
+
+      measure method "as[List[Type]]" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.as[List[TwentyTwoCol]]
+          }
+        }
+      }
+    }
+  }
 }

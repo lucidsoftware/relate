@@ -385,6 +385,8 @@ trait Sql {
    */
   def executeInsertCollection[U, T[_]](parser: SqlResult => U)(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = insertionStatement.execute(_.asCollection(parser))
 
+  def as[A: Parseable]()(implicit connection: Connection): A = normalStatement.execute(_.as[A])
+
   /**
    * Execute this query and get back the result as a single record
    * @param parser the RowParser to use when parsing the result set
