@@ -75,19 +75,21 @@ private[relate] sealed trait ListParam {
 /** ListParam type that represents a comma separated list of parameters */
 private[relate] case class CommaSeparated(
   name: String,
-  count: Int,
-  charCount: Int
-) extends ListParam
+  count: Int
+) extends ListParam {
+  override val charCount: Int = count * 2
+}
 
 /** ListParam type that represents a comma separated list of tuples */
 private[relate] case class Tupled(
   name: String,
-  count: Int,
-  charCount: Int,
   params: Map[String, Int],
   numTuples: Int,
   tupleSize: Int
-) extends ListParam
+) extends ListParam {
+  override val count: Int = numTuples * tupleSize
+  override val charCount: Int = numTuples * 3 + numTuples * tupleSize * 2
+}
 
 /** 
  * Expandable is a trait for SQL queries that can be expanded.
@@ -136,7 +138,7 @@ sealed trait Expandable extends ParameterizableSql {
    * @param count the count of parameters in the list
    */
   def commaSeparated(name: String, count: Int) {
-    listParams(name) = CommaSeparated(name, count, count * 2)
+    listParams(name) = CommaSeparated(name, count)
   }
 
   /**
@@ -167,16 +169,14 @@ sealed trait Expandable extends ParameterizableSql {
    * @param name the identifier for the tuples
    * @param columns a list of the column names in the order they should be inserted into
    * the tuples
-   * @param count the number of tuples to insert
+   * @param numTuples the number of tuples to insert
    */
-  def tupled(name: String, columns: Seq[String], count: Int) {
+  def tupled(name: String, columns: Seq[String], numTuples: Int) {
     val namesToIndexes = columns.zipWithIndex.toMap
     listParams(name) = Tupled(
       name,
-      count * columns.size,
-      count * 3 + count * columns.size * 2,
       namesToIndexes,
-      count,
+      numTuples,
       columns.size
     )
   }

@@ -84,14 +84,7 @@ private[relate] object SqlStatementParser {
    * @param query the current query in a StringBuilder
    */
   private def insertCommaSeparated(count: Int, query: StringBuilder): Unit = {
-    if (count > 0) {
-      query += '?'
-    }
-    var i = 1
-    while (i < count) {
-      query.append(",?")
-      i += 1
-    }
+    Iterator.fill(count)("?").addString(query, ",")
   }
 
   /**
@@ -101,14 +94,9 @@ private[relate] object SqlStatementParser {
    * @param query the current query in a StringBuilder
    */
   private def insertTuples(numTuples: Int, tupleSize: Int, query: StringBuilder): Unit = {
-    if (numTuples > 0) {
+    for (i <- 0 to numTuples - 1) {
+      if (i > 0) query append ','
       insertTuple(tupleSize, query)
-    }
-    var i = 1
-    while (i < numTuples) {
-      query += ','
-      insertTuple(tupleSize, query)
-      i += 1
     }
   }
 
@@ -118,15 +106,6 @@ private[relate] object SqlStatementParser {
    * @param query the current query in a StringBuilder
    */
   private def insertTuple(tupleSize: Int, query: StringBuilder): Unit = {
-    query += '('
-    if (tupleSize > 0) {
-      query += '?'
-    }
-    var i = 1
-    while (i < tupleSize) {
-      query.append(",?")
-      i += 1
-    }
-    query += ')'
+    Iterator.fill(tupleSize)("?").addString(query, "(", ",", ")")
   }
 }
