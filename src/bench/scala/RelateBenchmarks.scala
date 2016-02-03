@@ -3,7 +3,7 @@ package com.lucidchart.open.relate
 import org.scalameter.api._
 import java.sql._
 
-trait DbReport extends Bench.OfflineReport {
+trait DbBench { self: Bench.HTMLReport =>
   implicit val conn = Init.conn
 
   def cases = Seq(RelateTests, AnormTests, JdbcTests)
@@ -18,6 +18,8 @@ trait DbReport extends Bench.OfflineReport {
     }
   }
 }
+
+trait DbReport extends Bench.OfflineReport with DbBench
 
 object Benchmarks extends DbReport {
   val ranges = for (size <- Gen.range("rows")(100, 10000, 1980)) yield 0 until size

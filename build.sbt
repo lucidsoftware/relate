@@ -1,5 +1,7 @@
 lazy val Benchmark = config("bench") extend Test
 
+lazy val Regression = config("regression") extend Benchmark
+
 lazy val relate = Project(
   "relate",
   file("."),
@@ -18,10 +20,12 @@ lazy val relate = Project(
       "org.specs2" %% "specs2" % "2.3.12" % "test",
       "com.h2database" % "h2" % "1.4.191" % "test",
       "com.storm-enroute" %% "scalameter" % "0.7" % "bench",
+      "com.storm-enroute" %% "scalameter" % "0.7" % "regression",
       "com.typesafe.play" %% "anorm" % "2.4.0" % "bench"
     ),
     testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework"),
     parallelExecution in Benchmark := false,
+    parallelExecution in Regression := false,
     logBuffered := false,
     pgpPassphrase := Some(Array()),
     pgpPublicRing := file(System.getProperty("user.home")) / ".pgp" / "pubring",
@@ -68,4 +72,5 @@ lazy val relate = Project(
         Some("releases" at nexus + "service/local/staging/deploy/maven2")
     }
   )
-).configs(Benchmark).settings(inConfig(Benchmark)(Defaults.testSettings): _*)
+).configs(Benchmark).settings(inConfig(Benchmark)(Defaults.testSettings): _*).
+  configs(Regression).settings(inConfig(Regression)(Defaults.testSettings): _*)
