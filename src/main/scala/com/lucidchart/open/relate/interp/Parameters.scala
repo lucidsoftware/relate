@@ -87,7 +87,7 @@ object Parameter {
   implicit def fromOptionalJavaDate(value: Option[java.util.Date]) = value.map(fromJavaDate).getOrElse(NullTimestampParameter)
   implicit def fromOptionalUuid(value: Option[UUID]) = value.map(fromUuid).getOrElse(NullVarBinaryParameter)
 
-  implicit def fromSeq[A <% SingleParameter](seq: Seq[A]) = new TupleParameter(seq.map(elem => elem: SingleParameter))
+  implicit def fromIterable[A <% SingleParameter](it: Iterable[A]) = new TupleParameter(it.map(elem => elem: SingleParameter))
   type SP = SingleParameter
   implicit def fromTuple1[T1 <% SP](t: Tuple1[T1]) = TupleParameter(t._1)
   implicit def fromTuple2[T1 <% SP,T2 <% SP](t: Tuple2[T1,T2]) = TupleParameter(t._1, t._2)
@@ -151,7 +151,7 @@ trait SingleParameter extends Parameter {
 }
 
 trait MultipleParameter extends Parameter {
-  protected def params: Seq[Parameter]
+  protected def params: Iterable[Parameter]
   def parameterize(statement: PreparedStatement, i: Int) = {
     params.foldLeft(i) { (i, param) =>
       param.parameterize(statement, i)
@@ -159,9 +159,9 @@ trait MultipleParameter extends Parameter {
   }
 }
 
-class TupleParameter(val params: Seq[SingleParameter]) extends MultipleParameter {
+class TupleParameter(val params: Iterable[SingleParameter]) extends MultipleParameter {
   def appendPlaceholders(stringBuilder: StringBuilder) = {
-    val length = params.length
+    val length = params.size
     if(length > 0) {
       stringBuilder.append("?")
       var i = 1
@@ -177,7 +177,7 @@ object TupleParameter {
   def apply(params: SingleParameter*) = new TupleParameter(params)
 }
 
-class TuplesParameter(val params: Seq[TupleParameter]) extends MultipleParameter {
+class TuplesParameter(val params: Iterable[TupleParameter]) extends MultipleParameter {
   def appendPlaceholders(stringBuilder: StringBuilder) = {
     if(params.nonEmpty) {
       params.foreach { param =>
