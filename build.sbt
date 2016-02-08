@@ -9,8 +9,8 @@ lazy val relate = Project(
     name := "Relate",
     organization := "com.lucidchart",
     version := "1.13.0-SNAPSHOT",
-    scalaVersion := "2.11.4",
-    crossScalaVersions := Seq("2.10.4", "2.11.4"),
+    scalaVersion := "2.11.7",
+    crossScalaVersions := Seq("2.10.6", "2.11.7"),
     scalacOptions ++= Seq(
       "-deprecation",
       "-feature",
