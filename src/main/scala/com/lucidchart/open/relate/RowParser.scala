@@ -110,6 +110,6 @@ object RowParser {
    */
   def string(columnLabel: String) = (row: SqlResult) => row.string(columnLabel)
 
-  private[relate] val insertInt = (row: SqlResult) => row.strictInt(1)
-  private[relate] val insertLong = (row: SqlResult) => row.strictLong(1)
+  private[relate] val insertInt = (row: SqlResult) => row.int(1)
+  private[relate] val insertLong = (row: SqlResult) => row.long(1)
 }
