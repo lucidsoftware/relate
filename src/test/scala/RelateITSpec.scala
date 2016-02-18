@@ -14,11 +14,6 @@ trait Db {
   val props = new Properties()
   props.put("MODE", "MySQL")
 
-  // a little weird because Travis won't set empty env variable
-  // protected[this] val (user, pass) = Option(System.getenv("MYSQL_USER")).fold(("dev", "dev")) {
-  //   (_, Option(System.getenv("MYSQL_PASSWORD")).getOrElse(""))
-  // }
-
   Class.forName(driver)
 
   def withConnection[A](f: Connection => A): A = {
@@ -151,7 +146,7 @@ class RelateITSpec extends Specification with Db {
     description: String
   )
 
-  val pokedexParser = RowParser { row =>
+  def pokedexParser(row: SqlResult) = {
     PokedexEntry(
       row.long("id"),
       row.string("name"),
@@ -166,7 +161,7 @@ class RelateITSpec extends Specification with Db {
     trainerId: Option[Long]
   )
 
-  val pokemonParser = RowParser { row =>
+  def pokemonParser(row: SqlResult) = {
     Pokemon(
       row.long("id"),
       row.long("pokedex_id"),
@@ -181,7 +176,7 @@ class RelateITSpec extends Specification with Db {
     trainerId: Option[Long]
   )
 
-  val starterParser = RowParser { row =>
+  def starterParser(row: SqlResult) = {
     Starter(
       row.long("id"),
       row.string("name"),
@@ -468,9 +463,9 @@ class RelateITSpec extends Specification with Db {
       """).on { implicit query =>
         string("name1", wartortle.name)
         string("name2", blastoise.name)
-      }.asMap(RowParser { row =>
+      }.asMap { row =>
         (row.string("name"), row.string("description"))
-      })
+      }
 
       (pokemon(wartortle.name) must_== wartortle.description) and (pokemon(blastoise.name) must_== blastoise.description)
     }
@@ -480,9 +475,9 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE id = -1
-      """).asMap(RowParser { row =>
+      """).asMap { row =>
         (row.string("name"), row.string("description"))
-      })
+      }
 
       pokemon.size must_== 0
     }
@@ -555,7 +550,7 @@ class RelateITSpec extends Specification with Db {
     )
 
     "work for PaginatedQuery" in withConnection { implicit connection =>
-      val parser = RowParser { row =>
+      def parser(row: SqlResult) = {
         Result(row.long("id"), row.int("value"))
       }
 

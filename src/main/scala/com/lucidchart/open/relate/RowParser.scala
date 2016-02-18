@@ -68,16 +68,6 @@ object Parseable {
 }
 
 /**
- * A RowParser is a function that takes a SqlResult as a parameter and parses it to
- * return a concrete type
- *
- * See the [[com.lucidchart.open.relate.RowParser$#apply RowParser]] for more information
- *
- */
-@deprecated("Use plain SqlResult => A instead", "1.7.0")
-trait RowParser[+A] extends (SqlResult => A)
-
-/**
  * The RowParser companion object allows creation of arbitrary RowParsers with its apply method.
  * {{{
  * import com.lucidchart.open.relate.RowParser
@@ -88,15 +78,6 @@ trait RowParser[+A] extends (SqlResult => A)
  * }}}
  */
 object RowParser {
-  /**
-   * Create a new RowParser by passing in a function that takes a SqlResult and returns
-   * a concrete type
-   * @param f the function that will do the parsing
-   */
-  @deprecated("Use plain SqlResult => A instead", "1.7.0")
-  def apply[A](f: (SqlResult) => A) = new RowParser[A] {
-    def apply(row: SqlResult) = f(row)
-  }
 
   /**
    * Shorthand for creating a RowParser that takes only a BigInt column from the result set
