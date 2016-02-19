@@ -31,7 +31,7 @@ class ImplicitParsingTest extends Specification with Mockito {
   case class TestRecord(name: String)
 
   object TestRecord {
-    implicit val praser = new Parseable[TestRecord] {
+    implicit val praser = new Parser[TestRecord] {
       def parse(result: SqlRow): TestRecord = {
         TestRecord(result.string("name"))
       }
@@ -41,14 +41,14 @@ class ImplicitParsingTest extends Specification with Mockito {
   case class TestKey(key: String)
 
   object TestKey {
-    implicit val parse = new Parseable[TestKey] {
+    implicit val parse = new Parser[TestKey] {
       def parse(result: SqlRow): TestKey = {
         TestKey(result.string("key"))
       }
     }
   }
 
-  "Parseable" should {
+  "Parser" should {
     "build a list" in {
       val (rs, result) = getMocks
 

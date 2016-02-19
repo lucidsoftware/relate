@@ -138,18 +138,23 @@ class RelateITSpec extends Specification with Db {
   def streamConnection = DriverManager.getConnection(url, props)
   def streamConnection2 = DriverManager.getConnection(url, props)
 
+  def withStreamConnection[A](f: Connection => A) = f(streamConnection)
+  def withStreamConnection2[A](f: Connection => A) = f(streamConnection2)
+
   case class PokedexEntry(
     id: Long,
     name: String,
     description: String
   )
 
-  def pokedexParser(row: SqlRow) = {
-    PokedexEntry(
-      row.long("id"),
-      row.string("name"),
-      row.string("description")
-    )
+  object PokedexEntry {
+    implicit val parser = Parser[PokedexEntry] { row =>
+      PokedexEntry(
+        row.long("id"),
+        row.string("name"),
+        row.string("description")
+      )
+    }
   }
 
   case class Pokemon(
@@ -159,13 +164,15 @@ class RelateITSpec extends Specification with Db {
     trainerId: Option[Long]
   )
 
-  def pokemonParser(row: SqlRow) = {
-    Pokemon(
-      row.long("id"),
-      row.long("pokedex_id"),
-      row.int("level"),
-      row.longOption("trainer_id")
-    )
+  object Pokemon {
+    implicit val parser = Parser[Pokemon] { row =>
+      Pokemon(
+        row.long("id"),
+        row.long("pokedex_id"),
+        row.int("level"),
+        row.longOption("trainer_id")
+      )
+    }
   }
 
   case class Starter(
@@ -174,12 +181,14 @@ class RelateITSpec extends Specification with Db {
     trainerId: Option[Long]
   )
 
-  def starterParser(row: SqlRow) = {
-    Starter(
-      row.long("id"),
-      row.string("name"),
-      row.longOption("trainer_id")
-    )
+  object Starter {
+    implicit val parser = Parser[Starter] { row =>
+      Starter(
+        row.long("id"),
+        row.string("name"),
+        row.longOption("trainer_id")
+      )
+    }
   }
 
   //check if statements all closed in all tests stmt.isClosed
@@ -197,7 +206,7 @@ class RelateITSpec extends Specification with Db {
       //now check if that record was correctly inserted
       val entries = sql"""
        SELECT id, name, description FROM pokedex WHERE name = $pokemonName
-      """.asList(pokedexParser)
+      """.as[List[PokedexEntry]]
 
       (entries.size must_== 1) and (entries(0).name must_== pokemonName) and (entries(0).description must_== pokemonDesc)
     }
@@ -217,7 +226,7 @@ class RelateITSpec extends Specification with Db {
       //check if those records were inserted
       val pokemon = sql"""
        SELECT id, pokedex_id, level, trainer_id FROM pokemon WHERE pokedex_id = $pokedexId
-     """.asList(pokemonParser)
+     """.as[List[Pokemon]]
 
       val levelAndTrainerIdFromDb = pokemon.map { pokemon =>
         (pokemon.level, pokemon.trainerId)
@@ -243,7 +252,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, pokedex_id, level, trainer_id
         FROM pokemon
         WHERE id = ${7L}
-      """.asSingle(pokemonParser)
+      """.as[Pokemon]
 
       (pokemon.id must_== 7) and (pokemon.pokedexId must_== 4) and (pokemon.level must_== 3) and (pokemon.trainerId must_== None)
     }
@@ -253,7 +262,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, pokedex_id, level, trainer_id
         FROM pokemon
         WHERE id = ${7L}
-      """.asSingleOption(pokemonParser).get
+      """.as[Option[Pokemon]].get
 
       (pokemon.id must_== 7) and (pokemon.pokedexId must_== 4) and (pokemon.level must_== 3) and (pokemon.trainerId must_== None)
     }
@@ -263,7 +272,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, pokedex_id, level, trainer_id
         FROM pokemon
         WHERE id = -1
-      """.asSingleOption(pokemonParser)
+      """.as[Option[Pokemon]]
 
       pokemon must_== None
     }
@@ -275,7 +284,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE name = ${squirtle.name}
-      """.asSet(pokedexParser)
+      """.as[Set[PokedexEntry]]
 
       (pokemon.size must_== 1) and (pokemon must contain(squirtle))
     }
@@ -285,7 +294,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE id = -1
-      """.asSet(pokedexParser)
+      """.as[Set[PokedexEntry]]
 
       pokemon.size must_== 0
     }
@@ -298,7 +307,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE name = ${squirtle.name} OR name = ${pikachu.name}
-      """.asSeq(pokedexParser)
+      """.as[Seq[PokedexEntry]]
 
       (pokemon.size must_== 2) and (pokemon must contain(squirtle)) and (pokemon must contain(pikachu))
     }
@@ -308,7 +317,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE id = -1
-      """.asSeq(pokedexParser)
+      """.as[Seq[PokedexEntry]]
 
       (pokemon.size must_== 0)
     }
@@ -320,7 +329,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE name = ${names(0)} OR name = ${names(1)} OR name = ${names(2)}
-      """.asIterable(pokedexParser)
+      """.as[Iterable[PokedexEntry]]
 
       val iterableAsList = pokemon.map(_.name)
       (iterableAsList must contain(names(0))) and (iterableAsList must contain(names(1))) and (iterableAsList must contain(names(2)))
@@ -331,7 +340,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE id = -1
-      """.asIterable(pokedexParser).toList
+      """.as[Iterable[PokedexEntry]]
 
       pokemon.size must_== 0
     }
@@ -343,7 +352,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE name = ${jigglypuff.name} OR name = ${magikarp.name}
-      """.asList(pokedexParser)
+      """.as[List[PokedexEntry]]
 
       (pokemon.size must_== 2) and (pokemon must contain(jigglypuff)) and (pokemon must contain(magikarp))
     }
@@ -353,7 +362,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE id = -1
-      """.asList(pokedexParser)
+      """.as[List[PokedexEntry]]
 
       pokemon.size must_== 0
     }
@@ -366,11 +375,9 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE name = ${wartortle.name} OR name = ${blastoise.name}
-      """.asMap { row =>
-        (row.string("name"), row.string("description"))
-      }
+      """.asMap[PokedexEntry]("name")
 
-      (pokemon(wartortle.name) must_== wartortle.description) and (pokemon(blastoise.name) must_== blastoise.description)
+      (pokemon(wartortle.name) must_== wartortle) and (pokemon(blastoise.name) must_== blastoise)
     }
 
     "work for empty asMap" in withConnection { implicit connection =>
@@ -378,14 +385,12 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE id = -1
-      """.asMap { row =>
-        (row.string("name"), row.string("description"))
-      }
+      """.asMap[PokedexEntry]("name")
 
       pokemon.size must_== 0
     }
 
-    "work for asIterator" in withConnection { implicit connection =>
+    "work for asIterator" in withStreamConnection { implicit conn =>
       val wartortle = PokedexEntry(2, "Wartortle", "more sassy evolved form of Squirtle")
       val blastoise = PokedexEntry(3, "Blastoise", "an awesome turtle with water cannons")
 
@@ -393,17 +398,17 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE name = ${wartortle.name} OR name = ${blastoise.name}
-      """.asIterator(pokedexParser)(streamConnection).toList
+      """.asIterator[PokedexEntry]().toList
 
       (pokemon.size must_== 2) and (pokemon must contain(wartortle)) and (pokemon must contain(blastoise))
     }
 
-    "work for empty asIterator" in withConnection { implicit connection =>
+    "work for empty asIterator" in withStreamConnection2 { implicit conn =>
       val pokemon = sql"""
         SELECT id, name, description
         FROM pokedex
         WHERE id = -1
-      """.asIterator(pokedexParser)(streamConnection2).toList
+      """.asIterator[PokedexEntry]().toList
 
       pokemon.size must_== 0
     }
@@ -420,7 +425,7 @@ class RelateITSpec extends Specification with Db {
         SELECT id, name, description
         FROM pokedex
         WHERE id IN ($ids)
-      """.asList(pokedexParser).map(_.name)
+      """.as[List[PokedexEntry]].map(_.name)
 
       (pokemonNames must contain("Squirtle")) and (pokemonNames must contain("Wartortle")) and (pokemonNames must contain("Blastoise"))
     }
@@ -452,7 +457,7 @@ class RelateITSpec extends Specification with Db {
       val pokemon = sql"""
         SELECT id, name, trainer_id
         FROM professor_oaks_pokemon
-      """.asList(starterParser)
+      """.as[List[Starter]]
 
       pokemon must_== correct
     }
@@ -467,9 +472,11 @@ class RelateITSpec extends Specification with Db {
         WHERE name = ${"Gym Leader Brock"}
       """.execute()
 
+      implicit val parser = Parser[String](_.string("name"))
+
       val trainers = sql"""
         SELECT name FROM undefeated_trainers
-      """.asList(RowParser.string("name"))
+      """.as[List[String]]
 
       trainers must_== correct
     }
