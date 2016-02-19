@@ -32,7 +32,7 @@ class ImplicitParsingTest extends Specification with Mockito {
 
   object TestRecord {
     implicit val praser = new Parseable[TestRecord] {
-      def parse(result: SqlResult): TestRecord = {
+      def parse(result: SqlRow): TestRecord = {
         TestRecord(result.string("name"))
       }
     }
@@ -42,7 +42,7 @@ class ImplicitParsingTest extends Specification with Mockito {
 
   object TestKey {
     implicit val parse = new Parseable[TestKey] {
-      def parse(result: SqlResult): TestKey = {
+      def parse(result: SqlRow): TestKey = {
         TestKey(result.string("key"))
       }
     }
