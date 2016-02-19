@@ -1,6 +1,7 @@
 package com.lucidchart.open.relate
 
 import java.net.URL
+import java.nio.ByteBuffer
 import java.sql.{Blob, Clob, Date, NClob, PreparedStatement, Ref, RowId, SQLXML, Timestamp, Time, Types}
 import java.util.UUID
 import scala.language.implicitConversions
@@ -318,3 +319,14 @@ object NullTinyIntParameter extends NullParameter(Types.TINYINT)
 object NullVarBinaryParameter extends NullParameter(Types.VARBINARY)
 
 object NullVarCharParameter extends NullParameter(Types.VARCHAR)
+
+private[relate] object ByteHelper {
+
+  def uuidToByteArray(uuid: UUID): Array[Byte] = {
+    val bb = ByteBuffer.wrap(new Array[Byte](16))
+    bb.putLong(uuid.getMostSignificantBits)
+    bb.putLong(uuid.getLeastSignificantBits)
+    bb.array()
+  }
+
+}
