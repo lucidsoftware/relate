@@ -1,5 +1,9 @@
 package com.lucidchart.open
 
+import java.sql.Connection
+import java.sql.Date
+import java.util.UUID
+
 /**
  * Relate API
  *
@@ -12,14 +16,15 @@ package com.lucidchart.open
  * }}}
  */
 package object relate {
-  implicit class SqlString(string: String) {
-    def toSql = InterpolatedQuery.fromParts(Seq(string), Seq())
-  }
 
-  implicit class SqlStringContext(stringContext: StringContext) {
-    def sql(args: Parameter*) = InterpolatedQuery.fromParts(stringContext.parts, args)
-  }
-
-  def tuple(parameters: SingleParameter*) = new TupleParameter(parameters)
+  /**
+   * Create a SQL query with the provided statement
+   * @param stmt the SQL statement
+   *
+   * {{{
+   * val query = SQL("SELECT * FROM users")
+   * }}}
+   */
+  def SQL(stmt: String): ExpandableQuery = Relate.sql(stmt)
 
 }
