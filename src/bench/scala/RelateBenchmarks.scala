@@ -87,7 +87,7 @@ trait TestCase extends Serializable {
 }
 
 object RelateTests extends TestCase {
-  import com.lucidchart.open.relate._
+  import com.lucidchart.open.relate.interp._
 
   val name: String = "Relate"
 

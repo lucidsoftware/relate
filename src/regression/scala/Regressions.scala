@@ -2,6 +2,7 @@ package com.lucidchart.open.relate
 
 import org.scalameter.api._
 import java.sql._
+import com.lucidchart.open.relate.interp._
 
 trait DbRegression extends Bench.OfflineRegressionReport with DbBench {
   def test(c: TestCase, name: String)(f: TestCase => Any): Unit = {
@@ -97,7 +98,7 @@ object Regressions extends DbRegression {
 
   type ThreeCol = (Int, Int, Int)
   implicit val threeColParseable = new Parseable[ThreeCol] {
-    def parse(row: SqlRow): ThreeCol = (
+    def parse(row: SqlResult): ThreeCol = (
       row.int("col1"),
       row.int("col2"),
       row.int("col3")
@@ -106,7 +107,7 @@ object Regressions extends DbRegression {
 
   type TwentyTwoCol = (Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int)
   implicit val twentyTwoColParseable = new Parseable[TwentyTwoCol] {
-    def parse(row: SqlRow): TwentyTwoCol = (
+    def parse(row: SqlResult): TwentyTwoCol = (
       row.int("col1"),
       row.int("col2"),
       row.int("col3"),
