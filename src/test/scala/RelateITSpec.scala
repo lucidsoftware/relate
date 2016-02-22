@@ -1,5 +1,7 @@
 package com.lucidchart.open.relate
 
+import com.lucidchart.open.relate._
+import com.lucidchart.open.relate.Query._
 import java.sql.{DriverManager, Connection, SQLException}
 import org.specs2.mutable._
 import org.specs2.specification.Fragments
