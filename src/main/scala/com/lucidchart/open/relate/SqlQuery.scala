@@ -64,7 +64,7 @@ private[relate] case class SqlQuery(
 
 }
 
-/** The base class for all list type parameters. Contains a name and a count (total number of
+/** The base class for all list type parameters. Contains a name and a count (total number of 
 inserted params) */
 private[relate] sealed trait ListParam {
   val name: String
@@ -91,7 +91,7 @@ private[relate] case class Tupled(
   override val charCount: Int = numTuples * 3 + numTuples * tupleSize * 2
 }
 
-/**
+/** 
  * Expandable is a trait for SQL queries that can be expanded.
  *
  * It defines two expansion methods:
@@ -102,8 +102,8 @@ private[relate] case class Tupled(
  * {{{
  * import com.lucidchart.open.relate._
  * import com.lucidchart.open.relate.Query._
- *
- * val ids = Array(1L, 2L, 3L)
+ * 
+ * val ids = Array(1L, 2L, 3L)  
  *
  * SQL("""
  *   SELECT *
@@ -112,7 +112,7 @@ private[relate] case class Tupled(
  * """).expand { implicit query =>
  *   commaSeparated("ids", ids.size)
  * }.on {
- *   longs("ids", ids)
+ *   longs("ids", ids) 
  * }
  * }}}
  */
@@ -345,21 +345,21 @@ trait Sql {
    * @return the auto-incremented key as an Int
    */
   def executeInsertInt()(implicit connection: Connection): Int = insertionStatement.execute(_.asSingle(RowParser.insertInt))
-
+  
   /**
    * Execute the query and get the auto-incremented keys as a List of Ints
    * @param connection the connection to use when executing the query
    * @return the auto-incremented keys as a List of Ints
    */
   def executeInsertInts()(implicit connection: Connection): List[Int] = insertionStatement.execute(_.asList(RowParser.insertInt))
-
+  
   /**
    * Execute the query and get the auto-incremented key as a Long
    * @param connection the connection to use when executing the query
    * @return the auto-incremented key as a Long
    */
   def executeInsertLong()(implicit connection: Connection): Long = insertionStatement.execute(_.asSingle(RowParser.insertLong))
-
+  
   /**
    * Execute the query and get the auto-incremented keys as a a List of Longs
    * @param connection the connection to use when executing the query
@@ -461,7 +461,7 @@ trait Sql {
    * @return the results as a single value
    */
   def asScalar[A]()(implicit connection: Connection): A = normalStatement.execute(_.asScalar[A]())
-
+  
   /**
    * Execute this query and get back the result as an optional single value. Assumes that there is
    * only one row and one value in the result set.
