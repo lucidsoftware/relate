@@ -8,22 +8,6 @@ import scala.collection.mutable
  * Sql is a trait for basic SQL queries.
  *
  * It provides methods for parameter insertion and query execution.
- * {{{
- * import com.lucidchart.open.relate._
- * import com.lucidchart.open.relate.Query._
- *
- * case class User(id: Long, name: String)
- *
- * SQL("""
- *   SELECT id, name
- *   FROM users
- *   WHERE id={id}
- * """).on { implicit query =>
- *   long("id", 1L)
- * }.asSingle(RowParser { row =>
- *   User(row.long("id"), row.string("name"))
- * })
- * }}}
  */
 trait Sql {
   self =>
@@ -143,6 +127,10 @@ trait Sql {
 
   def as[A: Parser](implicit conn: Connection): A = normalStatement.execute { row =>
     implicitly[Parser[A]].doParse(row)
+  }
+
+  def as[A](parser: SqlRow => A)(implicit conn: Connection): A = normalStatement.execute { row =>
+    Parser(parser).doParse(row)
   }
 
   def asMap[A: Parser](keyColumn: String)(implicit conn: Connection): Map[String, A] =

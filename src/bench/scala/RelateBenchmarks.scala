@@ -92,53 +92,105 @@ object RelateTests extends TestCase {
   val name: String = "Relate"
 
   def oneColumn(nums: Seq[Int])(implicit conn: Connection) = {
-    sql"SELECT col14 FROM sel_50 WHERE col44 IN ($nums)".asList(_.int("col14"))
+    sql"SELECT col14 FROM sel_50 WHERE col44 IN ($nums)".as(RowParser.ints("col14"))
+  }
+
+  case class TenColumn(
+    one: Int,
+    two: Int,
+    three: Int,
+    four: Int,
+    five: Int,
+    six: Int,
+    seven: Int,
+    either: Int,
+    nine: Int,
+    ten: Int
+  )
+
+  object TenColumn {
+    implicit val parser = Parser[TenColumn] { row =>
+      TenColumn(
+        row.int("col45"),
+        row.int("col46"),
+        row.int("col47"),
+        row.int("col48"),
+        row.int("col49"),
+        row.int("col50"),
+        row.int("col1"),
+        row.int("col2"),
+        row.int("col3"),
+        row.int("col4")
+      )
+    }
   }
 
   def tenColumns(nums: Seq[Int])(implicit conn: Connection) = {
-    sql"SELECT `col45`,`col46`,`col47`,`col48`,`col49`,`col50`,`col1`,`col2`,`col3`,`col4`,`col5` FROM `sel_50` WHERE  `col18` IN ($nums)".asList { row =>
-      row.int("col45")
-      row.int("col46")
-      row.int("col47")
-      row.int("col48")
-      row.int("col49")
-      row.int("col50")
-      row.int("col1")
-      row.int("col2")
-      row.int("col3")
-      row.int("col4")
-      row.int("col5")
+    sql"SELECT `col45`,`col46`,`col47`,`col48`,`col49`,`col50`,`col1`,`col2`,`col3`,`col4`,`col5` FROM `sel_50` WHERE  `col18` IN ($nums)".as[List[TenColumn]]
+  }
+
+  case class TwentyFiveColumn(
+    one: Int,
+    two: Int,
+    three: Int,
+    four: Int,
+    five: Int,
+    six: Int,
+    seven: Int,
+    either: Int,
+    nine: Int,
+    ten: Int,
+    eleven: Int,
+    twelve: Int,
+    thirteen: Int,
+    fourteen: Int,
+    fifteen: Int,
+    sixteen: Int,
+    seventeen: Int,
+    eighteen: Int,
+    nineteen: Int,
+    twenty: Int,
+    twentyOne: Int,
+    twentyTwo: Int,
+    twentyThree: Int,
+    twentyFour: Int,
+    twentyFive: Int
+  )
+
+  object TwentyFiveColumn {
+    implicit val parser = Parser[TwentyFiveColumn] { row =>
+      TwentyFiveColumn(
+        row.int("col1"),
+        row.int("col2"),
+        row.int("col3"),
+        row.int("col4"),
+        row.int("col5"),
+        row.int("col6"),
+        row.int("col7"),
+        row.int("col8"),
+        row.int("col9"),
+        row.int("col10"),
+        row.int("col11"),
+        row.int("col12"),
+        row.int("col13"),
+        row.int("col14"),
+        row.int("col15"),
+        row.int("col16"),
+        row.int("col17"),
+        row.int("col18"),
+        row.int("col19"),
+        row.int("col20"),
+        row.int("col21"),
+        row.int("col22"),
+        row.int("col23"),
+        row.int("col24"),
+        row.int("col25")
+      )
     }
   }
 
   def twentyFiveColumns(nums: Seq[Int])(implicit conn: Connection) = {
-    sql"SELECT `col1`,`col2`,`col3`,`col4`,`col5`,`col6`,`col7`,`col8`,`col9`,`col10`,`col11`,`col12`,`col13`,`col14`,`col15`,`col16`,`col17`,`col18`,`col19`,`col20`,`col21`,`col22`,`col23`,`col24`,`col25` FROM `sel_50` WHERE  `col18` IN ($nums)".asList { row =>
-      row.int("col1")
-      row.int("col2")
-      row.int("col3")
-      row.int("col4")
-      row.int("col5")
-      row.int("col6")
-      row.int("col7")
-      row.int("col8")
-      row.int("col9")
-      row.int("col10")
-      row.int("col11")
-      row.int("col12")
-      row.int("col13")
-      row.int("col14")
-      row.int("col15")
-      row.int("col16")
-      row.int("col17")
-      row.int("col18")
-      row.int("col19")
-      row.int("col20")
-      row.int("col21")
-      row.int("col22")
-      row.int("col23")
-      row.int("col24")
-      row.int("col25")
-    }
+    sql"SELECT `col1`,`col2`,`col3`,`col4`,`col5`,`col6`,`col7`,`col8`,`col9`,`col10`,`col11`,`col12`,`col13`,`col14`,`col15`,`col16`,`col17`,`col18`,`col19`,`col20`,`col21`,`col22`,`col23`,`col24`,`col25` FROM `sel_50` WHERE  `col18` IN ($nums)".as[List[TwentyFiveColumn]]
   }
 
   def insertTen(rows: Seq[Int])(implicit conn: Connection) = {
