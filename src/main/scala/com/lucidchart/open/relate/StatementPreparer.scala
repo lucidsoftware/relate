@@ -15,11 +15,11 @@ private[relate] sealed trait StatementPreparer {
    * @param callback the function to call on the results of the query
    * @return whatever the callback returns
    */
-  def execute[A](callback: SqlRow => A): A = {
+  def execute[A](callback: (SqlResult) => A): A = {
     try {
       val resultSet = results()
       try {
-        callback(new SqlRow(resultSet))
+        callback(SqlResult(resultSet))
       }
       finally {
         resultSet.close()
@@ -81,7 +81,7 @@ private[relate] trait NormalStatementPreparer extends BaseStatementPreparer {
     applyParams(stmt)
     stmt
   }
-
+  
   /**
    * Get the results of excutioning this statement
    * @return the resulting ResultSet
@@ -111,16 +111,6 @@ private[relate] trait InsertionStatementPreparer extends BaseStatementPreparer {
     stmt.executeUpdate()
     stmt.getGeneratedKeys()
   }
-
-  def executeInsertLong(): Long = {
-    stmt.executeUpdate()
-    val generatedKeys = stmt.getGeneratedKeys()
-    if (generatedKeys.next()) {
-      generatedKeys.getLong(1)
-    } else {
-      throw new Exception("Insert failed")
-    }
-  }
 }
 
 private[relate] trait StreamedStatementPreparer extends BaseStatementPreparer {
@@ -147,14 +137,14 @@ private[relate] trait StreamedStatementPreparer extends BaseStatementPreparer {
     applyParams(stmt)
     stmt
   }
-
+  
   /**
    * Override the default execute method so that it does not close the resources
    * @param callback the function to call on the results of the query
    * @return whatever the callback returns
    */
-  override def execute[A](callback: SqlRow => A): A = {
-    callback(new SqlRow(results()))
+  override def execute[A](callback: (SqlResult) => A): A = {
+    callback(SqlResult(results()))
   }
 
   /**

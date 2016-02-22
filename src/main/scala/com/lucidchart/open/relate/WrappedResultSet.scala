@@ -25,12 +25,12 @@ trait WrappedResultSet {
   def wasNull(): Boolean = resultSet.wasNull()
   private[relate] def next(): Boolean = resultSet.next()
 
-  // protected[relate] def withResultSet[A](f: (java.sql.ResultSet) => A) = {
-  //   try {
-  //     f(resultSet)
-  //   }
-  //   finally {
-  //     resultSet.close()
-  //   }
-  // }
+  protected[relate] def withResultSet[A](f: (java.sql.ResultSet) => A) = {
+    try {
+      f(resultSet)
+    }
+    finally {
+      resultSet.close()
+    }
+  }
 }
