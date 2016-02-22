@@ -19,6 +19,7 @@ import java.util.UUID
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
 import scala.collection.JavaConversions
+import com.lucidchart.open.relate.SqlResultTypes._
 
 case class TestRecord(
   id: Long,
@@ -35,18 +36,18 @@ object TestRecord{
 }
 
 class SqlResultSpec extends Specification with Mockito {
-  def parser(row: SqlResult) = {
+  val parser = { implicit row: SqlResult =>
     TestRecord(
-      row.long("id"),
-      row.string("name")
+      long("id"),
+      string("name")
     )
   }
 
-  def pairparser(row: SqlResult) = {
-    val id = row.long("id")
+  val pairparser = { implicit row: SqlResult =>
+    val id = long("id")
     id -> TestRecord(
       id,
-      row.string("name")
+      string("name")
     )
   }
 

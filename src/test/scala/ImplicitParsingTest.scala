@@ -19,6 +19,7 @@ import java.util.UUID
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
 import scala.collection.JavaConversions
+import com.lucidchart.open.relate.SqlResultTypes._
 
 class ImplicitParsingTest extends Specification with Mockito {
   def getMocks = {

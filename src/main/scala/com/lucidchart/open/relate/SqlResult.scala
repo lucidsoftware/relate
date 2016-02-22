@@ -290,3 +290,52 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
     value <- Try(e(id)).toOption
   } yield(value)
 }
+
+/**
+ * The SqlResultTypes object provides syntactic sugar for RowParser creation.
+ * {{{
+ * import com.lucidchart.open.relate._
+ * import com.lucidchart.open.relate.SqlResultTypes._
+ *
+ * val rowParser = RowParser { implicit row =>
+ *   (long("id"), string("name"))
+ * }
+ * }}}
+ *
+ * In this example, declaring "row" as implicit precludes the need to explicitly use the long and
+ * string methods on "row".
+ */
+object SqlResultTypes {
+  def string(column: String)(implicit sr: SqlResult) = sr.string(column)
+  def stringOption(column: String)(implicit sr: SqlResult) = sr.stringOption(column)
+  def int(column: String)(implicit sr: SqlResult) = sr.int(column)
+  def intOption(column: String)(implicit sr: SqlResult) = sr.intOption(column)
+  def double(column: String)(implicit sr: SqlResult) = sr.double(column)
+  def doubleOption(column: String)(implicit sr: SqlResult) = sr.doubleOption(column)
+  def short(column: String)(implicit sr: SqlResult) = sr.short(column)
+  def shortOption(column: String)(implicit sr: SqlResult) = sr.shortOption(column)
+  def byte(column: String)(implicit sr: SqlResult) = sr.byte(column)
+  def byteOption(column: String)(implicit sr: SqlResult) = sr.byteOption(column)
+  def bool(column: String)(implicit sr: SqlResult) = sr.bool(column)
+  def boolOption(column: String)(implicit sr: SqlResult) = sr.boolOption(column)
+  def long(column: String)(implicit sr: SqlResult) = sr.long(column)
+  def longOption(column: String)(implicit sr: SqlResult) = sr.longOption(column)
+  def bigInt(column: String)(implicit sr: SqlResult) = sr.bigInt(column)
+  def bigIntOption(column: String)(implicit sr: SqlResult) = sr.bigIntOption(column)
+  def bigDecimal(column: String)(implicit sr: SqlResult) = sr.bigDecimal(column)
+  def bigDecimalOption(column: String)(implicit sr: SqlResult) = sr.bigDecimalOption(column)
+  def javaBigInteger(column: String)(implicit sr: SqlResult) = sr.javaBigInteger(column)
+  def javaBigIntegerOption(column: String)(implicit sr: SqlResult) = sr.javaBigIntegerOption(column)
+  def javaBigDecimal(column: String)(implicit sr: SqlResult) = sr.javaBigDecimal(column)
+  def javaBigDecimalOption(column: String)(implicit sr: SqlResult) = sr.javaBigDecimalOption(column)
+  def date(column: String)(implicit sr: SqlResult) = sr.date(column)
+  def dateOption(column: String)(implicit sr: SqlResult) = sr.dateOption(column)
+  def byteArray(column: String)(implicit sr: SqlResult) = sr.byteArray(column)
+  def byteArrayOption(column: String)(implicit sr: SqlResult) = sr.byteArrayOption(column)
+  def uuid(column: String)(implicit sr: SqlResult) = sr.uuid(column)
+  def uuidOption(column: String)(implicit sr: SqlResult) = sr.uuidOption(column)
+  def uuidFromString(column: String)(implicit sr: SqlResult) = sr.uuidFromString(column)
+  def uuidFromStringOption(column: String)(implicit sr: SqlResult) = sr.uuidFromStringOption(column)
+  def enum(column: String, e: Enumeration)(implicit sr: SqlResult) = sr.enum(column, e)
+  def enumOption(column: String, e: Enumeration)(implicit sr: SqlResult) = sr.enumOption(column, e)
+}
