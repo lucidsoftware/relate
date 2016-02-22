@@ -27,7 +27,7 @@ case class TestRecord(
 
 object TestRecord{
   implicit val TestRecordParseable = new Parseable[TestRecord] {
-    def parse(row: SqlRow): TestRecord = TestRecord(
+    def parse(row: SqlResult): TestRecord = TestRecord(
       row.long("id"),
       row.string("name")
     )
@@ -35,14 +35,14 @@ object TestRecord{
 }
 
 class SqlResultSpec extends Specification with Mockito {
-  def parser(row: SqlRow) = {
+  def parser(row: SqlResult) = {
     TestRecord(
       row.long("id"),
       row.string("name")
     )
   }
 
-  def pairparser(row: SqlRow) = {
+  def pairparser(row: SqlResult) = {
     val id = row.long("id")
     id -> TestRecord(
       id,
@@ -52,14 +52,14 @@ class SqlResultSpec extends Specification with Mockito {
 
   def getMocks = {
     val rs = mock[java.sql.ResultSet]
-    (rs, SqlResult(rs), new SqlRow(rs))
+    (rs, SqlResult(rs))
   }
 
   implicit val con: Connection = null
 
   "asSingle" should {
     "return a single row with an explicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.getRow returns 0 thenReturn 1
       rs.next returns true thenReturns false
@@ -70,7 +70,7 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "return a single row with an implicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.getRow returns 0 thenReturn 1
       rs.next returns true thenReturns false
@@ -90,28 +90,28 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "return a single row with an explicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
       init(rs, true)
 
       result.asSingleOption(parser) must beSome(TestRecord(100L, "the name"))
     }
 
     "return a None with an explicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
       init(rs, false)
 
       result.asSingleOption(parser) must beNone
     }
 
     "return a single row with an implicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
       init(rs, true)
 
       result.asSingleOption[TestRecord] must beSome(TestRecord(100L, "the name"))
     }
 
     "return a None with an implicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
       init(rs, false)
 
       result.asSingleOption[TestRecord] must beNone
@@ -120,7 +120,7 @@ class SqlResultSpec extends Specification with Mockito {
 
   "asList" should {
     "return a list of 3 elements with an explicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
       rs.next   returns true thenReturn true thenReturn true thenReturn false
@@ -131,7 +131,7 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "return an empty list with an explicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.getRow returns 0
       rs.next returns false
@@ -140,7 +140,7 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "return a list of 3 elements with an implicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
       rs.next   returns true thenReturn true thenReturn true thenReturn false
@@ -151,7 +151,7 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "return an empty list with an implicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.getRow returns 0
       rs.next returns false
@@ -162,7 +162,7 @@ class SqlResultSpec extends Specification with Mockito {
 
   "asMap" should {
     "return a map of 3 elements with an explicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
       import java.lang.{Long => L}
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
@@ -177,21 +177,21 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "return an empty map with an explicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
       rs.getRow returns 0
       rs.next returns false
       result.asMap(pairparser) equals Map()
     }
 
     implicit val a: Parseable[(Long, TestRecord)] = new Parseable[(Long, TestRecord)] {
-      def parse(row: SqlRow) = {
+      def parse(row: SqlResult) = {
         val id = row.long("id")
         id -> TestRecord(id, row.string("name"))
       }
     }
 
     "return a map of 3 elements with an implicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
       import java.lang.{Long => L}
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
@@ -206,7 +206,7 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "return an empty map with an implicit parser" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
       rs.getRow returns 0
       rs.next returns false
       result.asMap[Long, TestRecord] equals Map()
@@ -215,7 +215,7 @@ class SqlResultSpec extends Specification with Mockito {
 
   "asMultiMap" should {
     "return a multimap of 2 keys with 2 entries in each" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
       import java.lang.{Long => L}
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3 thenReturn     4
@@ -234,7 +234,7 @@ class SqlResultSpec extends Specification with Mockito {
 
   "scalar" should {
     "return the correct type" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.next returns true
       rs.getObject(1) returns (2: java.lang.Long)
@@ -243,7 +243,7 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "ignore other result values" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.next returns true
       rs.getObject(1) returns ("test": java.lang.String)
@@ -253,7 +253,7 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "return null if there are no rows" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.next returns false
 
@@ -263,7 +263,7 @@ class SqlResultSpec extends Specification with Mockito {
 
   "extractOption" should {
     "Extract a Some" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val name: Object = "hello"
       rs.getObject("name") returns name
@@ -272,7 +272,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("id") returns id
 
 
-      val nameOpt = row.extractOption("name") { any =>
+      val nameOpt = result.extractOption("name") { any =>
         any match {
           case x: String => x
           case _ => ""
@@ -281,7 +281,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       nameOpt must beSome("hello")
 
-      val idOpt = row.extractOption("id") { any =>
+      val idOpt = result.extractOption("id") { any =>
         any match {
           case x: Int => x
           case _ => 0
@@ -292,11 +292,11 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "Extract a None" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.getObject("null") returns null
 
-      val nullOpt = row.extractOption("null") { _ => "hello" }
+      val nullOpt = result.extractOption("null") { _ => "hello" }
 
       nullOpt must beNone
     }
@@ -304,7 +304,7 @@ class SqlResultSpec extends Specification with Mockito {
 
   "getRow" should {
     "return current row number of a ResultSet" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.getRow() returns 3
       result.getRow equals 3
@@ -313,7 +313,7 @@ class SqlResultSpec extends Specification with Mockito {
 
   "wasNull" should {
     "return true if the last read was null" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.wasNull() returns true
       result.wasNull equals true
@@ -322,267 +322,267 @@ class SqlResultSpec extends Specification with Mockito {
 
   "string" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = "hello"
       rs.getObject("string") returns res
-      row.string("string") equals res
-      row.stringOption("string") must beSome(res)
+      result.string("string") equals res
+      result.stringOption("string") must beSome(res)
     }
   }
 
   "int" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = 10: java.lang.Integer
       rs.getInt("int") returns res
-      row.int("int") equals res
-      row.intOption("int") must beSome(res)
+      result.int("int") equals res
+      result.intOption("int") must beSome(res)
     }
 
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = 1
       rs.getInt(1) returns res
-      row.int(1) equals res
+      result.int(1) equals res
     }
   }
 
   "intOption" should {
     "return None if the value in the database is null" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.wasNull returns true
-      row.intOption("int") must beNone
+      result.intOption("int") must beNone
     }
 
     "return Some(0) if the value in the database was really 0" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = 0 : java.lang.Integer
       rs.getInt("int") returns res
       rs.wasNull returns false
-      row.intOption("int") must beSome(res)
+      result.intOption("int") must beSome(res)
     }
   }
 
   "double" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = 1.1: java.lang.Double
       rs.getDouble("double") returns res
-      row.double("double") equals res
-      row.doubleOption("double") must beSome(res)
+      result.double("double") equals res
+      result.doubleOption("double") must beSome(res)
     }
   }
 
   "short" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res: Short = 1
       rs.getShort("short") returns res
-      row.short("short") equals res
-      row.shortOption("short") must beSome(res)
+      result.short("short") equals res
+      result.shortOption("short") must beSome(res)
     }
   }
 
   "byte" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res: Byte = 1
       rs.getByte("byte") returns res
-      row.byte("byte") equals res
-      row.byteOption("byte") must beSome(res)
+      result.byte("byte") equals res
+      result.byteOption("byte") must beSome(res)
     }
   }
 
   "boolean" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = true
       rs.getBoolean("boolean") returns res
-      row.bool("boolean") equals res
-      row.boolOption("boolean") must beSome(res)
+      result.bool("boolean") equals res
+      result.boolOption("boolean") must beSome(res)
     }
   }
 
   "long" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res: Object = 100000L: java.lang.Long
       rs.getObject("long") returns res
-      row.long("long") equals res
-      row.longOption("long") must beSome(res)
+      result.long("long") equals res
+      result.longOption("long") must beSome(res)
     }
 
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = 1000L
       rs.getLong(1) returns res
-      row.long(1) equals res
+      result.long(1) equals res
     }
   }
 
   "bigInt" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val number = 1010101
 
       val int: Object = number.toInt: java.lang.Integer
       rs.getObject("bigInt") returns int
-      row.bigInt("bigInt") equals BigInt(number)
-      row.bigIntOption("bigInt") must beSome(BigInt(number))
+      result.bigInt("bigInt") equals BigInt(number)
+      result.bigIntOption("bigInt") must beSome(BigInt(number))
 
       val long: Object = number.toLong: java.lang.Long
       rs.getObject("bigInt") returns long
-      row.bigInt("bigInt") equals BigInt(number)
-      row.bigIntOption("bigInt") must beSome(BigInt(number))
+      result.bigInt("bigInt") equals BigInt(number)
+      result.bigIntOption("bigInt") must beSome(BigInt(number))
 
       val string: Object = number.toString
       rs.getObject("bigInt") returns string
-      row.bigInt("bigInt") equals BigInt(number)
-      row.bigIntOption("bigInt") must beSome(BigInt(number))
+      result.bigInt("bigInt") equals BigInt(number)
+      result.bigIntOption("bigInt") must beSome(BigInt(number))
 
       val bigint: Object = new java.math.BigInteger(number.toString)
       rs.getObject("bigInt") returns bigint
-      row.bigInt("bigInt") equals BigInt(number)
-      row.bigIntOption("bigInt") must beSome(BigInt(number))
+      result.bigInt("bigInt") equals BigInt(number)
+      result.bigIntOption("bigInt") must beSome(BigInt(number))
     }
   }
 
   "bigDecimal" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val number = 1.013
 
       val int: Object = number.toInt: java.lang.Integer
       rs.getObject("bigDecimal") returns int
-      row.bigDecimal("bigDecimal") equals BigDecimal(number.toInt)
-      row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number.toInt))
+      result.bigDecimal("bigDecimal") equals BigDecimal(number.toInt)
+      result.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number.toInt))
 
       val long: Object = number.toLong: java.lang.Long
       rs.getObject("bigDecimal") returns long
-      row.bigDecimal("bigDecimal") equals BigDecimal(number.toLong)
-      row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number.toLong))
+      result.bigDecimal("bigDecimal") equals BigDecimal(number.toLong)
+      result.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number.toLong))
 
       val string: Object = number.toString
       rs.getObject("bigDecimal") returns string
-      row.bigDecimal("bigDecimal") equals BigDecimal(number)
-      row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number))
+      result.bigDecimal("bigDecimal") equals BigDecimal(number)
+      result.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number))
 
       val bigint: Object = new java.math.BigDecimal(number.toString)
       rs.getObject("bigDecimal") returns bigint
-      row.bigDecimal("bigDecimal") equals BigDecimal(number)
-      row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number))
+      result.bigDecimal("bigDecimal") equals BigDecimal(number)
+      result.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number))
     }
   }
 
   "javaBigInteger" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val number = 1010101
 
       val int: Object = number.toInt: java.lang.Integer
       rs.getObject("javaBigInteger") returns int
-      row.javaBigInteger("javaBigInteger") equals new java.math.BigInteger(number.toString)
-      row.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
+      result.javaBigInteger("javaBigInteger") equals new java.math.BigInteger(number.toString)
+      result.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
 
       val long: Object = number.toLong: java.lang.Long
       rs.getObject("javaBigInteger") returns long
-      row.javaBigInteger("javaBigInteger") equals new java.math.BigInteger(number.toString)
-      row.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
+      result.javaBigInteger("javaBigInteger") equals new java.math.BigInteger(number.toString)
+      result.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
 
       val bigint: Object = new java.math.BigInteger(number.toString)
       rs.getObject("javaBigInteger") returns bigint
-      row.javaBigInteger("javaBigInteger") equals new java.math.BigInteger(number.toString)
-      row.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
+      result.javaBigInteger("javaBigInteger") equals new java.math.BigInteger(number.toString)
+      result.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
     }
   }
 
   "javaBigDecimal" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val number = 1
 
       val double: Object = number.toDouble: java.lang.Double
       rs.getObject("javaBigDecimal") returns double
-      row.javaBigDecimal("javaBigDecimal") equals new java.math.BigDecimal(number.toString)
-      row.javaBigDecimalOption("javaBigDecimal") must beSome(new java.math.BigDecimal(number.toString))
+      result.javaBigDecimal("javaBigDecimal") equals new java.math.BigDecimal(number.toString)
+      result.javaBigDecimalOption("javaBigDecimal") must beSome(new java.math.BigDecimal(number.toString))
 
       val bigdec: Object = new java.math.BigDecimal(number.toString)
       rs.getObject("javaBigDecimal") returns bigdec
-      row.javaBigDecimal("javaBigDecimal") equals new java.math.BigDecimal(number.toString)
-      row.javaBigDecimalOption("javaBigDecimal") must beSome(new java.math.BigDecimal(number.toString))
+      result.javaBigDecimal("javaBigDecimal") equals new java.math.BigDecimal(number.toString)
+      result.javaBigDecimalOption("javaBigDecimal") must beSome(new java.math.BigDecimal(number.toString))
     }
   }
 
   "date" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = mock[Timestamp]
       rs.getTimestamp("date") returns res
-      row.date("date") equals res
-      row.dateOption("date") must beSome(res)
+      result.date("date") equals res
+      result.dateOption("date") must beSome(res)
     }
   }
 
   "byteArray" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = Array[Byte]('1','2','3')
       rs.getObject("byteArray") returns res
-      row.byteArray("byteArray") equals res
-      row.byteArrayOption("byteArray") must beSome(res)
+      result.byteArray("byteArray") equals res
+      result.byteArrayOption("byteArray") must beSome(res)
 
       val blob = mock[Blob]
       blob.length returns res.length
       blob.getBytes(0, res.length) returns res
       rs.getObject("byteArray") returns blob
-      row.byteArray("byteArray") equals res
-      row.byteArrayOption("byteArray") must beSome(res)
+      result.byteArray("byteArray") equals res
+      result.byteArrayOption("byteArray") must beSome(res)
 
       val clob = mock[Clob]
       clob.length returns res.length
       clob.getSubString(1, res.length) returns "123"
       rs.getObject("byteArray") returns clob
-      row.byteArray("byteArray") equals res
-      row.byteArrayOption("byteArray") must beSome(res)
+      result.byteArray("byteArray") equals res
+      result.byteArrayOption("byteArray") must beSome(res)
     }
   }
 
   "uuid" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = Array[Byte]('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
       rs.getObject("uuid") returns res
-      row.uuid("uuid") equals new UUID(3472611983179986487L, 4051376414998685030L)
-      row.uuidOption("uuid") must beSome(new UUID(3472611983179986487L, 4051376414998685030L))
+      result.uuid("uuid") equals new UUID(3472611983179986487L, 4051376414998685030L)
+      result.uuidOption("uuid") must beSome(new UUID(3472611983179986487L, 4051376414998685030L))
     }
   }
 
   "uuidFromString" should {
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       val res = "000102030405060708090a0b0c0d0e0f"
       rs.getObject("uuidFromString") returns res
-      row.uuidFromString("uuidFromString") equals new UUID(283686952306183L, 579005069656919567L)
-      row.uuidFromStringOption("uuidFromString") must beSome(new UUID(283686952306183L, 579005069656919567L))
+      result.uuidFromString("uuidFromString") equals new UUID(283686952306183L, 579005069656919567L)
+      result.uuidFromStringOption("uuidFromString") must beSome(new UUID(283686952306183L, 579005069656919567L))
     }
   }
 
@@ -594,13 +594,13 @@ class SqlResultSpec extends Specification with Mockito {
     }
 
     "return the correct value" in {
-      val (rs, result, row) = getMocks
+      val (rs, result) = getMocks
 
       rs.getInt("enum") returns 1 thenReturns 2 thenReturns 3 thenReturns 4
-      row.enum("enum", Things) equals Things.one
-      row.enum("enum", Things) equals Things.two
-      row.enumOption("enum", Things) must beSome(Things.three)
-      row.enumOption("enum", Things) must beNone
+      result.enum("enum", Things) equals Things.one
+      result.enum("enum", Things) equals Things.two
+      result.enumOption("enum", Things) must beSome(Things.three)
+      result.enumOption("enum", Things) must beNone
     }
   }
 }

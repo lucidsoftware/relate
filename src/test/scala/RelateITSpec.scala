@@ -146,7 +146,7 @@ class RelateITSpec extends Specification with Db {
     description: String
   )
 
-  def pokedexParser(row: SqlRow) = {
+  def pokedexParser(row: SqlResult) = {
     PokedexEntry(
       row.long("id"),
       row.string("name"),
@@ -161,7 +161,7 @@ class RelateITSpec extends Specification with Db {
     trainerId: Option[Long]
   )
 
-  def pokemonParser(row: SqlRow) = {
+  def pokemonParser(row: SqlResult) = {
     Pokemon(
       row.long("id"),
       row.long("pokedex_id"),
@@ -176,7 +176,7 @@ class RelateITSpec extends Specification with Db {
     trainerId: Option[Long]
   )
 
-  def starterParser(row: SqlRow) = {
+  def starterParser(row: SqlResult) = {
     Starter(
       row.long("id"),
       row.string("name"),
