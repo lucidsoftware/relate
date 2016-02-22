@@ -30,7 +30,6 @@ object RowParser {
    * @param the extracted column value
    */
   def int(columnLabel: String) = (row: SqlRow) => row.int(columnLabel)
-  def ints(columnLabel: String) = Parser.list[Int](int(columnLabel))
   /**
    * Shorthand for creating a RowParser that takes only a long column from the result set
    * @param columnLabel the column name to extract

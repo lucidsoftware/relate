@@ -96,7 +96,7 @@ object Regressions extends DbRegression {
   }
 
   type ThreeCol = (Int, Int, Int)
-  implicit val threeColParseable = new Parser[ThreeCol] {
+  implicit val threeColParseable = new Parseable[ThreeCol] {
     def parse(row: SqlRow): ThreeCol = (
       row.int("col1"),
       row.int("col2"),
@@ -105,7 +105,7 @@ object Regressions extends DbRegression {
   }
 
   type TwentyTwoCol = (Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int)
-  implicit val twentyTwoColParseable = new Parser[TwentyTwoCol] {
+  implicit val twentyTwoColParseable = new Parseable[TwentyTwoCol] {
     def parse(row: SqlRow): TwentyTwoCol = (
       row.int("col1"),
       row.int("col2"),
@@ -137,6 +137,22 @@ object Regressions extends DbRegression {
 
   performance of "parsers" in {
     performance of "three columns" in {
+      measure method "asList(parser)" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.asList(threeColParseable.parse)
+          }
+        }
+      }
+
+      measure method "asList[Type]" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.asList[ThreeCol]
+          }
+        }
+      }
+
       measure method "as[List[Type]]" in {
         using(Gen.unit("parser")) in { _ =>
           parserIterations.foreach { _ =>
@@ -147,6 +163,22 @@ object Regressions extends DbRegression {
     }
 
     performance of "thirty columns" in {
+      measure method "asList(parser)" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.asList(twentyTwoColParseable.parse)
+          }
+        }
+      }
+
+      measure method "asList[Type]" in {
+        using(Gen.unit("parser")) in { _ =>
+          parserIterations.foreach { _ =>
+            query.asList[TwentyTwoCol]
+          }
+        }
+      }
+
       measure method "as[List[Type]]" in {
         using(Gen.unit("parser")) in { _ =>
           parserIterations.foreach { _ =>

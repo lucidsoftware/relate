@@ -33,7 +33,7 @@ class InterpolatedQuery(protected val parsedQuery: String, protected val params:
 
 object InterpolatedQuery {
 
-  def fromParts(parts: Seq[String], params: Seq[Parameter]): InterpolatedQuery = {
+  def fromParts(parts: Seq[String], params: Seq[Parameter]): Sql = {
     val stringBuilder = new StringBuilder()
     parts.zip(params).foreach { case (part, param) =>
       stringBuilder ++= part
