@@ -1,5 +1,7 @@
 # Relate
 
+[![Join the chat at https://gitter.im/lucidsoftware/relate](https://badges.gitter.im/lucidsoftware/relate.svg)](https://gitter.im/lucidsoftware/relate?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Relate is a lightweight, blazing-fast database access layer for Scala that abstracts the idiosyncricies of the JDBC while keeping complete control over the SQL.
 
 ## Examples
