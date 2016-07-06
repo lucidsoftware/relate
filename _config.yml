@@ -1,0 +1,14 @@
+title: "Barebones Jekyll"
+description: "A starter for future jekyll sites."
+baseurl: /relate
+
+markdown: kramdown
+sass:
+  sass_dir: _sass
+  style: compressed
+
+exclude: [
+  Gemfile*,
+  .gitignore,
+  README.md
+]

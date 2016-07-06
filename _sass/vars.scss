@@ -1,0 +1,14 @@
+// variables to be used throughout the site
+
+// media vars
+$screen-sm: 768px;
+$screen-md: 992px;
+$screen-lg: 1200px;
+
+// media queries
+$large-stop: "(max-width: #{$screen-lg + 50})";
+
+// grid vars
+$grid-horizontal-spacing: 3%;
+$grid-vertical-spacing: $grid-horizontal-spacing;
+$grid-total-columns: 12;
