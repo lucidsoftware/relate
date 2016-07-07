@@ -31,6 +31,16 @@ sql"SELECT * from jedis WHERE last_name=$lastName".asList { row =>
     <div class="container">
       <h1 class="section-title">Boost Performance</h1>
       <p>In production situations, every millisecond matters. And while Relate may not be the prettiest face in the crowd, it does the best at managing large queries and large results.</p>
+      <div class="image-block">
+        <img src="{{site.baseurl}}/assets/img/selecting-10-columns.png" />
+        <h5 class="caption">Selecting rows with 10 columns</h5>
+      </div>
+      <div class="image-block">
+        <img src="{{site.baseurl}}/assets/img/inserting-10-columns.png" />
+        <h5 class="caption">Inserting rows with 10 columns</h5>
+      </div>
+      <p>Pure JDBC is the hard bottom line for performance, but Relate gets pretty close to that. At <a href="https://golucid.co">Lucid</a>, we make queries at scale, and we've been extremely pleased with Relate's performance.</p>
+      <p>If you'd like to run the benchmarks yourself, you can find them in the Relate <a href="https://github.com/lucidsoftware/relate">repo</a>!</p>
     </div>
   </section>
   <section class="sbt">

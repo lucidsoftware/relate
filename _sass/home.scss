@@ -60,6 +60,23 @@
     }
   }
 
+  .image-block {
+    @include drop-shadow-1;
+
+    margin: 30px auto;
+    padding: 20px;
+    width: 80%;
+
+    img { width: 100%; }
+
+    .caption {
+      margin-top: 10px;
+
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+
   section.sbt {
     background-color: $butter;
 
