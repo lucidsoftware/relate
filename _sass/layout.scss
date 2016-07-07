@@ -1,4 +1,11 @@
 // layout classes, like the grid system
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
 
 %clearfix:after {
     display: block;

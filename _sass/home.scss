@@ -1,0 +1,29 @@
+.home {
+  .hero {
+    min-height: calc(98vh - #{$site-header-height});
+    padding: 50px;
+
+    background-color: $salmon;
+    color: white;
+    text-align: center;
+
+    .title-container {
+      position: absolute;
+      left: 0;
+      top: 40%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+
+    .title {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .subtitle {
+      margin-top: 40px;
+
+      font-size: 36px;
+    }
+  }
+}

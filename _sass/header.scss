@@ -1,0 +1,79 @@
+header.site-header {
+  position: fixed;
+  z-index: 100;
+
+  height: $site-header-height;
+  left: 0;
+  right: 0;
+
+  background-color: $lucky-point;
+  color: white;
+
+  @include drop-shadow-1;
+}
+
+.hamburger {
+  display: inline-block;
+  float: left;
+
+  padding: ($site-header-height - ($hamburger-line-height + $hamburger-line-margin) * 3) / 2;
+
+  cursor: pointer;
+
+  .hamburger-line {
+    background: darken(white, 20%);
+    display: block;
+    height: $hamburger-line-height;
+    margin: $hamburger-line-margin 0 0;
+    width: $hamburger-toggle-width;
+  }
+}
+
+.image-link img {
+  height: $site-header-height;
+  padding: 15px;
+}
+
+.github img {
+  float: right;
+}
+
+.waffle img {
+  float: right;
+
+  height: 68px;
+  padding-left: 8px;
+}
+
+.brand img {
+  float: left;
+
+  padding-top: 10px;
+  padding-left: 5px;
+}
+
+#docsearch-input {
+  $input-height: 45px;
+  float: right;
+
+  border: none;
+  border-radius: 2px;
+  height: $input-height;
+  margin-top: ($site-header-height - $input-height) / 2;
+  margin-left: 10px;
+  margin-right: 20px;
+  padding: 10px;
+  width: 250px;
+
+  background-color: rgba(255, 255, 255, .2);
+  color: white;
+  font-size: 18px;
+
+  transition: width .5s ease-in-out;
+
+  @include focus-glow(rgba($navajo-white, .4), .5s);
+
+  &:focus {
+    width: 300px;
+  }
+}

@@ -1,4 +1,12 @@
 // contains the colors and color functions used throughout the site
+$lucky-point: #1f2b5f;
+$studio: #7a5c9c;
+$cornflower: #6396d8;
+$salmon: #d98594;
+$navajo-white: #fecd71;
+
+$font-color-dark: #444;
+
 @mixin drop-shadow-1 {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
@@ -9,4 +17,17 @@
 
 @mixin drop-shadow-3 {
   box-shadow: 0 6px 9px rgba(0,0,0,0.16), 0 6px 9px rgba(0,0,0,0.23);
+}
+
+@mixin focus-glow($color, $time) {
+  & {
+    border: 1px solid rgba(0, 0, 0, 0);
+  }
+
+  &:focus {
+    box-shadow: 0 0 5px $color;
+    outline: none;
+    border: 1px solid $color;
+    transition: all $time ease-in-out;
+  }
 }

@@ -1,5 +1,5 @@
-title: "Barebones Jekyll"
-description: "A starter for future jekyll sites."
+title: "Relate"
+description: "Blazingly fast database access layer for Scala."
 baseurl: /relate
 
 markdown: kramdown
