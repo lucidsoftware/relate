@@ -3,8 +3,8 @@
     min-height: calc(98vh - #{$site-header-height});
     padding: 50px;
 
-    background-color: $salmon;
-    color: white;
+    background-color: white;
+    color: $eggplant;
     text-align: center;
 
     .title-container {
@@ -24,6 +24,47 @@
       margin-top: 40px;
 
       font-size: 36px;
+    }
+  }
+
+  section {
+    position: relative;
+
+    padding: 150px 0;
+
+    .section-title {
+      margin-top: 0;
+      margin-bottom: 30px;
+
+      font-size: 36px;
+    }
+
+    p {
+      margin: 20px 0;
+
+      font-size: 24px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  section.plain-sql {
+    background-color: $clean;
+  }
+
+  section.performance, section.sbt {
+    .section-title {
+      margin-bottom: 20px;
+    }
+  }
+
+  section.sbt {
+    background-color: $butter;
+
+    .highlight {
+      background-color: lighten($clean, 20%);
     }
   }
 }

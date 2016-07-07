@@ -1,11 +1,10 @@
 // contains the colors and color functions used throughout the site
-$lucky-point: #1f2b5f;
-$studio: #7a5c9c;
-$cornflower: #6396d8;
-$salmon: #d98594;
-$navajo-white: #fecd71;
+$eggplant: #874c62;
+$salmon: #c98474;
+$butter: #f2d388;
+$clean: #a7d2cb;
 
-$font-color-dark: #444;
+$font-color-dark: darken($eggplant, 18%);
 
 @mixin drop-shadow-1 {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);

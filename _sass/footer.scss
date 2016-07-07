@@ -1,0 +1,17 @@
+footer.site-footer {
+  height: $site-footer-height;
+
+  background-color: $eggplant;
+  color: white;
+
+  .created-by {
+    display: inline-block;
+
+    height: $site-footer-height;
+    width: 100%;
+
+    font-size: 20px;
+    line-height: $site-footer-height;
+    text-align: center;
+  }
+}

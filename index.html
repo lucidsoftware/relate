@@ -6,8 +6,49 @@ description: Blazingly fast database access layer for Scala.
 <div class="home">
   <div class="hero">
     <div class="container title-container">
-      <img class="title" src="{{site.baseurl}}/assets/img/relate-logo-white.svg" />
+      <img class="title" src="{{site.baseurl}}/assets/img/relate-logo-eggplant.svg" />
       <h2 class="subtitle">Blazingly fast database access in Scala</h2>
     </div>
   </div>
+  <section class="plain-sql">
+    <div class="container">
+      <h1 class="section-title">Write Queries in Plain SQL</h1>
+      {% highlight scala %}
+case class Jedi(name: String, isChosenOne: Boolean)
+val lastName = "Skywalker"
+sql"SELECT * from jedis WHERE last_name=$lastName".asList { row =>
+  Jedi(
+    row.string("first_name") + row.string("last_name"),
+    row.bool("is_chosen_one")
+  )
+}
+      {% endhighlight%}
+      <p>SQL is already the best domain-specific language for querying relational databases. We don't need another. Ultimately, ORMs obscure the underlying queries and cause lots of headaches.</p>
+      <p>With Relate, you write your queries in the language nature intended, while interacting with the inputs and results in a high-level and performant way.</p>
+    </div>
+  </section>
+  <section class="performance">
+    <div class="container">
+      <h1 class="section-title">Boost Performance</h1>
+      <p>In production situations, every millisecond matters. And while Relate may not be the prettiest face in the crowd, it does the best at managing large queries and large results.</p>
+    </div>
+  </section>
+  <section class="sbt">
+    <div class="container">
+      <h1 class="section-title">Include Relate in Your Project</h1>
+      <p>All it takes is adding a dependency on Relate in your SBT configuration!</p>
+      {% highlight scala %}
+// build.sbt
+libraryDependencies += "com.lucidchart" %% "relate" % "1.13.0"
+
+resolvers += "Sonatype release repository" at "https://oss.sonatype.org/content/repositories/releases/"
+      {% endhighlight %}
+    </div>
+  </section>
+  <section class="explore-docs">
+    <div class="container">
+      <h1 class="section-title">Explore the Documentation</h1>
+      <p>Relate has a lot of cool features, like pararmeter sequences and query composition. To get the most of it, and for a more complete overview of the project, continue on to the <a href="{{site.baseurl}}/docs/overview.html">rest of the documentation</a>.</p>
+    </div>
+  </section>
 </div>

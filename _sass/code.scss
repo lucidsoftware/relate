@@ -1,7 +1,9 @@
 // styling for syntax highlighting
 .highlight {
+  @include drop-shadow-1;
   margin: 0;
   padding: 10px 30px;
 
+  background-color: lighten($butter, 10%);
   overflow-x: auto;
 }

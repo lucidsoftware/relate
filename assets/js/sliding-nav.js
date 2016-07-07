@@ -1,10 +1,17 @@
 addOnload(function() {
-  document.getElementById('hamburger').addEventListener('click', function(e) {
-    var nav = document.getElementById('sliding-nav');
-    if (nav.className == 'sliding active') {
-      nav.className = 'sliding';
-    } else {
+  var hamburger = document.getElementById('hamburger');
+  var nav = document.getElementById('sliding-nav');
+  hamburger.addEventListener('click', function(e) {
+    if (nav.className == 'sliding') {
       nav.className = 'sliding active';
+    } else {
+      nav.className = 'sliding';
+    }
+
+    if (hamburger.className == 'hamburger') {
+      hamburger.className = 'hamburger active';
+    } else {
+      hamburger.className = 'hamburger';
     }
   })
 })

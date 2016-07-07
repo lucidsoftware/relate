@@ -4,11 +4,13 @@ nav.sliding {
   position: fixed;
   left: -$nav-width - 10;
   top: $site-header-height;
+  z-index: 99;
 
   height: calc(100vh - #{$site-header-height});
   width: $nav-width;
 
-  background-color: white;
+  background-color: lighten($clean, 20%);
+  color: $eggplant;
   transition: left ease .5s;
 
   ul {
@@ -21,13 +23,16 @@ nav.sliding {
   li a {
     display: block;
 
-    border-bottom: 1px solid rgba($studio, .3);
+    border-bottom: 1px solid rgba($eggplant, .3);
     padding: 20px;
+
+    color: $eggplant;
 
     transition: background-color ease .5s;
 
     &:hover {
-      background-color: rgba($studio, .2);
+      background-color: $eggplant;
+      color: $butter;
     }
   }
 

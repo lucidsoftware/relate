@@ -6,7 +6,7 @@ header.site-header {
   left: 0;
   right: 0;
 
-  background-color: $lucky-point;
+  background-color: $eggplant;
   color: white;
 
   @include drop-shadow-1;
@@ -21,11 +21,21 @@ header.site-header {
   cursor: pointer;
 
   .hamburger-line {
-    background: darken(white, 20%);
     display: block;
+
     height: $hamburger-line-height;
     margin: $hamburger-line-margin 0 0;
     width: $hamburger-toggle-width;
+
+    background: darken(white, 20%);
+
+    transition: background ease .5s;
+  }
+
+  &.active {
+    .hamburger-line {
+      background: $butter;
+    }
   }
 }
 
@@ -71,7 +81,7 @@ header.site-header {
 
   transition: width .5s ease-in-out;
 
-  @include focus-glow(rgba($navajo-white, .4), .5s);
+  @include focus-glow($clean, .5s);
 
   &:focus {
     width: 300px;

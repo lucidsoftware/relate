@@ -22,19 +22,30 @@ body {
 }
 
 a {
+  color: $clean;
   cursor: pointer;
+  text-decoration: none;
+
+  transition: color ease .5s;
+
+  &:hover {
+    color: $butter;
+  }
 }
 
 .btn {
+  @include drop-shadow-2;
   padding: 14px 20px;
 
+  background-color: $clean;
+  color: $font-color-dark;
   font-size: 24px;
 
-  @include drop-shadow-1;
-
-  transition: box-shadow 1s;
+  transition: all ease .5s;
 
   &:hover {
-    @include drop-shadow-2;
+    @include drop-shadow-3;
+
+    color: $eggplant;
   }
 }
