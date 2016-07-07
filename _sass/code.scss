@@ -4,6 +4,12 @@
   margin: 0;
   padding: 10px 30px;
 
-  background-color: lighten($butter, 10%);
+  background-color: lighten($butter, 15%);
   overflow-x: auto;
+
+  .language-scala {
+    .c1 { color: #999; }
+    .k, .kt { color: $salmon; font-weight: 700; }
+    .s { color: $darker-clean; }
+  }
 }
