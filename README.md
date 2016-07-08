@@ -1,4 +1,5 @@
 # Relate
+http://lucidsoftware.github.io/relate/
 
 [![Join the chat at https://gitter.im/lucidsoftware/relate](https://badges.gitter.im/lucidsoftware/relate.svg)](https://gitter.im/lucidsoftware/relate?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
