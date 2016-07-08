@@ -31,6 +31,12 @@
 
       font-size: 32px;
     }
+
+    .highlight {
+      margin: 34px 0px;
+
+      background-color: lighten($navy-blue, 82%);
+    }
   }
 
   .pagination {
