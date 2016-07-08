@@ -1,0 +1,26 @@
+---
+layout: doc
+title: Overview
+subtitle: What's Relate?
+color: clean
+next:
+  name: Getting Started
+  url: /docs/getting-started.html
+---
+Relate is a lightweight database access layer for Scala that simplifies database interaction while leaving complete control over the actual SQL query. It was developed at Lucid Software in response to a need for increasingly performant database access software and seeks to abstract away `PreparedStatement`'s idiosyncrasies while maintaining its speed.
+
+## Advantages - Why Use Relate?
+* Works with all JDBC connection types
+* Works with all database engines
+* Performance
+
+## Constraints - What Relate Doesn't Do
+* Create connections to databases
+* ORM abstraction
+
+## Next Steps
+* [Getting Started]({{site.baseurl}}/docs/getting-started.html)
+* [Writing Queries]({{site.baseurl}}/docs/writing-queries.html)
+* [Retrieving Data]({{site.baseurl}}/docs/retrieving-data.html)
+* [FAQ]({{site.baseurl}}/docs/faq.html)
+* [Browse API Docs]({{site.baseurl}}/docs/api/index.html)

@@ -14,7 +14,8 @@ html, body {
 
   color: $font-color-dark;
   font-size: 18px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Raleway', sans-serif;
+  background-color: $eggshell;
 }
 
 body {
@@ -22,30 +23,13 @@ body {
 }
 
 a {
-  color: $darker-clean;
+  color: $coral;
   cursor: pointer;
   text-decoration: none;
 
   transition: color ease .5s;
 
   &:hover {
-    color: $butter;
-  }
-}
-
-.btn {
-  @include drop-shadow-2;
-  padding: 14px 20px;
-
-  background-color: $clean;
-  color: $font-color-dark;
-  font-size: 24px;
-
-  transition: all ease .5s;
-
-  &:hover {
-    @include drop-shadow-3;
-
-    color: $eggplant;
+    color: $leather;
   }
 }

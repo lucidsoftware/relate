@@ -25,7 +25,7 @@
      inkscape:pageopacity="0.90588235"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="485.52368"
+     inkscape:cx="307.73683"
      inkscape:cy="224.70574"
      inkscape:document-units="px"
      inkscape:current-layer="g3914"
@@ -69,7 +69,7 @@
        transform="matrix(1.3168938,0,0,2.0407008,-184.06981,-851.52989)">
       <text
          xml:space="preserve"
-         style="font-size:200px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:15px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         style="font-size:200px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:15px;word-spacing:0px;fill:#f5f5f5;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
          x="516.33691"
          y="925.57263"
          id="text3004"
@@ -80,7 +80,7 @@
            id="tspan3006"><tspan
              x="516.33691"
              y="925.57263"
-             style="font-size:240px;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+             style="font-size:240px;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#f5f5f5;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
              id="tspan3008">r   late</tspan></tspan></text>
       <text
          transform="translate(0,652.36218)"
@@ -96,11 +96,12 @@
            sodipodi:role="line" /></text>
       <g
          id="g3846"
-         transform="matrix(1.3063865,0,0,0.96861933,-97.708589,255.12511)">
+         transform="matrix(1.3063865,0,0,0.96861933,-97.708589,255.12511)"
+         style="fill:#f5f5f5;fill-opacity:1">
         <g
            id="g3047"
            transform="matrix(0.94130014,0,0,1.0034304,21.532635,205.48004)"
-           style="fill:#ffffff;fill-opacity:1;stroke:none">
+           style="fill:#f5f5f5;fill-opacity:1;stroke:none">
           <path
              transform="matrix(0.67250172,0,0,1.0945138,-46.006911,603.82874)"
              d="m 641.44687,-212.65752 c 0,6.97365 -36.63312,12.62691 -81.82236,12.62691 -45.18924,0 -81.82236,-5.65326 -81.82236,-12.62691 0,-6.97364 36.63312,-12.6269 81.82236,-12.6269 45.18924,0 81.82236,5.65326 81.82236,12.6269 z"
@@ -109,16 +110,16 @@
              sodipodi:cy="-212.65752"
              sodipodi:cx="559.62451"
              id="path3781"
-             style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+             style="fill:#f5f5f5;fill-opacity:1;fill-rule:evenodd;stroke:none"
              sodipodi:type="arc" />
           <g
              id="g3792-3-5"
              transform="matrix(1,0,0,0.88056685,-0.15021567,108.48307)"
-             style="fill:#ffffff;fill-opacity:1;stroke:none">
+             style="fill:#f5f5f5;fill-opacity:1;stroke:none">
             <path
                transform="matrix(0.66953777,0,0,1.0945138,-44.221983,651.78471)"
                sodipodi:type="arc"
-               style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+               style="fill:#f5f5f5;fill-opacity:1;fill-rule:evenodd;stroke:none"
                id="path3781-3-6-3"
                sodipodi:cx="559.62451"
                sodipodi:cy="-212.65752"
@@ -130,17 +131,17 @@
             <path
                id="rect3803-7-5"
                d="m 275.65695,396.66667 0,22.53017 109.72996,0 0,-22.53017 -0.4057,0 c -0.9058,7.24615 -24.94421,13.05402 -54.49132,13.05402 -29.54713,0 -53.60686,-5.80787 -54.51266,-13.05402 l -0.32028,0 z"
-               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#f5f5f5;fill-opacity:1;fill-rule:nonzero;stroke:none"
                inkscape:connector-curvature="0" />
           </g>
           <g
              id="g3792-3-5-3"
              transform="matrix(1,0,0,0.8158739,-0.46313026,99.265688)"
-             style="fill:#ffffff;fill-opacity:1;stroke:none">
+             style="fill:#f5f5f5;fill-opacity:1;stroke:none">
             <path
                transform="matrix(0.66953777,0,0,1.0945138,-44.221983,651.78471)"
                sodipodi:type="arc"
-               style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+               style="fill:#f5f5f5;fill-opacity:1;fill-rule:evenodd;stroke:none"
                id="path3781-3-6-3-6"
                sodipodi:cx="559.62451"
                sodipodi:cy="-212.65752"
@@ -152,17 +153,17 @@
             <path
                id="rect3803-7-5-7"
                d="m 275.69581,396.66667 0,22.53017 109.57452,0 0,-22.53017 -0.40513,0 c -0.90451,7.24615 -24.90887,13.05402 -54.41412,13.05402 -29.50528,0 -53.53093,-5.80787 -54.43544,-13.05402 l -0.31983,0 z"
-               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#f5f5f5;fill-opacity:1;fill-rule:nonzero;stroke:none"
                inkscape:connector-curvature="0" />
           </g>
           <g
              id="g3792-3-5-5"
              transform="matrix(1,0,0,0.83080304,-0.15273963,58.308894)"
-             style="fill:#ffffff;fill-opacity:1;stroke:none">
+             style="fill:#f5f5f5;fill-opacity:1;stroke:none">
             <path
                transform="matrix(0.66953777,0,0,1.0945138,-44.221983,651.78471)"
                sodipodi:type="arc"
-               style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+               style="fill:#f5f5f5;fill-opacity:1;fill-rule:evenodd;stroke:none"
                id="path3781-3-6-3-3"
                sodipodi:cx="559.62451"
                sodipodi:cy="-212.65752"
@@ -174,7 +175,7 @@
             <path
                id="rect3803-7-5-5"
                d="m 275.65695,396.66667 0,22.53017 109.60119,0 0,-22.53017 -0.40523,0 c -0.90473,7.24615 -24.91493,13.05402 -54.42736,13.05402 -29.51245,0 -53.54395,-5.80787 -54.44869,-13.05402 l -0.31991,0 z"
-               style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               style="fill:#f5f5f5;fill-opacity:1;fill-rule:nonzero;stroke:none"
                inkscape:connector-curvature="0" />
           </g>
         </g>

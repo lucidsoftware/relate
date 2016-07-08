@@ -1,0 +1,39 @@
+.doc {
+  .hero {
+    min-height: 300px;
+    padding: 60px 0px;
+
+    background-color: $coral;
+    color: $eggshell;
+    text-align: center;
+
+    .page-title {
+      margin: 0;
+
+      font-size: 100px;
+    }
+
+    .page-subtitle {
+      margin: 0;
+      margin-top: 20px;
+
+      font-size: 32px;
+    }
+  }
+
+  .doc-content {
+    padding: 60px 0px;
+
+    line-height: 22px;
+
+    h2 {
+      margin: 30px auto;
+
+      font-size: 32px;
+    }
+  }
+
+  .pagination {
+    text-align: center;
+  }
+}

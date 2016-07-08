@@ -9,8 +9,8 @@ nav.sliding {
   height: calc(100vh - #{$site-header-height});
   width: $nav-width;
 
-  background-color: lighten($clean, 20%);
-  color: $eggplant;
+  background-color: white;
+  color: $navy-blue;
   transition: left ease .5s;
 
   ul {
@@ -23,16 +23,16 @@ nav.sliding {
   li a {
     display: block;
 
-    border-bottom: 1px solid rgba($eggplant, .3);
+    border-bottom: 1px solid rgba($navy-blue, .3);
     padding: 20px;
 
-    color: $eggplant;
+    color: $navy-blue;
 
     transition: background-color ease .5s;
 
     &:hover {
-      background-color: $eggplant;
-      color: $butter;
+      background-color: $coral;
+      color: $eggshell;
     }
   }
 

@@ -3,8 +3,7 @@
     min-height: calc(98vh - #{$site-header-height});
     padding: 50px;
 
-    background-color: white;
-    color: $eggplant;
+    color: $navy-blue;
     text-align: center;
 
     .title-container {
@@ -50,8 +49,9 @@
     }
   }
 
-  section.plain-sql {
-    background-color: $clean;
+  section.plain-sql, section.sbt {
+    background-color: $coral;
+    color: $eggshell;
   }
 
   section.performance, section.sbt {
@@ -67,6 +67,8 @@
     padding: 20px;
     width: 80%;
 
+    background-color: white;
+
     img { width: 100%; }
 
     .caption {
@@ -74,14 +76,6 @@
 
       font-size: 18px;
       text-align: center;
-    }
-  }
-
-  section.sbt {
-    background-color: $butter;
-
-    .highlight {
-      background-color: lighten($clean, 18%);
     }
   }
 }

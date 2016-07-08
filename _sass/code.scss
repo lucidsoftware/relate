@@ -1,15 +1,23 @@
 // styling for syntax highlighting
 .highlight {
-  @include drop-shadow-1;
+  @include drop-shadow-2;
   margin: 0;
   padding: 10px 30px;
 
-  background-color: lighten($butter, 15%);
+  background-color: $eggshell;
   overflow-x: auto;
 
   .language-scala {
-    .c1 { color: #999; }
-    .k, .kt { color: $salmon; font-weight: 700; }
-    .s { color: $darker-clean; }
+    color: $navy-blue;
+
+    .c1 { color: $leather; }
+    .k, .kt { color: $navy-blue; font-weight: 700; }
+    .s { color: $coral; }
   }
+}
+
+.highlighter-rouge {
+  background-color: rgba($leather, .3);
+  padding: 4px;
+  line-height: 24px;
 }
