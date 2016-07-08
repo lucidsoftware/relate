@@ -16,7 +16,7 @@ description: Blazingly fast database access layer for Scala.
       {% highlight scala %}
 case class Jedi(name: String, isChosenOne: Boolean)
 val lastName = "Skywalker"
-sql"SELECT * from jedis WHERE last_name=$lastName".asList { row =>
+sql"SELECT * from jedi WHERE last_name=$lastName".asList { row =>
   Jedi(
     row.string("first_name") + row.string("last_name"),
     row.bool("is_chosen_one")

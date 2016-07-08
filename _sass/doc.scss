@@ -30,6 +30,13 @@
       margin: 30px auto;
 
       font-size: 32px;
+
+      &:target:before {
+        content: '';
+        display: block;
+        height: ($site-header-height + 20);
+        margin: -($site-header-height + 20) 0 0;
+      }
     }
 
     .highlight {
