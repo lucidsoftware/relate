@@ -2,7 +2,9 @@
 layout: doc
 title: Overview
 subtitle: What's Relate?
-color: clean
+previous:
+  name: Home
+  url: /
 next:
   name: Getting Started
   url: /docs/getting-started.html
@@ -11,7 +13,7 @@ Relate is a lightweight database access layer for Scala that simplifies database
 
 ## Advantages - Why Use Relate?
 * Works with all JDBC connection types
-* Works with all database engines
+* Compatible with all database engines
 * Performance
 
 ## Constraints - What Relate Doesn't Do

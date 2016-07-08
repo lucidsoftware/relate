@@ -34,6 +34,16 @@
   }
 
   .pagination {
+    padding-bottom: 80px;
+
     text-align: center;
+
+    .page-name {
+      font-size: 24px;
+    }
+
+    .mega-octicon {
+      margin: 0px 10px;
+    }
   }
 }
