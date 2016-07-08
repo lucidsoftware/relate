@@ -34,4 +34,4 @@ Relate is a lightweight database access layer for Scala that simplifies database
   * [Single Value Parsers]({{site.baseurl}}/docs/retrieving-data.html#single-value-parsers)
   * [Retrieving Auto Increment Values]({{site.baseurl}}/docs/retrieving-data.html#retrieving-auto-increment-values-on-insert)
 * [FAQ]({{site.baseurl}}/docs/faq.html)
-* [Browse API Docs]({{site.baseurl}}/docs/api/index.html)
+* [Browse API Docs]({{site.baseurl}}/api/1.13.0/index.html)
