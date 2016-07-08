@@ -13,5 +13,11 @@ footer.site-footer {
     font-size: 20px;
     line-height: $site-footer-height;
     text-align: center;
+
+    .scala {
+      height: 20px;
+      margin-bottom: -4px;
+      margin-right: 2px;
+    }
   }
 }
