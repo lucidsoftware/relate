@@ -20,7 +20,7 @@ However, when you execute a query, you usually want to interact with the result 
 
 ## Defining a Parser
 
-Parsers are nothing more than functions that take a `SqlResult` representing a row of data and return the desired result. `SqlResult`s have many methods that allow you to extract a column as an instance particular type. Here's an example:
+Parsers are nothing more than functions that take a [`SqlResult`]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.SqlResult) representing a row of data and return the desired result. `SqlResult`s have many methods that allow you to extract a column as an instance particular type. Here's an example:
 
 {% highlight scala %}
 import com.lucidchart.open.relate.SqlResult
@@ -46,7 +46,7 @@ val jediParser = { row: SqlResult =>
 }
 {% endhighlight %}
 
-In this example, the created parser takes the value from the `name` column of the row as a string, the value of `lightSaberColor` as a short that is used for the `Enumeration`, and the value from the `species` column as a string option to instantiate a Jedi object. The `SqlResult` object has [numerous methods to extract data](Data-Extraction-Methods) from the row with the desired data type.
+In this example, the created parser takes the value from the `name` column of the row as a string, the value of `lightSaberColor` as a short that is used for the `Enumeration`, and the value from the `species` column as a string option to instantiate a Jedi object. The `SqlResult` object has [numerous methods to extract data]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.SqlResult) from the row with the desired data type.
 
 The parser can return any value, so it doesn't necessarily need to be an instance of a case class. A `Tuple`, `Seq`, etc. would work equally well.
 
@@ -78,7 +78,7 @@ sql"SELECT * FROM jedi".asMap(nameToJediParser)(connection)
 
 ## Single Column Parsers
 
-Sometimes a query retrieves only one column. Convenience methods are defined in `RowParser` for creating single column row parsers in these occasions. Below is an example of their use:
+Sometimes a query retrieves only one column. Convenience methods are defined in [`RowParser`]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.RowParser$) for creating single column row parsers in these occasions. Below is an example of their use:
 
 {% highlight scala %}
 import com.lucidchart.open.relate.RowParser
@@ -90,11 +90,11 @@ sql"""
 """.asList(RowParser.string("id"))
 {% endhighlight %}
 
-The `RowParser` object also contains definitions for `bigInt`, `date`, `int`, and `string`.
+The [`RowParser`]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.RowParser$) object also contains definitions for `bigInt`, `date`, `int`, and `string`.
 
 ## Single Value Parsers
 
-In other cases, only one value is desired as the result of a query. For these scenarios, Relate provides a scalar method with which the desired type of the returned single value can be defined. The return value is wrapped as an `Option`. An example of its use is as follows:
+In other cases, only one value is desired as the result of a query. For these scenarios, Relate provides a [scalar method]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.Sql@asScalarOption[A]()(implicitconnection:java.sql.Connection):Option[A]) with which the desired type of the returned single value can be defined. The return value is wrapped as an `Option`. An example of its use is as follows:
 
 {% highlight scala %}
 sql"""
@@ -104,11 +104,11 @@ sql"""
 """.asScalarOption[String]
 {% endhighlight %}
 
-There is also a non-option version of this method, `asScalar[A]`.
+There is also a non-option version of this method, [`asScalar[A]`]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.Sql@asScalar[A]()(implicitconnection:java.sql.Connection):A).
 
 ## Retrieving Auto Increment Values on Insert
 
-There also exist methods to retrieve the auto-incremented ids of inserted records. Given a table where the primary key was a bigint, here's an example:
+There also exist [methods to retrieve the auto-incremented ids]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.Sql) of inserted records. Given a table where the primary key was a bigint, here's an example:
 
 {% highlight scala %}
 val id = sql"""

@@ -1,0 +1,2738 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>SqlResult - com.lucidchart.open.relate.SqlResult</title>
+          <meta name="description" content="SqlResult - com.lucidchart.open.relate.SqlResult" />
+          <meta name="keywords" content="SqlResult com.lucidchart.open.relate.SqlResult" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../index.html';
+            var hash = 'com.lucidchart.open.relate.SqlResult';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <a href="SqlResult$.html" title="See companion object"><img alt="Class/Object" src="../../../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a href="../../../package.html" class="extype" name="com">com</a>.<a href="../../package.html" class="extype" name="com.lucidchart">lucidchart</a>.<a href="../package.html" class="extype" name="com.lucidchart.open">open</a>.<a href="package.html" class="extype" name="com.lucidchart.open.relate">relate</a></p>
+        <h1><a href="SqlResult$.html" title="See companion object">SqlResult</a></h1><h3><span class="morelinks"><div>
+            Related Docs:
+            <a href="SqlResult$.html" title="See companion object">object SqlResult</a>
+            | <a href="package.html" class="extype" name="com.lucidchart.open.relate">package relate</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">SqlResult</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>The SqlResult class is a wrapper around Java's ResultSet class.</p><p>It provides methods to allows users to retrieve specific columns by name and datatype,
+but also provides methods that can, given a <a href="RowParser.html" class="extype" name="com.lucidchart.open.relate.RowParser">RowParser</a>,
+parse the entire result set as a collection of records returned by the parser. These methods are
+also defined in the Sql trait, and are most conveniently used when chained with parameter
+insertion. For how to do this, see the <a href="Sql.html" class="extype" name="com.lucidchart.open.relate.Sql">Sql</a> trait
+documentation.</p><p>The extraction methods (int, string, long, etc.) also have &quot;strict&quot; counterparts. The &quot;strict&quot;
+methods are slightly faster, but do not do type checking or handle null values.
+</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="com.lucidchart.open.relate.SqlResult"><span>SqlResult</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="com.lucidchart.open.relate.SqlResult#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(resultSet:java.sql.ResultSet):com.lucidchart.open.relate.SqlResult"></a>
+      <a id="&lt;init&gt;:SqlResult"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">SqlResult</span><span class="params">(<span name="resultSet">resultSet: <span class="extype" name="java.sql.ResultSet">ResultSet</span></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@&lt;init&gt;(resultSet:java.sql.ResultSet):com.lucidchart.open.relate.SqlResult" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@##():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#as" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="as[A]()(implicitevidence$1:com.lucidchart.open.relate.Parseable[A]):A"></a>
+      <a id="as[A]()(Parseable[A]):A"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">as</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.as.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.as.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@as[A]()(implicitevidence$1:com.lucidchart.open.relate.Parseable[A]):A" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asCollection" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asCollection[U,T[_]](parser:com.lucidchart.open.relate.SqlResult=&gt;U,maxRows:Long)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]]):T[U]"></a>
+      <a id="asCollection[U,T[_]]((SqlResult)⇒U,Long)(CanBuildFrom[T[U],U,T[U]]):T[U]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asCollection</span><span class="tparams">[<span name="U">U</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span></span>, <span name="maxRows">maxRows: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>], <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asCollection[U,T[_]](parser:com.lucidchart.open.relate.SqlResult=&gt;U,maxRows:Long)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]]):T[U]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#asCollection" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asCollection[U,T[_]](maxRows:Long)(implicitevidence$9:com.lucidchart.open.relate.Parseable[U],implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]]):T[U]"></a>
+      <a id="asCollection[U,T[_]](Long)(Parseable[U],CanBuildFrom[T[U],U,T[U]]):T[U]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asCollection</span><span class="tparams">[<span name="U">U</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span name="maxRows">maxRows: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]</span>, <span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>], <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asCollection[U,T[_]](maxRows:Long)(implicitevidence$9:com.lucidchart.open.relate.Parseable[U],implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]]):T[U]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#asCollection" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asCollection[U,T[_]]()(implicitevidence$8:com.lucidchart.open.relate.Parseable[U],implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]]):T[U]"></a>
+      <a id="asCollection[U,T[_]]()(Parseable[U],CanBuildFrom[T[U],U,T[U]]):T[U]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asCollection</span><span class="tparams">[<span name="U">U</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]</span>, <span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>], <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asCollection[U,T[_]]()(implicitevidence$8:com.lucidchart.open.relate.Parseable[U],implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]]):T[U]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asCollection" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asCollection[U,T[_]](parser:com.lucidchart.open.relate.SqlResult=&gt;U)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]]):T[U]"></a>
+      <a id="asCollection[U,T[_]]((SqlResult)⇒U)(CanBuildFrom[T[U],U,T[U]]):T[U]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asCollection</span><span class="tparams">[<span name="U">U</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>], <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asCollection.U">U</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asCollection[U,T[_]](parser:com.lucidchart.open.relate.SqlResult=&gt;U)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]]):T[U]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#asIterable" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asIterable[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):Iterable[A]"></a>
+      <a id="asIterable[A]((SqlResult)⇒A):Iterable[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asIterable</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.asIterable.A">A</span></span>)</span><span class="result">: <span class="extype" name="scala.Iterable">Iterable</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asIterable.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asIterable[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):Iterable[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asIterable" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asIterable[A]()(implicitevidence$6:com.lucidchart.open.relate.Parseable[A]):Iterable[A]"></a>
+      <a id="asIterable[A]()(Parseable[A]):Iterable[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asIterable</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asIterable.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Iterable">Iterable</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asIterable.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asIterable[A]()(implicitevidence$6:com.lucidchart.open.relate.Parseable[A]):Iterable[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asList" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asList[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):List[A]"></a>
+      <a id="asList[A]((SqlResult)⇒A):List[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asList</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.asList.A">A</span></span>)</span><span class="result">: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asList.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asList[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):List[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asList" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asList[A]()(implicitevidence$7:com.lucidchart.open.relate.Parseable[A]):List[A]"></a>
+      <a id="asList[A]()(Parseable[A]):List[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asList</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asList.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asList.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asList[A]()(implicitevidence$7:com.lucidchart.open.relate.Parseable[A]):List[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asMap[U,V](parser:com.lucidchart.open.relate.SqlResult=&gt;(U,V)):Map[U,V]"></a>
+      <a id="asMap[U,V]((SqlResult)⇒(U,V)):Map[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asMap</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ (<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMap.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asMap.V">V</span>)</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMap.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asMap.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asMap[U,V](parser:com.lucidchart.open.relate.SqlResult=&gt;(U,V)):Map[U,V]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asMap[U,V]()(implicitp:com.lucidchart.open.relate.Parseable[(U,V)]):Map[U,V]"></a>
+      <a id="asMap[U,V]()(Parseable[(U,V)]):Map[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asMap</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="p">p: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[(<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMap.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asMap.V">V</span>)]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMap.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asMap.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asMap[U,V]()(implicitp:com.lucidchart.open.relate.Parseable[(U,V)]):Map[U,V]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asMultiMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asMultiMap[U,V](parser:com.lucidchart.open.relate.SqlResult=&gt;(U,V)):Map[U,Set[V]]"></a>
+      <a id="asMultiMap[U,V]((SqlResult)⇒(U,V)):Map[U,Set[V]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asMultiMap</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ (<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMultiMap.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asMultiMap.V">V</span>)</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMultiMap.U">U</span>, <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMultiMap.V">V</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asMultiMap[U,V](parser:com.lucidchart.open.relate.SqlResult=&gt;(U,V)):Map[U,Set[V]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asMultiMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asMultiMap[U,V]()(implicitp:com.lucidchart.open.relate.Parseable[(U,V)]):Map[U,Set[V]]"></a>
+      <a id="asMultiMap[U,V]()(Parseable[(U,V)]):Map[U,Set[V]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asMultiMap</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="p">p: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[(<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMultiMap.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asMultiMap.V">V</span>)]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMultiMap.U">U</span>, <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asMultiMap.V">V</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asMultiMap[U,V]()(implicitp:com.lucidchart.open.relate.Parseable[(U,V)]):Map[U,Set[V]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asPairCollection" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asPairCollection[U,V,T[_,_]](parser:com.lucidchart.open.relate.SqlResult=&gt;(U,V),maxRows:Long)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]"></a>
+      <a id="asPairCollection[U,V,T[_,_]]((SqlResult)⇒(U,V),Long)(CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asPairCollection</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>, <span name="_">_</span>]</span></span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ (<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>)</span>, <span name="maxRows">maxRows: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>], (<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>), <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>]]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asPairCollection[U,V,T[_,_]](parser:com.lucidchart.open.relate.SqlResult=&gt;(U,V),maxRows:Long)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#asPairCollection" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asPairCollection[U,V,T[_,_]](maxRows:Long)(implicitp:com.lucidchart.open.relate.Parseable[(U,V)],implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]"></a>
+      <a id="asPairCollection[U,V,T[_,_]](Long)(Parseable[(U,V)],CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asPairCollection</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>, <span name="_">_</span>]</span></span>]</span><span class="params">(<span name="maxRows">maxRows: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="p">p: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[(<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>)]</span>, <span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>], (<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>), <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>]]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asPairCollection[U,V,T[_,_]](maxRows:Long)(implicitp:com.lucidchart.open.relate.Parseable[(U,V)],implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#asPairCollection" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asPairCollection[U,V,T[_,_]](parser:com.lucidchart.open.relate.SqlResult=&gt;(U,V))(implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]"></a>
+      <a id="asPairCollection[U,V,T[_,_]]((SqlResult)⇒(U,V))(CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asPairCollection</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>, <span name="_">_</span>]</span></span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ (<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>)</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>], (<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>), <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>]]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asPairCollection[U,V,T[_,_]](parser:com.lucidchart.open.relate.SqlResult=&gt;(U,V))(implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asPairCollection" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asPairCollection[U,V,T[_,_]]()(implicitp:com.lucidchart.open.relate.Parseable[(U,V)],implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]"></a>
+      <a id="asPairCollection[U,V,T[_,_]]()(Parseable[(U,V)],CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asPairCollection</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>, <span name="_">_</span>]</span></span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="p">p: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[(<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>)]</span>, <span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>], (<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>), <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>]]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.open.relate.SqlResult.asPairCollection.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asPairCollection[U,V,T[_,_]]()(implicitp:com.lucidchart.open.relate.Parseable[(U,V)],implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]]):T[U,V]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asScalar" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asScalar[A]():A"></a>
+      <a id="asScalar[A]():A"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asScalar</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asScalar.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asScalar[A]():A" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asScalarOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asScalarOption[A]():Option[A]"></a>
+      <a id="asScalarOption[A]():Option[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asScalarOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asScalarOption.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asScalarOption[A]():Option[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asSeq" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asSeq[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):Seq[A]"></a>
+      <a id="asSeq[A]((SqlResult)⇒A):Seq[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSeq</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.asSeq.A">A</span></span>)</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSeq.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asSeq[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):Seq[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asSeq" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asSeq[A]()(implicitevidence$5:com.lucidchart.open.relate.Parseable[A]):Seq[A]"></a>
+      <a id="asSeq[A]()(Parseable[A]):Seq[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSeq</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSeq.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSeq.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asSeq[A]()(implicitevidence$5:com.lucidchart.open.relate.Parseable[A]):Seq[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asSet" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asSet[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):Set[A]"></a>
+      <a id="asSet[A]((SqlResult)⇒A):Set[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSet</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.asSet.A">A</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSet.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asSet[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):Set[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asSet" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asSet[A]()(implicitevidence$4:com.lucidchart.open.relate.Parseable[A]):Set[A]"></a>
+      <a id="asSet[A]()(Parseable[A]):Set[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSet</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSet.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSet.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asSet[A]()(implicitevidence$4:com.lucidchart.open.relate.Parseable[A]):Set[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asSingle" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asSingle[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):A"></a>
+      <a id="asSingle[A]((SqlResult)⇒A):A"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSingle</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.asSingle.A">A</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asSingle.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asSingle[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):A" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asSingle" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asSingle[A]()(implicitevidence$2:com.lucidchart.open.relate.Parseable[A]):A"></a>
+      <a id="asSingle[A]()(Parseable[A]):A"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSingle</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSingle.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.asSingle.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asSingle[A]()(implicitevidence$2:com.lucidchart.open.relate.Parseable[A]):A" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asSingleOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asSingleOption[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):Option[A]"></a>
+      <a id="asSingleOption[A]((SqlResult)⇒A):Option[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSingleOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.asSingleOption.A">A</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSingleOption.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asSingleOption[A](parser:com.lucidchart.open.relate.SqlResult=&gt;A):Option[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#asSingleOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="asSingleOption[A]()(implicitevidence$3:com.lucidchart.open.relate.Parseable[A]):Option[A]"></a>
+      <a id="asSingleOption[A]()(Parseable[A]):Option[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSingleOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Parseable.html" class="extype" name="com.lucidchart.open.relate.Parseable">Parseable</a>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSingleOption.A">A</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.asSingleOption.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@asSingleOption[A]()(implicitevidence$3:com.lucidchart.open.relate.Parseable[A]):Option[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#bigDecimal" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="bigDecimal(column:String):BigDecimal"></a>
+      <a id="bigDecimal(String):BigDecimal"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">bigDecimal</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@bigDecimal(column:String):BigDecimal" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#bigDecimalOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="bigDecimalOption(column:String):Option[BigDecimal]"></a>
+      <a id="bigDecimalOption(String):Option[BigDecimal]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">bigDecimalOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.BigDecimal">BigDecimal</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@bigDecimalOption(column:String):Option[BigDecimal]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#bigInt" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="bigInt(column:String):BigInt"></a>
+      <a id="bigInt(String):BigInt"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">bigInt</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.BigInt">BigInt</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@bigInt(column:String):BigInt" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#bigIntOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="bigIntOption(column:String):Option[BigInt]"></a>
+      <a id="bigIntOption(String):Option[BigInt]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">bigIntOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.BigInt">BigInt</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@bigIntOption(column:String):Option[BigInt]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#bool" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="bool(column:String):Boolean"></a>
+      <a id="bool(String):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">bool</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@bool(column:String):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#boolOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="boolOption(column:String):Option[Boolean]"></a>
+      <a id="boolOption(String):Option[Boolean]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">boolOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@boolOption(column:String):Option[Boolean]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#byte" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="byte(column:String):Byte"></a>
+      <a id="byte(String):Byte"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">byte</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Byte">Byte</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@byte(column:String):Byte" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#byteArray" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="byteArray(column:String):Array[Byte]"></a>
+      <a id="byteArray(String):Array[Byte]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">byteArray</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@byteArray(column:String):Array[Byte]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#byteArrayOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="byteArrayOption(column:String):Option[Array[Byte]]"></a>
+      <a id="byteArrayOption(String):Option[Array[Byte]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">byteArrayOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@byteArrayOption(column:String):Option[Array[Byte]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#byteOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="byteOption(column:String):Option[Byte]"></a>
+      <a id="byteOption(String):Option[Byte]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">byteOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@byteOption(column:String):Option[Byte]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#date" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="date(column:String):java.util.Date"></a>
+      <a id="date(String):Date"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">date</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.util.Date">Date</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@date(column:String):java.util.Date" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#dateOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="dateOption(column:String):Option[java.util.Date]"></a>
+      <a id="dateOption(String):Option[Date]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">dateOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.util.Date">Date</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@dateOption(column:String):Option[java.util.Date]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#double" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="double(column:String):Double"></a>
+      <a id="double(String):Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">double</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@double(column:String):Double" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#doubleOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="doubleOption(column:String):Option[Double]"></a>
+      <a id="doubleOption(String):Option[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doubleOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@doubleOption(column:String):Option[Double]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#enum" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="enum(column:String,e:Enumeration):e.Value"></a>
+      <a id="enum(String,Enumeration):Value"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">enum</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="e">e: <span class="extype" name="scala.Enumeration">Enumeration</span></span>)</span><span class="result">: <span class="extype" name="scala.Enumeration.Value">Value</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@enum(column:String,e:Enumeration):e.Value" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#enumOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="enumOption(column:String,e:Enumeration):Option[e.Value]"></a>
+      <a id="enumOption(String,Enumeration):Option[Value]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">enumOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="e">e: <span class="extype" name="scala.Enumeration">Enumeration</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Enumeration.Value">Value</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@enumOption(column:String,e:Enumeration):Option[e.Value]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#extractOption" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="extractOption[A](column:String)(f:Any=&gt;A):Option[A]"></a>
+      <a id="extractOption[A](String)((Any)⇒A):Option[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">extractOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span name="f">f: (<span class="extype" name="scala.Any">Any</span>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.extractOption.A">A</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.extractOption.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@extractOption[A](column:String)(f:Any=&gt;A):Option[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="package.html" class="extype" name="com.lucidchart.open.relate">com.lucidchart.open.relate</a>] </dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#getMetaData" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getMetaData():java.sql.ResultSetMetaData"></a>
+      <a id="getMetaData():ResultSetMetaData"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getMetaData</span><span class="params">()</span><span class="result">: <span class="extype" name="java.sql.ResultSetMetaData">ResultSetMetaData</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@getMetaData():java.sql.ResultSetMetaData" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Get the metadata for the java.sql.ResultSet that underlies this SqlResult</p><div class="fullcomment"><div class="comment cmt"><p>Get the metadata for the java.sql.ResultSet that underlies this SqlResult</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the metadata</p></dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#getResultSetOption" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getResultSetOption[A](f:=&gt;A):Option[A]"></a>
+      <a id="getResultSetOption[A](⇒A):Option[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getResultSetOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="f">f: ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.getResultSetOption.A">A</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.lucidchart.open.relate.SqlResult.getResultSetOption.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@getResultSetOption[A](f:=&gt;A):Option[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#getRow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getRow():Int"></a>
+      <a id="getRow():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getRow</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@getRow():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Get the number of the row the SqlResult is currently on</p><div class="fullcomment"><div class="comment cmt"><p>Get the number of the row the SqlResult is currently on</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the current row number</p></dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#hasColumn" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hasColumn(column:String):Boolean"></a>
+      <a id="hasColumn(String):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hasColumn</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@hasColumn(column:String):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Determine if the result set contains the given column name</p><div class="fullcomment"><div class="comment cmt"><p>Determine if the result set contains the given column name</p></div><dl class="paramcmts block"><dt class="param">column</dt><dd class="cmt"><p>the column name to check</p></dd><dt>returns</dt><dd class="cmt"><p>whether or not the result set contains that column name</p></dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#int" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="int(column:String):Int"></a>
+      <a id="int(String):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">int</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@int(column:String):Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#intOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="intOption(column:String):Option[Int]"></a>
+      <a id="intOption(String):Option[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">intOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@intOption(column:String):Option[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#javaBigDecimal" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="javaBigDecimal(column:String):java.math.BigDecimal"></a>
+      <a id="javaBigDecimal(String):BigDecimal"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">javaBigDecimal</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.math.BigDecimal">BigDecimal</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@javaBigDecimal(column:String):java.math.BigDecimal" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#javaBigDecimalOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="javaBigDecimalOption(column:String):Option[java.math.BigDecimal]"></a>
+      <a id="javaBigDecimalOption(String):Option[BigDecimal]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">javaBigDecimalOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.math.BigDecimal">BigDecimal</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@javaBigDecimalOption(column:String):Option[java.math.BigDecimal]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#javaBigInteger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="javaBigInteger(column:String):java.math.BigInteger"></a>
+      <a id="javaBigInteger(String):BigInteger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">javaBigInteger</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.math.BigInteger">BigInteger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@javaBigInteger(column:String):java.math.BigInteger" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#javaBigIntegerOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="javaBigIntegerOption(column:String):Option[java.math.BigInteger]"></a>
+      <a id="javaBigIntegerOption(String):Option[BigInteger]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">javaBigIntegerOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.math.BigInteger">BigInteger</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@javaBigIntegerOption(column:String):Option[java.math.BigInteger]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#long" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="long(column:String):Long"></a>
+      <a id="long(String):Long"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">long</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@long(column:String):Long" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#longOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="longOption(column:String):Option[Long]"></a>
+      <a id="longOption(String):Option[Long]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">longOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@longOption(column:String):Option[Long]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#resultSet" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="resultSet:java.sql.ResultSet"></a>
+      <a id="resultSet:ResultSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">resultSet</span><span class="result">: <span class="extype" name="java.sql.ResultSet">ResultSet</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@resultSet:java.sql.ResultSet" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#short" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="short(column:String):Short"></a>
+      <a id="short(String):Short"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">short</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Short">Short</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@short(column:String):Short" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#shortOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="shortOption(column:String):Option[Short]"></a>
+      <a id="shortOption(String):Option[Short]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">shortOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Short">Short</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@shortOption(column:String):Option[Short]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictArray" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictArray(column:String):java.sql.Array"></a>
+      <a id="strictArray(String):Array"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictArray</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.sql.Array">Array</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictArray(column:String):java.sql.Array" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictArrayOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictArrayOption(column:String):Option[java.sql.Array]"></a>
+      <a id="strictArrayOption(String):Option[Array]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictArrayOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.Array">Array</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictArrayOption(column:String):Option[java.sql.Array]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictAsciiStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictAsciiStream(column:String):java.io.InputStream"></a>
+      <a id="strictAsciiStream(String):InputStream"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictAsciiStream</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.io.InputStream">InputStream</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictAsciiStream(column:String):java.io.InputStream" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictAsciiStreamOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictAsciiStreamOption(column:String):Option[java.io.InputStream]"></a>
+      <a id="strictAsciiStreamOption(String):Option[InputStream]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictAsciiStreamOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.InputStream">InputStream</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictAsciiStreamOption(column:String):Option[java.io.InputStream]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBigDecimal" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBigDecimal(column:String):BigDecimal"></a>
+      <a id="strictBigDecimal(String):BigDecimal"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBigDecimal</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBigDecimal(column:String):BigDecimal" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBigDecimalOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBigDecimalOption(column:String):Option[BigDecimal]"></a>
+      <a id="strictBigDecimalOption(String):Option[BigDecimal]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBigDecimalOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.BigDecimal">BigDecimal</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBigDecimalOption(column:String):Option[BigDecimal]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBinaryStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBinaryStream(column:String):java.io.InputStream"></a>
+      <a id="strictBinaryStream(String):InputStream"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBinaryStream</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.io.InputStream">InputStream</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBinaryStream(column:String):java.io.InputStream" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBinaryStreamOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBinaryStreamOption(column:String):Option[java.io.InputStream]"></a>
+      <a id="strictBinaryStreamOption(String):Option[InputStream]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBinaryStreamOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.InputStream">InputStream</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBinaryStreamOption(column:String):Option[java.io.InputStream]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBlob" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBlob(column:String):java.sql.Blob"></a>
+      <a id="strictBlob(String):Blob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBlob</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.sql.Blob">Blob</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBlob(column:String):java.sql.Blob" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBlobOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBlobOption(column:String):Option[java.sql.Blob]"></a>
+      <a id="strictBlobOption(String):Option[Blob]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBlobOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.Blob">Blob</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBlobOption(column:String):Option[java.sql.Blob]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBoolean" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBoolean(column:String):Boolean"></a>
+      <a id="strictBoolean(String):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBoolean</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBoolean(column:String):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBooleanOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBooleanOption(column:String):Option[Boolean]"></a>
+      <a id="strictBooleanOption(String):Option[Boolean]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBooleanOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBooleanOption(column:String):Option[Boolean]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictByte" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictByte(column:String):Byte"></a>
+      <a id="strictByte(String):Byte"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictByte</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Byte">Byte</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictByte(column:String):Byte" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictByteOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictByteOption(column:String):Option[Byte]"></a>
+      <a id="strictByteOption(String):Option[Byte]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictByteOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictByteOption(column:String):Option[Byte]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBytes" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBytes(column:String):Array[Byte]"></a>
+      <a id="strictBytes(String):Array[Byte]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBytes</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBytes(column:String):Array[Byte]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictBytesOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictBytesOption(column:String):Option[Array[Byte]]"></a>
+      <a id="strictBytesOption(String):Option[Array[Byte]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictBytesOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictBytesOption(column:String):Option[Array[Byte]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictCharacterStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictCharacterStream(column:String):java.io.Reader"></a>
+      <a id="strictCharacterStream(String):Reader"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictCharacterStream</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.io.Reader">Reader</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictCharacterStream(column:String):java.io.Reader" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictCharacterStreamOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictCharacterStreamOption(column:String):Option[java.io.Reader]"></a>
+      <a id="strictCharacterStreamOption(String):Option[Reader]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictCharacterStreamOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.Reader">Reader</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictCharacterStreamOption(column:String):Option[java.io.Reader]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictClob" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictClob(column:String):java.sql.Clob"></a>
+      <a id="strictClob(String):Clob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictClob</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.sql.Clob">Clob</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictClob(column:String):java.sql.Clob" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictClobOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictClobOption(column:String):Option[java.sql.Clob]"></a>
+      <a id="strictClobOption(String):Option[Clob]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictClobOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.Clob">Clob</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictClobOption(column:String):Option[java.sql.Clob]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictDate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictDate(column:String,cal:java.util.Calendar):java.util.Date"></a>
+      <a id="strictDate(String,Calendar):Date"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictDate</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="cal">cal: <span class="extype" name="java.util.Calendar">Calendar</span></span>)</span><span class="result">: <span class="extype" name="java.util.Date">Date</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictDate(column:String,cal:java.util.Calendar):java.util.Date" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictDate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictDate(column:String):java.util.Date"></a>
+      <a id="strictDate(String):Date"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictDate</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.util.Date">Date</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictDate(column:String):java.util.Date" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictDateOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictDateOption(column:String,cal:java.util.Calendar):Option[java.util.Date]"></a>
+      <a id="strictDateOption(String,Calendar):Option[Date]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictDateOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="cal">cal: <span class="extype" name="java.util.Calendar">Calendar</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.util.Date">Date</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictDateOption(column:String,cal:java.util.Calendar):Option[java.util.Date]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictDateOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictDateOption(column:String):Option[java.util.Date]"></a>
+      <a id="strictDateOption(String):Option[Date]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictDateOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.util.Date">Date</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictDateOption(column:String):Option[java.util.Date]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictDouble" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictDouble(column:String):Double"></a>
+      <a id="strictDouble(String):Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictDouble</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictDouble(column:String):Double" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictDoubleOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictDoubleOption(column:String):Option[Double]"></a>
+      <a id="strictDoubleOption(String):Option[Double]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictDoubleOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Double">Double</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictDoubleOption(column:String):Option[Double]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictFloat" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictFloat(column:String):Float"></a>
+      <a id="strictFloat(String):Float"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictFloat</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Float">Float</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictFloat(column:String):Float" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictFloatOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictFloatOption(column:String):Option[Float]"></a>
+      <a id="strictFloatOption(String):Option[Float]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictFloatOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictFloatOption(column:String):Option[Float]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictInt" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictInt(column:String):Int"></a>
+      <a id="strictInt(String):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictInt</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictInt(column:String):Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictInt" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictInt(index:Int):Int"></a>
+      <a id="strictInt(Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictInt</span><span class="params">(<span name="index">index: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictInt(index:Int):Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictIntOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictIntOption(column:String):Option[Int]"></a>
+      <a id="strictIntOption(String):Option[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictIntOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictIntOption(column:String):Option[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictLong" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictLong(column:String):Long"></a>
+      <a id="strictLong(String):Long"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictLong</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictLong(column:String):Long" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictLong" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictLong(index:Int):Long"></a>
+      <a id="strictLong(Int):Long"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictLong</span><span class="params">(<span name="index">index: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictLong(index:Int):Long" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictLongOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictLongOption(column:String):Option[Long]"></a>
+      <a id="strictLongOption(String):Option[Long]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictLongOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictLongOption(column:String):Option[Long]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictNCharacterStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictNCharacterStream(column:String):java.io.Reader"></a>
+      <a id="strictNCharacterStream(String):Reader"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictNCharacterStream</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.io.Reader">Reader</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictNCharacterStream(column:String):java.io.Reader" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictNCharacterStreamOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictNCharacterStreamOption(column:String):Option[java.io.Reader]"></a>
+      <a id="strictNCharacterStreamOption(String):Option[Reader]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictNCharacterStreamOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.Reader">Reader</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictNCharacterStreamOption(column:String):Option[java.io.Reader]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictNClob" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictNClob(column:String):java.sql.NClob"></a>
+      <a id="strictNClob(String):NClob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictNClob</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.sql.NClob">NClob</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictNClob(column:String):java.sql.NClob" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictNClobOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictNClobOption(column:String):Option[java.sql.NClob]"></a>
+      <a id="strictNClobOption(String):Option[NClob]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictNClobOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.NClob">NClob</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictNClobOption(column:String):Option[java.sql.NClob]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictNString" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictNString(column:String):String"></a>
+      <a id="strictNString(String):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictNString</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictNString(column:String):String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictNStringOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictNStringOption(column:String):Option[String]"></a>
+      <a id="strictNStringOption(String):Option[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictNStringOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictNStringOption(column:String):Option[String]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictObject" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictObject(column:String,map:Map[String,Class[_]]):Object"></a>
+      <a id="strictObject(String,Map[String,Class[_]]):AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictObject</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="map">map: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.Class">Class</span>[_]]</span>)</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictObject(column:String,map:Map[String,Class[_]]):Object" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictObject" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictObject(column:String):Object"></a>
+      <a id="strictObject(String):AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictObject</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictObject(column:String):Object" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictObjectOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictObjectOption(column:String,map:Map[String,Class[_]]):Option[Object]"></a>
+      <a id="strictObjectOption(String,Map[String,Class[_]]):Option[AnyRef]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictObjectOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="map">map: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.Class">Class</span>[_]]</span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.AnyRef">AnyRef</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictObjectOption(column:String,map:Map[String,Class[_]]):Option[Object]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictObjectOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictObjectOption(column:String):Option[Object]"></a>
+      <a id="strictObjectOption(String):Option[AnyRef]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictObjectOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.AnyRef">AnyRef</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictObjectOption(column:String):Option[Object]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictRef" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictRef(column:String):java.sql.Ref"></a>
+      <a id="strictRef(String):Ref"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictRef</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.sql.Ref">Ref</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictRef(column:String):java.sql.Ref" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictRefOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictRefOption(column:String):Option[java.sql.Ref]"></a>
+      <a id="strictRefOption(String):Option[Ref]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictRefOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.Ref">Ref</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictRefOption(column:String):Option[java.sql.Ref]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictRowId" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictRowId(column:String):java.sql.RowId"></a>
+      <a id="strictRowId(String):RowId"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictRowId</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.sql.RowId">RowId</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictRowId(column:String):java.sql.RowId" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictRowIdOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictRowIdOption(column:String):Option[java.sql.RowId]"></a>
+      <a id="strictRowIdOption(String):Option[RowId]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictRowIdOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.RowId">RowId</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictRowIdOption(column:String):Option[java.sql.RowId]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictSQLXML" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictSQLXML(column:String):java.sql.SQLXML"></a>
+      <a id="strictSQLXML(String):SQLXML"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictSQLXML</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.sql.SQLXML">SQLXML</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictSQLXML(column:String):java.sql.SQLXML" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictSQLXMLOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictSQLXMLOption(column:String):Option[java.sql.SQLXML]"></a>
+      <a id="strictSQLXMLOption(String):Option[SQLXML]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictSQLXMLOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.SQLXML">SQLXML</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictSQLXMLOption(column:String):Option[java.sql.SQLXML]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictShort" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictShort(column:String):Short"></a>
+      <a id="strictShort(String):Short"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictShort</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Short">Short</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictShort(column:String):Short" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictShortOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictShortOption(column:String):Option[Short]"></a>
+      <a id="strictShortOption(String):Option[Short]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictShortOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Short">Short</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictShortOption(column:String):Option[Short]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictString" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictString(column:String):String"></a>
+      <a id="strictString(String):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictString</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictString(column:String):String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictStringOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictStringOption(column:String):Option[String]"></a>
+      <a id="strictStringOption(String):Option[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictStringOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictStringOption(column:String):Option[String]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictTime" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictTime(column:String,cal:java.util.Calendar):java.sql.Time"></a>
+      <a id="strictTime(String,Calendar):Time"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictTime</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="cal">cal: <span class="extype" name="java.util.Calendar">Calendar</span></span>)</span><span class="result">: <span class="extype" name="java.sql.Time">Time</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictTime(column:String,cal:java.util.Calendar):java.sql.Time" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictTime" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictTime(column:String):java.sql.Time"></a>
+      <a id="strictTime(String):Time"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictTime</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.sql.Time">Time</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictTime(column:String):java.sql.Time" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictTimeOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictTimeOption(column:String,cal:java.util.Calendar):Option[java.sql.Time]"></a>
+      <a id="strictTimeOption(String,Calendar):Option[Time]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictTimeOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="cal">cal: <span class="extype" name="java.util.Calendar">Calendar</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.Time">Time</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictTimeOption(column:String,cal:java.util.Calendar):Option[java.sql.Time]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictTimeOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictTimeOption(column:String):Option[java.sql.Time]"></a>
+      <a id="strictTimeOption(String):Option[Time]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictTimeOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.Time">Time</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictTimeOption(column:String):Option[java.sql.Time]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictTimestamp" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictTimestamp(column:String,cal:java.util.Calendar):java.sql.Timestamp"></a>
+      <a id="strictTimestamp(String,Calendar):Timestamp"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictTimestamp</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="cal">cal: <span class="extype" name="java.util.Calendar">Calendar</span></span>)</span><span class="result">: <span class="extype" name="java.sql.Timestamp">Timestamp</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictTimestamp(column:String,cal:java.util.Calendar):java.sql.Timestamp" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictTimestamp" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictTimestamp(column:String):java.sql.Timestamp"></a>
+      <a id="strictTimestamp(String):Timestamp"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictTimestamp</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.sql.Timestamp">Timestamp</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictTimestamp(column:String):java.sql.Timestamp" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictTimestampOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictTimestampOption(column:String,cal:java.util.Calendar):Option[java.sql.Timestamp]"></a>
+      <a id="strictTimestampOption(String,Calendar):Option[Timestamp]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictTimestampOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="cal">cal: <span class="extype" name="java.util.Calendar">Calendar</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.Timestamp">Timestamp</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictTimestampOption(column:String,cal:java.util.Calendar):Option[java.sql.Timestamp]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictTimestampOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictTimestampOption(column:String):Option[java.sql.Timestamp]"></a>
+      <a id="strictTimestampOption(String):Option[Timestamp]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictTimestampOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.sql.Timestamp">Timestamp</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictTimestampOption(column:String):Option[java.sql.Timestamp]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictURL" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictURL(column:String):java.net.URL"></a>
+      <a id="strictURL(String):URL"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictURL</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.net.URL">URL</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictURL(column:String):java.net.URL" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#strictURLOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="strictURLOption(column:String):Option[java.net.URL]"></a>
+      <a id="strictURLOption(String):Option[URL]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">strictURLOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.net.URL">URL</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@strictURLOption(column:String):Option[java.net.URL]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#string" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="string(column:String):String"></a>
+      <a id="string(String):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">string</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@string(column:String):String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#stringOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="stringOption(column:String):Option[String]"></a>
+      <a id="stringOption(String):Option[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">stringOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@stringOption(column:String):Option[String]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@toString():String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#uuid" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="uuid(column:String):java.util.UUID"></a>
+      <a id="uuid(String):UUID"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">uuid</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.util.UUID">UUID</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@uuid(column:String):java.util.UUID" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#uuidFromString" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="uuidFromString(column:String):java.util.UUID"></a>
+      <a id="uuidFromString(String):UUID"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">uuidFromString</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.util.UUID">UUID</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@uuidFromString(column:String):java.util.UUID" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#uuidFromStringOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="uuidFromStringOption(column:String):Option[java.util.UUID]"></a>
+      <a id="uuidFromStringOption(String):Option[UUID]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">uuidFromStringOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.util.UUID">UUID</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@uuidFromStringOption(column:String):Option[java.util.UUID]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResult#uuidOption" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="uuidOption(column:String):Option[java.util.UUID]"></a>
+      <a id="uuidOption(String):Option[UUID]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">uuidOption</span><span class="params">(<span name="column">column: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.util.UUID">UUID</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@uuidOption(column:String):Option[java.util.UUID]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#wasNull" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wasNull():Boolean"></a>
+      <a id="wasNull():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wasNull</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@wasNull():Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Determine if the last value extracted from the result set was null</p><div class="fullcomment"><div class="comment cmt"><p>Determine if the last value extracted from the result set was null</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>whether the last value was null</p></dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult#withResultSet" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="withResultSet[A](f:java.sql.ResultSet=&gt;A):A"></a>
+      <a id="withResultSet[A]((ResultSet)⇒A):A"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">withResultSet</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="f">f: (<span class="extype" name="java.sql.ResultSet">ResultSet</span>) ⇒ <span class="extype" name="com.lucidchart.open.relate.SqlResult.withResultSet.A">A</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.SqlResult.withResultSet.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.SqlResult@withResultSet[A](f:java.sql.ResultSet=&gt;A):A" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="package.html" class="extype" name="com.lucidchart.open.relate">com.lucidchart.open.relate</a>] </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>relate - com.lucidchart.open.relate</title>
+          <meta name="description" content="relate - com.lucidchart.open.relate" />
+          <meta name="keywords" content="relate com.lucidchart.open.relate" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../index.html';
+            var hash = 'com.lucidchart.open.relate.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../../../../lib/package_big.png" />
+        <p id="owner"><a href="../../../package.html" class="extype" name="com">com</a>.<a href="../../package.html" class="extype" name="com.lucidchart">lucidchart</a>.<a href="../package.html" class="extype" name="com.lucidchart.open">open</a></p>
+        <h1>relate</h1><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">relate</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Relate API</p><p>Use the SQL method to start an SQL query</p><pre><span class="kw">import</span> com.lucidchart.open.relate._
+
+SQL(<span class="lit">"Select 1"</span>)</pre></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="com.lucidchart.open.relate"><span>relate</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="com.lucidchart.open.relate.Expandable" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="ExpandableextendsParameterizableSql"></a>
+      <a id="Expandable:Expandable"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Expandable.html"><span class="name">Expandable</span></a><span class="result"> extends <a href="ParameterizableSql.html" class="extype" name="com.lucidchart.open.relate.ParameterizableSql">ParameterizableSql</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@ExpandableextendsParameterizableSql" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Expandable is a trait for SQL queries that can be expanded.</p><div class="fullcomment"><div class="comment cmt"><p>Expandable is a trait for SQL queries that can be expanded.</p><p>It defines two expansion methods:</p><ul><li><a href="Expandable.html#commaSeparated(name:String,count:Int):Unit" class="extmbr" name="com.lucidchart.open.relate.Expandable#commaSeparated">commaSeparated</a> for expanding a parameter into a comma separated list</li><li><a href="Expandable.html#tupled(name:String,columns:Seq[String],numTuples:Int):Unit" class="extmbr" name="com.lucidchart.open.relate.Expandable#tupled">tupled</a> for expanding a parameter into a comma separated list of tuples for insertion queries</li></ul><p>These methods should be called in the <a href="Expandable.html#expand(f:com.lucidchart.open.relate.Expandable=&gt;Unit):com.lucidchart.open.relate.Expandable" class="extmbr" name="com.lucidchart.open.relate.Expandable#expand">expand</a> method.</p><pre><span class="kw">import</span> com.lucidchart.open.relate._
+<span class="kw">import</span> com.lucidchart.open.relate.Query._
+
+<span class="kw">val</span> ids = <span class="std">Array</span>(<span class="num">1</span>L, <span class="num">2</span>L, <span class="num">3</span>L)
+
+SQL(<span class="lit">""</span><span class="lit">"
+  SELECT *
+  FROM users
+  WHERE id IN ({ids})
+"</span><span class="lit">""</span>).expand { <span class="kw">implicit</span> query <span class="kw">=&gt;</span>
+  commaSeparated(<span class="lit">"ids"</span>, ids.size)
+}.on {
+  longs(<span class="lit">"ids"</span>, ids)
+}</pre></div></div>
+    </li><li name="com.lucidchart.open.relate.ParameterizableSql" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="ParameterizableSqlextendsParameterizedSql"></a>
+      <a id="ParameterizableSql:ParameterizableSql"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="ParameterizableSql.html"><span class="name">ParameterizableSql</span></a><span class="result"> extends <a href="ParameterizedSql.html" class="extype" name="com.lucidchart.open.relate.ParameterizedSql">ParameterizedSql</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@ParameterizableSqlextendsParameterizedSql" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.ParameterizedSql" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="ParameterizedSqlextendsSql"></a>
+      <a id="ParameterizedSql:ParameterizedSql"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="ParameterizedSql.html"><span class="name">ParameterizedSql</span></a><span class="result"> extends <a href="Sql.html" class="extype" name="com.lucidchart.open.relate.Sql">Sql</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@ParameterizedSqlextendsSql" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.Parseable" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="Parseable[A]extendsAnyRef"></a>
+      <a id="Parseable[A]:Parseable[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Parseable.html"><span class="name">Parseable</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@Parseable[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.Sql" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="SqlextendsAnyRef"></a>
+      <a id="Sql:Sql"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Sql.html"><span class="name">Sql</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@SqlextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Sql is a trait for basic SQL queries.</p><div class="fullcomment"><div class="comment cmt"><p>Sql is a trait for basic SQL queries.</p><p>It provides methods for parameter insertion and query execution.</p><pre><span class="kw">import</span> com.lucidchart.open.relate._
+<span class="kw">import</span> com.lucidchart.open.relate.Query._
+
+<span class="kw">case</span> <span class="kw">class</span> User(id: <span class="std">Long</span>, name: <span class="std">String</span>)
+
+SQL(<span class="lit">""</span><span class="lit">"
+  SELECT id, name
+  FROM users
+  WHERE id={id}
+"</span><span class="lit">""</span>).on { <span class="kw">implicit</span> query <span class="kw">=&gt;</span>
+  long(<span class="lit">"id"</span>, <span class="num">1</span>L)
+}.asSingle(RowParser { row <span class="kw">=&gt;</span>
+  User(row.long(<span class="lit">"id"</span>), row.string(<span class="lit">"name"</span>))
+})</pre></div></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="SqlResultextendsAnyRef"></a>
+      <a id="SqlResult:SqlResult"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="SqlResult.html"><span class="name">SqlResult</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@SqlResultextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The SqlResult class is a wrapper around Java's ResultSet class.</p><div class="fullcomment"><div class="comment cmt"><p>The SqlResult class is a wrapper around Java's ResultSet class.</p><p>It provides methods to allows users to retrieve specific columns by name and datatype,
+but also provides methods that can, given a <a href="RowParser.html" class="extype" name="com.lucidchart.open.relate.RowParser">RowParser</a>,
+parse the entire result set as a collection of records returned by the parser. These methods are
+also defined in the Sql trait, and are most conveniently used when chained with parameter
+insertion. For how to do this, see the <a href="Sql.html" class="extype" name="com.lucidchart.open.relate.Sql">Sql</a> trait
+documentation.</p><p>The extraction methods (int, string, long, etc.) also have &quot;strict&quot; counterparts. The &quot;strict&quot;
+methods are slightly faster, but do not do type checking or handle null values.
+</p></div></div>
+    </li><li name="com.lucidchart.open.relate.SqlStatement" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="SqlStatementextendsAnyRef"></a>
+      <a id="SqlStatement:SqlStatement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="SqlStatement.html"><span class="name">SqlStatement</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@SqlStatementextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A smart wrapper around the PreparedStatement class that allows inserting
+parameter values by name rather than by index.</p><div class="fullcomment"><div class="comment cmt"><p>A smart wrapper around the PreparedStatement class that allows inserting
+parameter values by name rather than by index. Provides methods for inserting
+all necessary datatypes.
+</p></div></div>
+    </li><li name="com.lucidchart.open.relate.TupleStatement" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="TupleStatementextendsProductwithSerializable"></a>
+      <a id="TupleStatement:TupleStatement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="TupleStatement.html"><span class="name">TupleStatement</span></a><span class="params">(<span name="stmt">stmt: <span class="extype" name="java.sql.PreparedStatement">PreparedStatement</span></span>, <span name="params">params: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>, <span name="index">index: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@TupleStatementextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This class is used to insert tuple data into a prepared statement</p>
+    </li><li name="com.lucidchart.open.relate.RowParser" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="RowParser[+A]extendscom.lucidchart.open.relate.SqlResult=&gt;A"></a>
+      <a id="RowParser[+A]:RowParser[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="RowParser.html"><span class="name deprecated" title="Deprecated: (Since version 1.7.0) Use plain SqlResult =&gt; A instead">RowParser</span></a><span class="tparams">[<span name="A">+A</span>]</span><span class="result"> extends (<a href="SqlResult.html" class="extype" name="com.lucidchart.open.relate.SqlResult">SqlResult</a>) ⇒ <span class="extype" name="com.lucidchart.open.relate.RowParser.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@RowParser[+A]extendscom.lucidchart.open.relate.SqlResult=&gt;A" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A RowParser is a function that takes a SqlResult as a parameter and parses it to
+return a concrete type</p><div class="fullcomment"><div class="comment cmt"><p>A RowParser is a function that takes a SqlResult as a parameter and parses it to
+return a concrete type</p><p>See the <a href="RowParser$.html#apply[A](f:com.lucidchart.open.relate.SqlResult=&gt;A):com.lucidchart.open.relate.RowParser[A]" class="extmbr" name="com.lucidchart.open.relate.RowParser#apply">RowParser</a> for more information</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 1.7.0)</i> Use plain SqlResult =&gt; A instead</p></dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="com.lucidchart.open.relate.PaginatedQuery" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="PaginatedQuery"></a>
+      <a id="PaginatedQuery:PaginatedQuery"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="PaginatedQuery$.html"><span class="name">PaginatedQuery</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@PaginatedQuery" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The PaginatedQuery companion object supplies apply methods that will create new
+PaginatedQuery's and execute them to get Streams of results.</p><div class="fullcomment"><div class="comment cmt"><p>The PaginatedQuery companion object supplies apply methods that will create new
+PaginatedQuery's and execute them to get Streams of results.</p><p>PaginatedQuery provides two pagination methods:</p><ul><li>Using LIMIT and OFFSET</li><li>Allowing the user to specify the next query based on the last record in the previous page</li></ul><p>The latter method is provided because the LIMIT/OFFSET method has poor performance when result
+sets get large.
+</p></div></div>
+    </li><li name="com.lucidchart.open.relate.Parseable" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Parseable"></a>
+      <a id="Parseable:Parseable"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Parseable$.html"><span class="name">Parseable</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@Parseable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.Query" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Query"></a>
+      <a id="Query:Query"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Query$.html"><span class="name">Query</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@Query" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Provide implicit method calls for syntactic sugar</p><div class="fullcomment"><div class="comment cmt"><p>Provide implicit method calls for syntactic sugar</p><p>These functions should be used in the <span class="extype" name="com.lucidchart.open.relate.Sql#on">on</span> and <a href="Expandable.html#expand(f:com.lucidchart.open.relate.Expandable=&gt;Unit):com.lucidchart.open.relate.Expandable" class="extmbr" name="com.lucidchart.open.relate.Expandable#expand">expand</a> methods.</p><pre><span class="kw">import</span> com.lucidchart.open.relate._
+<span class="kw">import</span> com.lucidchart.open.relate.Query._
+
+SQL(<span class="lit">"SELECT * FROM users WHERE id={id}"</span>).on { <span class="kw">implicit</span> query <span class="kw">=&gt;</span>
+ long(<span class="lit">"id"</span>, <span class="num">1</span>L)
+}</pre><p>See the <a href="https://github.com/lucidsoftware/relate/wiki" target="_blank">Relate Wiki</a> for more information.
+</p></div></div>
+    </li><li name="com.lucidchart.open.relate.RowParser" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="RowParser"></a>
+      <a id="RowParser:RowParser"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="RowParser$.html"><span class="name">RowParser</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@RowParser" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The RowParser companion object allows creation of arbitrary RowParsers with its apply method.</p><div class="fullcomment"><div class="comment cmt"><p>The RowParser companion object allows creation of arbitrary RowParsers with its apply method.</p><pre><span class="kw">import</span> com.lucidchart.open.relate.RowParser
+
+<span class="kw">val</span> rowParser = (row: SqlResult) <span class="kw">=&gt;</span>
+  (row.long(<span class="lit">"id"</span>), row.string(<span class="lit">"name"</span>))
+}</pre></div></div>
+    </li><li name="com.lucidchart.open.relate#SQL" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="SQL(stmt:String):com.lucidchart.open.relate.ExpandableQuery"></a>
+      <a id="SQL(String):ExpandableQuery"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">SQL</span><span class="params">(<span name="stmt">stmt: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.open.relate.ExpandableQuery">ExpandableQuery</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@SQL(stmt:String):com.lucidchart.open.relate.ExpandableQuery" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Create a SQL query with the provided statement</p><div class="fullcomment"><div class="comment cmt"><p>Create a SQL query with the provided statement</p></div><dl class="paramcmts block"><dt class="param">stmt</dt><dd class="cmt"><p>the SQL statement</p><pre><span class="kw">val</span> query = SQL(<span class="lit">"SELECT * FROM users"</span>)</pre></dd></dl></div>
+    </li><li name="com.lucidchart.open.relate.SqlResult" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SqlResult"></a>
+      <a id="SqlResult:SqlResult"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="SqlResult$.html"><span class="name">SqlResult</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@SqlResult" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.lucidchart.open.relate.SqlResultTypes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="SqlResultTypes"></a>
+      <a id="SqlResultTypes:SqlResultTypes"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="SqlResultTypes$.html"><span class="name">SqlResultTypes</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@SqlResultTypes" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The SqlResultTypes object provides syntactic sugar for RowParser creation.</p><div class="fullcomment"><div class="comment cmt"><p>The SqlResultTypes object provides syntactic sugar for RowParser creation.</p><pre><span class="kw">import</span> com.lucidchart.open.relate._
+<span class="kw">import</span> com.lucidchart.open.relate.SqlResultTypes._
+
+<span class="kw">val</span> rowParser = RowParser { <span class="kw">implicit</span> row <span class="kw">=&gt;</span>
+  (long(<span class="lit">"id"</span>), string(<span class="lit">"name"</span>))
+}</pre><p>In this example, declaring &quot;row&quot; as implicit precludes the need to explicitly use the long and
+string methods on &quot;row&quot;.
+</p></div></div>
+    </li><li name="com.lucidchart.open.relate.interp" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="interp"></a>
+      <a id="interp:interp"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="interp/package.html"><span class="name">interp</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.lucidchart.open.relate.package@interp" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
