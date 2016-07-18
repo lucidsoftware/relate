@@ -260,6 +260,7 @@ class SqlXmlParameter(value: SQLXML) extends SingleParameter {
 
 class StringParameter(value: String) extends SingleParameter {
   protected def set(statement: PreparedStatement, i: Int) = statement.setString(i, value)
+  override def toString(): String = value
 }
 
 class TimeParameter(value: Time) extends SingleParameter {

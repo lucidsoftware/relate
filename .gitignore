@@ -4,6 +4,7 @@ Relate.sublime-workspace
 .history
 .idea*
 lib_managed/*
+.DS_Store
 
 #built files
 target/*
