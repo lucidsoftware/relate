@@ -31,15 +31,33 @@ object Benchmarks extends DbReport {
     }
   }
 
+  test("Selecting 1 column (alternate method)") { c =>
+    using(ranges) in { nums =>
+      c.oneColumnAlt(nums)
+    }
+  }
+
   test("Selecting 10 columns") { c =>
     using(ranges) in { nums =>
       c.tenColumns(nums)
     }
   }
 
+  test("Selecting 10 columns (alternate method)") { c =>
+    using(ranges) in { nums =>
+      c.tenColumnsAlt(nums)
+    }
+  }
+
   test("Selecting 25 columns") { c =>
     using(ranges) in { nums =>
       c.twentyFiveColumns(nums)
+    }
+  }
+
+  test("Selecting 25 columns (alternate method)") { c =>
+    using(ranges) in { nums =>
+      c.twentyFiveColumnsAlt(nums)
     }
   }
 
@@ -77,8 +95,11 @@ object Benchmarks extends DbReport {
 trait TestCase extends Serializable {
   def name: String
   def oneColumn(nums: Seq[Int])(implicit conn: Connection): List[Int]
+  def oneColumnAlt(nums: Seq[Int])(implicit conn: Connection): List[Int]
   def tenColumns(nums: Seq[Int])(implicit conn: Connection): Any
+  def tenColumnsAlt(nums: Seq[Int])(implicit conn: Connection): Any
   def twentyFiveColumns(nums: Seq[Int])(implicit conn: Connection): Any
+  def twentyFiveColumnsAlt(nums: Seq[Int])(implicit conn: Connection): Any
   def insertTen(nums: Seq[Int])(implicit conn: Connection): Any
   def insertFifty(nums: Seq[Int])(implicit conn: Connection): Any
   def updateTwo(nums: Seq[Int])(implicit conn: Connection): Any
@@ -95,6 +116,10 @@ object RelateTests extends TestCase {
     sql"SELECT col14 FROM sel_50 WHERE col44 IN ($nums)".asList(_.int("col14"))
   }
 
+  def oneColumnAlt(nums: Seq[Int])(implicit conn: Connection) = {
+    sql"SELECT col14 FROM sel_50 WHERE col44 IN ($nums)".asList(_.column[Int]("col14"))
+  }
+
   def tenColumns(nums: Seq[Int])(implicit conn: Connection) = {
     sql"SELECT `col45`,`col46`,`col47`,`col48`,`col49`,`col50`,`col1`,`col2`,`col3`,`col4`,`col5` FROM `sel_50` WHERE  `col18` IN ($nums)".asList { row =>
       row.int("col45")
@@ -108,6 +133,22 @@ object RelateTests extends TestCase {
       row.int("col3")
       row.int("col4")
       row.int("col5")
+    }
+  }
+
+  def tenColumnsAlt(nums: Seq[Int])(implicit conn: Connection) = {
+    sql"SELECT `col45`,`col46`,`col47`,`col48`,`col49`,`col50`,`col1`,`col2`,`col3`,`col4`,`col5` FROM `sel_50` WHERE  `col18` IN ($nums)".asList { row =>
+      row.column[Int]("col45")
+      row.column[Int]("col46")
+      row.column[Int]("col47")
+      row.column[Int]("col48")
+      row.column[Int]("col49")
+      row.column[Int]("col50")
+      row.column[Int]("col1")
+      row.column[Int]("col2")
+      row.column[Int]("col3")
+      row.column[Int]("col4")
+      row.column[Int]("col5")
     }
   }
 
@@ -138,6 +179,36 @@ object RelateTests extends TestCase {
       row.int("col23")
       row.int("col24")
       row.int("col25")
+    }
+  }
+
+  def twentyFiveColumnsAlt(nums: Seq[Int])(implicit conn: Connection) = {
+    sql"SELECT `col1`,`col2`,`col3`,`col4`,`col5`,`col6`,`col7`,`col8`,`col9`,`col10`,`col11`,`col12`,`col13`,`col14`,`col15`,`col16`,`col17`,`col18`,`col19`,`col20`,`col21`,`col22`,`col23`,`col24`,`col25` FROM `sel_50` WHERE  `col18` IN ($nums)".asList { row =>
+      row.column[Int]("col1")
+      row.column[Int]("col2")
+      row.column[Int]("col3")
+      row.column[Int]("col4")
+      row.column[Int]("col5")
+      row.column[Int]("col6")
+      row.column[Int]("col7")
+      row.column[Int]("col8")
+      row.column[Int]("col9")
+      row.column[Int]("col10")
+      row.column[Int]("col11")
+      row.column[Int]("col12")
+      row.column[Int]("col13")
+      row.column[Int]("col14")
+      row.column[Int]("col15")
+      row.column[Int]("col16")
+      row.column[Int]("col17")
+      row.column[Int]("col18")
+      row.column[Int]("col19")
+      row.column[Int]("col20")
+      row.column[Int]("col21")
+      row.column[Int]("col22")
+      row.column[Int]("col23")
+      row.column[Int]("col24")
+      row.column[Int]("col25")
     }
   }
 
@@ -182,13 +253,29 @@ object AnormTests extends TestCase {
     SQL"SELECT `col14` FROM  `sel_50` WHERE `col44` IN ($nums)".as(int("col14").*)
   }
 
+  def oneColumnAlt(nums: Seq[Int])(implicit conn: Connection) = {
+    SQL"SELECT `col14` FROM  `sel_50` WHERE `col44` IN ($nums)".as(int("col14").*)
+  }
+
   def tenColumns(nums: Seq[Int])(implicit conn: Connection) = {
     SQL"SELECT `col45`,`col46`,`col47`,`col48`,`col49`,`col50`,`col1`,`col2`,`col3`,`col4`,`col5` FROM `sel_50` WHERE `col18` IN ($nums)".as(
       (int("col45")~int("col46")~int("col47")~int("col48")~int("col49")~int("col50")~int("col1")~int("col2")~int("col3")~int("col4")~int("col5")).*
     )
   }
 
+  def tenColumnsAlt(nums: Seq[Int])(implicit conn: Connection) = {
+    SQL"SELECT `col45`,`col46`,`col47`,`col48`,`col49`,`col50`,`col1`,`col2`,`col3`,`col4`,`col5` FROM `sel_50` WHERE `col18` IN ($nums)".as(
+      (int("col45")~int("col46")~int("col47")~int("col48")~int("col49")~int("col50")~int("col1")~int("col2")~int("col3")~int("col4")~int("col5")).*
+    )
+  }
+
   def twentyFiveColumns(nums: Seq[Int])(implicit conn: Connection) = {
+    SQL"SELECT `col1`,`col2`,`col3`,`col4`,`col5`,`col6`,`col7`,`col8`,`col9`,`col10`,`col11`,`col12`,`col13`,`col14`,`col15`,`col16`,`col17`,`col18`,`col19`,`col20`,`col21`,`col22`,`col23`,`col24`,`col25` FROM `sel_50`  WHERE `col18` IN ($nums)".as(
+      (int("col1")~int("col2")~int("col3")~int("col4")~int("col5")~int("col6")~int("col7")~int("col8")~int("col9")~int("col10")~int("col11")~int("col12")~int("col13")~int("col14")~int("col15")~int("col16")~int("col17")~int("col18")~int("col19")~int("col20")~int("col21")~int("col22")~int("col23")~int("col24")~int("col25")).*
+    )
+  }
+
+  def twentyFiveColumnsAlt(nums: Seq[Int])(implicit conn: Connection) = {
     SQL"SELECT `col1`,`col2`,`col3`,`col4`,`col5`,`col6`,`col7`,`col8`,`col9`,`col10`,`col11`,`col12`,`col13`,`col14`,`col15`,`col16`,`col17`,`col18`,`col19`,`col20`,`col21`,`col22`,`col23`,`col24`,`col25` FROM `sel_50`  WHERE `col18` IN ($nums)".as(
       (int("col1")~int("col2")~int("col3")~int("col4")~int("col5")~int("col6")~int("col7")~int("col8")~int("col9")~int("col10")~int("col11")~int("col12")~int("col13")~int("col14")~int("col15")~int("col16")~int("col17")~int("col18")~int("col19")~int("col20")~int("col21")~int("col22")~int("col23")~int("col24")~int("col25")).*
     )
@@ -263,6 +350,27 @@ object JdbcTests extends TestCase {
     }
   }
 
+  def oneColumnAlt(nums: Seq[Int])(implicit conn: Connection) = {
+    val queryBuilder = new StringBuilder((nums.size*2)+100,"SELECT `col14` FROM  `sel_50` WHERE `col44` IN (?" )
+    var i = 1
+    while (i < nums.size) {
+      queryBuilder.append(",?")
+      i += 1
+    }
+    queryBuilder.append(")")
+
+    withPreparedStatement(conn,  queryBuilder.toString) { statement =>
+      var i = 1
+      while (i <= nums.size) {
+        statement.setInt(i, nums(i-1))
+        i += 1
+      }
+
+      statement.executeQuery()
+      List()
+    }
+  }
+
   def tenColumns(nums: Seq[Int])(implicit conn: Connection) = {
     val queryBuilder = new StringBuilder((nums.size*2)+100,"SELECT `col45`,`col46`,`col47`,`col48`,`col49`,`col50`,`col1`,`col2`,`col3`,`col4`,`col5` FROM `sel_50` WHERE  `col18` IN (?" )
     var i = 1
@@ -282,7 +390,46 @@ object JdbcTests extends TestCase {
     }
   }
 
+  def tenColumnsAlt(nums: Seq[Int])(implicit conn: Connection) = {
+    val queryBuilder = new StringBuilder((nums.size*2)+100,"SELECT `col45`,`col46`,`col47`,`col48`,`col49`,`col50`,`col1`,`col2`,`col3`,`col4`,`col5` FROM `sel_50` WHERE  `col18` IN (?" )
+    var i = 1
+    while (i < nums.size) {
+      queryBuilder.append(",?")
+      i += 1
+    }
+    queryBuilder.append(")")
+
+    withPreparedStatement(conn,  queryBuilder.toString) { statement =>
+      var i = 1
+      while (i <= nums.size) {
+        statement.setInt(i, nums(i-1))
+        i += 1
+      }
+      statement.executeQuery()
+    }
+  }
+
   def twentyFiveColumns(nums: Seq[Int])(implicit conn: Connection) = {
+    val queryBuilder = new StringBuilder((nums.size*2)+100,"SELECT `col1`,`col2`,`col3`,`col4`,`col5`,`col6`,`col7`,`col8`,`col9`,`col10`,`col11`,`col12`,`col13`,`col14`,`col15`,`col16`,`col17`,`col18`,`col19`,`col20`,`col21`,`col22`,`col23`,`col24`,`col25` FROM `sel_50` WHERE  `col18` IN (?" )
+    var i = 1
+    while (i < nums.size) {
+      queryBuilder.append(",?")
+      i += 1
+    }
+    queryBuilder.append(")")
+
+    withPreparedStatement(conn,  queryBuilder.toString) { statement =>
+
+      var i = 1
+      while (i <= nums.size) {
+        statement.setInt(i, nums(i-1))
+        i += 1
+      }
+      statement.executeQuery()
+    }
+  }
+
+  def twentyFiveColumnsAlt(nums: Seq[Int])(implicit conn: Connection) = {
     val queryBuilder = new StringBuilder((nums.size*2)+100,"SELECT `col1`,`col2`,`col3`,`col4`,`col5`,`col6`,`col7`,`col8`,`col9`,`col10`,`col11`,`col12`,`col13`,`col14`,`col15`,`col16`,`col17`,`col18`,`col19`,`col20`,`col21`,`col22`,`col23`,`col24`,`col25` FROM `sel_50` WHERE  `col18` IN (?" )
     var i = 1
     while (i < nums.size) {

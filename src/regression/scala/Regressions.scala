@@ -29,6 +29,14 @@ object Regressions extends DbRegression {
       }
     }
 
+    measure method "one column (alternate method)" in {
+      using(ranges) in { nums =>
+        selectIterations.foreach { _ =>
+          RelateTests.oneColumnAlt(nums)
+        }
+      }
+    }
+
     measure method "ten columns" in {
       using(ranges) in { nums =>
         selectIterations.foreach { _ =>
@@ -37,10 +45,26 @@ object Regressions extends DbRegression {
       }
     }
 
+    measure method "ten columns (alternate method)" in {
+      using(ranges) in { nums =>
+        selectIterations.foreach { _ =>
+          RelateTests.tenColumnsAlt(nums)
+        }
+      }
+    }
+
     measure method "twenty-five columns" in {
       using(ranges) in { nums =>
         selectIterations.foreach { _ =>
           RelateTests.tenColumns(nums)
+        }
+      }
+    }
+
+    measure method "twenty-five columns (alternate method)" in {
+      using(ranges) in { nums =>
+        selectIterations.foreach { _ =>
+          RelateTests.tenColumnsAlt(nums)
         }
       }
     }
