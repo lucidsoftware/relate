@@ -237,6 +237,11 @@ class SqlResult(val resultSet: java.sql.ResultSet) {
     }
   }
 
+  def apply[A: ColReader](col: String): A =
+    implicitly[ColReader[A]].forceRead(col, this)
+  def opt[A: ColReader](col: String): Option[A] =
+    implicitly[ColReader[A]].read(col, this)
+
   def string(column: String): String = stringOption(column).get
   def stringOption(column: String): Option[String] = {
     extractOption(column) {

@@ -17,11 +17,11 @@ lazy val relate = Project(
       "-language:higherKinds"
     ),
     libraryDependencies ++= Seq(
-      "org.specs2" %% "specs2" % "2.3.12" % "test",
       "com.h2database" % "h2" % "1.4.191" % "test",
       "com.storm-enroute" %% "scalameter" % "0.7" % "bench",
       "com.storm-enroute" %% "scalameter" % "0.7" % "regression",
-      "com.typesafe.play" %% "anorm" % "2.4.0" % "bench"
+      "com.typesafe.play" %% "anorm" % "2.4.0" % "bench",
+      "org.specs2" %% "specs2" % "2.3.12" % "test"
     ),
     testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework"),
     parallelExecution in Benchmark := false,
