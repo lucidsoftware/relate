@@ -117,7 +117,7 @@ object RelateTests extends TestCase {
   }
 
   def oneColumnAlt(nums: Seq[Int])(implicit conn: Connection) = {
-    sql"SELECT col14 FROM sel_50 WHERE col44 IN ($nums)".asList(_.column[Int]("col14"))
+    sql"SELECT col14 FROM sel_50 WHERE col44 IN ($nums)".asList(_[Int]("col14"))
   }
 
   def tenColumns(nums: Seq[Int])(implicit conn: Connection) = {
@@ -138,17 +138,17 @@ object RelateTests extends TestCase {
 
   def tenColumnsAlt(nums: Seq[Int])(implicit conn: Connection) = {
     sql"SELECT `col45`,`col46`,`col47`,`col48`,`col49`,`col50`,`col1`,`col2`,`col3`,`col4`,`col5` FROM `sel_50` WHERE  `col18` IN ($nums)".asList { row =>
-      row.column[Int]("col45")
-      row.column[Int]("col46")
-      row.column[Int]("col47")
-      row.column[Int]("col48")
-      row.column[Int]("col49")
-      row.column[Int]("col50")
-      row.column[Int]("col1")
-      row.column[Int]("col2")
-      row.column[Int]("col3")
-      row.column[Int]("col4")
-      row.column[Int]("col5")
+      row[Int]("col45")
+      row[Int]("col46")
+      row[Int]("col47")
+      row[Int]("col48")
+      row[Int]("col49")
+      row[Int]("col50")
+      row[Int]("col1")
+      row[Int]("col2")
+      row[Int]("col3")
+      row[Int]("col4")
+      row[Int]("col5")
     }
   }
 
@@ -184,31 +184,31 @@ object RelateTests extends TestCase {
 
   def twentyFiveColumnsAlt(nums: Seq[Int])(implicit conn: Connection) = {
     sql"SELECT `col1`,`col2`,`col3`,`col4`,`col5`,`col6`,`col7`,`col8`,`col9`,`col10`,`col11`,`col12`,`col13`,`col14`,`col15`,`col16`,`col17`,`col18`,`col19`,`col20`,`col21`,`col22`,`col23`,`col24`,`col25` FROM `sel_50` WHERE  `col18` IN ($nums)".asList { row =>
-      row.column[Int]("col1")
-      row.column[Int]("col2")
-      row.column[Int]("col3")
-      row.column[Int]("col4")
-      row.column[Int]("col5")
-      row.column[Int]("col6")
-      row.column[Int]("col7")
-      row.column[Int]("col8")
-      row.column[Int]("col9")
-      row.column[Int]("col10")
-      row.column[Int]("col11")
-      row.column[Int]("col12")
-      row.column[Int]("col13")
-      row.column[Int]("col14")
-      row.column[Int]("col15")
-      row.column[Int]("col16")
-      row.column[Int]("col17")
-      row.column[Int]("col18")
-      row.column[Int]("col19")
-      row.column[Int]("col20")
-      row.column[Int]("col21")
-      row.column[Int]("col22")
-      row.column[Int]("col23")
-      row.column[Int]("col24")
-      row.column[Int]("col25")
+      row[Int]("col1")
+      row[Int]("col2")
+      row[Int]("col3")
+      row[Int]("col4")
+      row[Int]("col5")
+      row[Int]("col6")
+      row[Int]("col7")
+      row[Int]("col8")
+      row[Int]("col9")
+      row[Int]("col10")
+      row[Int]("col11")
+      row[Int]("col12")
+      row[Int]("col13")
+      row[Int]("col14")
+      row[Int]("col15")
+      row[Int]("col16")
+      row[Int]("col17")
+      row[Int]("col18")
+      row[Int]("col19")
+      row[Int]("col20")
+      row[Int]("col21")
+      row[Int]("col22")
+      row[Int]("col23")
+      row[Int]("col24")
+      row[Int]("col25")
     }
   }
 

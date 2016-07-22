@@ -23,18 +23,18 @@ object RecordA extends Mockito {
   implicit val reader = new Parseable[RecordA] {
     def parse(row: SqlResult): RecordA = {
       RecordA(
-        row.column[BigDecimal]("bd"),
-        row.column[Boolean]("bool"),
-        row.column[Array[Byte]]("ba"),
-        row.column[Byte]("byte"),
-        row.column[Date]("date"),
-        row.column[Double]("double"),
-        row.column[Int]("int"),
-        row.column[Long]("long"),
-        row.column[Short]("short"),
-        row.column[String]("str"),
-        row.column[UUID]("uuid"),
-        row.column[Things.Value]("thing")
+        row[BigDecimal]("bd"),
+        row[Boolean]("bool"),
+        row[Array[Byte]]("ba"),
+        row[Byte]("byte"),
+        row[Date]("date"),
+        row[Double]("double"),
+        row[Int]("int"),
+        row[Long]("long"),
+        row[Short]("short"),
+        row[String]("str"),
+        row[UUID]("uuid"),
+        row[Things.Value]("thing")
       )
     }
   }
@@ -77,18 +77,18 @@ object RecordB extends Mockito {
   implicit val reader = new Parseable[RecordB] {
     def parse(row: SqlResult): RecordB = {
       RecordB(
-        row.columnOpt[BigDecimal]("bd"),
-        row.columnOpt[Boolean]("bool"),
-        row.columnOpt[Array[Byte]]("ba"),
-        row.columnOpt[Byte]("byte"),
-        row.columnOpt[Date]("date"),
-        row.columnOpt[Double]("double"),
-        row.columnOpt[Int]("int"),
-        row.columnOpt[Long]("long"),
-        row.columnOpt[Short]("short"),
-        row.columnOpt[String]("str"),
-        row.columnOpt[UUID]("uuid"),
-        row.columnOpt[Things.Value]("thing")
+        row.opt[BigDecimal]("bd"),
+        row.opt[Boolean]("bool"),
+        row.opt[Array[Byte]]("ba"),
+        row.opt[Byte]("byte"),
+        row.opt[Date]("date"),
+        row.opt[Double]("double"),
+        row.opt[Int]("int"),
+        row.opt[Long]("long"),
+        row.opt[Short]("short"),
+        row.opt[String]("str"),
+        row.opt[UUID]("uuid"),
+        row.opt[Things.Value]("thing")
       )
     }
   }
