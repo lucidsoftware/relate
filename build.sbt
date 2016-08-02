@@ -4,7 +4,7 @@ lazy val Regression = config("regression") extend Benchmark
 
 lazy val buildSettings = Seq(
   organization := "com.lucidchart",
-  version := "1.14.0-SNAPSHOT",
+  version := "2.0.0-SNAPSHOT",
   scalaVersion := "2.11.8",
   crossScalaVersions := Seq("2.11.8", "2.10.6"),
   scalacOptions ++= Seq(

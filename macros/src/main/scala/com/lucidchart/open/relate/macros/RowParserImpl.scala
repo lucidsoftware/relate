@@ -1,7 +1,6 @@
 package com.lucidchart.open.relate.macros
 
 import com.lucidchart.open.relate._
-import com.lucidchart.open.relate.interp._
 import macrocompat.bundle
 import scala.reflect.macros.blackbox.Context
 
