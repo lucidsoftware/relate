@@ -1,5 +1,7 @@
 package com.lucidchart.open.relate
 
+import java.sql.SQLException
+
 trait ResultSetWrapper {
   val resultSet: java.sql.ResultSet
 
@@ -17,6 +19,21 @@ trait ResultSetWrapper {
     }
     finally {
       resultSet.close()
+    }
+  }
+
+  /**
+    * Determine if the result set contains the given column name
+    * @param column the column name to check
+    * @return whether or not the result set contains that column name
+    */
+  def hasColumn(column: String): Boolean = {
+    try {
+      resultSet.findColumn(column)
+      true
+    }
+    catch {
+      case e: SQLException => false
     }
   }
 
