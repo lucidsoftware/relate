@@ -1,6 +1,6 @@
-package com.lucidchart.open.relate
+package com.lucidchart.open
 
-package object interp {
+package object relate {
 
   implicit class SqlString(string: String) {
     def toSql = InterpolatedQuery.fromParts(Seq(string), Seq())
