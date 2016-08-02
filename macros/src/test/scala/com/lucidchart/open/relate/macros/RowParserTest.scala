@@ -12,15 +12,15 @@ object Thing {
 }
 case class User(firstName: String, lastName: String)
 
-class ParseableTest extends Specification with Mockito {
-  "Parseable def macros" should {
+class RowParserTest extends Specification with Mockito {
+  "RowParser def macros" should {
     "generate parser" in {
       val rs = mock[java.sql.ResultSet]
       rs.getString("firstName") returns "hi"
       rs.getInt("b") returns 20
       val row = SqlRow(rs)
 
-      val p = generateParseable[Thing]
+      val p = generateParser[Thing]
 
       p.parse(row) mustEqual(Thing("hi", Some(20)))
     }
@@ -31,13 +31,13 @@ class ParseableTest extends Specification with Mockito {
       rs.getInt("b") returns 20
       val row = SqlRow(rs)
 
-      val p = generateSnakeParseable[Thing]
+      val p = generateSnakeParser[Thing]
 
       p.parse(row) mustEqual(Thing("gregg", Some(20)))
     }
 
     "remap column names" in {
-      val p = generateParseable[User](Map(
+      val p = generateParser[User](Map(
         "firstName" -> "fname",
         "lastName" -> "lname"
       ))
@@ -51,7 +51,7 @@ class ParseableTest extends Specification with Mockito {
     }
 
     "remap column names w/normal tuple syntax" in {
-      val p = generateParseable[User](Map(
+      val p = generateParser[User](Map(
         ("firstName", "fname"),
         ("lastName", "lname")
       ))
@@ -65,7 +65,7 @@ class ParseableTest extends Specification with Mockito {
     }
 
     "remap some column names" in {
-      val p = generateParseable[User](Map(
+      val p = generateParser[User](Map(
         "firstName" -> "fname"
       ))
 
@@ -79,12 +79,12 @@ class ParseableTest extends Specification with Mockito {
 
     "fail to compile with non-literals" in {
       illTyped(
-        """val name = "newName"; generateParseable[User](Map("firstName" -> name))""",
+        """val name = "newName"; generateParser[User](Map("firstName" -> name))""",
         "Remappings must be literal strings"
       )
 
       illTyped(
-        """val col = "col"; generateParseable[User](Map(col -> "name"))""",
+        """val col = "col"; generateParser[User](Map(col -> "name"))""",
         "Column names must be literal strings"
       )
 
@@ -93,7 +93,7 @@ class ParseableTest extends Specification with Mockito {
 
     "fail to compile with invalid columns" in {
       illTyped(
-        """generateParseable[User](Map("badCol" -> "name"))""",
+        """generateParser[User](Map("badCol" -> "name"))""",
         "badCol is not a member of com.lucidchart.open.relate.macros.User"
       )
 
@@ -111,7 +111,7 @@ class ParseableTest extends Specification with Mockito {
       rs.getString("lastName") returns "hernandez"
       val row = SqlRow(rs)
 
-      implicitly[Parseable[SimpleRecord]].parse(row) mustEqual SimpleRecord("gregg", Some("hernandez"))
+      implicitly[RowParser[SimpleRecord]].parse(row) mustEqual SimpleRecord("gregg", Some("hernandez"))
     }
 
     @Record("snakeCase" -> true)
@@ -130,7 +130,7 @@ class ParseableTest extends Specification with Mockito {
       // verify that this still compiles
       SnakeRecord.f()
 
-      implicitly[Parseable[SnakeRecord]].parse(row) mustEqual SnakeRecord("gregg", Some("hernandez"))
+      implicitly[RowParser[SnakeRecord]].parse(row) mustEqual SnakeRecord("gregg", Some("hernandez"))
     }
 
     @Record("colMapping" -> Map("firstName" -> "fname", "lastName" -> "lname"))
@@ -142,7 +142,7 @@ class ParseableTest extends Specification with Mockito {
       rs.getString("lname") returns "hernandez"
       val row = SqlRow(rs)
 
-      implicitly[Parseable[RemapRecord]].parse(row) mustEqual RemapRecord("gregg", "hernandez")
+      implicitly[RowParser[RemapRecord]].parse(row) mustEqual RemapRecord("gregg", "hernandez")
     }
 
     @Record("colMapping" -> Map(("firstName", "fname"), ("lastName", "lname")))
@@ -154,7 +154,7 @@ class ParseableTest extends Specification with Mockito {
       rs.getString("lname") returns "hernandez"
       val row = SqlRow(rs)
 
-      implicitly[Parseable[RemapTRecord]].parse(row) mustEqual RemapTRecord("gregg", "hernandez")
+      implicitly[RowParser[RemapTRecord]].parse(row) mustEqual RemapTRecord("gregg", "hernandez")
     }
 
     @Record("colMapping" -> Map("firstName" -> "fname"))
@@ -166,7 +166,7 @@ class ParseableTest extends Specification with Mockito {
       rs.getString("lastName") returns "hernandez"
       val row = SqlRow(rs)
 
-      implicitly[Parseable[RemapSomeRecord]].parse(row) mustEqual RemapSomeRecord("gregg", "hernandez")
+      implicitly[RowParser[RemapSomeRecord]].parse(row) mustEqual RemapSomeRecord("gregg", "hernandez")
     }
 
     "fail to compile for anything besides a case class" in {

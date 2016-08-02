@@ -121,7 +121,7 @@ object Regressions extends DbRegression {
   }
 
   type ThreeCol = (Int, Int, Int)
-  implicit val threeColParseable = new Parseable[ThreeCol] {
+  implicit val threeColRowParser = new RowParser[ThreeCol] {
     def parse(row: SqlRow): ThreeCol = (
       row.int("col1"),
       row.int("col2"),
@@ -130,7 +130,7 @@ object Regressions extends DbRegression {
   }
 
   type TwentyTwoCol = (Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int)
-  implicit val twentyTwoColParseable = new Parseable[TwentyTwoCol] {
+  implicit val twentyTwoColRowParser = new RowParser[TwentyTwoCol] {
     def parse(row: SqlRow): TwentyTwoCol = (
       row.int("col1"),
       row.int("col2"),
@@ -165,7 +165,7 @@ object Regressions extends DbRegression {
       measure method "asList(parser)" in {
         using(Gen.unit("parser")) in { _ =>
           parserIterations.foreach { _ =>
-            query.asList(threeColParseable.parse)
+            query.asList(threeColRowParser.parse)
           }
         }
       }
@@ -191,7 +191,7 @@ object Regressions extends DbRegression {
       measure method "asList(parser)" in {
         using(Gen.unit("parser")) in { _ =>
           parserIterations.foreach { _ =>
-            query.asList(twentyTwoColParseable.parse)
+            query.asList(twentyTwoColRowParser.parse)
           }
         }
       }
