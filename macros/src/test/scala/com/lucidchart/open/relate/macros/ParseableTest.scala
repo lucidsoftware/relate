@@ -18,7 +18,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("firstName") returns "hi"
       rs.getInt("b") returns 20
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       val p = generateParseable[Thing]
 
@@ -29,7 +29,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("first_name") returns "gregg"
       rs.getInt("b") returns 20
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       val p = generateSnakeParseable[Thing]
 
@@ -45,7 +45,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("fname") returns "gregg"
       rs.getString("lname") returns "hernandez"
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       p.parse(row) mustEqual User("gregg", "hernandez")
     }
@@ -59,7 +59,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("fname") returns "gregg"
       rs.getString("lname") returns "hernandez"
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       p.parse(row) mustEqual User("gregg", "hernandez")
     }
@@ -72,7 +72,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("fname") returns "gregg"
       rs.getString("lastName") returns "hernandez"
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       p.parse(row) mustEqual User("gregg", "hernandez")
     }
@@ -109,7 +109,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("firstName") returns "gregg"
       rs.getString("lastName") returns "hernandez"
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       implicitly[Parseable[SimpleRecord]].parse(row) mustEqual SimpleRecord("gregg", Some("hernandez"))
     }
@@ -125,7 +125,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("first_name") returns "gregg"
       rs.getString("last_name") returns "hernandez"
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       // verify that this still compiles
       SnakeRecord.f()
@@ -140,7 +140,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("fname") returns "gregg"
       rs.getString("lname") returns "hernandez"
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       implicitly[Parseable[RemapRecord]].parse(row) mustEqual RemapRecord("gregg", "hernandez")
     }
@@ -152,7 +152,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("fname") returns "gregg"
       rs.getString("lname") returns "hernandez"
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       implicitly[Parseable[RemapTRecord]].parse(row) mustEqual RemapTRecord("gregg", "hernandez")
     }
@@ -164,7 +164,7 @@ class ParseableTest extends Specification with Mockito {
       val rs = mock[java.sql.ResultSet]
       rs.getString("fname") returns "gregg"
       rs.getString("lastName") returns "hernandez"
-      val row = SqlResult(rs)
+      val row = SqlRow(rs)
 
       implicitly[Parseable[RemapSomeRecord]].parse(row) mustEqual RemapSomeRecord("gregg", "hernandez")
     }

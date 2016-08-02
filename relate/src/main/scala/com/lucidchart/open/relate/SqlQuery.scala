@@ -64,7 +64,7 @@ private[relate] case class SqlQuery(
 
 }
 
-/** The base class for all list type parameters. Contains a name and a count (total number of 
+/** The base class for all list type parameters. Contains a name and a count (total number of
 inserted params) */
 private[relate] sealed trait ListParam {
   val name: String
@@ -91,7 +91,7 @@ private[relate] case class Tupled(
   override val charCount: Int = numTuples * 3 + numTuples * tupleSize * 2
 }
 
-/** 
+/**
  * Expandable is a trait for SQL queries that can be expanded.
  *
  * It defines two expansion methods:
@@ -102,8 +102,8 @@ private[relate] case class Tupled(
  * {{{
  * import com.lucidchart.open.relate._
  * import com.lucidchart.open.relate.Query._
- * 
- * val ids = Array(1L, 2L, 3L)  
+ *
+ * val ids = Array(1L, 2L, 3L)
  *
  * SQL("""
  *   SELECT *
@@ -112,7 +112,7 @@ private[relate] case class Tupled(
  * """).expand { implicit query =>
  *   commaSeparated("ids", ids.size)
  * }.on {
- *   longs("ids", ids) 
+ *   longs("ids", ids)
  * }
  * }}}
  */
@@ -345,21 +345,21 @@ trait Sql {
    * @return the auto-incremented key as an Int
    */
   def executeInsertInt()(implicit connection: Connection): Int = insertionStatement.execute(_.asSingle(RowParser.insertInt))
-  
+
   /**
    * Execute the query and get the auto-incremented keys as a List of Ints
    * @param connection the connection to use when executing the query
    * @return the auto-incremented keys as a List of Ints
    */
   def executeInsertInts()(implicit connection: Connection): List[Int] = insertionStatement.execute(_.asList(RowParser.insertInt))
-  
+
   /**
    * Execute the query and get the auto-incremented key as a Long
    * @param connection the connection to use when executing the query
    * @return the auto-incremented key as a Long
    */
   def executeInsertLong()(implicit connection: Connection): Long = insertionStatement.execute(_.asSingle(RowParser.insertLong))
-  
+
   /**
    * Execute the query and get the auto-incremented keys as a a List of Longs
    * @param connection the connection to use when executing the query
@@ -374,8 +374,8 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the auto-incremented key
    */
-  def executeInsertSingle[U](parser: SqlResult => U)(implicit connection: Connection): U = insertionStatement.execute(_.asSingle(parser))
-  
+  def executeInsertSingle[U](parser: SqlRow => U)(implicit connection: Connection): U = insertionStatement.execute(_.asSingle(parser))
+
   /**
    * Execute the query and get the auto-incremented keys using a RowParser. Provided for the case
    * that a primary key is not an Int or BigInt
@@ -383,7 +383,7 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the auto-incremented keys
    */
-  def executeInsertCollection[U, T[_]](parser: SqlResult => U)(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = insertionStatement.execute(_.asCollection(parser))
+  def executeInsertCollection[U, T[_]](parser: SqlRow => U)(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = insertionStatement.execute(_.asCollection(parser))
 
   def as[A: Parseable]()(implicit connection: Connection): A = normalStatement.execute(_.as[A])
 
@@ -393,7 +393,7 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a single record
    */
-  def asSingle[A](parser: SqlResult => A)(implicit connection: Connection): A = normalStatement.execute(_.asSingle(parser))
+  def asSingle[A](parser: SqlRow => A)(implicit connection: Connection): A = normalStatement.execute(_.asSingle(parser))
   def asSingle[A: Parseable]()(implicit connection: Connection): A = normalStatement.execute(_.asSingle[A])
 
   /**
@@ -402,7 +402,7 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as an optional single record
    */
-  def asSingleOption[A](parser: SqlResult => A)(implicit connection: Connection): Option[A] = normalStatement.execute(_.asSingleOption(parser))
+  def asSingleOption[A](parser: SqlRow => A)(implicit connection: Connection): Option[A] = normalStatement.execute(_.asSingleOption(parser))
   def asSingleOption[A: Parseable]()(implicit connection: Connection): Option[A] = normalStatement.execute(_.asSingleOption[A])
 
   /**
@@ -411,7 +411,7 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a Set of records
    */
-  def asSet[A](parser: SqlResult => A)(implicit connection: Connection): Set[A] = normalStatement.execute(_.asSet(parser))
+  def asSet[A](parser: SqlRow => A)(implicit connection: Connection): Set[A] = normalStatement.execute(_.asSet(parser))
   def asSet[A: Parseable]()(implicit connection: Connection): Set[A] = normalStatement.execute(_.asSet[A])
 
   /**
@@ -420,7 +420,7 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a sequence of records
    */
-  def asSeq[A](parser: SqlResult => A)(implicit connection: Connection): Seq[A] = normalStatement.execute(_.asSeq(parser))
+  def asSeq[A](parser: SqlRow => A)(implicit connection: Connection): Seq[A] = normalStatement.execute(_.asSeq(parser))
   def asSeq[A: Parseable]()(implicit connection: Connection): Seq[A] = normalStatement.execute(_.asSeq[A])
 
   /**
@@ -429,7 +429,7 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as an iterable of records
    */
-  def asIterable[A](parser: SqlResult => A)(implicit connection: Connection): Iterable[A] = normalStatement.execute(_.asIterable(parser))
+  def asIterable[A](parser: SqlRow => A)(implicit connection: Connection): Iterable[A] = normalStatement.execute(_.asIterable(parser))
   def asIterable[A: Parseable]()(implicit connection: Connection): Iterable[A] = normalStatement.execute(_.asIterable[A])
 
   /**
@@ -438,7 +438,7 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a List of records
    */
-  def asList[A](parser: SqlResult => A)(implicit connection: Connection): List[A] = normalStatement.execute(_.asList(parser))
+  def asList[A](parser: SqlRow => A)(implicit connection: Connection): List[A] = normalStatement.execute(_.asList(parser))
   def asList[A: Parseable]()(implicit connection: Connection): List[A] = normalStatement.execute(_.asList[A])
 
   /**
@@ -448,10 +448,10 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as a Map of records
    */
-  def asMap[U, V](parser: SqlResult => (U, V))(implicit connection: Connection): Map[U, V] = normalStatement.execute(_.asMap(parser))
+  def asMap[U, V](parser: SqlRow => (U, V))(implicit connection: Connection): Map[U, V] = normalStatement.execute(_.asMap(parser))
   def asMap[U, V]()(implicit connection: Connection, p: Parseable[(U, V)]): Map[U, V] = normalStatement.execute(_.asMap[U, V])
 
-  def asMultiMap[U, V](parser: SqlResult => (U, V))(implicit connection: Connection): Map[U, Set[V]] = normalStatement.execute(_.asMultiMap(parser))
+  def asMultiMap[U, V](parser: SqlRow => (U, V))(implicit connection: Connection): Map[U, Set[V]] = normalStatement.execute(_.asMultiMap(parser))
   def asMultiMap[U, V]()(implicit connection: Connection, p: Parseable[(U, V)]): Map[U, Set[V]] = normalStatement.execute(_.asMultiMap[U, V])
 
   /**
@@ -461,23 +461,23 @@ trait Sql {
    * @return the results as a single value
    */
   def asScalar[A]()(implicit connection: Connection): A = normalStatement.execute(_.asScalar[A]())
-  
+
   /**
-   * Execute this query and get back the result as an optional single value. Assumes that there is 
+   * Execute this query and get back the result as an optional single value. Assumes that there is
    * only one row and one value in the result set.
    * @param parser the RowParser to use when parsing the result set
    * @param connection the connection to use when executing the query
    * @return the results as an optional single value
    */
   def asScalarOption[A]()(implicit connection: Connection): Option[A] = normalStatement.execute(_.asScalarOption[A]())
-  
+
   /**
    * Execute this query and get back the result as an arbitrary collection of records
    * @param parser the RowParser to use when parsing the result set
    * @param connection the connection to use when executing the query
    * @return the results as an arbitrary collection of records
    */
-  def asCollection[U, T[_]](parser: SqlResult => U)(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = normalStatement.execute(_.asCollection(parser))
+  def asCollection[U, T[_]](parser: SqlRow => U)(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = normalStatement.execute(_.asCollection(parser))
   def asCollection[U: Parseable, T[_]]()(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = normalStatement.execute(_.asCollection[U, T])
 
   /**
@@ -486,7 +486,7 @@ trait Sql {
    * @param connection the connection to use when executing the query
    * @return the results as an arbitrary collection of key value pairs
    */
-  def asPairCollection[U, V, T[_, _]](parser: SqlResult => (U, V))(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = normalStatement.execute(_.asPairCollection(parser))
+  def asPairCollection[U, V, T[_, _]](parser: SqlRow => (U, V))(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = normalStatement.execute(_.asPairCollection(parser))
   def asPairCollection[U, V, T[_, _]]()(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection, p: Parseable[(U, V)]): T[U, V] = normalStatement.execute(_.asPairCollection[U, V, T])
 
   /**
@@ -499,7 +499,7 @@ trait Sql {
    * is MySQL, the fetchSize will always default to Int.MinValue, as MySQL's JDBC implementation
    * ignores all other fetchSize values and only streams if fetchSize is Int.MinValue
    */
-  def asIterator[A](parser: SqlResult => A, fetchSize: Int = 100)(implicit connection: Connection): Iterator[A] = {
+  def asIterator[A](parser: SqlRow => A, fetchSize: Int = 100)(implicit connection: Connection): Iterator[A] = {
     val prepared = streamedStatement(fetchSize)
     prepared.execute(RowIterator(parser, prepared.stmt, _))
   }

@@ -134,7 +134,7 @@ class ParseableImpl(val c: Context) {
 
     q"""
       new com.lucidchart.open.relate.Parseable[$tpe] {
-        def parse(row: com.lucidchart.open.relate.SqlResult): $tpe = {
+        def parse(row: com.lucidchart.open.relate.SqlRow): $tpe = {
           $apply(..$extractors)
         }
       }

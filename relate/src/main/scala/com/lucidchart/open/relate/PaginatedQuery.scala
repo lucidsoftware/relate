@@ -7,7 +7,7 @@ import scala.collection.mutable.ArrayBuffer
  * The PaginatedQuery companion object supplies apply methods that will create new
  * PaginatedQuery's and execute them to get Streams of results.
  *
- * PaginatedQuery provides two pagination methods: 
+ * PaginatedQuery provides two pagination methods:
  *  - Using LIMIT and OFFSET
  *  - Allowing the user to specify the next query based on the last record in the previous page
  *
@@ -22,13 +22,13 @@ object PaginatedQuery {
    * query.
    * @param parser the RowParser that will parse records from the database
    * @param getNextStmt a function that will, optionally given the last record in a page of results,
-   * produce a query object that can be executed to get the next page of results. The last record 
+   * produce a query object that can be executed to get the next page of results. The last record
    * Option will be None when getting the first page of results.
    * @param connection the connection to use to make the query
    * @return a Stream over all the records returned by the query, getting a new page of results
    * when the current one is exhausted
    */
-  def apply[A](parser: SqlResult => A)(getNextStmt: Option[A] => Sql)(implicit connection: Connection): Stream[A] = {
+  def apply[A](parser: SqlRow => A)(getNextStmt: Option[A] => Sql)(implicit connection: Connection): Stream[A] = {
     new PaginatedQuery(parser, connection).withQuery(getNextStmt)
   }
 
@@ -44,7 +44,7 @@ object PaginatedQuery {
    * @return a Stream over all the records returned by the query, getting a new page of results
    * when the current one is exhausted
    */
-  def apply[A](parser: SqlResult => A, limit: Int, startingOffset: Long)(query: ParameterizedSql)(implicit connection: Connection): Stream[A] = {
+  def apply[A](parser: SqlRow => A, limit: Int, startingOffset: Long)(query: ParameterizedSql)(implicit connection: Connection): Stream[A] = {
     new PaginatedQuery(parser, connection).withLimitAndOffset(limit, startingOffset, query)
   }
 }
@@ -52,7 +52,7 @@ object PaginatedQuery {
 /**
  * A query object that will execute a query in a paginated format and return the results in a Stream
  */
-private[relate] class PaginatedQuery[A](parser: SqlResult => A, connection: Connection) {
+private[relate] class PaginatedQuery[A](parser: SqlRow => A, connection: Connection) {
   self =>
 
   /**
@@ -117,7 +117,7 @@ private[relate] class PaginatedQuery[A](parser: SqlResult => A, connection: Conn
     }
 
     /**
-     * Create a lazily evaluated stream of results 
+     * Create a lazily evaluated stream of results
      * @param offset the offset into the database results
      * @return a stream of results
      */

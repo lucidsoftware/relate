@@ -4,12 +4,12 @@ import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
 
 trait Parseable[A] {
-  def parse(row: SqlResult): A
+  def parse(row: SqlRow): A
 }
 
 object Parseable {
-  def apply[A](f: SqlResult => A): Parseable[A] = new Parseable[A] {
-    def parse(result: SqlResult): A = f(result)
+  def apply[A](f: SqlRow => A): Parseable[A] = new Parseable[A] {
+    def parse(result: SqlRow): A = f(result)
   }
 
   def limitedCollection[B: Parseable, Col[_]](maxRows: Long)(implicit cbf: CanBuildFrom[Col[B], B, Col[B]]) =
@@ -75,7 +75,7 @@ object Parseable {
  *
  */
 @deprecated("Use plain SqlResult => A instead", "1.7.0")
-trait RowParser[+A] extends (SqlResult => A)
+trait RowParser[+A] extends (SqlRow => A)
 
 /**
  * The RowParser companion object allows creation of arbitrary RowParsers with its apply method.
@@ -94,8 +94,8 @@ object RowParser {
    * @param f the function that will do the parsing
    */
   @deprecated("Use plain SqlResult => A instead", "1.7.0")
-  def apply[A](f: (SqlResult) => A) = new RowParser[A] {
-    def apply(row: SqlResult) = f(row)
+  def apply[A](f: (SqlRow) => A) = new RowParser[A] {
+    def apply(row: SqlRow) = f(row)
   }
 
   /**
@@ -103,32 +103,32 @@ object RowParser {
    * @param columnLabel the column name to extract
    * @param the extracted column value
    */
-  def bigInt(columnLabel: String) = (row: SqlResult) => row.bigInt(columnLabel)
+  def bigInt(columnLabel: String) = (row: SqlRow) => row.bigInt(columnLabel)
   /**
    * Shorthand for creating a RowParser that takes only a date column from the result set
    * @param columnLabel the column name to extract
    * @param the extracted column value
    */
-  def date(columnLabel: String) = (row: SqlResult) => row.date(columnLabel)
+  def date(columnLabel: String) = (row: SqlRow) => row.date(columnLabel)
   /**
    * Shorthand for creating a RowParser that takes only an int column from the result set
    * @param columnLabel the column name to extract
    * @param the extracted column value
    */
-  def int(columnLabel: String) = (row: SqlResult) => row.int(columnLabel)
+  def int(columnLabel: String) = (row: SqlRow) => row.int(columnLabel)
   /**
    * Shorthand for creating a RowParser that takes only a long column from the result set
    * @param columnLabel the column name to extract
    * @param the extracted column value
    */
-  def long(columnLabel: String) = (row: SqlResult) => row.long(columnLabel)
+  def long(columnLabel: String) = (row: SqlRow) => row.long(columnLabel)
   /**
    * Shorthand for creating a RowParser that takes only a string column from the result set
    * @param columnLabel the column name to extract
    * @param the extracted column value
    */
-  def string(columnLabel: String) = (row: SqlResult) => row.string(columnLabel)
+  def string(columnLabel: String) = (row: SqlRow) => row.string(columnLabel)
 
-  private[relate] val insertInt = (row: SqlResult) => row.strictInt(1)
-  private[relate] val insertLong = (row: SqlResult) => row.strictLong(1)
+  private[relate] val insertInt = (row: SqlRow) => row.strictInt(1)
+  private[relate] val insertLong = (row: SqlRow) => row.strictLong(1)
 }
