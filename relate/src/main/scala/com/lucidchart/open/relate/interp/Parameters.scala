@@ -1,7 +1,7 @@
 package com.lucidchart.open.relate.interp
 
-import com.lucidchart.open.relate.ByteHelper
 import java.net.URL
+import java.nio.ByteBuffer
 import java.sql.{Blob, Clob, Date, NClob, PreparedStatement, Ref, RowId, SQLXML, Timestamp, Time, Types}
 import java.util.UUID
 import scala.language.implicitConversions
@@ -83,10 +83,16 @@ object Parameter {
   implicit def fromOptionalUrl(value: Option[URL]) = value.map(fromUrl).getOrElse(NullDatalinkParameter)
 
   implicit def fromJavaDate(value: java.util.Date) = fromTimestamp(new Timestamp(value.getTime))
-  implicit def fromUuid(value: UUID) = fromByteArray(ByteHelper.uuidToByteArray(value))
+  implicit def fromUuid(uuid: UUID) = fromByteArray {
+    val bb = ByteBuffer.wrap(new Array[Byte](16))
+    bb.putLong(uuid.getMostSignificantBits)
+    bb.putLong(uuid.getLeastSignificantBits)
+    bb.array()
+  }
   implicit def fromOptionalJavaDate(value: Option[java.util.Date]) = value.map(fromJavaDate).getOrElse(NullTimestampParameter)
   implicit def fromOptionalUuid(value: Option[UUID]) = value.map(fromUuid).getOrElse(NullVarBinaryParameter)
 
+  implicit def fromArray[A <% SingleParameter](it: Array[A]) = new TupleParameter(it.map(elem => elem: SingleParameter))
   implicit def fromIterable[A <% SingleParameter](it: Iterable[A]) = new TupleParameter(it.map(elem => elem: SingleParameter))
   type SP = SingleParameter
   implicit def fromTuple1[T1 <% SP](t: Tuple1[T1]) = TupleParameter(t._1)

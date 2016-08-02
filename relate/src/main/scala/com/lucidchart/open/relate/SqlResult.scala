@@ -120,19 +120,4 @@ class SqlResult(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
    * @return the metadata
    */
   def getMetaData(): ResultSetMetaData = resultSet.getMetaData()
-
-  /**
-   * Determine if the result set contains the given column name
-   * @param column the column name to check
-   * @return whether or not the result set contains that column name
-   */
-  def hasColumn(column: String): Boolean = {
-    try {
-      resultSet.findColumn(column)
-      true
-    }
-    catch {
-      case e: SQLException => false
-    }
-  }
 }
