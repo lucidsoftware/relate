@@ -91,9 +91,16 @@ lazy val relate = project.in(file("relate"))
       "org.specs2" %% "specs2" % "2.3.12" % "test",
       "com.h2database" % "h2" % "1.4.191" % "test",
       "com.storm-enroute" %% "scalameter" % "0.7" % "bench",
-      "com.storm-enroute" %% "scalameter" % "0.7" % "regression",
-      "com.typesafe.play" %% "anorm" % "2.4.0" % "bench"
+      "com.storm-enroute" %% "scalameter" % "0.7" % "regression"
     ),
+    libraryDependencies <+= (scalaVersion) { sv =>
+      sv match {
+        case x if x.startsWith("2.10") =>
+          "com.typesafe.play" %% "anorm" % "2.4.0" % "bench"
+        case _ =>
+          "com.typesafe.play" %% "anorm" % "2.5.2" % "bench"
+      }
+    },
     testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework"),
     parallelExecution in Benchmark := false,
     parallelExecution in Regression := false,
