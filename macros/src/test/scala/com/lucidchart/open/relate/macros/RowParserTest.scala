@@ -1,7 +1,6 @@
 package com.lucidchart.open.relate.macros
 
 import com.lucidchart.open.relate._
-import com.lucidchart.open.relate.interp._
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 import shapeless.test.illTyped
