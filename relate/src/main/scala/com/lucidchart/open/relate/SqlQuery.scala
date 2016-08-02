@@ -385,7 +385,7 @@ trait Sql {
    */
   def executeInsertCollection[U, T[_]](parser: SqlRow => U)(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = insertionStatement.execute(_.asCollection(parser))
 
-  def as[A: Parseable]()(implicit connection: Connection): A = normalStatement.execute(_.as[A])
+  def as[A: RowParser]()(implicit connection: Connection): A = normalStatement.execute(_.as[A])
 
   /**
    * Execute this query and get back the result as a single record
@@ -394,7 +394,7 @@ trait Sql {
    * @return the results as a single record
    */
   def asSingle[A](parser: SqlRow => A)(implicit connection: Connection): A = normalStatement.execute(_.asSingle(parser))
-  def asSingle[A: Parseable]()(implicit connection: Connection): A = normalStatement.execute(_.asSingle[A])
+  def asSingle[A: RowParser]()(implicit connection: Connection): A = normalStatement.execute(_.asSingle[A])
 
   /**
    * Execute this query and get back the result as an optional single record
@@ -403,7 +403,7 @@ trait Sql {
    * @return the results as an optional single record
    */
   def asSingleOption[A](parser: SqlRow => A)(implicit connection: Connection): Option[A] = normalStatement.execute(_.asSingleOption(parser))
-  def asSingleOption[A: Parseable]()(implicit connection: Connection): Option[A] = normalStatement.execute(_.asSingleOption[A])
+  def asSingleOption[A: RowParser]()(implicit connection: Connection): Option[A] = normalStatement.execute(_.asSingleOption[A])
 
   /**
    * Execute this query and get back the result as a Set of records
@@ -412,7 +412,7 @@ trait Sql {
    * @return the results as a Set of records
    */
   def asSet[A](parser: SqlRow => A)(implicit connection: Connection): Set[A] = normalStatement.execute(_.asSet(parser))
-  def asSet[A: Parseable]()(implicit connection: Connection): Set[A] = normalStatement.execute(_.asSet[A])
+  def asSet[A: RowParser]()(implicit connection: Connection): Set[A] = normalStatement.execute(_.asSet[A])
 
   /**
    * Execute this query and get back the result as a sequence of records
@@ -421,7 +421,7 @@ trait Sql {
    * @return the results as a sequence of records
    */
   def asSeq[A](parser: SqlRow => A)(implicit connection: Connection): Seq[A] = normalStatement.execute(_.asSeq(parser))
-  def asSeq[A: Parseable]()(implicit connection: Connection): Seq[A] = normalStatement.execute(_.asSeq[A])
+  def asSeq[A: RowParser]()(implicit connection: Connection): Seq[A] = normalStatement.execute(_.asSeq[A])
 
   /**
    * Execute this query and get back the result as an iterable of records
@@ -430,7 +430,7 @@ trait Sql {
    * @return the results as an iterable of records
    */
   def asIterable[A](parser: SqlRow => A)(implicit connection: Connection): Iterable[A] = normalStatement.execute(_.asIterable(parser))
-  def asIterable[A: Parseable]()(implicit connection: Connection): Iterable[A] = normalStatement.execute(_.asIterable[A])
+  def asIterable[A: RowParser]()(implicit connection: Connection): Iterable[A] = normalStatement.execute(_.asIterable[A])
 
   /**
    * Execute this query and get back the result as a List of records
@@ -439,7 +439,7 @@ trait Sql {
    * @return the results as a List of records
    */
   def asList[A](parser: SqlRow => A)(implicit connection: Connection): List[A] = normalStatement.execute(_.asList(parser))
-  def asList[A: Parseable]()(implicit connection: Connection): List[A] = normalStatement.execute(_.asList[A])
+  def asList[A: RowParser]()(implicit connection: Connection): List[A] = normalStatement.execute(_.asList[A])
 
   /**
    * Execute this query and get back the result as a Map of records
@@ -449,10 +449,10 @@ trait Sql {
    * @return the results as a Map of records
    */
   def asMap[U, V](parser: SqlRow => (U, V))(implicit connection: Connection): Map[U, V] = normalStatement.execute(_.asMap(parser))
-  def asMap[U, V]()(implicit connection: Connection, p: Parseable[(U, V)]): Map[U, V] = normalStatement.execute(_.asMap[U, V])
+  def asMap[U, V]()(implicit connection: Connection, p: RowParser[(U, V)]): Map[U, V] = normalStatement.execute(_.asMap[U, V])
 
   def asMultiMap[U, V](parser: SqlRow => (U, V))(implicit connection: Connection): Map[U, Set[V]] = normalStatement.execute(_.asMultiMap(parser))
-  def asMultiMap[U, V]()(implicit connection: Connection, p: Parseable[(U, V)]): Map[U, Set[V]] = normalStatement.execute(_.asMultiMap[U, V])
+  def asMultiMap[U, V]()(implicit connection: Connection, p: RowParser[(U, V)]): Map[U, Set[V]] = normalStatement.execute(_.asMultiMap[U, V])
 
   /**
    * Execute this query and get back the result as a single value. Assumes that there is only one
@@ -478,7 +478,7 @@ trait Sql {
    * @return the results as an arbitrary collection of records
    */
   def asCollection[U, T[_]](parser: SqlRow => U)(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = normalStatement.execute(_.asCollection(parser))
-  def asCollection[U: Parseable, T[_]]()(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = normalStatement.execute(_.asCollection[U, T])
+  def asCollection[U: RowParser, T[_]]()(implicit cbf: CanBuildFrom[T[U], U, T[U]], connection: Connection): T[U] = normalStatement.execute(_.asCollection[U, T])
 
   /**
    * Execute this query and get back the result as an arbitrary collection of key value pairs
@@ -487,7 +487,7 @@ trait Sql {
    * @return the results as an arbitrary collection of key value pairs
    */
   def asPairCollection[U, V, T[_, _]](parser: SqlRow => (U, V))(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection): T[U, V] = normalStatement.execute(_.asPairCollection(parser))
-  def asPairCollection[U, V, T[_, _]]()(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection, p: Parseable[(U, V)]): T[U, V] = normalStatement.execute(_.asPairCollection[U, V, T])
+  def asPairCollection[U, V, T[_, _]]()(implicit cbf: CanBuildFrom[T[U, V], (U, V), T[U, V]], connection: Connection, p: RowParser[(U, V)]): T[U, V] = normalStatement.execute(_.asPairCollection[U, V, T])
 
   /**
    * The asIterator method returns an Iterator that will stream data out of the database.

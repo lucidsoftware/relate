@@ -27,7 +27,7 @@ case class TestRecord(
 )
 
 object TestRecord{
-  implicit val TestRecordParseable = new Parseable[TestRecord] {
+  implicit val TestRecordRowParser = new RowParser[TestRecord] {
     def parse(row: SqlRow): TestRecord = TestRecord(
       row.long("id"),
       row.string("name")
@@ -184,7 +184,7 @@ class SqlResultSpec extends Specification with Mockito {
       result.asMap(pairparser) equals Map()
     }
 
-    implicit val a: Parseable[(Long, TestRecord)] = new Parseable[(Long, TestRecord)] {
+    implicit val a: RowParser[(Long, TestRecord)] = new RowParser[(Long, TestRecord)] {
       def parse(row: SqlRow) = {
         val id = row.long("id")
         id -> TestRecord(id, row.string("name"))

@@ -4,14 +4,14 @@ import scala.annotation.{compileTimeOnly, implicitNotFound, StaticAnnotation}
 import scala.language.implicitConversions
 
 package object macros {
-  def generateSnakeParseable[A]: Parseable[A] =
-    macro ParseableImpl.generateSnakeImpl[A]
+  def generateSnakeParser[A]: RowParser[A] =
+    macro RowParserImpl.generateSnakeImpl[A]
 
-  def generateParseable[A]: Parseable[A] =
-    macro ParseableImpl.generateImpl[A]
+  def generateParser[A]: RowParser[A] =
+    macro RowParserImpl.generateImpl[A]
 
-  def generateParseable[A](colMapping: Map[String, String]): Parseable[A] =
-    macro ParseableImpl.generateMappingImpl[A]
+  def generateParser[A](colMapping: Map[String, String]): RowParser[A] =
+    macro RowParserImpl.generateMappingImpl[A]
 
   @implicitNotFound("A value of type ${A} is never allowed as an RecordOption")
   private trait RecordOptionValue[A]
@@ -29,6 +29,6 @@ package object macros {
 
   @compileTimeOnly("enable macro paradise to expand macro annotations")
   class Record(options: RecordOption[_]*) extends StaticAnnotation {
-    def macroTransform(annottees: Any*): Any = macro ParseableImpl.annotation
+    def macroTransform(annottees: Any*): Any = macro RowParserImpl.annotation
   }
 }
