@@ -122,7 +122,7 @@ object Regressions extends DbRegression {
 
   type ThreeCol = (Int, Int, Int)
   implicit val threeColParseable = new Parseable[ThreeCol] {
-    def parse(row: SqlResult): ThreeCol = (
+    def parse(row: SqlRow): ThreeCol = (
       row.int("col1"),
       row.int("col2"),
       row.int("col3")
@@ -131,7 +131,7 @@ object Regressions extends DbRegression {
 
   type TwentyTwoCol = (Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int)
   implicit val twentyTwoColParseable = new Parseable[TwentyTwoCol] {
-    def parse(row: SqlResult): TwentyTwoCol = (
+    def parse(row: SqlRow): TwentyTwoCol = (
       row.int("col1"),
       row.int("col2"),
       row.int("col3"),

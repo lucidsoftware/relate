@@ -3,10 +3,10 @@ package com.lucidchart.open.relate
 import java.sql.PreparedStatement
 
 private[relate] object RowIterator {
-  def apply[A](parser: SqlResult => A, stmt: PreparedStatement, resultSet: SqlResult) = new RowIterator(parser, stmt, resultSet)
+  def apply[A](parser: SqlRow => A, stmt: PreparedStatement, resultSet: SqlResult) = new RowIterator(parser, stmt, resultSet)
 }
 
-private[relate] class RowIterator[A](parser: SqlResult => A, stmt: PreparedStatement, result: SqlResult) extends Iterator[A] {
+private[relate] class RowIterator[A](parser: SqlRow => A, stmt: PreparedStatement, result: SqlResult) extends Iterator[A] {
 
   private var _hasNext = result.next()
 
@@ -28,7 +28,7 @@ private[relate] class RowIterator[A](parser: SqlResult => A, stmt: PreparedState
    * @return the parsed record
    */
   override def next(): A = {
-    val ret = parser(result)
+    val ret = parser(result.asRow)
     if (_hasNext) {
       _hasNext = result.next()
     }

@@ -81,7 +81,7 @@ private[relate] trait NormalStatementPreparer extends BaseStatementPreparer {
     applyParams(stmt)
     stmt
   }
-  
+
   /**
    * Get the results of excutioning this statement
    * @return the resulting ResultSet
@@ -137,7 +137,7 @@ private[relate] trait StreamedStatementPreparer extends BaseStatementPreparer {
     applyParams(stmt)
     stmt
   }
-  
+
   /**
    * Override the default execute method so that it does not close the resources
    * @param callback the function to call on the results of the query
