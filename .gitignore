@@ -9,3 +9,5 @@ lib_managed/*
 target/*
 project/target/*
 project/project/*
+macros/target/*
+relate/target/*
