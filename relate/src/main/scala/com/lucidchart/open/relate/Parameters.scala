@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate.interp
+package com.lucidchart.open.relate
 
 import java.net.URL
 import java.nio.ByteBuffer
