@@ -1,6 +1,5 @@
 package com.lucidchart.open.relate
 
-import com.lucidchart.open.relate.interp._
 import java.util.Properties
 import java.sql._
 
