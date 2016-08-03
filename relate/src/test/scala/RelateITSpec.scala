@@ -149,7 +149,7 @@ class RelateITSpec extends Specification with Db {
     description: String
   )
 
-  val pokedexParser = RowParser { row =>
+  def pokedexParser(row: SqlRow) = {
     PokedexEntry(
       row.long("id"),
       row.string("name"),
@@ -164,7 +164,7 @@ class RelateITSpec extends Specification with Db {
     trainerId: Option[Long]
   )
 
-  val pokemonParser = RowParser { row =>
+  def pokemonParser(row: SqlRow) = {
     Pokemon(
       row.long("id"),
       row.long("pokedex_id"),
@@ -179,7 +179,7 @@ class RelateITSpec extends Specification with Db {
     trainerId: Option[Long]
   )
 
-  val starterParser = RowParser { row =>
+  def starterParser(row: SqlRow) = {
     Starter(
       row.long("id"),
       row.string("name"),
