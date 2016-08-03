@@ -3,10 +3,8 @@ package com.lucidchart.open.relate
 import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
 
-trait RowParser[A] extends (SqlRow => A) {
+trait RowParser[A] {
   def parse(row: SqlRow): A
-
-  def apply(row: SqlRow): A = parse(row)
 }
 
 object RowParser {
