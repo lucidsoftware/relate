@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable

@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import java.nio.ByteBuffer
 import java.sql.ResultSet

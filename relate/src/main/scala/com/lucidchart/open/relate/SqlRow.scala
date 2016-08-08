@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import java.io.InputStream
 import java.io.Reader
@@ -239,8 +239,8 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
 /**
   * The SqlResultTypes object provides syntactic sugar for RowParser creation.
   * {{{
-  * import com.lucidchart.open.relate._
-  * import com.lucidchart.open.relate.SqlResultTypes._
+  * import com.lucidchart.relate._
+  * import com.lucidchart.relate.SqlResultTypes._
   *
   * val rowParser = RowParser { implicit row =>
   *   (long("id"), string("name"))

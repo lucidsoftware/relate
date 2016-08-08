@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import org.scalameter.api._
 import java.sql._

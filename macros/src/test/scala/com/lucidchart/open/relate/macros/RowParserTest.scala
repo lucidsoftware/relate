@@ -1,6 +1,6 @@
-package com.lucidchart.open.relate.macros
+package com.lucidchart.relate.macros
 
-import com.lucidchart.open.relate._
+import com.lucidchart.relate._
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 import shapeless.test.illTyped
@@ -93,7 +93,7 @@ class RowParserTest extends Specification with Mockito {
     "fail to compile with invalid columns" in {
       illTyped(
         """generateParser[User](Map("badCol" -> "name"))""",
-        "badCol is not a member of com.lucidchart.open.relate.macros.User"
+        "badCol is not a member of com.lucidchart.relate.macros.User"
       )
 
       success

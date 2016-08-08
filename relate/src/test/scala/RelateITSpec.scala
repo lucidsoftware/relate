@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import java.sql.{DriverManager, Connection, SQLException}
 import org.specs2.mutable._

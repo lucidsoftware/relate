@@ -1,6 +1,6 @@
-package com.lucidchart.open.relate.test
+package com.lucidchart.relate.test
 
-import com.lucidchart.open.relate._
+import com.lucidchart.relate._
 import org.specs2.mutable._
 
 class ExpandableSpec extends Specification {

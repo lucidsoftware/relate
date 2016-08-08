@@ -1,6 +1,6 @@
-package com.lucidchart.open.relate.macros
+package com.lucidchart.relate.macros
 
-import com.lucidchart.open.relate._
+import com.lucidchart.relate._
 import macrocompat.bundle
 import scala.reflect.macros.blackbox.Context
 
@@ -91,7 +91,7 @@ class RowParserImpl(val c: Context) {
             q"""$mods object $tname extends { ..$earlydefns } with ..$parents { $self: $stype =>
               ..$body
 
-              implicit val relateRowParser: com.lucidchart.open.relate.RowParser[$typeName] = {
+              implicit val relateRowParser: com.lucidchart.relate.RowParser[$typeName] = {
                 ${newRowParser(typeName, extractors, q"$tname")}
               }
             }"""
@@ -130,8 +130,8 @@ class RowParserImpl(val c: Context) {
 
   private def newRowParser(tpe: Tree, extractors: List[Tree], comp: Tree): Tree = {
     q"""
-      new com.lucidchart.open.relate.RowParser[$tpe] {
-        def parse(row: com.lucidchart.open.relate.SqlRow): $tpe = {
+      new com.lucidchart.relate.RowParser[$tpe] {
+        def parse(row: com.lucidchart.relate.SqlRow): $tpe = {
           $comp(..$extractors)
         }
       }

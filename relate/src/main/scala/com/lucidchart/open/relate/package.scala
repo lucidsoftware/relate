@@ -1,4 +1,4 @@
-package com.lucidchart.open
+package com.lucidchart
 
 package object relate {
 

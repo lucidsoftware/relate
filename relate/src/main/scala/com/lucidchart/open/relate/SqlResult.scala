@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import java.io.InputStream
 import java.io.Reader
@@ -32,10 +32,10 @@ object SqlResult {
  * The SqlResult class is a wrapper around Java's ResultSet class.
  *
  * It provides methods to allows users to retrieve specific columns by name and datatype,
- * but also provides methods that can, given a [[com.lucidchart.open.relate.RowParser RowParser]],
+ * but also provides methods that can, given a [[com.lucidchart.relate.RowParser RowParser]],
  * parse the entire result set as a collection of records returned by the parser. These methods are
  * also defined in the Sql trait, and are most conveniently used when chained with parameter
- * insertion. For how to do this, see the [[com.lucidchart.open.relate.Sql Sql]] trait
+ * insertion. For how to do this, see the [[com.lucidchart.relate.Sql Sql]] trait
  * documentation.
  *
  * The extraction methods (int, string, long, etc.) also have "strict" counterparts. The "strict"

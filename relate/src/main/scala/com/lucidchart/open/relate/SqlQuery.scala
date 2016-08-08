@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import java.sql.{Connection, PreparedStatement, ResultSet}
 import scala.collection.generic.CanBuildFrom
@@ -9,8 +9,8 @@ import scala.collection.mutable
  *
  * It provides methods for parameter insertion and query execution.
  * {{{
- * import com.lucidchart.open.relate._
- * import com.lucidchart.open.relate.Query._
+ * import com.lucidchart.relate._
+ * import com.lucidchart.relate.Query._
  *
  * case class User(id: Long, name: String)
  *
