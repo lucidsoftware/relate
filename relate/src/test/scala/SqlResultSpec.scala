@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import java.io.ByteArrayInputStream
 import java.io.Reader
@@ -19,7 +19,7 @@ import java.util.UUID
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
 import scala.collection.JavaConversions
-import com.lucidchart.open.relate.SqlResultTypes._
+import com.lucidchart.relate.SqlResultTypes._
 
 case class TestRecord(
   id: Long,

@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import scala.annotation.{compileTimeOnly, implicitNotFound, StaticAnnotation}
 import scala.language.implicitConversions
