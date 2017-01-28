@@ -1,3 +1,5 @@
+import sbt.cross.CrossVersionUtil
+
 lazy val Benchmark = config("bench") extend Test
 
 lazy val Regression = config("regression") extend Benchmark
@@ -6,13 +8,15 @@ lazy val buildSettings = Seq(
   organization := "com.lucidchart",
   version := "1.14.0-SNAPSHOT",
   scalaVersion := "2.11.8",
-  crossScalaVersions := Seq("2.11.8", "2.10.6"),
+  crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1"),
   scalacOptions ++= Seq(
     "-deprecation",
     "-feature",
     "-language:higherKinds"
   )
 )
+
+inScope(Global)(buildSettings)
 
 lazy val publishingSettings = Seq(
   pgpPassphrase := Some(Array()),
@@ -67,10 +71,10 @@ lazy val macroSettings = buildSettings ++ Seq(
   addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
   libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _),
   libraryDependencies ++= Seq(
-    "com.chuusai" %% "shapeless" % "2.3.1" % "test",
+    "com.chuusai" %% "shapeless" % "2.3.2" % "test",
     "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
-    "org.specs2" %% "specs2-core" % "3.8.4" % "test",
-    "org.specs2" %% "specs2-mock" % "3.8.4" % "test",
+    "org.specs2" %% "specs2-core" % "3.8.7" % "test",
+    "org.specs2" %% "specs2-mock" % "3.8.7" % "test",
     "org.typelevel" %% "macro-compat" % "1.1.1"
   )
 )
@@ -88,19 +92,17 @@ lazy val relate = project.in(file("relate"))
     name := "Relate",
     moduleName := "relate",
     libraryDependencies ++= Seq(
-      "org.specs2" %% "specs2" % "2.3.12" % "test",
+      "org.specs2" %% "specs2-core" % "3.8.7" % "test",
+      "org.specs2" %% "specs2-mock" % "3.8.7" % "test",
       "com.h2database" % "h2" % "1.4.191" % "test",
-      "com.storm-enroute" %% "scalameter" % "0.7" % "bench",
-      "com.storm-enroute" %% "scalameter" % "0.7" % "regression"
+      "com.storm-enroute" %% "scalameter" % "0.8.2" % "bench",
+      "com.storm-enroute" %% "scalameter" % "0.8.2" % "regression"
     ),
-    libraryDependencies <+= (scalaVersion) { sv =>
-      sv match {
-        case x if x.startsWith("2.10") =>
-          "com.typesafe.play" %% "anorm" % "2.4.0" % "bench"
-        case _ =>
-          "com.typesafe.play" %% "anorm" % "2.5.2" % "bench"
-      }
-    },
+    libraryDependencies ++= (CrossVersionUtil.binaryScalaVersion(scalaVersion.value) match {
+      case "2.10" => Seq("com.typesafe.play" %% "anorm" % "2.4.0" % "bench")
+      case "2.11" => Seq("com.typesafe.play" %% "anorm" % "2.5.2" % "bench")
+      case "2.12" => Nil // note: can't run benchmarks for 2.12 until a suitable anorm artifact is avaiable
+    }),
     testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework"),
     parallelExecution in Benchmark := false,
     parallelExecution in Regression := false,

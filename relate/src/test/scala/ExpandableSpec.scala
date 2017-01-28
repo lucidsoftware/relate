@@ -6,7 +6,7 @@ import org.specs2.mutable._
 
 class ExpandableSpec extends Specification {
 
-  "The expand method" should {
+  //"The expand method" should {
 
     // "work with one param" in {
     //   val query = ExpandableQuery("SELECT * FROM table WHERE id IN ({ids})").expand { implicit query =>
@@ -43,6 +43,6 @@ class ExpandableSpec extends Specification {
     //   query must_== "SELECT * FROM table WHERE id IN ({ids_0},{ids_1},{ids_2}) AND value IN ({values_0},{values_1})"
     // }
 
-  }
+  //}
 
 }
