@@ -24,10 +24,11 @@ env:
     - MYSQL_USER=root
     - MYSQL_PASSWORD=
 jdk:
-  - openjdk6
+  - oraclejdk8
 language: scala
 scala:
   - 2.10.5
   - 2.11.6
+  - 2.12.1
 script:
   - sbt ++$TRAVIS_SCALA_VERSION test package

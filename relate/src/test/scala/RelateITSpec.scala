@@ -4,7 +4,7 @@ import com.lucidchart.open.relate.interp._
 import com.lucidchart.open.relate.Query._
 import java.sql.{DriverManager, Connection, SQLException}
 import org.specs2.mutable._
-import org.specs2.specification.Fragments
+import org.specs2.specification.core.Fragments
 import org.specs2.specification.Step
 import java.util.Properties
 
