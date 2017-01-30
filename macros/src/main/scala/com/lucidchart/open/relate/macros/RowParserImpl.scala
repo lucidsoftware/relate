@@ -1,12 +1,11 @@
-package com.lucidchart.open.relate.macros
+package com.lucidchart.relate.macros
 
-import com.lucidchart.open.relate._
-import com.lucidchart.open.relate.interp._
+import com.lucidchart.relate._
 import macrocompat.bundle
 import scala.reflect.macros.blackbox.Context
 
 @bundle
-class ParseableImpl(val c: Context) {
+class RowParserImpl(val c: Context) {
   import c.universe._
 
   def generateSnakeImpl[A: c.WeakTypeTag]: Tree = generate[A](AnnotOpts(true, Map.empty))
@@ -86,14 +85,14 @@ class ParseableImpl(val c: Context) {
         }
 
         val companion: Tree = existingCompanion match {
-          case q"$mods object $tname extends { ..$earlydefns } with ..$parents { $self => ..$body }" =>
+          case q"$mods object $tname extends { ..$earlydefns } with ..$parents { $self: $stype => ..$body }" =>
             val typeName = tq"$tpname"
 
-            q"""$mods object $tname extends { ..$earlydefns } with ..$parents { $self =>
+            q"""$mods object $tname extends { ..$earlydefns } with ..$parents { $self: $stype =>
               ..$body
 
-              implicit val relateParseable: com.lucidchart.open.relate.Parseable[$typeName] = {
-                ${newParseable(typeName, extractors, None)}
+              implicit val relateRowParser: com.lucidchart.relate.RowParser[$typeName] = {
+                ${newRowParser(typeName, extractors, q"$tname")}
               }
             }"""
         }
@@ -126,16 +125,14 @@ class ParseableImpl(val c: Context) {
 
     val comp = q"${tpe.typeSymbol.companion}"
     val typeName = tq"${weakTypeTag[A].tpe}"
-    newParseable(typeName, input, Some(comp))
+    newRowParser(typeName, input, comp)
   }
 
-  private def newParseable(tpe: Tree, extractors: List[Tree], comp: Option[Tree]): Tree = {
-    val apply = comp.getOrElse(q"apply")
-
+  private def newRowParser(tpe: Tree, extractors: List[Tree], comp: Tree): Tree = {
     q"""
-      new com.lucidchart.open.relate.Parseable[$tpe] {
-        def parse(row: com.lucidchart.open.relate.SqlResult): $tpe = {
-          $apply(..$extractors)
+      new com.lucidchart.relate.RowParser[$tpe] {
+        def parse(row: com.lucidchart.relate.SqlRow): $tpe = {
+          $comp(..$extractors)
         }
       }
     """

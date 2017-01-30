@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import java.io.ByteArrayInputStream
 import java.io.Reader
@@ -19,7 +19,7 @@ import java.util.UUID
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
 import scala.collection.JavaConversions
-import com.lucidchart.open.relate.SqlResultTypes._
+import com.lucidchart.relate.SqlResultTypes._
 
 class ImplicitParsingTest extends Specification with Mockito {
   def getMocks = {
@@ -32,8 +32,8 @@ class ImplicitParsingTest extends Specification with Mockito {
   case class TestRecord(name: String)
 
   object TestRecord {
-    implicit val praser = new Parseable[TestRecord] {
-      def parse(result: SqlResult): TestRecord = {
+    implicit val praser = new RowParser[TestRecord] {
+      def parse(result: SqlRow): TestRecord = {
         TestRecord(result.string("name"))
       }
     }
@@ -42,14 +42,14 @@ class ImplicitParsingTest extends Specification with Mockito {
   case class TestKey(key: String)
 
   object TestKey {
-    implicit val parse = new Parseable[TestKey] {
-      def parse(result: SqlResult): TestKey = {
+    implicit val parse = new RowParser[TestKey] {
+      def parse(result: SqlRow): TestKey = {
         TestKey(result.string("key"))
       }
     }
   }
 
-  "Parseable" should {
+  "RowParser" should {
     "build a list" in {
       val (rs, result) = getMocks
 

@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import java.nio.ByteBuffer
 import java.sql.ResultSet
@@ -7,9 +7,9 @@ import java.util.{Date, UUID}
 class NullColumnException(col: String) extends Exception(s"Unexpected null value in column: $col")
 
 trait ColReader[A] { self =>
-  def read(col: String, row: SqlResult): Option[A]
+  def read(col: String, row: SqlRow): Option[A]
 
-  def forceRead(col: String, row: SqlResult): A = {
+  def forceRead(col: String, row: SqlRow): A = {
     read(col, row).getOrElse {
       throw new NullColumnException(col)
     }
@@ -31,8 +31,8 @@ trait ColReader[A] { self =>
 }
 
 object ColReader {
-  def apply[A](f: (String, SqlResult) => Option[A]): ColReader[A] = new ColReader[A] {
-    def read(col: String, rs: SqlResult): Option[A] = f(col, rs)
+  def apply[A](f: (String, SqlRow) => Option[A]): ColReader[A] = new ColReader[A] {
+    def read(col: String, rs: SqlRow): Option[A] = f(col, rs)
   }
 
   def option[A](x: A, rs: ResultSet): Option[A] = {

@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import java.util.{Date, UUID}
 import org.specs2.mock.Mockito
@@ -20,8 +20,8 @@ case class RecordA(
 )
 
 object RecordA extends Mockito {
-  implicit val reader = new Parseable[RecordA] {
-    def parse(row: SqlResult): RecordA = {
+  implicit val reader = new RowParser[RecordA] {
+    def parse(row: SqlRow): RecordA = {
       RecordA(
         row[BigDecimal]("bd"),
         row[Boolean]("bool"),
@@ -53,7 +53,7 @@ object RecordA extends Mockito {
     rs.getString("str") returns "hello"
     rs.getBytes("uuid") returns Array[Byte](1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
     rs.getInt("thing") returns 1
-    SqlResult(rs)
+    SqlRow(rs)
   }
 
 }
@@ -74,8 +74,8 @@ case class RecordB(
 )
 
 object RecordB extends Mockito {
-  implicit val reader = new Parseable[RecordB] {
-    def parse(row: SqlResult): RecordB = {
+  implicit val reader = new RowParser[RecordB] {
+    def parse(row: SqlRow): RecordB = {
       RecordB(
         row.opt[BigDecimal]("bd"),
         row.opt[Boolean]("bool"),
@@ -101,7 +101,7 @@ object RecordB extends Mockito {
     rs.getDate("date") returns null
     rs.getString("str") returns null
     rs.getBytes("uuid") returns null
-    SqlResult(rs)
+    SqlRow(rs)
   }
 
 }

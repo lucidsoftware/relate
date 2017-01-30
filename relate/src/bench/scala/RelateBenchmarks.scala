@@ -1,4 +1,4 @@
-package com.lucidchart.open.relate
+package com.lucidchart.relate
 
 import org.scalameter.api._
 import java.sql._
@@ -108,7 +108,7 @@ trait TestCase extends Serializable {
 }
 
 object RelateTests extends TestCase {
-  import com.lucidchart.open.relate.interp._
+  import com.lucidchart.relate._
 
   val name: String = "Relate"
 

@@ -1,7 +1,5 @@
-package com.lucidchart.open.relate.interp
+package com.lucidchart.relate
 
-import com.lucidchart.open.relate._
-import com.lucidchart.open.relate.Sql
 import java.sql.Connection
 import java.sql.PreparedStatement
 
