@@ -20,6 +20,13 @@ lazy val buildSettings = Seq(
 
 inScope(Global)(buildSettings)
 
+credentials in Global += Credentials(
+  "Sonatype Nexus Repository Manager",
+  "oss.sonatype.org",
+  sys.env.getOrElse("SONATYPE_USERNAME", ""),
+  sys.env.getOrElse("SONATYPE_PASSWORD", "")
+)
+
 lazy val publishingSettings = Seq(
   pgpPassphrase := Some(Array()),
   pomExtra := (
@@ -32,12 +39,6 @@ lazy val publishingSettings = Seq(
   ),
   pomIncludeRepository := { _ => false },
   publishMavenStyle := true,
-  credentials += Credentials(
-    "Sonatype Nexus Repository Manager",
-    "oss.sonatype.org",
-    sys.env.getOrElse("SONATYPE_USERNAME", ""),
-    sys.env.getOrElse("SONATYPE_PASSWORD", "")
-  ),
   developers += Developer("msiebert", "Mark Siebert", "", url("https://github.com/msiebert")),
   developers += Developer("gregghz", "Gregg Hernandez", "greggory.hz@gmail.com", url("https://github.com/gregghz")),
   developers += Developer("matthew-lucidchart", "Matthew Barlocker", "", url("https://github.com/matthew-lucidchart")),
