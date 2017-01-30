@@ -22,8 +22,6 @@ inScope(Global)(buildSettings)
 
 lazy val publishingSettings = Seq(
   pgpPassphrase := Some(Array()),
-  pgpPublicRing := file(System.getProperty("user.home")) / ".pgp" / "pubring",
-  pgpSecretRing := file(System.getProperty("user.home")) / ".pgp" / "secring",
   pomExtra := (
     <licenses>
       <license>
