@@ -6,7 +6,9 @@ lazy val Regression = config("regression") extend Benchmark
 
 lazy val buildSettings = Seq(
   organization := "com.lucidchart",
-  version := "2.0.0-SNAPSHOT",
+  organizationHomepage := Some(url("https://golucid.co")),
+  organizationName := "Lucid Software",
+  version := sys.props.getOrElse("build.version", "0-SNAPSHOT"),
   scalaVersion := "2.11.8",
   crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1"),
   scalacOptions ++= Seq(
@@ -23,39 +25,30 @@ lazy val publishingSettings = Seq(
   pgpPublicRing := file(System.getProperty("user.home")) / ".pgp" / "pubring",
   pgpSecretRing := file(System.getProperty("user.home")) / ".pgp" / "secring",
   pomExtra := (
-    <url>https://github.com/lucidsoftware/relate</url>
     <licenses>
       <license>
       <name>Apache License</name>
       <url>http://www.apache.org/licenses/</url>
       </license>
     </licenses>
-    <scm>
-      <url>git@github.com:lucidsoftware/relate.git</url>
-      <connection>scm:git:git@github.com:lucidsoftware/relate.git</connection>
-    </scm>
-    <developers>
-      <developer>
-        <id>msiebert</id>
-        <name>Mark Siebert</name>
-      </developer>
-      <developer>
-        <id>gregghz</id>
-        <name>Gregg Hernandez</name>
-      </developer>
-      <developer>
-        <id>matthew-lucidchart</id>
-        <name>Matthew Barlocker</name>
-      </developer>
-      <developer>
-        <id>pauldraper</id>
-        <name>Paul Draper</name>
-      </developer>
-    </developers>
   ),
   pomIncludeRepository := { _ => false },
   publishMavenStyle := true,
-  credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USERNAME"), System.getenv("SONATYPE_PASSWORD")),
+  credentials += Credentials(
+    "Sonatype Nexus Repository Manager",
+    "oss.sonatype.org",
+    sys.env.getOrElse("SONATYPE_USERNAME", ""),
+    sys.env.getOrElse("SONATYPE_PASSWORD", "")
+  ),
+  developers += Developer("msiebert", "Mark Siebert", "", url("https://github.com/msiebert")),
+  developers += Developer("gregghz", "Gregg Hernandez", "greggory.hz@gmail.com", url("https://github.com/gregghz")),
+  developers += Developer("matthew-lucidchart", "Matthew Barlocker", "", url("https://github.com/matthew-lucidchart")),
+  developers += Developer("pauldraper", "Paul Draper", "pauldraper@gmail.com", url("https://github.com/pauldraper")),
+  scmInfo := Some(ScmInfo(
+    url("https://github.com/lucidsoftware/relate"),
+    "scm:git:git@github.com:lucidsoftware/relate.git"
+  )),
+  homepage := Some(url("https://github.com/lucidsoftware/relate")),
   publishTo <<= version { (v: String) =>
     val nexus = "https://oss.sonatype.org/"
     if (v.trim.endsWith("SNAPSHOT"))
