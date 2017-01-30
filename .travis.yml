@@ -1,6 +1,6 @@
 after_success:
   - |
-    if [ "$TRAVIS_SECURE_ENV" == true ]; then
+    if [ "$TRAVIS_SECURE_ENV_VARS" == true ]; then
         echo "$PGP_SECRET" | base64 --decode | gpg --import
         if [ -z "$TRAVIS_TAG" ]; then
             sbt publishSigned
