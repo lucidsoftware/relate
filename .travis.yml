@@ -1,16 +1,17 @@
 after_success:
   - |
-    if [ -n "$TRAVIS_TAG" ]; then
-        mkdir ~/.pgp
-        echo $PGP_PUBLIC | base64 --decode > ~/.pgp/pubring
-        echo $PGP_SECRET | base64 --decode > ~/.pgp/secring
-        sbt ++$TRAVIS_SCALA_VERSION publishSigned
-    elif [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$TRAVIS_BRANCH" == master ]; then
-        mkdir ~/.pgp
-        echo $PGP_PUBLIC | base64 --decode > ~/.pgp/pubring
-        echo $PGP_SECRET | base64 --decode > ~/.pgp/secring
-        sbt ++$TRAVIS_SCALA_VERSION publishSigned
+    if [ -n "$TRAVIS_SECURE_ENV" == true ]; then
+        echo "$PGP_SECRET" | base64 --decode | gpg --import
+        if [ -z "$TRAVIS_TAG" ]; then
+            sbt publishSigned
+        else
+            sbt publishSigned sonatypeRelease
+        fi
     fi
+cache:
+  directories:
+    - $HOME/.ivy2
+    - $HOME/.sbt
 deploy:
   api_key: $GITHUB_AUTH
   file: "*/target/**/*.jar"
@@ -23,6 +24,8 @@ env:
   global:
     - MYSQL_USER=root
     - MYSQL_PASSWORD=
+git:
+  depth: 1
 jdk:
   - oraclejdk8
 language: scala
@@ -31,4 +34,5 @@ scala:
   - 2.11.6
   - 2.12.1
 script:
+  - '[ "$TRAVIS_PULL_REQUEST" != false ] || export SBT_OPTS=-Dbuild.version=${TRAVIS_TAG:-$TRAVIS_BRANCH-SNAPSHOT}'
   - sbt ++$TRAVIS_SCALA_VERSION test package
