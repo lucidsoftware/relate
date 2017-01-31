@@ -1,7 +1,6 @@
 package com.lucidchart.relate
 
-import java.sql.Connection
-import java.sql.PreparedStatement
+import java.sql.{Connection, PreparedStatement}
 
 class InterpolatedQuery(protected val parsedQuery: String, protected val params: Seq[Parameter]) extends Sql with MultipleParameter {
 

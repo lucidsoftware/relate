@@ -1,6 +1,5 @@
 package com.lucidchart.relate
 
-import org.scalameter.api._
 import java.sql._
 
 trait DbBench { self: Bench.HTMLReport =>
@@ -244,8 +243,6 @@ object RelateTests extends TestCase {
 }
 
 object AnormTests extends TestCase {
-  import anorm._
-  import anorm.SqlParser._
 
   val name: String = "Anorm"
 

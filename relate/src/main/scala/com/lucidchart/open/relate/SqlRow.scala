@@ -1,27 +1,11 @@
 package com.lucidchart.relate
 
-import java.io.InputStream
-import java.io.Reader
+import java.io.{InputStream, Reader}
 import java.net.URL
 import java.nio.ByteBuffer
-import java.sql.Blob
-import java.sql.Clob
-import java.sql.NClob
-import java.sql.Ref
-import java.sql.ResultSetMetaData
-import java.sql.RowId
-import java.sql.SQLException
-import java.sql.SQLXML
-import java.sql.Time
-import java.sql.Timestamp
-import java.util.Calendar
-import java.util.Date
-import java.util.UUID
+import java.sql.{Blob, Clob, NClob, Ref, RowId, SQLXML, Time, Timestamp}
+import java.util.{Calendar, Date, UUID}
 import scala.collection.JavaConversions
-import scala.collection.generic.CanBuildFrom
-import scala.collection.mutable
-import scala.collection.mutable.Builder
-import scala.collection.mutable.MutableList
 import scala.language.higherKinds
 import scala.util.Try
 

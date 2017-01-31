@@ -1,7 +1,7 @@
 package com.lucidchart.relate
 
-import java.util.Properties
 import java.sql._
+import java.util.Properties
 
 object Init {
   Class.forName("org.h2.Driver")

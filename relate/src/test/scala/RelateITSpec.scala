@@ -1,10 +1,10 @@
 package com.lucidchart.relate
 
-import java.sql.{DriverManager, Connection, SQLException}
-import org.specs2.mutable._
-import org.specs2.specification.core.Fragments
-import org.specs2.specification.Step
+import java.sql.{Connection, DriverManager, SQLException}
 import java.util.Properties
+import org.specs2.mutable._
+import org.specs2.specification.Step
+import org.specs2.specification.core.Fragments
 
 trait Db {
   val url = "jdbc:h2:mem:test"

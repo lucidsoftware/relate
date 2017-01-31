@@ -2,7 +2,7 @@ package com.lucidchart.relate
 
 import java.net.URL
 import java.nio.ByteBuffer
-import java.sql.{Blob, Clob, Date, NClob, PreparedStatement, Ref, RowId, SQLXML, Timestamp, Time, Types}
+import java.sql.{Blob, Clob, Date, NClob, PreparedStatement, Ref, RowId, SQLXML, Time, Timestamp, Types}
 import java.util.UUID
 import scala.language.implicitConversions
 

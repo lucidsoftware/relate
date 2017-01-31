@@ -1,6 +1,6 @@
 package com.lucidchart.relate
 
-import java.sql.{Connection, PreparedStatement, ResultSet, Statement}
+import java.sql._
 
 private[relate] sealed trait StatementPreparer {
 

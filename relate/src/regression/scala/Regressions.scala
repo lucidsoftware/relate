@@ -1,8 +1,5 @@
 package com.lucidchart.relate
 
-import org.scalameter.api._
-import java.sql._
-
 trait DbRegression extends Bench.OfflineRegressionReport with DbBench {
   def test(c: TestCase, name: String)(f: TestCase => Any): Unit = {
     performance of name in {

@@ -1,25 +1,8 @@
 package com.lucidchart.relate
 
-import java.io.ByteArrayInputStream
-import java.io.Reader
-import java.net.URL
-import java.sql.Blob
-import java.sql.Clob
-import java.sql.Clob
 import java.sql.Connection
-import java.sql.NClob
-import java.sql.Ref
-import java.sql.RowId
-import java.sql.SQLXML
-import java.sql.Time
-import java.sql.Timestamp
-import java.util.Calendar
-import java.util.Date
-import java.util.UUID
-import org.specs2.mutable._
 import org.specs2.mock.Mockito
-import scala.collection.JavaConversions
-import com.lucidchart.relate.SqlResultTypes._
+import org.specs2.mutable._
 
 class ImplicitParsingTest extends Specification with Mockito {
   def getMocks = {
