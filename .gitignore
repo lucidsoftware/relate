@@ -6,8 +6,4 @@ Relate.sublime-workspace
 lib_managed/*
 
 #built files
-target/*
-project/target/*
-project/project/*
-macros/target/*
-relate/target/*
+target/

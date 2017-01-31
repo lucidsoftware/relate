@@ -1,20 +1,10 @@
-after_success:
-  - |
-    if [ "$TRAVIS_SECURE_ENV_VARS" == true ]; then
-        echo "$PGP_SECRET" | base64 --decode | gpg --import
-        if [ -z "$TRAVIS_TAG" ]; then
-            sbt publishSigned
-        else
-            sbt publishSigned sonatypeRelease
-        fi
-    fi
 cache:
   directories:
     - $HOME/.ivy2
     - $HOME/.sbt
 deploy:
   api_key: $GITHUB_AUTH
-  file: "*/target/**/*.jar"
+  file: '*/target/**/*.jar'
   file_glob: true
   on:
     tags: true
@@ -29,10 +19,15 @@ git:
 jdk:
   - oraclejdk8
 language: scala
-scala:
-  - 2.10.5
-  - 2.11.6
-  - 2.12.1
 script:
   - '[ "$TRAVIS_PULL_REQUEST" != false ] || export SBT_OPTS=-Dbuild.version=${TRAVIS_TAG:-$TRAVIS_BRANCH-SNAPSHOT}'
-  - sbt ++$TRAVIS_SCALA_VERSION test package
+  - sbt 'all doc:compile test'
+  - |
+    if [ "$TRAVIS_SECURE_ENV_VARS" == true ]; then
+      echo "$PGP_SECRET" | base64 --decode | gpg --import
+      if [ -z "$TRAVIS_TAG" ]; then
+          sbt publishSigned
+      else
+          sbt sonatypeOpen publishSigned sonatypeReleaseAll
+      fi
+    fi
