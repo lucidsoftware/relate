@@ -2,6 +2,7 @@ package com.lucidchart.relate
 
 import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
+import scala.language.higherKinds
 
 trait RowParser[A] {
   def parse(row: SqlRow): A

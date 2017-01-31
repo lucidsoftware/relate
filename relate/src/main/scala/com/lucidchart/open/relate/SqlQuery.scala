@@ -3,6 +3,7 @@ package com.lucidchart.relate
 import java.sql.{Connection, PreparedStatement, ResultSet}
 import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
+import scala.language.higherKinds
 
 /**
  * Sql is a trait for basic SQL queries.

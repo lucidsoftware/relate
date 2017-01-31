@@ -22,6 +22,7 @@ import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
 import scala.collection.mutable.Builder
 import scala.collection.mutable.MutableList
+import scala.language.higherKinds
 import scala.util.Try
 
 object SqlRow {
