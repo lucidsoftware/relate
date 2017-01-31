@@ -49,5 +49,5 @@ inScope(Global)(Seq(
   tags in (Benchmark, test) += benchmarkTag -> 1,
   tags in (Benchmark, testOnly) += benchmarkTag -> 1,
   tags in (Benchmark, testQuick) += benchmarkTag -> 1,
-  version := "0-SNAPSHOT"
+  version := sys.props.getOrElse("build.version", "0-SNAPSHOT")
 ))
