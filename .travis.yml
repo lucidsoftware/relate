@@ -28,6 +28,6 @@ script:
       if [ -z "$TRAVIS_TAG" ]; then
           sbt publishSigned
       else
-          sbt sonatypeOpen publishSigned sonatypeReleaseAll
+          sbt "sonatypeOpen relate-$TRAVIS_TAG" publishSigned sonatypeReleaseAll
       fi
     fi
