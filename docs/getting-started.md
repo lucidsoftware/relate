@@ -14,7 +14,7 @@ Getting started with Relate is relatively simple. First, you'll need to add the 
 
 {% highlight scala %}
 // build.sbt
-libraryDependencies += "com.lucidchart" %% "relate" % "1.13.0"
+libraryDependencies += "com.lucidchart" %% "relate" % "2.0.1"
 
 resolvers += "Sonatype release repository" at "https://oss.sonatype.org/content/repositories/releases/"
 {% endhighlight %}
@@ -23,8 +23,7 @@ resolvers += "Sonatype release repository" at "https://oss.sonatype.org/content/
 Next, you'll need to import Relate before you can start [writing queries]({{site.baseurl}}/docs/writing-queries.html) or [retrieving data]({{site.baseurl}}/docs/retrieving-data.html). Additionally, you'll have to supply Relate with the `Connection` to use when making queries (this can be supplied implicitly).
 
 {% highlight scala %}
-import com.lucidchart.open.relate._
-import com.lucidchart.open.relate.interp._
+import com.lucidchart.relate._
 import java.sql.Connection
 
 implicit val connection: Connection = ... // get a connection

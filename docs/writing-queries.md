@@ -14,7 +14,7 @@ next:
 Queries are created using the custom [string interpolation method](http://docs.scala-lang.org/overviews/core/string-interpolation.html#advanced-usage) `sql`:
 
 {% highlight scala %}
-import com.lucidchart.open.relate.interp._
+import com.lucidchart.relate._
 
 sql"SELECT name, lightsaber_color FROM jedi"
 {% endhighlight %}

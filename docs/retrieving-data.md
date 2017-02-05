@@ -16,14 +16,14 @@ Executing a query when you don't care about the result is as simple as:
 sql"""DELETE FROM planets WHERE name="Alderaan"""".execute
 {% endhighlight %}
 
-However, when you execute a query, you usually want to interact with the result in some way in Scala. To do this in Relate, do this by defining a parser and passing it to one of many methods that will parse rows into the specified data structure (`List`, `Map`, etc.). In the following sections, we'll show how to define parsers and how to use them.
+However, when you execute a query, you usually want to interact with the result in some way in Scala. In Relate, you do this by defining a parser and passing it to one of many methods that will parse rows into the specified data structure (`List`, `Map`, etc.). In the following sections, we'll show how to define parsers and how to use them.
 
 ## Defining a Parser
 
-Parsers are nothing more than functions that take a [`SqlResult`]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.SqlResult) representing a row of data and return the desired result. `SqlResult`s have many methods that allow you to extract a column as an instance particular type. Here's an example:
+Parsers are nothing more than functions that take a [`SqlRow`]({{site.baseurl}}/api/2.0.1/index.html#com.lucidchart.relate.SqlRow) representing a row of data and return the desired result. `SqlRow`s have many methods that allow you to extract a column as an instance of a particular type. Here's an example:
 
 {% highlight scala %}
-import com.lucidchart.open.relate.SqlResult
+import com.lucidchart.relate.SqlRow
 
 object Color extends Enumeration {
   val Green = Value(0)
@@ -37,7 +37,7 @@ case class Jedi(
   species: Option[String]
 )
 
-val jediParser = { row: SqlResult =>
+def jediParser(row: SqlRow): Jedi = {
   Jedi(
     row.string("name"),
     Color(row.short("lightsaber_color")),
@@ -46,7 +46,7 @@ val jediParser = { row: SqlResult =>
 }
 {% endhighlight %}
 
-In this example, the created parser takes the value from the `name` column of the row as a string, the value of `lightSaberColor` as a short that is used for the `Enumeration`, and the value from the `species` column as a string option to instantiate a Jedi object. The `SqlResult` object has [numerous methods to extract data]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.SqlResult) from the row with the desired data type.
+In this example, the created parser takes the value from the `name` column of the row as a string, the value of `lightSaberColor` as a short that is used for the `Enumeration`, and the value from the `species` column as a string option to instantiate a Jedi object. The `SqlRow` object has [numerous methods to extract data]({{site.baseurl}}/api/2.0.1/index.html#com.lucidchart.relate.SqlRow) from the row with the desired data type.
 
 The parser can return any value, so it doesn't necessarily need to be an instance of a case class. A `Tuple`, `Seq`, etc. would work equally well.
 
@@ -63,7 +63,7 @@ This example would return a `List[Jedi]`. The parser can also be passed to the `
 Parsers that return a Tuple of size 2 can also be passed to the `asMap` method to get a Map. Here's an example of its use (using the case class from the previous example):
 
 {% highlight scala %}
-val nameToJediParser = { row: SqlResult =>
+def nameToJediParser(row: SqlRow): (String, Jedi) = {
   val jedi = Jedi(
     row.string("name"),
     Color(row.short("lightsaber_color")),
@@ -76,12 +76,73 @@ val nameToJediParser = { row: SqlResult =>
 sql"SELECT * FROM jedi".asMap(nameToJediParser)(connection)
 {% endhighlight %}
 
-## Single Column Parsers
+## Using RowParser Instances
 
-Sometimes a query retrieves only one column. Convenience methods are defined in [`RowParser`]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.RowParser$) for creating single column row parsers in these occasions. Below is an example of their use:
+It is common in Relate to use methods like `.asList` or `asSingleOption` and explicitly pass a parser to these methods. It's also possible to allow the parser to be implicitly summoned. If define an implicit `RowParser[Jedi]` instead of defining `jediParser` as above you can then specify the type of list you wish to receive:
 
 {% highlight scala %}
-import com.lucidchart.open.relate.RowParser
+object Jedi {
+  implicit val parser: RowParser[Jedi] = new RowParser[Jedi] {
+    def parse(row: SqlRow): Jedi = {
+      Jedi(
+        row.string("name"),
+        Color(row.short("lightsaber_color")),
+        row.stringOption("species")
+      )
+    }
+  }
+}
+
+// Parser a `Jedi` is simple enough:
+sql"SELECT * FROM jedi".asList[Jedi]
+{% endhighlight %}
+
+Taking this one step further, you can use the `.as` method and specific the collection you'd like to end up with:
+
+{% highlight scala %}
+sql"SELECT * FROM jedi".as[List[Jedi]]
+{% endhighlight %}
+
+Any type that has an implicit `RowParser` available can be used with `.as`. Relate provides implicits for most common collections and types.
+
+## ColReader
+
+Relate also provides a `ColReader` which is much like `RowParser` but operates at the column level. Instead of `row.string("name")` you can write `row[String]("name")`. For common types like `String` there isn't much benefit to this approach. However if you wish a single column to represent a type that you control, simply provide an implicit `ColReader` for that type. The `Jedi` class has a `lightSaberColor` member that is a `Color.Value`. In the parser above `Color(row.short("lightsaber_color"))` was used. If we provide a `ColReader` as folows:
+
+{% highlight scala %}
+object Color extends Enumeration {
+  val Green = Value(0)
+  val Blue = Value(1)
+  val Red = Value(2)
+
+  implicit val colreader: ColReader[Value] = {
+    ColReader.intReader.flatMap(id => ColReader[Value] { (_, _) =>
+      values.find(_.id == id)
+    })
+  }
+}
+{% endhighlight %}
+
+Then we can parse the `lightsaber_color` column with:
+
+{% highlight scala %}
+row[Color.Value]("lightsabe_color")
+{% endhighlight %}
+
+There is also a helper to create `ColReader` implicits for an `Enumeration`. You could replace the implementation of `colreader` above with:
+
+{% highlight scala %}
+implicit val colreader: ColReader[Value] = ColReader.enumReader(Color)
+{% endhighlight %}
+
+Relate provides an implicit `ColReader` for most common types.
+
+## Single Column Parsers
+
+Sometimes a query retrieves only one column. Convenience methods are defined in [`RowParser`]({{site.baseurl}}/api/2.0.1/index.html#com.lucidchart.relate.RowParser$) for creating single column row parsers in these occasions. Below is an example of their use:
+
+{% highlight scala %}
+import com.lucidchart.relate.RowParser
 
 sql"""
   SELECT name
@@ -90,11 +151,11 @@ sql"""
 """.asList(RowParser.string("id"))
 {% endhighlight %}
 
-The [`RowParser`]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.RowParser$) object also contains definitions for `bigInt`, `date`, `int`, and `string`.
+The [`RowParser`]({{site.baseurl}}/api/2.0.1/index.html#com.lucidchart.relate.RowParser$) object also contains definitions for `bigInt`, `date`, `int`, and `string`.
 
 ## Single Value Parsers
 
-In other cases, only one value is desired as the result of a query. For these scenarios, Relate provides a [scalar method]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.Sql@asScalarOption[A]()(implicitconnection:java.sql.Connection):Option[A]) with which the desired type of the returned single value can be defined. The return value is wrapped as an `Option`. An example of its use is as follows:
+In other cases, only one value is desired as the result of a query. For these scenarios, Relate provides a [scalar method]({{site.baseurl}}/api/2.0.1/index.html#com.lucidchart.relate.Sql@asScalarOption[A]()(implicitconnection:java.sql.Connection):Option[A]) with which the desired type of the returned single value can be defined. The return value is wrapped in an `Option`. An example of its use is as follows:
 
 {% highlight scala %}
 sql"""
@@ -104,11 +165,11 @@ sql"""
 """.asScalarOption[String]
 {% endhighlight %}
 
-There is also a non-option version of this method, [`asScalar[A]`]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.Sql@asScalar[A]()(implicitconnection:java.sql.Connection):A).
+There is also a non-option version of this method, [`asScalar[A]`]({{site.baseurl}}/api/2.0.1/index.html#com.lucidchart.relate.Sql@asScalar[A]()(implicitconnection:java.sql.Connection):A).
 
 ## Retrieving Auto Increment Values on Insert
 
-There also exist [methods to retrieve the auto-incremented ids]({{site.baseurl}}/api/1.13.0/index.html#com.lucidchart.open.relate.Sql) of inserted records. Given a table where the primary key was a bigint, here's an example:
+There also exist [methods to retrieve the auto-incremented ids]({{site.baseurl}}/api/2.0.1/index.html#com.lucidchart.relate.Sql) of inserted records. Given a table where the primary key was a bigint, here's an example:
 
 {% highlight scala %}
 val id = sql"""

@@ -26,4 +26,12 @@ A: The [Relate repo](https://github.com/lucidsoftware/relate) contains the bench
 
 ### Q: Why can't I interpolate &lt;insert type here&gt;?
 
-A: Relate only supports interpolation for the types supported by JDBC.
+A: Relate only supports interpolation for common types supported by the JVM. However, you can create an implicit function (or implicit class) from the type you'd like to interpolate to a `Parameter`. For example, to interpolate an `org.joda.time.DateTime` you could create an implicit def like this:
+
+{% highligh scala %}
+implicit def fromDateTime(dt: DateTimte): SingleParameter = {
+  new TimestampParameter(dt.getMillis)
+}
+{% endhighlight %}
+
+See [Parameters.scala](https://github.com/lucidsoftware/relate/blob/master/relate/src/main/scala/com/lucidchart/relate/Parameters.scala) for details and examples.
