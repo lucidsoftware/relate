@@ -1,0 +1,1296 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>InterpolatedQuery - com.lucidchart.relate.InterpolatedQuery</title>
+          <meta name="description" content="InterpolatedQuery - com.lucidchart.relate.InterpolatedQuery" />
+          <meta name="keywords" content="InterpolatedQuery com.lucidchart.relate.InterpolatedQuery" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../index.html';
+            var hash = 'com.lucidchart.relate.InterpolatedQuery';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <a href="InterpolatedQuery$.html" title="See companion object"><img alt="Class/Object" src="../../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a href="../../package.html" class="extype" name="com">com</a>.<a href="../package.html" class="extype" name="com.lucidchart">lucidchart</a>.<a href="package.html" class="extype" name="com.lucidchart.relate">relate</a></p>
+        <h1><a href="InterpolatedQuery$.html" title="See companion object">InterpolatedQuery</a></h1><h3><span class="morelinks"><div>
+            Related Docs:
+            <a href="InterpolatedQuery$.html" title="See companion object">object InterpolatedQuery</a>
+            | <a href="package.html" class="extype" name="com.lucidchart.relate">package relate</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">InterpolatedQuery</span><span class="result"> extends <a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a> with <a href="MultipleParameter.html" class="extype" name="com.lucidchart.relate.MultipleParameter">MultipleParameter</a></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><a href="MultipleParameter.html" class="extype" name="com.lucidchart.relate.MultipleParameter">MultipleParameter</a>, <a href="Parameter.html" class="extype" name="com.lucidchart.relate.Parameter">Parameter</a>, <a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="com.lucidchart.relate.InterpolatedQuery"><span>InterpolatedQuery</span></li><li class="in" name="com.lucidchart.relate.MultipleParameter"><span>MultipleParameter</span></li><li class="in" name="com.lucidchart.relate.Parameter"><span>Parameter</span></li><li class="in" name="com.lucidchart.relate.Sql"><span>Sql</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="com.lucidchart.relate.InterpolatedQuery#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(parsedQuery:String,params:Seq[com.lucidchart.relate.Parameter]):com.lucidchart.relate.InterpolatedQuery"></a>
+      <a id="&lt;init&gt;:InterpolatedQuery"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">InterpolatedQuery</span><span class="params">(<span name="parsedQuery">parsedQuery: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="params">params: <span class="extype" name="scala.Seq">Seq</span>[<a href="Parameter.html" class="extype" name="com.lucidchart.relate.Parameter">Parameter</a>]</span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@&lt;init&gt;(parsedQuery:String,params:Seq[com.lucidchart.relate.Parameter]):com.lucidchart.relate.InterpolatedQuery" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="com.lucidchart.relate.Sql.BaseStatement" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="BaseStatementextendsAnyRef"></a>
+      <a id="BaseStatement:BaseStatement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Sql$BaseStatement.html"><span class="name">BaseStatement</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.Sql@BaseStatementextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="package.html" class="extype" name="com.lucidchart.relate">com.lucidchart.relate</a>] </dd><dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@##():Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.lucidchart.relate.InterpolatedQuery#+" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="+(query:com.lucidchart.relate.InterpolatedQuery):com.lucidchart.relate.InterpolatedQuery"></a>
+      <a id="+(InterpolatedQuery):InterpolatedQuery"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $plus" class="name">+</span><span class="params">(<span name="query">query: <a href="" class="extype" name="com.lucidchart.relate.InterpolatedQuery">InterpolatedQuery</a></span>)</span><span class="result">: <a href="" class="extype" name="com.lucidchart.relate.InterpolatedQuery">InterpolatedQuery</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@+(query:com.lucidchart.relate.InterpolatedQuery):com.lucidchart.relate.InterpolatedQuery" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.lucidchart.relate.InterpolatedQuery#appendPlaceholders" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="appendPlaceholders(stringBuilder:StringBuilder):Unit"></a>
+      <a id="appendPlaceholders(StringBuilder):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">appendPlaceholders</span><span class="params">(<span name="stringBuilder">stringBuilder: <span class="extype" name="scala.StringBuilder">StringBuilder</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@appendPlaceholders(stringBuilder:StringBuilder):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.lucidchart.relate.InterpolatedQuery">InterpolatedQuery</a> → <a href="Parameter.html" class="extype" name="com.lucidchart.relate.Parameter">Parameter</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.InterpolatedQuery#applyParams" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="applyParams(stmt:java.sql.PreparedStatement):Unit"></a>
+      <a id="applyParams(PreparedStatement):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">applyParams</span><span class="params">(<span name="stmt">stmt: <span class="extype" name="java.sql.PreparedStatement">PreparedStatement</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@applyParams(stmt:java.sql.PreparedStatement):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="" class="extype" name="com.lucidchart.relate.InterpolatedQuery">InterpolatedQuery</a> → <a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#as" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="as[A]()(implicitevidence$1:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):A"></a>
+      <a id="as[A]()(RowParser[A],Connection):A"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">as</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[<span class="extype" name="com.lucidchart.relate.Sql.as.A">A</span>]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.as.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@as[A]()(implicitevidence$1:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):A" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asCollection" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asCollection[U,T[_]]()(implicitevidence$8:com.lucidchart.relate.RowParser[U],implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]],implicitconnection:java.sql.Connection):T[U]"></a>
+      <a id="asCollection[U,T[_]]()(RowParser[U],CanBuildFrom[T[U],U,T[U]],Connection):T[U]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asCollection</span><span class="tparams">[<span name="U">U</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[<span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span>]</span>, <span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.relate.Sql.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span>], <span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span>]]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asCollection[U,T[_]]()(implicitevidence$8:com.lucidchart.relate.RowParser[U],implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]],implicitconnection:java.sql.Connection):T[U]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asCollection" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asCollection[U,T[_]](parser:com.lucidchart.relate.SqlRow=&gt;U)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]],implicitconnection:java.sql.Connection):T[U]"></a>
+      <a id="asCollection[U,T[_]]((SqlRow)⇒U)(CanBuildFrom[T[U],U,T[U]],Connection):T[U]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asCollection</span><span class="tparams">[<span name="U">U</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.relate.Sql.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span>], <span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span>]]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.asCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asCollection.U">U</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asCollection[U,T[_]](parser:com.lucidchart.relate.SqlRow=&gt;U)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]],implicitconnection:java.sql.Connection):T[U]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as an arbitrary collection of records</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as an arbitrary collection of records</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to use when parsing the result set</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as an arbitrary collection of records</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asIterable" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asIterable[A]()(implicitevidence$6:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):Iterable[A]"></a>
+      <a id="asIterable[A]()(RowParser[A],Connection):Iterable[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asIterable</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[<span class="extype" name="com.lucidchart.relate.Sql.asIterable.A">A</span>]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Iterable">Iterable</span>[<span class="extype" name="com.lucidchart.relate.Sql.asIterable.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asIterable[A]()(implicitevidence$6:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):Iterable[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asIterable" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asIterable[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):Iterable[A]"></a>
+      <a id="asIterable[A]((SqlRow)⇒A)(Connection):Iterable[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asIterable</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.asIterable.A">A</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Iterable">Iterable</span>[<span class="extype" name="com.lucidchart.relate.Sql.asIterable.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asIterable[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):Iterable[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as an iterable of records</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as an iterable of records</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to use when parsing the result set</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as an iterable of records</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asIterator" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asIterator[A](parser:com.lucidchart.relate.SqlRow=&gt;A,fetchSize:Int)(implicitconnection:java.sql.Connection):Iterator[A]"></a>
+      <a id="asIterator[A]((SqlRow)⇒A,Int)(Connection):Iterator[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asIterator</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.asIterator.A">A</span></span>, <span name="fetchSize">fetchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">100</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Iterator">Iterator</span>[<span class="extype" name="com.lucidchart.relate.Sql.asIterator.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asIterator[A](parser:com.lucidchart.relate.SqlRow=&gt;A,fetchSize:Int)(implicitconnection:java.sql.Connection):Iterator[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The asIterator method returns an Iterator that will stream data out of the database.</p><div class="fullcomment"><div class="comment cmt"><p>The asIterator method returns an Iterator that will stream data out of the database.
+This avoids an OutOfMemoryError when dealing with large datasets. Bear in mind that many
+JDBC implementations will not allow additional queries to the connection before all records
+in the Iterator have been retrieved.</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to parse rows with</p></dd><dt class="param">fetchSize</dt><dd class="cmt"><p>the number of rows to fetch at a time, defaults to 100. If the JDBC Driver
+is MySQL, the fetchSize will always default to Int.MinValue, as MySQL's JDBC implementation
+ignores all other fetchSize values and only streams if fetchSize is Int.MinValue</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asList" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asList[A]()(implicitevidence$7:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):List[A]"></a>
+      <a id="asList[A]()(RowParser[A],Connection):List[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asList</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[<span class="extype" name="com.lucidchart.relate.Sql.asList.A">A</span>]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.lucidchart.relate.Sql.asList.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asList[A]()(implicitevidence$7:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):List[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asList" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asList[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):List[A]"></a>
+      <a id="asList[A]((SqlRow)⇒A)(Connection):List[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asList</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.asList.A">A</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.List">List</span>[<span class="extype" name="com.lucidchart.relate.Sql.asList.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asList[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):List[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as a List of records</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as a List of records</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to use when parsing the result set</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as a List of records</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asMap[U,V]()(implicitconnection:java.sql.Connection,implicitp:com.lucidchart.relate.RowParser[(U,V)]):Map[U,V]"></a>
+      <a id="asMap[U,V]()(Connection,RowParser[(U,V)]):Map[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asMap</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>, <span name="p">p: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[(<span class="extype" name="com.lucidchart.relate.Sql.asMap.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asMap.V">V</span>)]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="com.lucidchart.relate.Sql.asMap.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asMap.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asMap[U,V]()(implicitconnection:java.sql.Connection,implicitp:com.lucidchart.relate.RowParser[(U,V)]):Map[U,V]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asMap[U,V](parser:com.lucidchart.relate.SqlRow=&gt;(U,V))(implicitconnection:java.sql.Connection):Map[U,V]"></a>
+      <a id="asMap[U,V]((SqlRow)⇒(U,V))(Connection):Map[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asMap</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ (<span class="extype" name="com.lucidchart.relate.Sql.asMap.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asMap.V">V</span>)</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="com.lucidchart.relate.Sql.asMap.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asMap.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asMap[U,V](parser:com.lucidchart.relate.SqlRow=&gt;(U,V))(implicitconnection:java.sql.Connection):Map[U,V]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as a Map of records</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as a Map of records</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to use when parsing the result set. The RowParser should return a Tuple
+of size 2 containing the key and value</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as a Map of records</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asMultiMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asMultiMap[U,V]()(implicitconnection:java.sql.Connection,implicitp:com.lucidchart.relate.RowParser[(U,V)]):Map[U,Set[V]]"></a>
+      <a id="asMultiMap[U,V]()(Connection,RowParser[(U,V)]):Map[U,Set[V]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asMultiMap</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>, <span name="p">p: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[(<span class="extype" name="com.lucidchart.relate.Sql.asMultiMap.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asMultiMap.V">V</span>)]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="com.lucidchart.relate.Sql.asMultiMap.U">U</span>, <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="com.lucidchart.relate.Sql.asMultiMap.V">V</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asMultiMap[U,V]()(implicitconnection:java.sql.Connection,implicitp:com.lucidchart.relate.RowParser[(U,V)]):Map[U,Set[V]]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asMultiMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asMultiMap[U,V](parser:com.lucidchart.relate.SqlRow=&gt;(U,V))(implicitconnection:java.sql.Connection):Map[U,Set[V]]"></a>
+      <a id="asMultiMap[U,V]((SqlRow)⇒(U,V))(Connection):Map[U,Set[V]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asMultiMap</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ (<span class="extype" name="com.lucidchart.relate.Sql.asMultiMap.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asMultiMap.V">V</span>)</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="com.lucidchart.relate.Sql.asMultiMap.U">U</span>, <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="com.lucidchart.relate.Sql.asMultiMap.V">V</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asMultiMap[U,V](parser:com.lucidchart.relate.SqlRow=&gt;(U,V))(implicitconnection:java.sql.Connection):Map[U,Set[V]]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asPairCollection" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asPairCollection[U,V,T[_,_]]()(implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]],implicitconnection:java.sql.Connection,implicitp:com.lucidchart.relate.RowParser[(U,V)]):T[U,V]"></a>
+      <a id="asPairCollection[U,V,T[_,_]]()(CanBuildFrom[T[U,V],(U,V),T[U,V]],Connection,RowParser[(U,V)]):T[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asPairCollection</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>, <span name="_">_</span>]</span></span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>], (<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>), <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>]]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>, <span name="p">p: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[(<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>)]</span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asPairCollection[U,V,T[_,_]]()(implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]],implicitconnection:java.sql.Connection,implicitp:com.lucidchart.relate.RowParser[(U,V)]):T[U,V]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asPairCollection" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asPairCollection[U,V,T[_,_]](parser:com.lucidchart.relate.SqlRow=&gt;(U,V))(implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]],implicitconnection:java.sql.Connection):T[U,V]"></a>
+      <a id="asPairCollection[U,V,T[_,_]]((SqlRow)⇒(U,V))(CanBuildFrom[T[U,V],(U,V),T[U,V]],Connection):T[U,V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asPairCollection</span><span class="tparams">[<span name="U">U</span>, <span name="V">V</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>, <span name="_">_</span>]</span></span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ (<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>)</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>], (<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>), <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>]]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.asPairCollection.V">V</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asPairCollection[U,V,T[_,_]](parser:com.lucidchart.relate.SqlRow=&gt;(U,V))(implicitcbf:scala.collection.generic.CanBuildFrom[T[U,V],(U,V),T[U,V]],implicitconnection:java.sql.Connection):T[U,V]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as an arbitrary collection of key value pairs</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as an arbitrary collection of key value pairs</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to use when parsing the result set</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as an arbitrary collection of key value pairs</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asScalar" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asScalar[A]()(implicitconnection:java.sql.Connection):A"></a>
+      <a id="asScalar[A]()(Connection):A"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asScalar</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.asScalar.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asScalar[A]()(implicitconnection:java.sql.Connection):A" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as a single value.</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as a single value. Assumes that there is only one
+row and one value in the result set.</p></div><dl class="paramcmts block"><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as a single value</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asScalarOption" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asScalarOption[A]()(implicitconnection:java.sql.Connection):Option[A]"></a>
+      <a id="asScalarOption[A]()(Connection):Option[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asScalarOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.lucidchart.relate.Sql.asScalarOption.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asScalarOption[A]()(implicitconnection:java.sql.Connection):Option[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as an optional single value.</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as an optional single value. Assumes that there is
+only one row and one value in the result set.</p></div><dl class="paramcmts block"><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as an optional single value</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asSeq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asSeq[A]()(implicitevidence$5:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):Seq[A]"></a>
+      <a id="asSeq[A]()(RowParser[A],Connection):Seq[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSeq</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[<span class="extype" name="com.lucidchart.relate.Sql.asSeq.A">A</span>]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="com.lucidchart.relate.Sql.asSeq.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asSeq[A]()(implicitevidence$5:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):Seq[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asSeq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asSeq[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):Seq[A]"></a>
+      <a id="asSeq[A]((SqlRow)⇒A)(Connection):Seq[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSeq</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.asSeq.A">A</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="com.lucidchart.relate.Sql.asSeq.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asSeq[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):Seq[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as a sequence of records</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as a sequence of records</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to use when parsing the result set</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as a sequence of records</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asSet" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asSet[A]()(implicitevidence$4:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):Set[A]"></a>
+      <a id="asSet[A]()(RowParser[A],Connection):Set[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSet</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[<span class="extype" name="com.lucidchart.relate.Sql.asSet.A">A</span>]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="com.lucidchart.relate.Sql.asSet.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asSet[A]()(implicitevidence$4:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):Set[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asSet" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asSet[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):Set[A]"></a>
+      <a id="asSet[A]((SqlRow)⇒A)(Connection):Set[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSet</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.asSet.A">A</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="com.lucidchart.relate.Sql.asSet.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asSet[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):Set[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as a Set of records</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as a Set of records</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to use when parsing the result set</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as a Set of records</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asSingle" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asSingle[A]()(implicitevidence$2:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):A"></a>
+      <a id="asSingle[A]()(RowParser[A],Connection):A"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSingle</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[<span class="extype" name="com.lucidchart.relate.Sql.asSingle.A">A</span>]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.asSingle.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asSingle[A]()(implicitevidence$2:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):A" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asSingle" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asSingle[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):A"></a>
+      <a id="asSingle[A]((SqlRow)⇒A)(Connection):A"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSingle</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.asSingle.A">A</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.asSingle.A">A</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asSingle[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):A" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as a single record</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as a single record</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to use when parsing the result set</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as a single record</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asSingleOption" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asSingleOption[A]()(implicitevidence$3:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):Option[A]"></a>
+      <a id="asSingleOption[A]()(RowParser[A],Connection):Option[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSingleOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="RowParser.html" class="extype" name="com.lucidchart.relate.RowParser">RowParser</a>[<span class="extype" name="com.lucidchart.relate.Sql.asSingleOption.A">A</span>]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.lucidchart.relate.Sql.asSingleOption.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asSingleOption[A]()(implicitevidence$3:com.lucidchart.relate.RowParser[A],implicitconnection:java.sql.Connection):Option[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#asSingleOption" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asSingleOption[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):Option[A]"></a>
+      <a id="asSingleOption[A]((SqlRow)⇒A)(Connection):Option[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSingleOption</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.asSingleOption.A">A</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.lucidchart.relate.Sql.asSingleOption.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@asSingleOption[A](parser:com.lucidchart.relate.SqlRow=&gt;A)(implicitconnection:java.sql.Connection):Option[A]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute this query and get back the result as an optional single record</p><div class="fullcomment"><div class="comment cmt"><p>Execute this query and get back the result as an optional single record</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser to use when parsing the result set</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the results as an optional single record</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@clone():Object" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#execute" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="execute()(implicitconnection:java.sql.Connection):Boolean"></a>
+      <a id="execute()(Connection):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">execute</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@execute()(implicitconnection:java.sql.Connection):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute a statement</p><div class="fullcomment"><div class="comment cmt"><p>Execute a statement</p></div><dl class="paramcmts block"><dt class="param">connection</dt><dd class="cmt"><p>the db connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>whether the query succeeded in its execution</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#executeInsertCollection" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="executeInsertCollection[U,T[_]](parser:com.lucidchart.relate.SqlRow=&gt;U)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]],implicitconnection:java.sql.Connection):T[U]"></a>
+      <a id="executeInsertCollection[U,T[_]]((SqlRow)⇒U)(CanBuildFrom[T[U],U,T[U]],Connection):T[U]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">executeInsertCollection</span><span class="tparams">[<span name="U">U</span>, <span name="T">T<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.executeInsertCollection.U">U</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="cbf">cbf: <span class="extype" name="scala.collection.generic.CanBuildFrom">CanBuildFrom</span>[<span class="extype" name="com.lucidchart.relate.Sql.executeInsertCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.executeInsertCollection.U">U</span>], <span class="extype" name="com.lucidchart.relate.Sql.executeInsertCollection.U">U</span>, <span class="extype" name="com.lucidchart.relate.Sql.executeInsertCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.executeInsertCollection.U">U</span>]]</span>, <span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.executeInsertCollection.T">T</span>[<span class="extype" name="com.lucidchart.relate.Sql.executeInsertCollection.U">U</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@executeInsertCollection[U,T[_]](parser:com.lucidchart.relate.SqlRow=&gt;U)(implicitcbf:scala.collection.generic.CanBuildFrom[T[U],U,T[U]],implicitconnection:java.sql.Connection):T[U]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute the query and get the auto-incremented keys using a RowParser.</p><div class="fullcomment"><div class="comment cmt"><p>Execute the query and get the auto-incremented keys using a RowParser. Provided for the case
+that a primary key is not an Int or BigInt</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser that can parse the returned keys</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the auto-incremented keys</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#executeInsertInt" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="executeInsertInt()(implicitconnection:java.sql.Connection):Int"></a>
+      <a id="executeInsertInt()(Connection):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">executeInsertInt</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@executeInsertInt()(implicitconnection:java.sql.Connection):Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute the query and get the auto-incremented key as an Int</p><div class="fullcomment"><div class="comment cmt"><p>Execute the query and get the auto-incremented key as an Int</p></div><dl class="paramcmts block"><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the auto-incremented key as an Int</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#executeInsertInts" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="executeInsertInts()(implicitconnection:java.sql.Connection):List[Int]"></a>
+      <a id="executeInsertInts()(Connection):List[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">executeInsertInts</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@executeInsertInts()(implicitconnection:java.sql.Connection):List[Int]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute the query and get the auto-incremented keys as a List of Ints</p><div class="fullcomment"><div class="comment cmt"><p>Execute the query and get the auto-incremented keys as a List of Ints</p></div><dl class="paramcmts block"><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the auto-incremented keys as a List of Ints</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#executeInsertLong" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="executeInsertLong()(implicitconnection:java.sql.Connection):Long"></a>
+      <a id="executeInsertLong()(Connection):Long"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">executeInsertLong</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@executeInsertLong()(implicitconnection:java.sql.Connection):Long" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute the query and get the auto-incremented key as a Long</p><div class="fullcomment"><div class="comment cmt"><p>Execute the query and get the auto-incremented key as a Long</p></div><dl class="paramcmts block"><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the auto-incremented key as a Long</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#executeInsertLongs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="executeInsertLongs()(implicitconnection:java.sql.Connection):List[Long]"></a>
+      <a id="executeInsertLongs()(Connection):List[Long]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">executeInsertLongs</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Long">Long</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@executeInsertLongs()(implicitconnection:java.sql.Connection):List[Long]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute the query and get the auto-incremented keys as a a List of Longs</p><div class="fullcomment"><div class="comment cmt"><p>Execute the query and get the auto-incremented keys as a a List of Longs</p></div><dl class="paramcmts block"><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the auto-incremented keys as a a List of Longs</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#executeInsertSingle" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="executeInsertSingle[U](parser:com.lucidchart.relate.SqlRow=&gt;U)(implicitconnection:java.sql.Connection):U"></a>
+      <a id="executeInsertSingle[U]((SqlRow)⇒U)(Connection):U"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">executeInsertSingle</span><span class="tparams">[<span name="U">U</span>]</span><span class="params">(<span name="parser">parser: (<a href="SqlRow.html" class="extype" name="com.lucidchart.relate.SqlRow">SqlRow</a>) ⇒ <span class="extype" name="com.lucidchart.relate.Sql.executeInsertSingle.U">U</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="com.lucidchart.relate.Sql.executeInsertSingle.U">U</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@executeInsertSingle[U](parser:com.lucidchart.relate.SqlRow=&gt;U)(implicitconnection:java.sql.Connection):U" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute the query and get the auto-incremented key using a RowParser.</p><div class="fullcomment"><div class="comment cmt"><p>Execute the query and get the auto-incremented key using a RowParser. Provided for the case
+that a primary key is not an Int or BigInt</p></div><dl class="paramcmts block"><dt class="param">parser</dt><dd class="cmt"><p>the RowParser that can parse the returned key</p></dd><dt class="param">connection</dt><dd class="cmt"><p>the connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the auto-incremented key</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#executeUpdate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="executeUpdate()(implicitconnection:java.sql.Connection):Int"></a>
+      <a id="executeUpdate()(Connection):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">executeUpdate</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@executeUpdate()(implicitconnection:java.sql.Connection):Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Execute an update</p><div class="fullcomment"><div class="comment cmt"><p>Execute an update</p></div><dl class="paramcmts block"><dt class="param">connection</dt><dd class="cmt"><p>the db connection to use when executing the query</p></dd><dt>returns</dt><dd class="cmt"><p>the number of rows update by the query</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#insertionStatement" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="insertionStatement(implicitconnection:java.sql.Connection):Sql.this.BaseStatementwithcom.lucidchart.relate.InsertionStatementPreparer"></a>
+      <a id="insertionStatement(Connection):BaseStatementwithInsertionStatementPreparer"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">insertionStatement</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <a href="#BaseStatementextendsAnyRef" class="extmbr" name="com.lucidchart.relate.Sql.BaseStatement">BaseStatement</a> with <span class="extype" name="com.lucidchart.relate.InsertionStatementPreparer">InsertionStatementPreparer</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@insertionStatement(implicitconnection:java.sql.Connection):Sql.this.BaseStatementwithcom.lucidchart.relate.InsertionStatementPreparer" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#normalStatement" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="normalStatement(implicitconnection:java.sql.Connection):Sql.this.BaseStatementwithcom.lucidchart.relate.NormalStatementPreparer"></a>
+      <a id="normalStatement(Connection):BaseStatementwithNormalStatementPreparer"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">normalStatement</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <a href="#BaseStatementextendsAnyRef" class="extmbr" name="com.lucidchart.relate.Sql.BaseStatement">BaseStatement</a> with <span class="extype" name="com.lucidchart.relate.NormalStatementPreparer">NormalStatementPreparer</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@normalStatement(implicitconnection:java.sql.Connection):Sql.this.BaseStatementwithcom.lucidchart.relate.NormalStatementPreparer" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.lucidchart.relate.MultipleParameter#parameterize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="parameterize(statement:java.sql.PreparedStatement,i:Int):Int"></a>
+      <a id="parameterize(PreparedStatement,Int):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">parameterize</span><span class="params">(<span name="statement">statement: <span class="extype" name="java.sql.PreparedStatement">PreparedStatement</span></span>, <span name="i">i: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@parameterize(statement:java.sql.PreparedStatement,i:Int):Int" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="MultipleParameter.html" class="extype" name="com.lucidchart.relate.MultipleParameter">MultipleParameter</a> → <a href="Parameter.html" class="extype" name="com.lucidchart.relate.Parameter">Parameter</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.InterpolatedQuery#params" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="params:Seq[com.lucidchart.relate.Parameter]"></a>
+      <a id="params:Seq[Parameter]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">params</span><span class="result">: <span class="extype" name="scala.Seq">Seq</span>[<a href="Parameter.html" class="extype" name="com.lucidchart.relate.Parameter">Parameter</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@params:Seq[com.lucidchart.relate.Parameter]" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="" class="extype" name="com.lucidchart.relate.InterpolatedQuery">InterpolatedQuery</a> → <a href="MultipleParameter.html" class="extype" name="com.lucidchart.relate.MultipleParameter">MultipleParameter</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.InterpolatedQuery#parsedQuery" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="parsedQuery:String"></a>
+      <a id="parsedQuery:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">parsedQuery</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@parsedQuery:String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="" class="extype" name="com.lucidchart.relate.InterpolatedQuery">InterpolatedQuery</a> → <a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#results" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="results()(implicitconnection:java.sql.Connection):java.sql.ResultSet"></a>
+      <a id="results()(Connection):ResultSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">results</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="java.sql.ResultSet">ResultSet</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@results()(implicitconnection:java.sql.Connection):java.sql.ResultSet" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Provides direct access to the underlying java.sql.ResultSet.</p><div class="fullcomment"><div class="comment cmt"><p>Provides direct access to the underlying java.sql.ResultSet.
+Note that this ResultSet must be closed manually or by wrapping it in SqlResult.</p><pre><span class="kw">val</span> results = SQL(query).results()
+. . .
+SqlResult(results).asList[A](parser)
+<span class="cmt">// or</span>
+results.close()</pre></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>java.sql.ResultSet</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#statementString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="statementString(implicitconnection:java.sql.Connection):String"></a>
+      <a id="statementString(Connection):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">statementString</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@statementString(implicitconnection:java.sql.Connection):String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Calls <span class="extype" name="PreparedStatement#toString">PreparedStatement#toString</span>, which for many JDBC implementations is the SQL query after parameter substitution.</p><div class="fullcomment"><div class="comment cmt"><p>Calls <span class="extype" name="PreparedStatement#toString">PreparedStatement#toString</span>, which for many JDBC implementations is the SQL query after parameter substitution.
+This is intended primarily for ad-hoc debugging.</p><p>For more routine logging, consider other solutions, such as <a href="https://code.google.com/p/log4jdbc/" target="_blank">log4jdbc</a>.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#streamedStatement" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="streamedStatement(fetchSize:Int)(implicitconnection:java.sql.Connection):Sql.this.BaseStatementwithcom.lucidchart.relate.StreamedStatementPreparer"></a>
+      <a id="streamedStatement(Int)(Connection):BaseStatementwithStreamedStatementPreparer"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">streamedStatement</span><span class="params">(<span name="fetchSize">fetchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="connection">connection: <span class="extype" name="java.sql.Connection">Connection</span></span>)</span><span class="result">: <a href="#BaseStatementextendsAnyRef" class="extmbr" name="com.lucidchart.relate.Sql.BaseStatement">BaseStatement</a> with <span class="extype" name="com.lucidchart.relate.StreamedStatementPreparer">StreamedStatementPreparer</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@streamedStatement(fetchSize:Int)(implicitconnection:java.sql.Connection):Sql.this.BaseStatementwithcom.lucidchart.relate.StreamedStatementPreparer" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.lucidchart.relate.Sql#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@toString():String" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Returns the SQL query, before parameter substitution.</p><div class="fullcomment"><div class="comment cmt"><p>Returns the SQL query, before parameter substitution.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a> → AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.lucidchart.relate.InterpolatedQuery#withTimeout" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="withTimeout(seconds:Int):com.lucidchart.relate.InterpolatedQuery"></a>
+      <a id="withTimeout(Int):InterpolatedQuery"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">withTimeout</span><span class="params">(<span name="seconds">seconds: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="" class="extype" name="com.lucidchart.relate.InterpolatedQuery">InterpolatedQuery</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../index.html#com.lucidchart.relate.InterpolatedQuery@withTimeout(seconds:Int):com.lucidchart.relate.InterpolatedQuery" title="Permalink" target="_top">
+        <img src="../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="com.lucidchart.relate.MultipleParameter">
+              <h3>Inherited from <a href="MultipleParameter.html" class="extype" name="com.lucidchart.relate.MultipleParameter">MultipleParameter</a></h3>
+            </div><div class="parent" name="com.lucidchart.relate.Parameter">
+              <h3>Inherited from <a href="Parameter.html" class="extype" name="com.lucidchart.relate.Parameter">Parameter</a></h3>
+            </div><div class="parent" name="com.lucidchart.relate.Sql">
+              <h3>Inherited from <a href="Sql.html" class="extype" name="com.lucidchart.relate.Sql">Sql</a></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
