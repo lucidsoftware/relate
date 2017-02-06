@@ -28,7 +28,7 @@ A: The [Relate repo](https://github.com/lucidsoftware/relate) contains the bench
 
 A: Relate only supports interpolation for common types supported by the JVM. However, you can create an implicit function (or implicit class) from the type you'd like to interpolate to a `Parameter`. For example, to interpolate an `org.joda.time.DateTime` you could create an implicit def like this:
 
-{% highligh scala %}
+{% highlight scala %}
 implicit def fromDateTime(dt: DateTimte): SingleParameter = {
   new TimestampParameter(dt.getMillis)
 }
