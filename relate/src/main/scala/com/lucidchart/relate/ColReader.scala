@@ -60,12 +60,8 @@ object ColReader {
   implicit val longReader: ColReader[Long] = optReader((col, rs) => rs.getLong(col))
   implicit val shortReader: ColReader[Short] = optReader((col, rs) => rs.getShort(col))
   implicit val stringReader: ColReader[String] = optReader((col, rs) => rs.getString(col))
-  implicit val uuidReader: ColReader[UUID] = byteArrayReader.map { bytes =>
-    require(bytes.length == 16)
-    val bb = ByteBuffer.wrap(bytes)
-    val high = bb.getLong
-    val low = bb.getLong
-    new UUID(high, low)
+  implicit val uuidReader: ColReader[UUID] = ColReader[UUID] { (col, row) =>
+    row.uuidOption(col)
   }
 
   def enumReader[A <: Enumeration](e: A): ColReader[e.Value] = {

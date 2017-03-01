@@ -874,13 +874,22 @@ class SqlResultSpec extends Specification with Mockito {
   }
 
   "uuid" should {
-    "return the correct value" in {
+    "return the correct value when stored as a byte array" in {
       val (rs, row, _) = getMocks
 
       val res = Array[Byte]('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
       rs.getObject("uuid") returns res
       row.uuid("uuid") equals new UUID(3472611983179986487L, 4051376414998685030L)
       row.uuidOption("uuid") must beSome(new UUID(3472611983179986487L, 4051376414998685030L))
+    }
+
+    "return the correct value when stored as UUID" in {
+      val (rs, row, _) = getMocks
+
+      val res = new UUID(3472611983179986487L, 4051376414998685030L)
+      rs.getObject("uuid") returns res
+      row.uuid("uuid") equals res
+      row.uuidOption("uuid") must beSome(res)
     }
   }
 

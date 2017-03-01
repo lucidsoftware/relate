@@ -51,7 +51,7 @@ object RecordA extends Mockito {
     rs.getLong("long") returns 100L
     rs.getShort("short") returns (5: Short)
     rs.getString("str") returns "hello"
-    rs.getBytes("uuid") returns Array[Byte](1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+    rs.getObject("uuid") returns Array[Byte](1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
     rs.getInt("thing") returns 1
     SqlRow(rs)
   }
@@ -183,6 +183,24 @@ class ColReaderTest extends Specification with Mockito {
         Some(UUID.fromString("01020304-0506-0708-090a-0b0c0d0e0f10")),
         Some(Things.One)
       )
+    }
+  }
+
+  "uuidReader" should {
+    "parse a byte array" in {
+      val rs = mock[java.sql.ResultSet]
+      val row = SqlRow(rs)
+      rs.getObject("col") returns Array[Byte]('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
+
+      ColReader.uuidReader.read("col", row) mustEqual Some(new UUID(3472611983179986487L, 4051376414998685030L))
+    }
+
+    "parse a uuid" in {
+      val rs = mock[java.sql.ResultSet]
+      val row = SqlRow(rs)
+      rs.getObject("col") returns new UUID(3472611983179986487L, 4051376414998685030L)
+
+      ColReader.uuidReader.read("col", row) mustEqual Some(new UUID(3472611983179986487L, 4051376414998685030L))
     }
   }
 }

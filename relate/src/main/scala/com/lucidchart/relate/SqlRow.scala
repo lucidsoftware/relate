@@ -173,13 +173,23 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
 
   def uuid(column: String): UUID = uuidOption(column).get
   def uuidOption(column: String): Option[UUID] = {
-    byteArrayOption(column).map { bytes =>
-      require(bytes.length == 16)
+    extractOption(column) {
+      case u: UUID => u
+      case b => {
+        val bytes = b match {
+          case x: Array[Byte] => x
+          case x: Blob => x.getBytes(0, x.length.toInt)
+          case x: Clob => x.getSubString(1, x.length.asInstanceOf[Int]).getBytes
+          case x: String => x.toCharArray.map(_.toByte)
+        }
 
-      val bb = ByteBuffer.wrap(bytes)
-      val high = bb.getLong
-      val low = bb.getLong
-      new UUID(high, low)
+        require(bytes.length == 16)
+
+        val bb = ByteBuffer.wrap(bytes)
+        val high = bb.getLong
+        val low = bb.getLong
+        new UUID(high, low)
+      }
     }
   }
 
