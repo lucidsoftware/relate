@@ -35,7 +35,7 @@ object ColReader {
     def read(col: String, rs: SqlRow): Option[A] = f(col, rs)
   }
 
-  def option[A](x: A, rs: ResultSet): Option[A] = {
+  def option[A](x: => A, rs: ResultSet): Option[A] = {
     if (rs.wasNull()) {
       None
     } else {
@@ -47,9 +47,13 @@ object ColReader {
     option(f(col, row.resultSet), row.resultSet)
   }
 
-  implicit val bigDecimalReader: ColReader[BigDecimal] = ColReader[java.math.BigDecimal] { (col, row) =>
+  implicit val jbigDecimalReader: ColReader[java.math.BigDecimal] = ColReader[java.math.BigDecimal] { (col, row) =>
     option(row.resultSet.getBigDecimal(col), row.resultSet)
-  }.map(BigDecimal(_))
+  }
+
+  implicit val bigDecimalReader: ColReader[BigDecimal] = jbigDecimalReader.map(BigDecimal(_))
+
+  implicit val bigIntReader: ColReader[BigInt] = jbigDecimalReader.map(bd => BigInt(bd.longValue))
 
   implicit val boolReader: ColReader[Boolean] = optReader((col, rs) => rs.getBoolean(col))
   implicit val byteArrayReader: ColReader[Array[Byte]] = optReader((col, rs) => rs.getBytes(col))
