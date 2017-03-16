@@ -3,7 +3,6 @@ package com.lucidchart.relate
 import java.sql.{Connection, DriverManager, SQLException}
 import java.util.Properties
 import org.specs2.mutable._
-import org.specs2.specification.Step
 import org.specs2.specification.core.Fragments
 
 trait Db {
@@ -138,7 +137,7 @@ trait Db {
 
 class RelateITSpec extends Specification with Db {
 
-  override def map(tests: =>Fragments) = Step(createDb) ^ tests ^ Step(deleteDb)
+  override def map(tests: =>Fragments) = step(createDb) ^ tests ^ step(deleteDb)
 
   def streamConnection = DriverManager.getConnection(url, props)
   def streamConnection2 = DriverManager.getConnection(url, props)

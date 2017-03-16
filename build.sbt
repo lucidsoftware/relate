@@ -42,6 +42,7 @@ inScope(Global)(Seq(
   homepage := Some(url("https://github.com/lucidsoftware/relate")),
   licenses += "Apache License 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"),
   scalacOptions ++= Seq(
+    "-Xfatal-warnings",
     "-deprecation",
     "-feature"
   ),
