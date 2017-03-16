@@ -18,6 +18,15 @@ lazy val relateAggregate = relate.aggregate(`relate2.10`, `relate2.11`, `relate2
   PgpKeys.publishSigned := ()
 )
 
+lazy val postgres = project.in(file("postgres")).cross.dependsOn(relate)
+lazy val `postgres2.10` = postgres("2.10.6")
+lazy val `postgres2.11` = postgres("2.11.8")
+lazy val `postgres2.12` = postgres("2.12.1")
+lazy val postgresAggregate = postgres.aggregate(`postgres2.10`, `postgres2.11`, `postgres2.12`).settings(
+  publishLocal := (),
+  PgpKeys.publishSigned := ()
+)
+
 val benchmarkTag = Tags.Tag("benchmark")
 
 publishLocal := ()
