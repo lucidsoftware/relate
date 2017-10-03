@@ -3,6 +3,7 @@ package com.lucidchart.relate
 import java.net.URL
 import java.nio.ByteBuffer
 import java.sql.{Blob, Clob, Date, NClob, PreparedStatement, Ref, RowId, SQLXML, Time, Timestamp, Types}
+import java.time.{Instant, LocalDate, LocalTime}
 import java.util.UUID
 import scala.language.implicitConversions
 
@@ -49,7 +50,10 @@ object Parameter {
   implicit def fromDate(value: Date) = new DateParameter(value)
   implicit def fromDouble(value: Double) = new DoubleParameter(value)
   implicit def fromFloat(value: Float) = new FloatParameter(value)
+  implicit def fromInstant(value: Instant) = new TimestampParameter(Timestamp.from(value))
   implicit def fromInt(value: Int) = new IntParameter(value)
+  implicit def fromLocalDate(value: LocalDate) = new DateParameter(Date.valueOf(value))
+  implicit def fromLocalTime(value: LocalTime) = new TimeParameter(Time.valueOf(value))
   implicit def fromLong(value: Long) = new LongParameter(value)
   implicit def fromNClob(value: NClob) = new NClobParameter(value)
   implicit def fromRef(value: Ref) = new RefParameter(value)
@@ -70,7 +74,10 @@ object Parameter {
   implicit def fromOptionalDate(value: Option[Date]) = value.map(fromDate).getOrElse(NullDateParameter)
   implicit def fromOptionalDouble(value: Option[Double]) = value.map(fromDouble).getOrElse(NullDoubleParameter)
   implicit def fromOptionalFloat(value: Option[Float]) = value.map(fromFloat).getOrElse(NullFloatParameter)
+  implicit def fromOptionalInstant(value: Option[Instant]) = value.map(fromInstant).getOrElse(NullTimestampParameter)
   implicit def fromOptionalInt(value: Option[Int]) = value.map(fromInt).getOrElse(NullIntegerParameter)
+  implicit def fromOptionalLocalDate(value: LocalDate) = new DateParameter(Date.valueOf(value))
+  implicit def fromOptionalLocalTime(value: Option[LocalTime]) = value.map(fromLocalTime).getOrElse(NullTimeParameter)
   implicit def fromOptionalLong(value: Option[Long]) = value.map(fromLong).getOrElse(NullBigIntParameter)
   implicit def fromOptionalNClob(value: Option[NClob]) = value.map(fromNClob).getOrElse(NullNClobParameter)
   implicit def fromOptionalRef(value: Option[Ref]) = value.map(fromRef).getOrElse(NullRefParameter)
