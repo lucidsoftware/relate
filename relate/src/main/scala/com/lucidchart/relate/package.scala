@@ -3,7 +3,10 @@ package com.lucidchart
 package object relate {
 
   implicit class SqlString(string: String) {
-    def toSql = InterpolatedQuery.fromParts(Seq(string), Seq())
+    def unsafeSql = InterpolatedQuery.fromParts(Seq(string), Seq())
+
+    @deprecated("Use .unsafeSql", since = "2.1.0")
+    def toSql = unsafeSql
   }
 
   implicit class SqlStringContext(stringContext: StringContext) {
