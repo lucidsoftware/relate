@@ -1,9 +1,13 @@
 package com.lucidchart.relate
 
+import org.scalameter.api._
 import java.sql._
 
-trait DbBench { self: Bench.HTMLReport =>
+object ImplicitConnection {
   implicit val conn = Init.conn
+}
+
+trait DbBench { self: Bench.HTMLReport =>
 
   def cases = Seq(RelateTests, AnormTests, JdbcTests)
 
@@ -23,6 +27,8 @@ trait DbReport extends Bench.OfflineReport with DbBench
 object Benchmarks extends DbReport {
   val ranges = for (size <- Gen.range("rows")(100, 10000, 1980)) yield 0 until size
   val rows = for (size <- Gen.range("rows")(1000, 10000, 1800)) yield 0 until size
+
+  import ImplicitConnection._
 
   test("Selecting 1 column") { c =>
     using(ranges) in { nums =>
@@ -243,6 +249,8 @@ object RelateTests extends TestCase {
 }
 
 object AnormTests extends TestCase {
+  import anorm._
+  import anorm.SqlParser._
 
   val name: String = "Anorm"
 
