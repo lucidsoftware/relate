@@ -17,7 +17,7 @@ libraryDependencies ++= Seq(
 libraryDependencies ++= (CrossVersionUtil.binaryScalaVersion(scalaVersion.value) match {
   case "2.10" => Seq("com.typesafe.play" %% "anorm" % "2.4.0" % Benchmark)
   case "2.11" => Seq("com.typesafe.play" %% "anorm" % "2.5.2" % Benchmark)
-  case "2.12" => Nil // note: can't run benchmarks for 2.12 until a suitable anorm artifact is avaiable
+  case "2.12" => Seq("com.typesafe.play" %% "anorm" % "2.6.0-M1" % Benchmark)
 })
 
 testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")

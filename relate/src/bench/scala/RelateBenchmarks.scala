@@ -1,9 +1,10 @@
 package com.lucidchart.relate
 
 import java.sql._
+import org.scalameter.api._
 
 trait DbBench { self: Bench.HTMLReport =>
-  implicit val conn = Init.conn
+  implicit def conn = Init.conn
 
   def cases = Seq(RelateTests, AnormTests, JdbcTests)
 
@@ -243,6 +244,8 @@ object RelateTests extends TestCase {
 }
 
 object AnormTests extends TestCase {
+  import anorm._
+  import anorm.SqlParser._
 
   val name: String = "Anorm"
 

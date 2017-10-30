@@ -1,5 +1,7 @@
 package com.lucidchart.relate
 
+import org.scalameter.api._
+
 trait DbRegression extends Bench.OfflineRegressionReport with DbBench {
   def test(c: TestCase, name: String)(f: TestCase => Any): Unit = {
     performance of name in {
@@ -104,12 +106,12 @@ object Regressions extends DbRegression {
   val unit = Gen.unit("interp")
 
   performance of "Interpolation" in {
-    measure method "toSql" in {
+    measure method "unsafeSql" in {
       using(unit) in { _ =>
         interpIterations.foreach { _ =>
-          val s = "SELECT".toSql
-          val f = "FROM".toSql
-          val w = "WHERE".toSql
+          val s = "SELECT".unsafeSql
+          val f = "FROM".unsafeSql
+          val w = "WHERE".unsafeSql
           sql"$s * $f table $w 1 = 1"
         }
       }
