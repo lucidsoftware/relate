@@ -7,8 +7,8 @@ object Build extends AutoPlugin {
   override val trigger = allRequirements
 
   object autoImport {
-    val Benchmark = config("bench") extend Test
-    val Regression = config("regression") extend Benchmark
+    val Benchmark = config("bench").hide extend Test
+    val Regression = config("regression").hide extend Benchmark
   }
 
 }
