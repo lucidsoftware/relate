@@ -35,7 +35,7 @@ object ColReader {
     def read(col: String, rs: SqlRow): Option[A] = f(col, rs)
   }
 
-  def option[A](x: => A, rs: ResultSet): Option[A] = {
+  def option[A](x: A, rs: ResultSet): Option[A] = {
     if (rs.wasNull()) {
       None
     } else {
