@@ -457,6 +457,12 @@ class RelateITSpec extends Specification with Db {
 
       insertOnSelect must throwA[SQLException]
     }
+
+    "work with null" in withConnection { implicit connection =>
+      val result = sql"SELECT * FROM pokemon WHERE id = 1"
+        .asSingle(row => (row[Int]("pokedex_id"), row.opt[Int]("trainer_id"), row[Int]("level")))
+      result must_== (1, None, 4)
+    }
   }
 
   "update" should {
