@@ -1,6 +1,7 @@
 package com.lucidchart.relate
 
 import java.util.{Date, UUID}
+import java.time.Instant
 import org.specs2.mock.Mockito
 import org.specs2.mutable._
 
@@ -10,6 +11,7 @@ case class RecordA(
   ba: Array[Byte],
   byte: Byte,
   date: Date,
+  instant: Instant,
   double: Double,
   int: Int,
   long: Long,
@@ -28,6 +30,7 @@ object RecordA extends Mockito {
         row[Array[Byte]]("ba"),
         row[Byte]("byte"),
         row[Date]("date"),
+        row[Instant]("instant"),
         row[Double]("double"),
         row[Int]("int"),
         row[Long]("long"),
@@ -39,6 +42,8 @@ object RecordA extends Mockito {
     }
   }
 
+  val timeMillis: Long = 1576179411000l
+
   val mockRow = {
     val rs = mock[java.sql.ResultSet]
     rs.getBigDecimal("bd") returns new java.math.BigDecimal(10)
@@ -46,6 +51,7 @@ object RecordA extends Mockito {
     rs.getBytes("ba") returns Array[Byte](1,2,3)
     rs.getByte("byte") returns (1: Byte)
     rs.getDate("date") returns (new java.sql.Date(10000))
+    rs.getTimestamp("instant") returns (new java.sql.Timestamp(timeMillis))
     rs.getDouble("double") returns 1.1
     rs.getInt("int") returns 10
     rs.getLong("long") returns 100L
@@ -64,6 +70,7 @@ case class RecordB(
   ba: Option[Array[Byte]],
   byte: Option[Byte],
   date: Option[Date],
+  instant: Option[Instant],
   double: Option[Double],
   int: Option[Int],
   long: Option[Long],
@@ -82,6 +89,7 @@ object RecordB extends Mockito {
         row.opt[Array[Byte]]("ba"),
         row.opt[Byte]("byte"),
         row.opt[Date]("date"),
+        row.opt[Instant]("instant"),
         row.opt[Double]("double"),
         row.opt[Int]("int"),
         row.opt[Long]("long"),
@@ -114,6 +122,7 @@ object Things extends Enumeration {
 }
 
 class ColReaderTest extends Specification with Mockito {
+  val mockedInstant = Instant.EPOCH.plusMillis(RecordA.timeMillis)
   "ColReader" should {
     "parse a present values" in {
       val row = RecordA.mockRow
@@ -130,6 +139,7 @@ class ColReaderTest extends Specification with Mockito {
         null,
         1,
         new Date(10000),
+        mockedInstant,
         1.1,
         10,
         100,
@@ -145,6 +155,7 @@ class ColReaderTest extends Specification with Mockito {
       val parsed = RecordB.reader.parse(row)
 
       parsed mustEqual RecordB(
+        None,
         None,
         None,
         None,
@@ -175,6 +186,7 @@ class ColReaderTest extends Specification with Mockito {
         null,
         Some(1),
         Some(new Date(10000)),
+        Some(mockedInstant),
         Some(1.1),
         Some(10),
         Some(100),

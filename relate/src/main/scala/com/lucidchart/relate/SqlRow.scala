@@ -4,6 +4,7 @@ import java.io.{InputStream, Reader}
 import java.net.URL
 import java.nio.ByteBuffer
 import java.sql.{Blob, Clob, NClob, Ref, RowId, SQLXML, Time, Timestamp}
+import java.time.Instant
 import java.util.{Calendar, Date, UUID}
 import scala.collection.JavaConversions
 import scala.language.higherKinds
@@ -160,6 +161,9 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
 
   def date(column: String): Date = dateOption(column).get
   def dateOption(column: String): Option[Date] = getResultSetOption(resultSet.getTimestamp(column))
+
+  def instant(column: String): Instant = instantOption(column).get
+  def instantOption(column: String): Option[Instant] = getResultSetOption(resultSet.getTimestamp(column)).map(_.toInstant)
 
   def byteArray(column: String): Array[Byte] = byteArrayOption(column).get
   def byteArrayOption(column: String): Option[Array[Byte]] = {
@@ -333,6 +337,8 @@ object SqlResultTypes {
   def javaBigDecimalOption(column: String)(implicit sr: SqlRow) = sr.javaBigDecimalOption(column)
   def date(column: String)(implicit sr: SqlRow) = sr.date(column)
   def dateOption(column: String)(implicit sr: SqlRow) = sr.dateOption(column)
+  def instant(column: String)(implicit sr: SqlRow) = sr.instant(column)
+  def instantOption(column: String)(implicit sr: SqlRow) = sr.instantOption(column)
   def byteArray(column: String)(implicit sr: SqlRow) = sr.byteArray(column)
   def byteArrayOption(column: String)(implicit sr: SqlRow) = sr.byteArrayOption(column)
   def uuid(column: String)(implicit sr: SqlRow) = sr.uuid(column)

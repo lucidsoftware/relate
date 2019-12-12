@@ -1,6 +1,7 @@
 package com.lucidchart.relate
 
 import java.util.Date
+import java.time.Instant
 import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
 import scala.language.higherKinds
@@ -18,6 +19,7 @@ object RowParser {
 
   def bigInt(columnLabel: String) = RowParser(_.apply[BigInt](columnLabel))
   def date(columnLabel: String) = RowParser(_.apply[Date](columnLabel))
+  def instant(columnLabel: String) = RowParser(_.apply[Instant](columnLabel))
   def int(columnLabel: String) = RowParser(_.apply[Int](columnLabel))
   def long(columnLabel: String) = RowParser(_.apply[Long](columnLabel))
   def string(columnLabel: String) = RowParser(_.apply[String](columnLabel))
