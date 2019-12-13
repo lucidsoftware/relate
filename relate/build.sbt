@@ -21,3 +21,5 @@ libraryDependencies ++= (CrossVersion.binaryScalaVersion(scalaVersion.value) mat
 })
 
 testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
+
+publishTo := sonatypePublishToBundle.value

@@ -12,3 +12,4 @@ libraryDependencies ++= Seq(
 moduleName := "relate-macros"
 
 scalacOptions += "-language:experimental.macros"
+publishTo := sonatypePublishToBundle.value
