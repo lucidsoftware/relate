@@ -4,6 +4,7 @@ import com.lucidchart.relate.SqlResultTypes._
 import java.io.{ByteArrayInputStream, Reader}
 import java.net.URL
 import java.sql.{Blob, Clob, Connection, NClob, Ref, RowId, SQLXML, Time, Timestamp}
+import java.time.Instant
 import java.util.{Calendar, UUID}
 import org.specs2.mock.Mockito
 import org.specs2.mutable._
@@ -845,6 +846,26 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getTimestamp("date") returns res
       row.date("date") equals res
       row.dateOption("date") must beSome(res)
+    }
+  }
+
+  "instant" should {
+    "return the correct value" in {
+      val (rs, row, _) = getMocks
+
+      val res = Instant.EPOCH.plusSeconds(10000)
+      val timestamp = mock[Timestamp]
+      timestamp.toInstant() returns res
+
+      rs.getTimestamp("instant") returns timestamp
+      row.instant("instant") equals res
+      row.instantOption("instant") must beSome(res)
+    }
+
+    "return None if null" in {
+      val (_, row, _) = getMocks
+
+      row.instantOption("instant") must beNone
     }
   }
 

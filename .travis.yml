@@ -17,7 +17,7 @@ env:
 git:
   depth: 1
 jdk:
-  - oraclejdk8
+  - openjdk8
 language: scala
 script:
   - '[ "$TRAVIS_PULL_REQUEST" != false ] || export SBT_OPTS=-Dbuild.version=${TRAVIS_TAG:-$TRAVIS_BRANCH-SNAPSHOT}'
@@ -28,6 +28,6 @@ script:
       if [ -z "$TRAVIS_TAG" ]; then
           sbt publishSigned
       else
-          sbt "sonatypeOpen relate-$TRAVIS_TAG" publishSigned sonatypeReleaseAll
+          sbt "; publishSigned; sonatypeBundleRelease"
       fi
     fi

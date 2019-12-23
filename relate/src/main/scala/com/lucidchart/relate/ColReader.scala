@@ -2,6 +2,7 @@ package com.lucidchart.relate
 
 import java.nio.ByteBuffer
 import java.sql.ResultSet
+import java.time.Instant
 import java.util.{Date, UUID}
 
 class NullColumnException(col: String) extends Exception(s"Unexpected null value in column: $col")
@@ -59,6 +60,7 @@ object ColReader {
   implicit val byteArrayReader: ColReader[Array[Byte]] = optReader((col, rs) => rs.getBytes(col))
   implicit val byteReader: ColReader[Byte] = optReader((col, rs) => rs.getByte(col))
   implicit val dateReader: ColReader[Date] = optReader((col, rs) => rs.getDate(col))
+  implicit val instantReader: ColReader[Instant] = optReader((col, rs) => rs.getTimestamp(col)).map(_.toInstant)
   implicit val doubleReader: ColReader[Double] = optReader((col, rs) => rs.getDouble(col))
   implicit val intReader: ColReader[Int] = optReader((col, rs) => rs.getInt(col))
   implicit val longReader: ColReader[Long] = optReader((col, rs) => rs.getLong(col))
