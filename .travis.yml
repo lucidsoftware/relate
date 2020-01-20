@@ -3,17 +3,19 @@ cache:
     - $HOME/.ivy2
     - $HOME/.sbt
 deploy:
-  api_key: $GITHUB_AUTH
+  api_key:
+    secure: NBk2ABujkJmgTVHmTz7eR0esZbSKWWZSWBw3PS6SNnifeNjBxHugdlKWBN15eNXFv842Hc1StPFPsq94o8LGXSnfG6HJFqWBLPZCQqDxyKHhQGRnDrYtwToe9GJ7Reiv0g7CYGAOTPorfCgMKd5s+FqXRtaupTcNT2Y8WjZzCwA=
   file: '*/target/**/*.jar'
   file_glob: true
   on:
+    repo: lucidsoftware/relate
     tags: true
   provider: releases
   skip_cleanup: true
 env:
   global:
-    - MYSQL_USER=root
-    - MYSQL_PASSWORD=
+  - MYSQL_USER=root
+  - MYSQL_PASSWORD=
 git:
   depth: 1
 jdk:
@@ -23,11 +25,11 @@ script:
   - '[ "$TRAVIS_PULL_REQUEST" != false ] || export SBT_OPTS=-Dbuild.version=${TRAVIS_TAG:-$TRAVIS_BRANCH-SNAPSHOT}'
   - sbt 'all doc:compile test'
   - |
-    if [ "$TRAVIS_SECURE_ENV_VARS" == true ]; then
-      echo "$PGP_SECRET" | base64 --decode | gpg --import
-      if [ -z "$TRAVIS_TAG" ]; then
-          sbt publishSigned
-      else
-          sbt "; publishSigned; sonatypeBundleRelease"
-      fi
+  if [ "$TRAVIS_SECURE_ENV_VARS" == true ]; then
+    echo "$PGP_SECRET" | base64 --decode | gpg --import
+    if [ -z "$TRAVIS_TAG" ]; then
+        sbt publishSigned
+    else
+        sbt "; publishSigned; sonatypeBundleRelease"
     fi
+  fi
