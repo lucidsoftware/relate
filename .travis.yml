@@ -25,11 +25,11 @@ script:
   - '[ "$TRAVIS_PULL_REQUEST" != false ] || export SBT_OPTS=-Dbuild.version=${TRAVIS_TAG:-$TRAVIS_BRANCH-SNAPSHOT}'
   - sbt 'all doc:compile test'
   - |
-  if [ "$TRAVIS_SECURE_ENV_VARS" == true ]; then
-    echo "$PGP_SECRET" | base64 --decode | gpg --import
-    if [ -z "$TRAVIS_TAG" ]; then
-        sbt publishSigned
-    else
-        sbt "; publishSigned; sonatypeBundleRelease"
+    if [ "$TRAVIS_SECURE_ENV_VARS" == true ]; then
+      echo "$PGP_SECRET" | base64 --decode | gpg --import
+      if [ -z "$TRAVIS_TAG" ]; then
+          sbt publishSigned
+      else
+          sbt "; publishSigned; sonatypeBundleRelease"
+      fi
     fi
-  fi
