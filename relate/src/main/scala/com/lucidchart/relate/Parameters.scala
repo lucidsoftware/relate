@@ -45,6 +45,7 @@ object Parameter {
       implicitly[Parameterizable[A]].setOption(statement, i, value)
   }
 
+  implicit def fromByteArray(it: Array[Byte]) = single(it)
   implicit def fromArray[A <% SingleParameter](it: Array[A]) = new TupleParameter(it.map(elem => elem: SingleParameter))
   implicit def fromIterable[A <% SingleParameter](it: Iterable[A]) = new TupleParameter(it.map(elem => elem: SingleParameter))
   type SP = SingleParameter
