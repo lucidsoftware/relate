@@ -4,7 +4,7 @@ cache:
     - $HOME/.sbt
 deploy:
   api_key:
-    secure: NBk2ABujkJmgTVHmTz7eR0esZbSKWWZSWBw3PS6SNnifeNjBxHugdlKWBN15eNXFv842Hc1StPFPsq94o8LGXSnfG6HJFqWBLPZCQqDxyKHhQGRnDrYtwToe9GJ7Reiv0g7CYGAOTPorfCgMKd5s+FqXRtaupTcNT2Y8WjZzCwA=
+    secure: Xt/GrRLR+fQPEapfpzSRyCyoY2q1mtKGUWIhRN+m0WQm840TCt46uI37xRvJ+w4KKUNxRhaOUKhlVsePsEghokFU4aDODcs+8twDT2HnseOa8xKvBzoSV3lhNcMEeSfSObfUeJTBYQkhqB0FNOqusO76BdwsVV/RWg25mZ+Qv8I=
   file: '*/target/**/*.jar'
   file_glob: true
   on:
