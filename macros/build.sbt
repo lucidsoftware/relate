@@ -1,12 +1,9 @@
-addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
-
 libraryDependencies ++= Seq(
-  "com.chuusai" %% "shapeless" % "2.3.2" % Test,
+  "com.chuusai" %% "shapeless" % "2.3.3" % Test,
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "org.specs2" %% "specs2-core" % "3.8.7" % Test,
-  "org.specs2" %% "specs2-mock" % "3.8.7" % Test,
-  "org.typelevel" %% "macro-compat" % "1.1.1"
+  "org.specs2" %% "specs2-core" % "4.6.0" % Test,
+  "org.specs2" %% "specs2-mock" % "4.6.0" % Test,
 )
 
 moduleName := "relate-macros"
