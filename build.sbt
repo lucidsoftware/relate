@@ -1,26 +1,26 @@
 import com.lucidchart.sbtcross.ProjectAggregateArgument.toArgument
 
 lazy val macros = project.in(file("macros")).cross.dependsOn(relate)
-lazy val `macros2.10` = macros("2.10.6")
-lazy val `macros2.11` = macros("2.11.8")
-lazy val `macros2.12` = macros("2.12.1")
-lazy val macrosAggregate = macros.aggregate(`macros2.10`, `macros2.11`, `macros2.12`).settings(
+lazy val `macros2.11` = macros("2.11.12")
+lazy val `macros2.12` = macros("2.12.11")
+lazy val `macros2.13` = macros("2.13.2")
+lazy val macrosAggregate = macros.aggregate(`macros2.11`, `macros2.12`, `macros2.13`).settings(
   skip in publish := true
 )
 
 lazy val relate = project.in(file("relate")).cross
-lazy val `relate2.10` = relate("2.10.6")
-lazy val `relate2.11` = relate("2.11.8")
-lazy val `relate2.12` = relate("2.12.1")
-lazy val relateAggregate = relate.aggregate(`relate2.10`, `relate2.11`, `relate2.12`).settings(
+lazy val `relate2.11` = relate("2.11.12")
+lazy val `relate2.12` = relate("2.12.11")
+lazy val `relate2.13` = relate("2.13.2")
+lazy val relateAggregate = relate.aggregate(`relate2.11`, `relate2.12`, `relate2.13`).settings(
   skip in publish := true
 )
 
 lazy val postgres = project.in(file("postgres")).cross.dependsOn(relate)
-lazy val `postgres2.10` = postgres("2.10.6")
-lazy val `postgres2.11` = postgres("2.11.8")
-lazy val `postgres2.12` = postgres("2.12.1")
-lazy val postgresAggregate = postgres.aggregate(`postgres2.10`, `postgres2.11`, `postgres2.12`).settings(
+lazy val `postgres2.11` = postgres("2.11.12")
+lazy val `postgres2.12` = postgres("2.12.11")
+lazy val `postgres2.13` = postgres("2.13.2")
+lazy val postgresAggregate = postgres.aggregate(`postgres2.11`, `postgres2.12`, `postgres2.13`).settings(
   skip in publish := true
 )
 
