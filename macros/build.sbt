@@ -6,7 +6,16 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-mock" % "4.6.0" % Test,
 )
 
+libraryDependencies ++= (CrossVersion.binaryScalaVersion(scalaVersion.value) match {
+  case "2.11" | "2.12" => Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full))
+  case _ => Seq.empty
+})
+
 moduleName := "relate-macros"
 
 scalacOptions += "-language:experimental.macros"
+scalacOptions += (CrossVersion.binaryScalaVersion(scalaVersion.value) match {
+  case "2.13" => "-Ymacro-annotations"
+  case _ => ""
+})
 publishTo := sonatypePublishToBundle.value
