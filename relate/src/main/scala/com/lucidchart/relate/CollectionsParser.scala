@@ -1,13 +1,12 @@
 package com.lucidchart.relate
 
-import scala.collection.generic.CanBuildFrom
+import scala.collection.compat._
 import scala.language.higherKinds
 
 trait CollectionsParser {
-
-  def limitedCollection[B: RowParser, Col[_]](maxRows: Long)(implicit cbf: CanBuildFrom[Col[B], B, Col[B]]) =
+   def limitedCollection[B: RowParser, Col[_]](maxRows: Long)(implicit factory: Factory[B, Col[B]]) =
     RowParser { result =>
-      val builder = cbf()
+      val builder = factory.newBuilder
 
       result.withResultSet { resultSet =>
         while (resultSet.getRow < maxRows && resultSet.next()) {
@@ -22,14 +21,14 @@ trait CollectionsParser {
     limitedCollection[B, List](1).parse(result).headOption
   }
 
-  implicit def collection[B: RowParser, Col[_]](implicit cbf: CanBuildFrom[Col[B], B, Col[B]]) =
+  implicit def collection[B: RowParser, Col[_]](implicit factory: Factory[B, Col[B]]) =
     limitedCollection[B, Col](Long.MaxValue)
 
   implicit def pairCollection[Key: RowParser, Value: RowParser, PairCol[_, _]]
-    (implicit cbf: CanBuildFrom[PairCol[Key, Value], (Key, Value), PairCol[Key, Value]]) =
+    (implicit factory: Factory[(Key, Value), PairCol[Key, Value]]) =
     RowParser { result =>
 
-      val builder = cbf()
+      val builder = factory.newBuilder
 
       result.withResultSet { resultSet =>
         while (resultSet.getRow < Long.MaxValue && resultSet.next()) {
