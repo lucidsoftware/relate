@@ -8,7 +8,7 @@ import java.time.Instant
 import java.util.{Calendar, UUID}
 import org.specs2.mock.Mockito
 import org.specs2.mutable._
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters._
 
 case class TestRecord(
   id: Long,
@@ -542,7 +542,7 @@ class SqlResultSpec extends Specification with Mockito {
       row.strictObjectOption("strictObject") must beSome(res)
 
       val map = Map[String,Class[_]]()
-      rs.getObject("strictObject", JavaConversions.mapAsJavaMap(map)) returns res
+      rs.getObject("strictObject", map.asJava) returns res
       row.strictObject("strictObject", map) equals res
       row.strictObjectOption("strictObject", map) must beSome(res)
     }

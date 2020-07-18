@@ -1,10 +1,8 @@
 package com.lucidchart.relate.macros
 
 import com.lucidchart.relate._
-import macrocompat.bundle
 import scala.reflect.macros.blackbox.Context
 
-@bundle
 class RowParserImpl(val c: Context) {
   import c.universe._
 

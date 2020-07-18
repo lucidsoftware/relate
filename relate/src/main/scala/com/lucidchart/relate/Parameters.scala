@@ -120,7 +120,7 @@ class TuplesParameter(val params: Iterable[TupleParameter]) extends MultiplePara
         param.appendPlaceholders(stringBuilder)
         stringBuilder.append("),")
       }
-      stringBuilder.length -= 1
+      stringBuilder.setLength(stringBuilder.length - 1)
     }
   }
 }

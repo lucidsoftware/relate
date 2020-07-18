@@ -6,7 +6,7 @@ import java.nio.ByteBuffer
 import java.sql.{Blob, Clob, NClob, Ref, RowId, SQLXML, Time, Timestamp}
 import java.time.Instant
 import java.util.{Calendar, Date, UUID}
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters._
 import scala.language.higherKinds
 import scala.util.Try
 
@@ -63,8 +63,8 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def strictNStringOption(column: String): Option[String] = getResultSetOption(resultSet.getNString(column))
   def strictObject(column: String): Object = resultSet.getObject(column)
   def strictObjectOption(column: String): Option[Object] = getResultSetOption(resultSet.getObject(column))
-  def strictObject(column: String, map: Map[String, Class[_]]): Object = resultSet.getObject(column, JavaConversions.mapAsJavaMap(map))
-  def strictObjectOption(column: String, map: Map[String, Class[_]]): Option[Object] = Option(resultSet.getObject(column, JavaConversions.mapAsJavaMap(map)))
+  def strictObject(column: String, map: Map[String, Class[_]]): Object = resultSet.getObject(column, map.asJava)
+  def strictObjectOption(column: String, map: Map[String, Class[_]]): Option[Object] = Option(resultSet.getObject(column, map.asJava))
   def strictRef(column: String): Ref = resultSet.getRef(column)
   def strictRefOption(column: String): Option[Ref] = getResultSetOption(resultSet.getRef(column))
   def strictRowId(column: String): RowId = resultSet.getRowId(column)
