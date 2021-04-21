@@ -160,7 +160,11 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   }
 
   def date(column: String): Date = dateOption(column).get
-  def dateOption(column: String): Option[Date] = getResultSetOption(resultSet.getTimestamp(column))
+  // Timestamp documentation says that "it is recommended that code not view Timestamp values generically as an instance
+  // of java.util.Date." Since this is typed as a Date we should probably return an instance of a Date.
+  // `date == timestamp` can be true but `timestamp == date` is always false "the Timestamp.equals(Object) method is not
+  // symmetric with respect to the java.util.Date.equals(Object)"
+  def dateOption(column: String): Option[Date] = getResultSetOption(resultSet.getTimestamp(column)).map(ts => new Date(ts.getTime))
 
   def instant(column: String): Instant = instantOption(column).get
   def instantOption(column: String): Option[Instant] = getResultSetOption(resultSet.getTimestamp(column)).map(_.toInstant)
