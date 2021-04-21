@@ -5,7 +5,7 @@ import java.io.{ByteArrayInputStream, Reader}
 import java.net.URL
 import java.sql.{Blob, Clob, Connection, NClob, Ref, RowId, SQLXML, Time, Timestamp}
 import java.time.Instant
-import java.util.{Calendar, UUID}
+import java.util.{Calendar, Date, UUID}
 import org.specs2.mock.Mockito
 import org.specs2.mutable._
 import scala.collection.JavaConverters._
@@ -842,10 +842,17 @@ class SqlResultSpec extends Specification with Mockito {
     "return the correct value" in {
       val (rs, row, _) = getMocks
 
-      val res = mock[Timestamp]
-      rs.getTimestamp("date") returns res
-      row.date("date") equals res
-      row.dateOption("date") must beSome(res)
+      val now = Instant.now
+      val timestamp = Timestamp.from(now)
+      val date = Date.from(now)
+      // Note that
+      timestamp mustNotEqual date
+      date mustEqual timestamp
+
+      rs.getTimestamp("date") returns timestamp
+      row.date("date") mustEqual timestamp
+      row.date("date") mustEqual date
+      row.dateOption("date") must beSome(timestamp)
     }
   }
 
