@@ -56,7 +56,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("id") returns (100L: java.lang.Long)
       rs.getObject("name") returns "the name"
 
-      result.asSingle(parser) equals TestRecord(100L, "the name")
+      result.asSingle(parser) mustEqual TestRecord(100L, "the name")
     }
 
     "return a single row with an implicit parser" in {
@@ -67,7 +67,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("id") returns (100L: java.lang.Long)
       rs.getObject("name") returns "the name"
 
-      result.asSingle[TestRecord] equals TestRecord(100L, "the name")
+      result.asSingle[TestRecord] mustEqual TestRecord(100L, "the name")
     }
   }
 
@@ -117,7 +117,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("id") returns (100L: java.lang.Long)
       rs.getObject("name") returns "the name"
 
-      result.asList(parser) equals List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
+      result.asList(parser) mustEqual List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
     }
 
     "return an empty list with an explicit parser" in {
@@ -126,7 +126,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getRow returns 0
       rs.next returns false
 
-      result.asList(parser) equals List()
+      result.asList(parser) mustEqual List()
     }
 
     "return a list of 3 elements with an implicit parser" in {
@@ -137,7 +137,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("id") returns (100L: java.lang.Long)
       rs.getObject("name") returns "the name"
 
-      result.asList[TestRecord] equals List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
+      result.asList[TestRecord] mustEqual List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
     }
 
     "return an empty list with an implicit parser" in {
@@ -146,7 +146,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getRow returns 0
       rs.next returns false
 
-      result.asList[TestRecord] equals List()
+      result.asList[TestRecord] mustEqual List()
     }
   }
 
@@ -161,16 +161,16 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("name") returns "the name"
 
       val res = result.asMap(pairparser)
-      res(1L) equals TestRecord(1L, "the name")
-      res(2L) equals TestRecord(2L, "the name")
-      res(3L) equals TestRecord(3L, "the name")
+      res(1L) mustEqual TestRecord(1L, "the name")
+      res(2L) mustEqual TestRecord(2L, "the name")
+      res(3L) mustEqual TestRecord(3L, "the name")
     }
 
     "return an empty map with an explicit parser" in {
       val (rs, _, result) = getMocks
       rs.getRow returns 0
       rs.next returns false
-      result.asMap(pairparser) equals Map()
+      result.asMap(pairparser) mustEqual Map()
     }
 
     implicit val a: RowParser[(Long, TestRecord)] = new RowParser[(Long, TestRecord)] {
@@ -190,16 +190,16 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getObject("name") returns "the name"
 
       val res = result.asMap[Long, TestRecord]
-      res(1L) equals TestRecord(1L, "the name")
-      res(2L) equals TestRecord(2L, "the name")
-      res(3L) equals TestRecord(3L, "the name")
+      res(1L) mustEqual TestRecord(1L, "the name")
+      res(2L) mustEqual TestRecord(2L, "the name")
+      res(3L) mustEqual TestRecord(3L, "the name")
     }
 
     "return an empty map with an implicit parser" in {
       val (rs, _, result) = getMocks
       rs.getRow returns 0
       rs.next returns false
-      result.asMap[Long, TestRecord] equals Map()
+      result.asMap[Long, TestRecord] mustEqual Map()
     }
   }
 
@@ -297,7 +297,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, row, _) = getMocks
 
       rs.getRow() returns 3
-      row.getRow equals 3
+      row.getRow mustEqual 3
     }
   }
 
@@ -306,7 +306,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, _, result) = getMocks
 
       rs.wasNull() returns true
-      result.wasNull equals true
+      result.wasNull mustEqual true
     }
   }
 
@@ -316,7 +316,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val arr = mock[java.sql.Array]
       rs.getArray("array") returns arr
-      row.strictArray("array") equals arr
+      row.strictArray("array") mustEqual arr
       row.strictArrayOption("array") must beSome(arr)
     }
   }
@@ -327,7 +327,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val stream = new ByteArrayInputStream("hello".getBytes())
       rs.getAsciiStream("ascii-stream") returns stream
-      row.strictAsciiStream("ascii-stream") equals stream
+      row.strictAsciiStream("ascii-stream") mustEqual stream
       row.strictAsciiStreamOption("ascii-stream") must beSome(stream)
     }
   }
@@ -337,7 +337,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, row, _) = getMocks
 
       rs.getBigDecimal("big-decimal") returns new java.math.BigDecimal("100.9999")
-      row.strictBigDecimal("big-decimal") equals BigDecimal("100.9999")
+      row.strictBigDecimal("big-decimal") mustEqual BigDecimal("100.9999")
       row.strictBigDecimalOption("big-decimal") must beSome(BigDecimal("100.9999"))
     }
   }
@@ -348,7 +348,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val stream = new ByteArrayInputStream("hello".getBytes())
       rs.getBinaryStream("binary-stream") returns stream
-      row.strictBinaryStream("binary-stream") equals stream
+      row.strictBinaryStream("binary-stream") mustEqual stream
       row.strictBinaryStreamOption("binary-stream") must beSome(stream)
     }
   }
@@ -359,7 +359,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val blob = mock[java.sql.Blob]
       rs.getBlob("blob") returns blob
-      row.strictBlob("blob") equals blob
+      row.strictBlob("blob") mustEqual blob
       row.strictBlobOption("blob") must beSome(blob)
     }
   }
@@ -370,7 +370,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = true
       rs.getBoolean("strictBoolean") returns res
-      row.strictBoolean("strictBoolean") equals res
+      row.strictBoolean("strictBoolean") mustEqual res
       row.strictBooleanOption("strictBoolean") must beSome(res)
     }
   }
@@ -381,7 +381,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res: Byte = 1
       rs.getByte("strictByte") returns res
-      row.strictByte("strictByte") equals res
+      row.strictByte("strictByte") mustEqual res
       row.strictByteOption("strictByte") must beSome(res)
     }
   }
@@ -392,7 +392,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res: Array[Byte] = Array(1,2,3)
       rs.getBytes("strictBytes") returns res
-      row.strictBytes("strictBytes") equals res
+      row.strictBytes("strictBytes") mustEqual res
       row.strictBytesOption("strictBytes") must beSome(res)
     }
   }
@@ -403,7 +403,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[Reader]
       rs.getCharacterStream("strictCharacterStream") returns res
-      row.strictCharacterStream("strictCharacterStream") equals res
+      row.strictCharacterStream("strictCharacterStream") mustEqual res
       row.strictCharacterStreamOption("strictCharacterStream") must beSome(res)
     }
   }
@@ -414,7 +414,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[Clob]
       rs.getClob("strictClob") returns res
-      row.strictClob("strictClob") equals res
+      row.strictClob("strictClob") mustEqual res
       row.strictClobOption("strictClob") must beSome(res)
     }
   }
@@ -425,12 +425,12 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[java.sql.Date]
       rs.getDate("strictDate") returns res
-      row.strictDate("strictDate") equals res
+      row.strictDate("strictDate") mustEqual res
       row.strictDateOption("strictDate") must beSome(res)
 
       val cal = Calendar.getInstance()
       rs.getDate("strictDate", cal) returns res
-      row.strictDate("strictDate", cal) equals res
+      row.strictDate("strictDate", cal) mustEqual res
       row.strictDateOption("strictDate", cal) must beSome(res)
     }
   }
@@ -441,7 +441,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res: Double = 1.1
       rs.getDouble("strictDouble") returns res
-      row.strictDouble("strictDouble") equals res
+      row.strictDouble("strictDouble") mustEqual res
       row.strictDoubleOption("strictDouble") must beSome(res)
     }
   }
@@ -452,7 +452,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = 1.1f
       rs.getFloat("strictFloat") returns res
-      row.strictFloat("strictFloat") equals res
+      row.strictFloat("strictFloat") mustEqual res
       row.strictFloatOption("strictFloat") must beSome(res)
     }
   }
@@ -463,7 +463,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = 1
       rs.getInt("strictInt") returns res
-      row.strictInt("strictInt") equals res
+      row.strictInt("strictInt") mustEqual res
       row.strictIntOption("strictInt") must beSome(res)
     }
   }
@@ -494,7 +494,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = 1000L
       rs.getLong("strictLong") returns res
-      row.strictLong("strictLong") equals res
+      row.strictLong("strictLong") mustEqual res
       row.strictLongOption("strictLong") must beSome(res)
     }
   }
@@ -505,7 +505,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[Reader]
       rs.getNCharacterStream("strictNCharacterStream") returns res
-      row.strictNCharacterStream("strictNCharacterStream") equals res
+      row.strictNCharacterStream("strictNCharacterStream") mustEqual res
       row.strictNCharacterStreamOption("strictNCharacterStream") must beSome(res)
     }
   }
@@ -516,7 +516,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[NClob]
       rs.getNClob("strictNClob") returns res
-      row.strictNClob("strictNClob") equals res
+      row.strictNClob("strictNClob") mustEqual res
       row.strictNClobOption("strictNClob") must beSome(res)
     }
   }
@@ -527,7 +527,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = "hello"
       rs.getNString("strictNString") returns res
-      row.strictNString("strictNString") equals res
+      row.strictNString("strictNString") mustEqual res
       row.strictNStringOption("strictNString") must beSome(res)
     }
   }
@@ -538,12 +538,12 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res: Object = 123: java.lang.Integer
       rs.getObject("strictObject") returns res
-      row.strictObject("strictObject") equals res
+      row.strictObject("strictObject") mustEqual res
       row.strictObjectOption("strictObject") must beSome(res)
 
       val map = Map[String,Class[_]]()
       rs.getObject("strictObject", map.asJava) returns res
-      row.strictObject("strictObject", map) equals res
+      row.strictObject("strictObject", map) mustEqual res
       row.strictObjectOption("strictObject", map) must beSome(res)
     }
   }
@@ -554,7 +554,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[Ref]
       rs.getRef("strictRef") returns res
-      row.strictRef("strictRef") equals res
+      row.strictRef("strictRef") mustEqual res
       row.strictRefOption("strictRef") must beSome(res)
     }
   }
@@ -565,7 +565,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[RowId]
       rs.getRowId("strictRowId") returns res
-      row.strictRowId("strictRowId") equals res
+      row.strictRowId("strictRowId") mustEqual res
       row.strictRowIdOption("strictRowId") must beSome(res)
     }
   }
@@ -576,7 +576,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res: Short = 1
       rs.getShort("strictShort") returns res
-      row.strictShort("strictShort") equals res
+      row.strictShort("strictShort") mustEqual res
       row.strictShortOption("strictShort") must beSome(res)
     }
   }
@@ -587,7 +587,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[SQLXML]
       rs.getSQLXML("strictSQLXML") returns res
-      row.strictSQLXML("strictSQLXML") equals res
+      row.strictSQLXML("strictSQLXML") mustEqual res
       row.strictSQLXMLOption("strictSQLXML") must beSome(res)
     }
   }
@@ -598,7 +598,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = "hello"
       rs.getString("strictString") returns res
-      row.strictString("strictString") equals res
+      row.strictString("strictString") mustEqual res
       row.strictStringOption("strictString") must beSome(res)
     }
   }
@@ -609,12 +609,12 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[Time]
       rs.getTime("strictTime") returns res
-      row.strictTime("strictTime") equals res
+      row.strictTime("strictTime") mustEqual res
       row.strictTimeOption("strictTime") must beSome(res)
 
       val cal = Calendar.getInstance()
       rs.getTime("strictTime", cal) returns res
-      row.strictTime("strictTime", cal) equals res
+      row.strictTime("strictTime", cal) mustEqual res
       row.strictTimeOption("strictTime", cal) must beSome(res)
     }
   }
@@ -625,12 +625,12 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = mock[Timestamp]
       rs.getTimestamp("strictTimestamp") returns res
-      row.strictTimestamp("strictTimestamp") equals res
+      row.strictTimestamp("strictTimestamp") mustEqual res
       row.strictTimestampOption("strictTimestamp") must beSome(res)
 
       val cal = Calendar.getInstance()
       rs.getTimestamp("strictTimestamp", cal) returns res
-      row.strictTimestamp("strictTimestamp", cal) equals res
+      row.strictTimestamp("strictTimestamp", cal) mustEqual res
       row.strictTimestampOption("strictTimestamp", cal) must beSome(res)
     }
   }
@@ -641,7 +641,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = new URL("http://localhost")
       rs.getURL("strictURL") returns res
-      row.strictURL("strictURL") equals res
+      row.strictURL("strictURL") mustEqual res
       row.strictURLOption("strictURL") must beSome(res)
     }
   }
@@ -652,7 +652,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = "hello"
       rs.getObject("string") returns res
-      row.string("string") equals res
+      row.string("string") mustEqual res
       row.stringOption("string") must beSome(res)
     }
   }
@@ -663,7 +663,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = 10: java.lang.Integer
       rs.getInt("int") returns res
-      row.int("int") equals res
+      row.int("int") mustEqual res
       row.intOption("int") must beSome(res)
     }
   }
@@ -692,7 +692,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = 1.1: java.lang.Double
       rs.getDouble("double") returns res
-      row.double("double") equals res
+      row.double("double") mustEqual res
       row.doubleOption("double") must beSome(res)
     }
   }
@@ -703,7 +703,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res: Short = 1
       rs.getShort("short") returns res
-      row.short("short") equals res
+      row.short("short") mustEqual res
       row.shortOption("short") must beSome(res)
     }
   }
@@ -714,7 +714,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res: Byte = 1
       rs.getByte("byte") returns res
-      row.byte("byte") equals res
+      row.byte("byte") mustEqual res
       row.byteOption("byte") must beSome(res)
     }
   }
@@ -725,7 +725,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = true
       rs.getBoolean("boolean") returns res
-      row.bool("boolean") equals res
+      row.bool("boolean") mustEqual res
       row.boolOption("boolean") must beSome(res)
     }
   }
@@ -736,7 +736,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res: Object = 100000L: java.lang.Long
       rs.getObject("long") returns res
-      row.long("long") equals res
+      row.long("long") mustEqual res
       row.longOption("long") must beSome(res)
     }
   }
@@ -749,22 +749,22 @@ class SqlResultSpec extends Specification with Mockito {
 
       val int: Object = number.toInt: java.lang.Integer
       rs.getObject("bigInt") returns int
-      row.bigInt("bigInt") equals BigInt(number)
+      row.bigInt("bigInt") mustEqual BigInt(number)
       row.bigIntOption("bigInt") must beSome(BigInt(number))
 
       val long: Object = number.toLong: java.lang.Long
       rs.getObject("bigInt") returns long
-      row.bigInt("bigInt") equals BigInt(number)
+      row.bigInt("bigInt") mustEqual BigInt(number)
       row.bigIntOption("bigInt") must beSome(BigInt(number))
 
       val string: Object = number.toString
       rs.getObject("bigInt") returns string
-      row.bigInt("bigInt") equals BigInt(number)
+      row.bigInt("bigInt") mustEqual BigInt(number)
       row.bigIntOption("bigInt") must beSome(BigInt(number))
 
       val bigint: Object = new java.math.BigInteger(number.toString)
       rs.getObject("bigInt") returns bigint
-      row.bigInt("bigInt") equals BigInt(number)
+      row.bigInt("bigInt") mustEqual BigInt(number)
       row.bigIntOption("bigInt") must beSome(BigInt(number))
     }
   }
@@ -777,22 +777,22 @@ class SqlResultSpec extends Specification with Mockito {
 
       val int: Object = number.toInt: java.lang.Integer
       rs.getObject("bigDecimal") returns int
-      row.bigDecimal("bigDecimal") equals BigDecimal(number.toInt)
+      row.bigDecimal("bigDecimal") mustEqual BigDecimal(number.toInt)
       row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number.toInt))
 
       val long: Object = number.toLong: java.lang.Long
       rs.getObject("bigDecimal") returns long
-      row.bigDecimal("bigDecimal") equals BigDecimal(number.toLong)
+      row.bigDecimal("bigDecimal") mustEqual BigDecimal(number.toLong)
       row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number.toLong))
 
       val string: Object = number.toString
       rs.getObject("bigDecimal") returns string
-      row.bigDecimal("bigDecimal") equals BigDecimal(number)
+      row.bigDecimal("bigDecimal") mustEqual BigDecimal(number)
       row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number))
 
       val bigint: Object = new java.math.BigDecimal(number.toString)
       rs.getObject("bigDecimal") returns bigint
-      row.bigDecimal("bigDecimal") equals BigDecimal(number)
+      row.bigDecimal("bigDecimal") mustEqual BigDecimal(number)
       row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number))
     }
   }
@@ -805,17 +805,17 @@ class SqlResultSpec extends Specification with Mockito {
 
       val int: Object = number.toInt: java.lang.Integer
       rs.getObject("javaBigInteger") returns int
-      row.javaBigInteger("javaBigInteger") equals new java.math.BigInteger(number.toString)
+      row.javaBigInteger("javaBigInteger") mustEqual new java.math.BigInteger(number.toString)
       row.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
 
       val long: Object = number.toLong: java.lang.Long
       rs.getObject("javaBigInteger") returns long
-      row.javaBigInteger("javaBigInteger") equals new java.math.BigInteger(number.toString)
+      row.javaBigInteger("javaBigInteger") mustEqual new java.math.BigInteger(number.toString)
       row.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
 
       val bigint: Object = new java.math.BigInteger(number.toString)
       rs.getObject("javaBigInteger") returns bigint
-      row.javaBigInteger("javaBigInteger") equals new java.math.BigInteger(number.toString)
+      row.javaBigInteger("javaBigInteger") mustEqual new java.math.BigInteger(number.toString)
       row.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
     }
   }
@@ -828,12 +828,12 @@ class SqlResultSpec extends Specification with Mockito {
 
       val double: Object = number.toDouble: java.lang.Double
       rs.getObject("javaBigDecimal") returns double
-      row.javaBigDecimal("javaBigDecimal") equals new java.math.BigDecimal(number.toString)
+      row.javaBigDecimal("javaBigDecimal") mustEqual new java.math.BigDecimal(number.toString)
       row.javaBigDecimalOption("javaBigDecimal") must beSome(new java.math.BigDecimal(number.toString))
 
       val bigdec: Object = new java.math.BigDecimal(number.toString)
       rs.getObject("javaBigDecimal") returns bigdec
-      row.javaBigDecimal("javaBigDecimal") equals new java.math.BigDecimal(number.toString)
+      row.javaBigDecimal("javaBigDecimal") mustEqual new java.math.BigDecimal(number.toString)
       row.javaBigDecimalOption("javaBigDecimal") must beSome(new java.math.BigDecimal(number.toString))
     }
   }
@@ -865,7 +865,7 @@ class SqlResultSpec extends Specification with Mockito {
       timestamp.toInstant() returns res
 
       rs.getTimestamp("instant") returns timestamp
-      row.instant("instant") equals res
+      row.instant("instant") mustEqual res
       row.instantOption("instant") must beSome(res)
     }
 
@@ -882,21 +882,21 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = Array[Byte]('1','2','3')
       rs.getObject("byteArray") returns res
-      row.byteArray("byteArray") equals res
+      row.byteArray("byteArray") mustEqual res
       row.byteArrayOption("byteArray") must beSome(res)
 
       val blob = mock[Blob]
       blob.length returns res.length
       blob.getBytes(0, res.length) returns res
       rs.getObject("byteArray") returns blob
-      row.byteArray("byteArray") equals res
+      row.byteArray("byteArray") mustEqual res
       row.byteArrayOption("byteArray") must beSome(res)
 
       val clob = mock[Clob]
       clob.length returns res.length
       clob.getSubString(1, res.length) returns "123"
       rs.getObject("byteArray") returns clob
-      row.byteArray("byteArray") equals res
+      row.byteArray("byteArray") mustEqual res
       row.byteArrayOption("byteArray") must beSome(res)
     }
   }
@@ -907,7 +907,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = Array[Byte]('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
       rs.getObject("uuid") returns res
-      row.uuid("uuid") equals new UUID(3472611983179986487L, 4051376414998685030L)
+      row.uuid("uuid") mustEqual new UUID(3472611983179986487L, 4051376414998685030L)
       row.uuidOption("uuid") must beSome(new UUID(3472611983179986487L, 4051376414998685030L))
     }
 
@@ -916,7 +916,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = new UUID(3472611983179986487L, 4051376414998685030L)
       rs.getObject("uuid") returns res
-      row.uuid("uuid") equals res
+      row.uuid("uuid") mustEqual res
       row.uuidOption("uuid") must beSome(res)
     }
   }
@@ -927,7 +927,7 @@ class SqlResultSpec extends Specification with Mockito {
 
       val res = "000102030405060708090a0b0c0d0e0f"
       rs.getObject("uuidFromString") returns res
-      row.uuidFromString("uuidFromString") equals new UUID(283686952306183L, 579005069656919567L)
+      row.uuidFromString("uuidFromString") mustEqual new UUID(283686952306183L, 579005069656919567L)
       row.uuidFromStringOption("uuidFromString") must beSome(new UUID(283686952306183L, 579005069656919567L))
     }
   }
@@ -943,8 +943,8 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, row, _) = getMocks
 
       rs.getInt("enum") returns 1 thenReturns 2 thenReturns 3 thenReturns 4
-      row.enum("enum", Things) equals Things.one
-      row.enum("enum", Things) equals Things.two
+      row.enum("enum", Things) mustEqual Things.one
+      row.enum("enum", Things) mustEqual Things.two
       row.enumOption("enum", Things) must beSome(Things.three)
       row.enumOption("enum", Things) must beNone
     }
