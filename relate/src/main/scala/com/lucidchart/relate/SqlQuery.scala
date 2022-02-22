@@ -81,7 +81,7 @@ trait Sql extends CollectionsSql {
   /**
    * Execute a statement
    * @param connection the db connection to use when executing the query
-   * @return whether the query succeeded in its execution
+   * @return true if the first result is a ResultSet object; false if the first result is an update count or there is no result
    */
   def execute()(implicit connection: Connection): Boolean = normalStatement.execute()
 

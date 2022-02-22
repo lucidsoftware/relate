@@ -32,7 +32,7 @@ private[relate] sealed trait StatementPreparer {
 
   /**
    * Execute the query and close
-   * @return if the query succeeded or not
+   * @return true if the first result is a ResultSet object; false if the first result is an update count or there is no result
    */
   def execute(): Boolean = {
     try {
