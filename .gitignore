@@ -2,6 +2,7 @@ Relate.sublime-project
 Relate.sublime-workspace
 .ensime
 .history
+.bsp
 .idea*
 lib_managed/*
 
