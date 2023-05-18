@@ -5,7 +5,7 @@ lazy val `macros2.11` = macros("2.11.12")
 lazy val `macros2.12` = macros("2.12.11")
 lazy val `macros2.13` = macros("2.13.2")
 lazy val macrosAggregate = macros.aggregate(`macros2.11`, `macros2.12`, `macros2.13`).settings(
-  skip in publish := true
+  publish / skip := true
 )
 
 lazy val relate = project.in(file("relate")).cross
@@ -13,7 +13,7 @@ lazy val `relate2.11` = relate("2.11.12")
 lazy val `relate2.12` = relate("2.12.11")
 lazy val `relate2.13` = relate("2.13.2")
 lazy val relateAggregate = relate.aggregate(`relate2.11`, `relate2.12`, `relate2.13`).settings(
-  skip in publish := true
+  publish / skip := true
 )
 
 lazy val postgres = project.in(file("postgres")).cross.dependsOn(relate)
@@ -21,7 +21,7 @@ lazy val `postgres2.11` = postgres("2.11.12")
 lazy val `postgres2.12` = postgres("2.12.11")
 lazy val `postgres2.13` = postgres("2.13.2")
 lazy val postgresAggregate = postgres.aggregate(`postgres2.11`, `postgres2.12`, `postgres2.13`).settings(
-  skip in publish := true
+  publish / skip := true
 )
 
 val benchmarkTag = Tags.Tag("benchmark")
@@ -49,9 +49,9 @@ inScope(Global)(Seq(
     "-feature"
   ),
   scmInfo := Some(ScmInfo(url("https://github.com/lucidsoftware/relate"), "scm:git:git@github.com:lucidsoftware/relate.git")),
-  tags in (Benchmark, test) += benchmarkTag -> 1,
-  tags in (Benchmark, testOnly) += benchmarkTag -> 1,
-  tags in (Benchmark, testQuick) += benchmarkTag -> 1,
+  Benchmark / test / tags += benchmarkTag -> 1,
+  Benchmark / testOnly / tags += benchmarkTag -> 1,
+  Benchmark / testQuick / tags += benchmarkTag -> 1,
   version := sys.props.getOrElse("build.version", "0-SNAPSHOT")
 ))
 
