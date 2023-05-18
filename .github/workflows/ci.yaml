@@ -26,6 +26,8 @@ jobs:
             ~/.ivy2
             ~/.sbt
           key: ${{ runner.os }}-sbt-${{ hashFiles('**/*.sbt') }}
+      - name: Start mysql
+        run: sudo /etc/init.d/mysql start
       - name: Set SBT_OPTS
         run: bash generate_sbt_opts.sh
       - name: Build
@@ -35,7 +37,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: jars
-          path: '*/target/*.jar'
+          path: '*/target/**/*.jar'
           retention-days: 1
   publish:
     if: ${{ github.event_name != 'pull_request' }} && (github.repository == 'lucidsoftware/java-thread-context') }}
@@ -48,7 +50,7 @@ jobs:
           path: |
             ~/.ivy2
             ~/.sbt
-          key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
+          key: ${{ runner.os }}-sbt-${{ hashFiles('**/*.sbt') }}
       - name: Set SBT_OPTS
         run: bash generate_sbt_opts.sh
       - name: Publish to Sonatype
@@ -73,5 +75,5 @@ jobs:
         run: |
           set -x
           tag="${GITHUB_REF#refs/tags/}"
-          targets=($(printf -- "-a %s " */target/*.jar))
+          targets=($(printf -- "-a %s " */target/**/*.jar))
           hub release create "${targets[@]}" -m "Release $tag" $tag

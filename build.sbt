@@ -50,8 +50,8 @@ inScope(Global)(Seq(
   ),
   scmInfo := Some(ScmInfo(url("https://github.com/lucidsoftware/relate"), "scm:git:git@github.com:lucidsoftware/relate.git")),
   Benchmark / test / tags += benchmarkTag -> 1,
-  Benchmark / test / tags += benchmarkTag -> 1,
-  Benchmark / test / tags += benchmarkTag -> 1,
+  Benchmark / testOnly / tags += benchmarkTag -> 1,
+  Benchmark / testQuick / tags += benchmarkTag -> 1,
   version := sys.props.getOrElse("build.version", "0-SNAPSHOT")
 ))
 
