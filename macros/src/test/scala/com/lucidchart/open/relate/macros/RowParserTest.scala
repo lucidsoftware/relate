@@ -11,6 +11,38 @@ object Thing {
 }
 case class User(firstName: String, lastName: String)
 
+case class Big(
+  f1: Int,
+  f2: Option[Int],
+  f3: Int,
+  f4: Int,
+  f5: Int,
+  f6: Int,
+  f7: Int,
+  f8: Int,
+  f9: Int,
+  z10: Int,
+  z11: Int,
+  z12: Int,
+  z13: Int,
+  z14: Int,
+  z15: Int,
+  z16: Int,
+  z17: Int,
+  z18: Int,
+  z19: Int,
+  a20: Int,
+  a21: Int,
+  a22: Int,
+  a23: Int,
+  a24: Option[Int],
+  a25: Int
+) {
+  val m1: Int = 0
+  def m2: Int = 0
+}
+
+
 class RowParserTest extends Specification with Mockito {
   "RowParser def macros" should {
     "generate parser" in {
@@ -74,6 +106,23 @@ class RowParserTest extends Specification with Mockito {
       val row = SqlRow(rs)
 
       p.parse(row) mustEqual User("gregg", "hernandez")
+    }
+
+    "generate parser for a case class > 22 fields" in {
+      val rs = mock[java.sql.ResultSet]
+      for (i <- (1 to 9)) { rs.getInt(s"f${i}") returns i }
+      for (i <- (10 to 19)) { rs.getInt(s"z${i}") returns i }
+      for (i <- (20 to 25)) { rs.getInt(s"a${i}") returns i }
+
+      val row = SqlRow(rs)
+
+      val p = generateParser[Big]
+
+      p.parse(row) mustEqual(Big(
+        1, Some(2), 3, 4, 5, 6, 7, 8, 9, 10,
+        11, 12, 13, 14, 15, 16, 17, 18, 19,
+        20, 21, 22, 23, Some(24), 25)
+      )
     }
 
     "fail to compile with non-literals" in {
