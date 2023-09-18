@@ -44,12 +44,16 @@ case class Big(
 
 
 class RowParserTest extends Specification with Mockito {
+  class MockableRow extends SqlRow(null) {
+    final override def apply[A: ColReader](col: String): A = super.apply(col)
+    final override def opt[A: ColReader](col: String): Option[A] = super.opt(col)
+  }
+
   "RowParser def macros" should {
     "generate parser" in {
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("firstName") returns "hi"
-      rs.getInt("b") returns 20
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("firstName") returns Some("hi")
+      row.intOption("b") returns Some(20)
 
       val p = generateParser[Thing]
 
@@ -57,10 +61,9 @@ class RowParserTest extends Specification with Mockito {
     }
 
     "generate parser w/snake_case columns" in {
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("first_name") returns "gregg"
-      rs.getInt("b") returns 20
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("first_name") returns Some("gregg")
+      row.intOption("b") returns Some(20)
 
       val p = generateSnakeParser[Thing]
 
@@ -73,10 +76,9 @@ class RowParserTest extends Specification with Mockito {
         "lastName" -> "lname"
       ))
 
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("fname") returns "gregg"
-      rs.getString("lname") returns "hernandez"
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("fname") returns Some("gregg")
+      row.stringOption("lname") returns Some("hernandez")
 
       p.parse(row) mustEqual User("gregg", "hernandez")
     }
@@ -87,10 +89,9 @@ class RowParserTest extends Specification with Mockito {
         ("lastName", "lname")
       ))
 
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("fname") returns "gregg"
-      rs.getString("lname") returns "hernandez"
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("fname") returns Some("gregg")
+      row.stringOption("lname") returns Some("hernandez")
 
       p.parse(row) mustEqual User("gregg", "hernandez")
     }
@@ -100,21 +101,19 @@ class RowParserTest extends Specification with Mockito {
         "firstName" -> "fname"
       ))
 
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("fname") returns "gregg"
-      rs.getString("lastName") returns "hernandez"
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("fname") returns Some("gregg")
+      row.stringOption("lastName") returns Some("hernandez")
 
       p.parse(row) mustEqual User("gregg", "hernandez")
     }
 
     "generate parser for a case class > 22 fields" in {
-      val rs = mock[java.sql.ResultSet]
-      for (i <- (1 to 9)) { rs.getInt(s"f${i}") returns i }
-      for (i <- (10 to 19)) { rs.getInt(s"z${i}") returns i }
-      for (i <- (20 to 25)) { rs.getInt(s"a${i}") returns i }
+      val row = mock[MockableRow]
+      for (i <- (1 to 9)) { row.intOption(s"f${i}") returns Some(i) }
+      for (i <- (10 to 19)) { row.intOption(s"z${i}") returns Some(i) }
+      for (i <- (20 to 25)) { row.intOption(s"a${i}") returns Some(i) }
 
-      val row = SqlRow(rs)
 
       val p = generateParser[Big]
 
@@ -154,10 +153,9 @@ class RowParserTest extends Specification with Mockito {
     case class SimpleRecord(firstName: String, lastName: Option[String])
 
     "generate parser" in {
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("firstName") returns "gregg"
-      rs.getString("lastName") returns "hernandez"
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("firstName") returns Some("gregg")
+      row.stringOption("lastName") returns Some("hernandez")
 
       implicitly[RowParser[SimpleRecord]].parse(row) mustEqual SimpleRecord("gregg", Some("hernandez"))
     }
@@ -170,10 +168,9 @@ class RowParserTest extends Specification with Mockito {
     }
 
     "generate parser w/snake_case columns" in {
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("first_name") returns "gregg"
-      rs.getString("last_name") returns "hernandez"
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("first_name") returns Some("gregg")
+      row.stringOption("last_name") returns Some("hernandez")
 
       // verify that this still compiles
       SnakeRecord.f()
@@ -185,10 +182,9 @@ class RowParserTest extends Specification with Mockito {
     case class RemapRecord(firstName: String, lastName: String)
 
     "remap column names" in {
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("fname") returns "gregg"
-      rs.getString("lname") returns "hernandez"
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("fname") returns Some("gregg")
+      row.stringOption("lname") returns Some("hernandez")
 
       implicitly[RowParser[RemapRecord]].parse(row) mustEqual RemapRecord("gregg", "hernandez")
     }
@@ -197,10 +193,9 @@ class RowParserTest extends Specification with Mockito {
     case class RemapTRecord(firstName: String, lastName: String)
 
     "remap column names w/normal tuple syntax" in {
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("fname") returns "gregg"
-      rs.getString("lname") returns "hernandez"
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("fname") returns Some("gregg")
+      row.stringOption("lname") returns Some("hernandez")
 
       implicitly[RowParser[RemapTRecord]].parse(row) mustEqual RemapTRecord("gregg", "hernandez")
     }
@@ -209,10 +204,9 @@ class RowParserTest extends Specification with Mockito {
     case class RemapSomeRecord(firstName: String, lastName: String)
 
     "remap some column names" in {
-      val rs = mock[java.sql.ResultSet]
-      rs.getString("fname") returns "gregg"
-      rs.getString("lastName") returns "hernandez"
-      val row = SqlRow(rs)
+      val row = mock[MockableRow]
+      row.stringOption("fname") returns Some("gregg")
+      row.stringOption("lastName") returns Some("hernandez")
 
       implicitly[RowParser[RemapSomeRecord]].parse(row) mustEqual RemapSomeRecord("gregg", "hernandez")
     }

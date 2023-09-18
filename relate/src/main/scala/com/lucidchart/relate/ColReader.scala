@@ -1,7 +1,5 @@
 package com.lucidchart.relate
 
-import java.nio.ByteBuffer
-import java.sql.ResultSet
 import java.time.Instant
 import java.util.{Date, UUID}
 
@@ -36,39 +34,21 @@ object ColReader {
     def read(col: String, rs: SqlRow): Option[A] = f(col, rs)
   }
 
-  def option[A](x: A, rs: ResultSet): Option[A] = {
-    if (rs.wasNull()) {
-      None
-    } else {
-      Some(x)
-    }
-  }
-
-  private def optReader[A](f: (String, ResultSet) => A): ColReader[A] = ColReader[A] { (col, row) =>
-    option(f(col, row.resultSet), row.resultSet)
-  }
-
-  implicit val jbigDecimalReader: ColReader[java.math.BigDecimal] = ColReader[java.math.BigDecimal] { (col, row) =>
-    option(row.resultSet.getBigDecimal(col), row.resultSet)
-  }
-
-  implicit val bigDecimalReader: ColReader[BigDecimal] = jbigDecimalReader.map(BigDecimal(_))
-
-  implicit val bigIntReader: ColReader[BigInt] = jbigDecimalReader.map(bd => BigInt(bd.longValue))
-
-  implicit val boolReader: ColReader[Boolean] = optReader((col, rs) => rs.getBoolean(col))
-  implicit val byteArrayReader: ColReader[Array[Byte]] = optReader((col, rs) => rs.getBytes(col))
-  implicit val byteReader: ColReader[Byte] = optReader((col, rs) => rs.getByte(col))
-  implicit val dateReader: ColReader[Date] = optReader((col, rs) => rs.getDate(col))
-  implicit val instantReader: ColReader[Instant] = optReader((col, rs) => rs.getTimestamp(col)).map(_.toInstant)
-  implicit val doubleReader: ColReader[Double] = optReader((col, rs) => rs.getDouble(col))
-  implicit val intReader: ColReader[Int] = optReader((col, rs) => rs.getInt(col))
-  implicit val longReader: ColReader[Long] = optReader((col, rs) => rs.getLong(col))
-  implicit val shortReader: ColReader[Short] = optReader((col, rs) => rs.getShort(col))
-  implicit val stringReader: ColReader[String] = optReader((col, rs) => rs.getString(col))
-  implicit val uuidReader: ColReader[UUID] = ColReader[UUID] { (col, row) =>
-    row.uuidOption(col)
-  }
+  implicit val jbigDecimalReader: ColReader[java.math.BigDecimal] = ColReader { (col, row) => row.javaBigDecimalOption(col)}
+  implicit val bigDecimalReader: ColReader[BigDecimal] = ColReader { (col, row) => row.bigDecimalOption(col)}
+  implicit val jBigIntReader: ColReader[java.math.BigInteger] = ColReader { (col, row) => row.javaBigIntegerOption(col)}
+  implicit val bigIntReader: ColReader[BigInt] = ColReader { (col, row) => row.bigIntOption(col)}
+  implicit val boolReader: ColReader[Boolean] = ColReader { (col, row) => row.boolOption(col)}
+  implicit val byteArrayReader: ColReader[Array[Byte]] = ColReader { (col, row) => row.byteArrayOption(col)}
+  implicit val byteReader: ColReader[Byte] = ColReader { (col, row) => row.byteOption(col)}
+  implicit val dateReader: ColReader[Date] = ColReader { (col, row) => row.dateOption(col)}
+  implicit val instantReader: ColReader[Instant] = ColReader { (col, row) => row.instantOption(col)}
+  implicit val doubleReader: ColReader[Double] = ColReader { (col, row) => row.doubleOption(col)}
+  implicit val intReader: ColReader[Int] = ColReader { (col, row) => row.intOption(col)}
+  implicit val longReader: ColReader[Long] = ColReader { (col, row) => row.longOption(col)}
+  implicit val shortReader: ColReader[Short] = ColReader { (col, row) => row.shortOption(col)}
+  implicit val stringReader: ColReader[String] = ColReader { (col, row) => row.stringOption(col)}
+  implicit val uuidReader: ColReader[UUID] = ColReader[UUID] { (col, row) => row.uuidOption(col)}
 
   def enumReader[A <: Enumeration](e: A): ColReader[e.Value] = {
     intReader.flatMap(id => ColReader[e.Value] { (_, _) =>
