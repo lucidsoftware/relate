@@ -1,7 +1,8 @@
 package com.lucidchart.relate
 
-import java.util.{Date, UUID}
+import java.sql.Timestamp
 import java.time.Instant
+import java.util.{Date, UUID}
 import org.specs2.mock.Mockito
 import org.specs2.mutable._
 
@@ -10,7 +11,8 @@ case class RecordA(
   bool: Boolean,
   ba: Array[Byte],
   byte: Byte,
-  date: Date,
+  sqlDate: java.sql.Date,
+  timestampDate: Date,
   instant: Instant,
   double: Double,
   int: Int,
@@ -29,7 +31,8 @@ object RecordA extends Mockito {
         row[Boolean]("bool"),
         row[Array[Byte]]("ba"),
         row[Byte]("byte"),
-        row[Date]("date"),
+        row[java.sql.Date]("sqlDate"),
+        row[Date]("timestampDate"),
         row[Instant]("instant"),
         row[Double]("double"),
         row[Int]("int"),
@@ -50,7 +53,8 @@ object RecordA extends Mockito {
     rs.getBoolean("bool") returns true
     rs.getBytes("ba") returns Array[Byte](1,2,3)
     rs.getByte("byte") returns (1: Byte)
-    rs.getDate("date") returns (new java.sql.Date(10000))
+    rs.getDate("sqlDate") returns (new java.sql.Date(10000))
+    rs.getTimestamp("timestampDate") returns (new Timestamp(timeMillis))
     rs.getTimestamp("instant") returns (new java.sql.Timestamp(timeMillis))
     rs.getDouble("double") returns 1.1
     rs.getInt("int") returns 10
@@ -69,7 +73,8 @@ case class RecordB(
   bool: Option[Boolean],
   ba: Option[Array[Byte]],
   byte: Option[Byte],
-  date: Option[Date],
+  sqlDate: Option[java.sql.Date],
+  timestampDate: Option[Date],
   instant: Option[Instant],
   double: Option[Double],
   int: Option[Int],
@@ -88,7 +93,8 @@ object RecordB extends Mockito {
         row.opt[Boolean]("bool"),
         row.opt[Array[Byte]]("ba"),
         row.opt[Byte]("byte"),
-        row.opt[Date]("date"),
+        row.opt[java.sql.Date]("sqlDate"),
+        row.opt[Date]("timestampDate"),
         row.opt[Instant]("instant"),
         row.opt[Double]("double"),
         row.opt[Int]("int"),
@@ -106,7 +112,8 @@ object RecordB extends Mockito {
     rs.wasNull() returns true
     rs.getBigDecimal("bd") returns null
     rs.getBytes("ba") returns null
-    rs.getDate("date") returns null
+    rs.getDate("sqlDate") returns null
+    rs.getTimestamp("timestampDate") returns null
     rs.getString("str") returns null
     rs.getBytes("uuid") returns null
     SqlRow(rs)
@@ -138,7 +145,8 @@ class ColReaderTest extends Specification with Mockito {
         true,
         null,
         1,
-        new Date(10000),
+        new java.sql.Date(10000),
+        new Date(mockedInstant.toEpochMilli),
         mockedInstant,
         1.1,
         10,
@@ -155,6 +163,7 @@ class ColReaderTest extends Specification with Mockito {
       val parsed = RecordB.reader.parse(row)
 
       parsed mustEqual RecordB(
+        None,
         None,
         None,
         None,
@@ -185,7 +194,8 @@ class ColReaderTest extends Specification with Mockito {
         Some(true),
         null,
         Some(1),
-        Some(new Date(10000)),
+        Some(new java.sql.Date(10000)),
+        Some(new Date(mockedInstant.toEpochMilli)),
         Some(mockedInstant),
         Some(1.1),
         Some(10),
