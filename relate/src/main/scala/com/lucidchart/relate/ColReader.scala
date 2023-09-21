@@ -1,7 +1,6 @@
 package com.lucidchart.relate
 
-import java.nio.ByteBuffer
-import java.sql.ResultSet
+import java.sql.{ResultSet, Timestamp}
 import java.time.Instant
 import java.util.{Date, UUID}
 
@@ -67,6 +66,7 @@ object ColReader {
   implicit val longReader: ColReader[Long] = optReader((col, rs) => rs.getLong(col))
   implicit val shortReader: ColReader[Short] = optReader((col, rs) => rs.getShort(col))
   implicit val stringReader: ColReader[String] = optReader((col, rs) => rs.getString(col))
+  implicit val timeReader: ColReader[Timestamp] = optReader((col, rs) => rs.getTimestamp(col))
   implicit val uuidReader: ColReader[UUID] = ColReader[UUID] { (col, row) =>
     row.uuidOption(col)
   }

@@ -13,6 +13,7 @@ case class RecordA(
   byte: Byte,
   sqlDate: java.sql.Date,
   timestampDate: Date,
+  timestamp: Timestamp,
   instant: Instant,
   double: Double,
   int: Int,
@@ -33,6 +34,7 @@ object RecordA extends Mockito {
         row[Byte]("byte"),
         row[java.sql.Date]("sqlDate"),
         row[Date]("timestampDate"),
+        row[Timestamp]("timestamp"),
         row[Instant]("instant"),
         row[Double]("double"),
         row[Int]("int"),
@@ -55,6 +57,7 @@ object RecordA extends Mockito {
     rs.getByte("byte") returns (1: Byte)
     rs.getDate("sqlDate") returns (new java.sql.Date(10000))
     rs.getTimestamp("timestampDate") returns (new Timestamp(timeMillis))
+    rs.getTimestamp("timestamp") returns (new Timestamp(timeMillis))
     rs.getTimestamp("instant") returns (new java.sql.Timestamp(timeMillis))
     rs.getDouble("double") returns 1.1
     rs.getInt("int") returns 10
@@ -75,6 +78,7 @@ case class RecordB(
   byte: Option[Byte],
   sqlDate: Option[java.sql.Date],
   timestampDate: Option[Date],
+  timestamp: Option[Timestamp],
   instant: Option[Instant],
   double: Option[Double],
   int: Option[Int],
@@ -95,6 +99,7 @@ object RecordB extends Mockito {
         row.opt[Byte]("byte"),
         row.opt[java.sql.Date]("sqlDate"),
         row.opt[Date]("timestampDate"),
+        row.opt[Timestamp]("timestamp"),
         row.opt[Instant]("instant"),
         row.opt[Double]("double"),
         row.opt[Int]("int"),
@@ -114,6 +119,7 @@ object RecordB extends Mockito {
     rs.getBytes("ba") returns null
     rs.getDate("sqlDate") returns null
     rs.getTimestamp("timestampDate") returns null
+    rs.getTimestamp("timestamp") returns null
     rs.getString("str") returns null
     rs.getBytes("uuid") returns null
     SqlRow(rs)
@@ -147,6 +153,7 @@ class ColReaderTest extends Specification with Mockito {
         1,
         new java.sql.Date(10000),
         new Date(mockedInstant.toEpochMilli),
+        new Timestamp(mockedInstant.toEpochMilli),
         mockedInstant,
         1.1,
         10,
@@ -163,6 +170,7 @@ class ColReaderTest extends Specification with Mockito {
       val parsed = RecordB.reader.parse(row)
 
       parsed mustEqual RecordB(
+        None,
         None,
         None,
         None,
@@ -196,6 +204,7 @@ class ColReaderTest extends Specification with Mockito {
         Some(1),
         Some(new java.sql.Date(10000)),
         Some(new Date(mockedInstant.toEpochMilli)),
+        Some(new Timestamp(mockedInstant.toEpochMilli)),
         Some(mockedInstant),
         Some(1.1),
         Some(10),
