@@ -4,10 +4,9 @@ import java.io.{InputStream, Reader}
 import java.net.URL
 import java.nio.ByteBuffer
 import java.sql.{Blob, Clob, NClob, Ref, RowId, SQLXML, Time, Timestamp}
-import java.time.Instant
+import java.time.{Instant, LocalDate}
 import java.util.{Calendar, UUID}
 import scala.collection.JavaConverters._
-import scala.language.higherKinds
 import scala.util.Try
 
 object SqlRow {
@@ -145,6 +144,9 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   // symmetric with respect to the java.util.Date.equals(Object)"
   def dateOption(column: String): Option[java.util.Date] =
     getResultSetOption(resultSet.getTimestamp(column)).map(ts => new java.util.Date(ts.getTime))
+
+  def localDate(column: String): LocalDate = localDateOption(column).get
+  def localDateOption(column: String): Option[LocalDate] = strictDateOption(column).map(_.toLocalDate)
 
   def instant(column: String): Instant = instantOption(column).get
   def instantOption(column: String): Option[Instant] = getResultSetOption(resultSet.getTimestamp(column)).map(_.toInstant)

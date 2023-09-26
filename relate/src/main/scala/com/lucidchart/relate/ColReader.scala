@@ -1,6 +1,6 @@
 package com.lucidchart.relate
 
-import java.time.Instant
+import java.time.{Instant, LocalDate}
 import java.util.{Date, UUID}
 
 class NullColumnException(col: String) extends Exception(s"Unexpected null value in column: $col")
@@ -42,6 +42,7 @@ object ColReader {
   implicit val byteArrayReader: ColReader[Array[Byte]] = ColReader { (col, row) => row.byteArrayOption(col)}
   implicit val byteReader: ColReader[Byte] = ColReader { (col, row) => row.byteOption(col)}
   implicit val dateReader: ColReader[Date] = ColReader { (col, row) => row.dateOption(col)}
+  implicit val localDateReader: ColReader[LocalDate] = ColReader { (col, row) => row.localDateOption(col)}
   implicit val instantReader: ColReader[Instant] = ColReader { (col, row) => row.instantOption(col)}
   implicit val doubleReader: ColReader[Double] = ColReader { (col, row) => row.doubleOption(col)}
   implicit val intReader: ColReader[Int] = ColReader { (col, row) => row.intOption(col)}
