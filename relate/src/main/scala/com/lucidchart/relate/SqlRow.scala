@@ -92,12 +92,7 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
     implicitly[ColReader[A]].read(col, this)
 
   def string(column: String): String = stringOption(column).get
-  def stringOption(column: String): Option[String] = {
-    extractOption(column) {
-      case x: String => x
-      case x: java.sql.Clob => x.getSubString(1, x.length.asInstanceOf[Int])
-    }
-  }
+  def stringOption(column: String): Option[String] = getResultSetOption(resultSet.getString(column))
 
   def int(column: String): Int = intOption(column).get
   def intOption(column: String): Option[Int] = getResultSetOption(resultSet.getInt(column))
@@ -115,32 +110,20 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def boolOption(column: String): Option[Boolean] = getResultSetOption(resultSet.getBoolean(column))
 
   def long(column: String): Long = longOption(column).get
-  def longOption(column: String): Option[Long] = {
-    extractOption(column) {
-      case x: Long => x
-      case x: Int => x.toLong
-    }
-  }
+  def longOption(column: String): Option[Long] = getResultSetOption(resultSet.getLong(column))
 
   def bigInt(column: String): BigInt = bigIntOption(column).get
   def bigIntOption(column: String): Option[BigInt] = {
     extractOption(column) {
+      case x: java.math.BigInteger => BigInt(x)
       case x: Int => BigInt(x)
       case x: Long => BigInt(x)
       case x: String => BigInt(x)
-      case x: java.math.BigInteger => BigInt(x.toString)
     }
   }
 
   def bigDecimal(column: String): BigDecimal = bigDecimalOption(column).get
-  def bigDecimalOption(column: String): Option[BigDecimal] = {
-    extractOption(column) {
-      case x: Int => BigDecimal(x)
-      case x: Long => BigDecimal(x)
-      case x: String => BigDecimal(x)
-      case x: java.math.BigDecimal => BigDecimal(x.toString)
-    }
-  }
+  def bigDecimalOption(column: String): Option[BigDecimal] = javaBigDecimalOption(column).map(BigDecimal.apply)
 
   def javaBigInteger(column: String): java.math.BigInteger = javaBigIntegerOption(column).get
   def javaBigIntegerOption(column: String): Option[java.math.BigInteger] = {
@@ -148,16 +131,12 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
       case x: java.math.BigInteger => x
       case x: Int => java.math.BigInteger.valueOf(x)
       case x: Long => java.math.BigInteger.valueOf(x)
+      case x: String => new java.math.BigInteger(x)
     }
   }
 
   def javaBigDecimal(column: String): java.math.BigDecimal = javaBigDecimalOption(column).get
-  def javaBigDecimalOption(column: String): Option[java.math.BigDecimal] = {
-    extractOption(column) {
-      case x: java.math.BigDecimal => x
-      case x: Double => new java.math.BigDecimal(x)
-    }
-  }
+  def javaBigDecimalOption(column: String): Option[java.math.BigDecimal] = getResultSetOption(resultSet.getBigDecimal(column))
 
   def date(column: String): Date = dateOption(column).get
   // Timestamp documentation says that "it is recommended that code not view Timestamp values generically as an instance
