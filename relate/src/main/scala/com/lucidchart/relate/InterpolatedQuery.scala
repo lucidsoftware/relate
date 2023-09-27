@@ -2,7 +2,9 @@ package com.lucidchart.relate
 
 import java.sql.{Connection, PreparedStatement}
 
-class InterpolatedQuery(protected val parsedQuery: String, protected val params: Seq[Parameter]) extends Sql with MultipleParameter {
+class InterpolatedQuery(protected val parsedQuery: String, protected val params: Seq[Parameter])
+    extends Sql
+    with MultipleParameter {
 
   def +(query: InterpolatedQuery) = new InterpolatedQuery(parsedQuery + query.parsedQuery, params ++ query.params)
 
@@ -11,11 +13,13 @@ class InterpolatedQuery(protected val parsedQuery: String, protected val params:
   def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder ++= parsedQuery
 
   def withTimeout(seconds: Int): InterpolatedQuery = new InterpolatedQuery(parsedQuery, params) {
-    override protected def normalStatement(implicit conn: Connection) = new BaseStatement(conn) with NormalStatementPreparer {
+    override protected def normalStatement(implicit conn: Connection) = new BaseStatement(conn)
+      with NormalStatementPreparer {
       override def timeout = Some(seconds)
     }
 
-    override protected def insertionStatement(implicit conn: Connection) = new BaseStatement(conn) with InsertionStatementPreparer {
+    override protected def insertionStatement(implicit conn: Connection) = new BaseStatement(conn)
+      with InsertionStatementPreparer {
       override def timeout = Some(seconds)
     }
 

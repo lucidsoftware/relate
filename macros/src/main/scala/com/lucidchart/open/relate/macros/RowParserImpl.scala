@@ -26,18 +26,17 @@ class RowParserImpl(val c: Context) {
 
     val opts: AnnotOpts = c.prefix.tree match {
       case q"new Record(..$params)" =>
-        val paramTrees: Map[String, Tree] = params.map {
-          case q"$optNameAst -> $optValueAst" =>
-            val optName = optNameAst match {
-              case Literal(Constant(optName: String)) => optName
-              case name => c.abort(name.pos, "Keys must be literal strings")
-            }
+        val paramTrees: Map[String, Tree] = params.map { case q"$optNameAst -> $optValueAst" =>
+          val optName = optNameAst match {
+            case Literal(Constant(optName: String)) => optName
+            case name                               => c.abort(name.pos, "Keys must be literal strings")
+          }
 
-            if (!validOptions.contains(optName)) {
-              c.abort(optNameAst.pos, s"$optName is an invalid option. Valid options: ${validOptions.mkString(", ")}")
-            }
+          if (!validOptions.contains(optName)) {
+            c.abort(optNameAst.pos, s"$optName is an invalid option. Valid options: ${validOptions.mkString(", ")}")
+          }
 
-            optName -> optValueAst
+          optName -> optValueAst
         }.toMap
 
         if (paramTrees.contains("colMapping") && paramTrees.contains("snakeCase")) {
@@ -46,15 +45,17 @@ class RowParserImpl(val c: Context) {
 
         paramTrees.foldLeft(AnnotOpts(false, Map.empty)) { case (opts, (optName, optValueAst)) =>
           optName match {
-            case "colMapping" => optValueAst match {
-              case q"Map[..$tpts](..$params)" =>
-                opts.copy(remapping = getRemapping(params))
-            }
-            case "snakeCase" => optValueAst match {
-              case q"true" => opts.copy(snakeCase = true)
-              case q"false" => opts.copy(snakeCase = false)
-              case value => c.abort(value.pos, "snakeCase requires a literal true or false value")
-            }
+            case "colMapping" =>
+              optValueAst match {
+                case q"Map[..$tpts](..$params)" =>
+                  opts.copy(remapping = getRemapping(params))
+              }
+            case "snakeCase" =>
+              optValueAst match {
+                case q"true"  => opts.copy(snakeCase = true)
+                case q"false" => opts.copy(snakeCase = false)
+                case value    => c.abort(value.pos, "snakeCase requires a literal true or false value")
+              }
           }
         }
       case q"new Record()" => AnnotOpts(false, Map.empty)
@@ -64,7 +65,6 @@ class RowParserImpl(val c: Context) {
 
     val result: List[Tree] = inputs match {
       case target @ q"case class $tpname[..$tparams] $ctorMods(...$paramss) extends { ..$earlydefns } with ..$parents { $self => ..$stats }" :: tail =>
-
         val params = paramss.head
 
         val paramNames = params.map(_.name.toString).toSet
@@ -134,13 +134,13 @@ class RowParserImpl(val c: Context) {
   private def tupleValueString(tupleTree: Tree): String = {
     val remapAst = tupleTree match {
       case q"$aa($colLit).$arrow[..$tpts]($remapAst)" => remapAst
-      case q"$col -> $remapAst" => remapAst
-      case q"($col, $remapAst)" => remapAst
+      case q"$col -> $remapAst"                       => remapAst
+      case q"($col, $remapAst)"                       => remapAst
     }
 
     remapAst match {
       case Literal(Constant(remap: String)) => remap
-      case value => c.abort(value.pos, "Remappings must be literal strings")
+      case value                            => c.abort(value.pos, "Remappings must be literal strings")
     }
   }
 
@@ -189,11 +189,16 @@ class RowParserImpl(val c: Context) {
     }
   }
 
-  private def toSnakeCase(s: String): String = s.replaceAll(
-    "([A-Z]+)([A-Z][a-z])", "$1_$2"
-  ).replaceAll(
-    "([a-z\\d])([A-Z])", "$1_$2"
-  ).toLowerCase
+  private def toSnakeCase(s: String): String = s
+    .replaceAll(
+      "([A-Z]+)([A-Z][a-z])",
+      "$1_$2"
+    )
+    .replaceAll(
+      "([a-z\\d])([A-Z])",
+      "$1_$2"
+    )
+    .toLowerCase
 
   private def findCaseClassFields(ty: Type): List[(TermName, Type)] = {
     ty.members.sorted.collect {
@@ -204,7 +209,7 @@ class RowParserImpl(val c: Context) {
   private def expand(colLit: Tree, tree: Tree): (String, Tree) = {
     val col = colLit match {
       case Literal(Constant(col: String)) => col
-      case _ => c.abort(colLit.pos, "Column names must be literal strings")
+      case _                              => c.abort(colLit.pos, "Column names must be literal strings")
     }
     col -> tree
   }
@@ -212,9 +217,9 @@ class RowParserImpl(val c: Context) {
   private def getRemapping(params: List[Tree]): Map[String, Tree] = {
     params.map {
       case tree @ q"$aa($colLit).$arrow[..$tpts]($remapLit)" => expand(colLit, tree)
-      case tree @ q"$colLit -> $remapLit" => expand(colLit, tree)
-      case tree @ q"($colLit, $remapLit)" => expand(colLit, tree)
-      case tree => c.abort(tree.pos, "Remappings must be literal tuples")
+      case tree @ q"$colLit -> $remapLit"                    => expand(colLit, tree)
+      case tree @ q"($colLit, $remapLit)"                    => expand(colLit, tree)
+      case tree                                              => c.abort(tree.pos, "Remappings must be literal tuples")
     }.toMap
   }
 }

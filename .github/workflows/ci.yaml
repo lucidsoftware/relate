@@ -33,7 +33,7 @@ jobs:
       - name: Build
         run: sbt package
       - name: Test
-        run: sbt test
+        run: sbt test scalafmtCheckAll
       - uses: actions/upload-artifact@v3
         with:
           name: jars

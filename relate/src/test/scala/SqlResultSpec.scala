@@ -15,7 +15,7 @@ case class TestRecord(
   name: String
 )
 
-object TestRecord{
+object TestRecord {
   implicit val TestRecordRowParser = new RowParser[TestRecord] {
     def parse(row: SqlRow): TestRecord = TestRecord(
       row.long("id"),
@@ -117,7 +117,11 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getLong("id") returns (100L: java.lang.Long)
       rs.getString("name") returns "the name"
 
-      result.asList(parser) mustEqual List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
+      result.asList(parser) mustEqual List(
+        TestRecord(100L, "the name"),
+        TestRecord(100L, "the name"),
+        TestRecord(100L, "the name")
+      )
     }
 
     "return an empty list with an explicit parser" in {
@@ -137,7 +141,11 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getLong("id") returns (100L: java.lang.Long)
       rs.getString("name") returns "the name"
 
-      result.asList[TestRecord] mustEqual List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
+      result.asList[TestRecord] mustEqual List(
+        TestRecord(100L, "the name"),
+        TestRecord(100L, "the name"),
+        TestRecord(100L, "the name")
+      )
     }
 
     "return an empty list with an implicit parser" in {
@@ -260,11 +268,10 @@ class SqlResultSpec extends Specification with Mockito {
       val id: Object = 12: java.lang.Integer
       rs.getObject("id") returns id
 
-
       val nameOpt = row.extractOption("name") { any =>
         any match {
           case x: String => x
-          case _ => ""
+          case _         => ""
         }
       }
 
@@ -273,7 +280,7 @@ class SqlResultSpec extends Specification with Mockito {
       val idOpt = row.extractOption("id") { any =>
         any match {
           case x: Int => x
-          case _ => 0
+          case _      => 0
         }
       }
 
@@ -389,7 +396,7 @@ class SqlResultSpec extends Specification with Mockito {
     "properly pass through the call to ResultSet" in {
       val (rs, row, _) = getMocks
 
-      val res: Array[Byte] = Array(1,2,3)
+      val res: Array[Byte] = Array(1, 2, 3)
       rs.getBytes("strictBytes") returns res
       row.strictBytes("strictBytes") mustEqual res
       row.strictBytesOption("strictBytes") must beSome(res)
@@ -540,7 +547,7 @@ class SqlResultSpec extends Specification with Mockito {
       row.strictObject("strictObject") mustEqual res
       row.strictObjectOption("strictObject") must beSome(res)
 
-      val map = Map[String,Class[_]]()
+      val map = Map[String, Class[_]]()
       rs.getObject("strictObject", map.asJava) returns res
       row.strictObject("strictObject", map) mustEqual res
       row.strictObjectOption("strictObject", map) must beSome(res)
@@ -678,7 +685,7 @@ class SqlResultSpec extends Specification with Mockito {
     "return Some(0) if the value in the database was really 0" in {
       val (rs, row, _) = getMocks
 
-      val res = 0 : java.lang.Integer
+      val res = 0: java.lang.Integer
       rs.getInt("int") returns res
       rs.wasNull returns false
       row.intOption("int") must beSome(res)
@@ -865,7 +872,7 @@ class SqlResultSpec extends Specification with Mockito {
     "return the correct value" in {
       val (rs, row, _) = getMocks
 
-      val res = Array[Byte]('1','2','3')
+      val res = Array[Byte]('1', '2', '3')
       rs.getObject("byteArray") returns res
       row.byteArray("byteArray") mustEqual res
       row.byteArrayOption("byteArray") must beSome(res)

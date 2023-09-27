@@ -12,46 +12,47 @@ private[relate] sealed trait StatementPreparer {
 
   /**
    * Execute the statement and close all resources
-   * @param callback the function to call on the results of the query
-   * @return whatever the callback returns
+   * @param callback
+   *   the function to call on the results of the query
+   * @return
+   *   whatever the callback returns
    */
   def execute[A](callback: (SqlResult) => A): A = {
     try {
       val resultSet = results()
       try {
         callback(SqlResult(resultSet))
-      }
-      finally {
+      } finally {
         resultSet.close()
       }
-    }
-    finally {
+    } finally {
       stmt.close()
     }
   }
 
   /**
    * Execute the query and close
-   * @return true if the first result is a ResultSet object; false if the first result is an update count or there is no result
+   * @return
+   *   true if the first result is a ResultSet object; false if the first result is an update count or there is no
+   *   result
    */
   def execute(): Boolean = {
     try {
       stmt.execute()
-    }
-    finally {
+    } finally {
       stmt.close()
     }
   }
 
   /**
    * Execute the query and close
-   * @return the number of rows affected by the query
+   * @return
+   *   the number of rows affected by the query
    */
   def executeUpdate(): Int = {
     try {
       stmt.executeUpdate()
-    }
-    finally {
+    } finally {
       stmt.close()
     }
   }
@@ -66,14 +67,15 @@ private[relate] trait BaseStatementPreparer extends StatementPreparer {
   protected def setTimeout(stmt: PreparedStatement): Unit = for {
     seconds <- timeout
     stmt <- Option(stmt)
-  } yield (stmt.setQueryTimeout(seconds))
+  } yield stmt.setQueryTimeout(seconds)
 }
 
 private[relate] trait NormalStatementPreparer extends BaseStatementPreparer {
 
   /**
    * Get a PreparedStatement from this query with inserted parameters
-   * @return the PreparedStatement
+   * @return
+   *   the PreparedStatement
    */
   protected override def prepare(): PreparedStatement = {
     val stmt = connection.prepareStatement(parsedQuery)
@@ -84,7 +86,8 @@ private[relate] trait NormalStatementPreparer extends BaseStatementPreparer {
 
   /**
    * Get the results of excutioning this statement
-   * @return the resulting ResultSet
+   * @return
+   *   the resulting ResultSet
    */
   override def results(): ResultSet = {
     stmt.executeQuery()
@@ -92,9 +95,11 @@ private[relate] trait NormalStatementPreparer extends BaseStatementPreparer {
 }
 
 private[relate] trait InsertionStatementPreparer extends BaseStatementPreparer {
+
   /**
    * Get a PreparedStatement from this query that will return generated keys
-   * @return the PreparedStatement
+   * @return
+   *   the PreparedStatement
    */
   protected override def prepare(): PreparedStatement = {
     val stmt = connection.prepareStatement(parsedQuery, Statement.RETURN_GENERATED_KEYS)
@@ -105,7 +110,8 @@ private[relate] trait InsertionStatementPreparer extends BaseStatementPreparer {
 
   /**
    * Get the results of executing this insertion statement
-   * @return the ResultSet
+   * @return
+   *   the ResultSet
    */
   override def results(): ResultSet = {
     stmt.executeUpdate()
@@ -118,7 +124,8 @@ private[relate] trait StreamedStatementPreparer extends BaseStatementPreparer {
 
   /**
    * Get a PreparedStatement from this query that will stream the resulting rows
-   * @return the PreparedStatement
+   * @return
+   *   the PreparedStatement
    */
   protected override def prepare(): PreparedStatement = {
     val stmt = connection.prepareStatement(
@@ -130,8 +137,7 @@ private[relate] trait StreamedStatementPreparer extends BaseStatementPreparer {
     val driver = connection.getMetaData().getDriverName()
     if (driver.toLowerCase.contains("mysql")) {
       stmt.setFetchSize(Int.MinValue)
-    }
-    else {
+    } else {
       stmt.setFetchSize(fetchSize)
     }
     applyParams(stmt)
@@ -140,8 +146,10 @@ private[relate] trait StreamedStatementPreparer extends BaseStatementPreparer {
 
   /**
    * Override the default execute method so that it does not close the resources
-   * @param callback the function to call on the results of the query
-   * @return whatever the callback returns
+   * @param callback
+   *   the function to call on the results of the query
+   * @return
+   *   whatever the callback returns
    */
   override def execute[A](callback: (SqlResult) => A): A = {
     callback(SqlResult(results()))
@@ -149,7 +157,8 @@ private[relate] trait StreamedStatementPreparer extends BaseStatementPreparer {
 
   /**
    * Get the results of executing this statement with a streaming ResultSet
-   * @return the ResultSet
+   * @return
+   *   the ResultSet
    */
   override def results(): ResultSet = {
     stmt.executeQuery()

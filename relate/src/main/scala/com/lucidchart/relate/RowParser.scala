@@ -34,11 +34,13 @@ object RowParser extends CollectionsParser {
         val key = implicitly[RowParser[Key]].parse(result)
         val value = implicitly[RowParser[Value]].parse(result)
 
-        mm.get(key).map { foundValue =>
-          mm += (key -> (foundValue + value))
-        }.getOrElse {
-          mm += (key -> Set(value))
-        }
+        mm.get(key)
+          .map { foundValue =>
+            mm += (key -> (foundValue + value))
+          }
+          .getOrElse {
+            mm += (key -> Set(value))
+          }
       }
     }
     mm.toMap

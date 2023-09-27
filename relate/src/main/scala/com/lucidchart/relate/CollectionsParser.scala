@@ -4,7 +4,7 @@ import scala.collection.compat._
 import scala.language.higherKinds
 
 trait CollectionsParser {
-   def limitedCollection[B: RowParser, Col[_]](maxRows: Long)(implicit factory: Factory[B, Col[B]]) =
+  def limitedCollection[B: RowParser, Col[_]](maxRows: Long)(implicit factory: Factory[B, Col[B]]) =
     RowParser { result =>
       val builder = factory.newBuilder
 
@@ -24,8 +24,9 @@ trait CollectionsParser {
   implicit def collection[B: RowParser, Col[_]](implicit factory: Factory[B, Col[B]]) =
     limitedCollection[B, Col](Long.MaxValue)
 
-  implicit def pairCollection[Key: RowParser, Value: RowParser, PairCol[_, _]]
-    (implicit factory: Factory[(Key, Value), PairCol[Key, Value]]) =
+  implicit def pairCollection[Key: RowParser, Value: RowParser, PairCol[_, _]](implicit
+    factory: Factory[(Key, Value), PairCol[Key, Value]]
+  ) =
     RowParser { result =>
 
       val builder = factory.newBuilder

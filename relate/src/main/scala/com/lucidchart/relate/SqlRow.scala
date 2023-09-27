@@ -14,20 +14,26 @@ object SqlRow {
 }
 
 class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
+
   /**
-    * Get the number of the row the SqlResult is currently on
-    * @return the current row number
-    */
+   * Get the number of the row the SqlResult is currently on
+   * @return
+   *   the current row number
+   */
   def getRow(): Int = resultSet.getRow()
 
   def strictArray(column: String): java.sql.Array = resultSet.getArray(column)
   def strictArrayOption(column: String): Option[java.sql.Array] = getResultSetOption(resultSet.getArray(column))
   def strictAsciiStream(column: String): InputStream = resultSet.getAsciiStream(column)
-  def strictAsciiStreamOption(column: String): Option[InputStream] = getResultSetOption(resultSet.getAsciiStream(column))
+  def strictAsciiStreamOption(column: String): Option[InputStream] = getResultSetOption(
+    resultSet.getAsciiStream(column)
+  )
   def strictBigDecimal(column: String): BigDecimal = resultSet.getBigDecimal(column)
   def strictBigDecimalOption(column: String): Option[BigDecimal] = getResultSetOption(resultSet.getBigDecimal(column))
   def strictBinaryStream(column: String): InputStream = resultSet.getBinaryStream(column)
-  def strictBinaryStreamOption(column: String): Option[InputStream] = getResultSetOption(resultSet.getBinaryStream(column))
+  def strictBinaryStreamOption(column: String): Option[InputStream] = getResultSetOption(
+    resultSet.getBinaryStream(column)
+  )
   def strictBlob(column: String): Blob = resultSet.getBlob(column)
   def strictBlobOption(column: String): Option[Blob] = getResultSetOption(resultSet.getBlob(column))
   def strictBoolean(column: String): Boolean = resultSet.getBoolean(column)
@@ -37,13 +43,17 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def strictBytes(column: String): Array[Byte] = resultSet.getBytes(column)
   def strictBytesOption(column: String): Option[Array[Byte]] = getResultSetOption(resultSet.getBytes(column))
   def strictCharacterStream(column: String): Reader = resultSet.getCharacterStream(column)
-  def strictCharacterStreamOption(column: String): Option[Reader] = getResultSetOption(resultSet.getCharacterStream(column))
+  def strictCharacterStreamOption(column: String): Option[Reader] = getResultSetOption(
+    resultSet.getCharacterStream(column)
+  )
   def strictClob(column: String): Clob = resultSet.getClob(column)
   def strictClobOption(column: String): Option[Clob] = getResultSetOption(resultSet.getClob(column))
   def strictDate(column: String): java.sql.Date = resultSet.getDate(column)
   def strictDateOption(column: String): Option[java.sql.Date] = getResultSetOption(resultSet.getDate(column))
   def strictDate(column: String, cal: Calendar): java.sql.Date = resultSet.getDate(column, cal)
-  def strictDateOption(column: String, cal: Calendar): Option[java.sql.Date] = getResultSetOption(resultSet.getDate(column, cal))
+  def strictDateOption(column: String, cal: Calendar): Option[java.sql.Date] = getResultSetOption(
+    resultSet.getDate(column, cal)
+  )
   def strictDouble(column: String): Double = resultSet.getDouble(column)
   def strictDoubleOption(column: String): Option[Double] = getResultSetOption(resultSet.getDouble(column))
   def strictFloat(column: String): Float = resultSet.getFloat(column)
@@ -55,7 +65,9 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def strictLong(column: String): Long = resultSet.getLong(column)
   def strictLongOption(column: String): Option[Long] = getResultSetOption(resultSet.getLong(column))
   def strictNCharacterStream(column: String): Reader = resultSet.getNCharacterStream(column)
-  def strictNCharacterStreamOption(column: String): Option[Reader] = getResultSetOption(resultSet.getNCharacterStream(column))
+  def strictNCharacterStreamOption(column: String): Option[Reader] = getResultSetOption(
+    resultSet.getNCharacterStream(column)
+  )
   def strictNClob(column: String): NClob = resultSet.getNClob(column)
   def strictNClobOption(column: String): Option[NClob] = getResultSetOption(resultSet.getNClob(column))
   def strictNString(column: String): String = resultSet.getNString(column)
@@ -63,7 +75,9 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def strictObject(column: String): Object = resultSet.getObject(column)
   def strictObjectOption(column: String): Option[Object] = getResultSetOption(resultSet.getObject(column))
   def strictObject(column: String, map: Map[String, Class[_]]): Object = resultSet.getObject(column, map.asJava)
-  def strictObjectOption(column: String, map: Map[String, Class[_]]): Option[Object] = Option(resultSet.getObject(column, map.asJava))
+  def strictObjectOption(column: String, map: Map[String, Class[_]]): Option[Object] = Option(
+    resultSet.getObject(column, map.asJava)
+  )
   def strictRef(column: String): Ref = resultSet.getRef(column)
   def strictRefOption(column: String): Option[Ref] = getResultSetOption(resultSet.getRef(column))
   def strictRowId(column: String): RowId = resultSet.getRowId(column)
@@ -81,7 +95,9 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def strictTimestamp(column: String): Timestamp = resultSet.getTimestamp(column)
   def strictTimestampOption(column: String): Option[Timestamp] = getResultSetOption(resultSet.getTimestamp(column))
   def strictTimestamp(column: String, cal: Calendar): Timestamp = resultSet.getTimestamp(column, cal)
-  def strictTimestampOption(column: String, cal: Calendar): Option[Timestamp] = getResultSetOption(resultSet.getTimestamp(column, cal))
+  def strictTimestampOption(column: String, cal: Calendar): Option[Timestamp] = getResultSetOption(
+    resultSet.getTimestamp(column, cal)
+  )
   def strictURL(column: String): URL = resultSet.getURL(column)
   def strictURLOption(column: String): Option[URL] = getResultSetOption(resultSet.getURL(column))
 
@@ -115,9 +131,9 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def bigIntOption(column: String): Option[BigInt] = {
     extractOption(column) {
       case x: java.math.BigInteger => BigInt(x)
-      case x: Int => BigInt(x)
-      case x: Long => BigInt(x)
-      case x: String => BigInt(x)
+      case x: Int                  => BigInt(x)
+      case x: Long                 => BigInt(x)
+      case x: String               => BigInt(x)
     }
   }
 
@@ -128,14 +144,16 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def javaBigIntegerOption(column: String): Option[java.math.BigInteger] = {
     extractOption(column) {
       case x: java.math.BigInteger => x
-      case x: Int => java.math.BigInteger.valueOf(x)
-      case x: Long => java.math.BigInteger.valueOf(x)
-      case x: String => new java.math.BigInteger(x)
+      case x: Int                  => java.math.BigInteger.valueOf(x)
+      case x: Long                 => java.math.BigInteger.valueOf(x)
+      case x: String               => new java.math.BigInteger(x)
     }
   }
 
   def javaBigDecimal(column: String): java.math.BigDecimal = javaBigDecimalOption(column).get
-  def javaBigDecimalOption(column: String): Option[java.math.BigDecimal] = getResultSetOption(resultSet.getBigDecimal(column))
+  def javaBigDecimalOption(column: String): Option[java.math.BigDecimal] = getResultSetOption(
+    resultSet.getBigDecimal(column)
+  )
 
   def date(column: String): java.util.Date = dateOption(column).get
   // Timestamp documentation says that "it is recommended that code not view Timestamp values generically as an instance
@@ -149,15 +167,16 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def localDateOption(column: String): Option[LocalDate] = strictDateOption(column).map(_.toLocalDate)
 
   def instant(column: String): Instant = instantOption(column).get
-  def instantOption(column: String): Option[Instant] = getResultSetOption(resultSet.getTimestamp(column)).map(_.toInstant)
+  def instantOption(column: String): Option[Instant] =
+    getResultSetOption(resultSet.getTimestamp(column)).map(_.toInstant)
 
   def byteArray(column: String): Array[Byte] = byteArrayOption(column).get
   def byteArrayOption(column: String): Option[Array[Byte]] = {
     extractOption(column) {
       case x: Array[Byte] => x
-      case x: Blob => x.getBytes(0, x.length.toInt)
-      case x: Clob => x.getSubString(1, x.length.asInstanceOf[Int]).getBytes
-      case x: String => x.toCharArray.map(_.toByte)
+      case x: Blob        => x.getBytes(0, x.length.toInt)
+      case x: Clob        => x.getSubString(1, x.length.asInstanceOf[Int]).getBytes
+      case x: String      => x.toCharArray.map(_.toByte)
     }
   }
 
@@ -168,9 +187,9 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
       case b => {
         val bytes = b match {
           case x: Array[Byte] => x
-          case x: Blob => x.getBytes(0, x.length.toInt)
-          case x: Clob => x.getSubString(1, x.length.asInstanceOf[Int]).getBytes
-          case x: String => x.toCharArray.map(_.toByte)
+          case x: Blob        => x.getBytes(0, x.length.toInt)
+          case x: Clob        => x.getSubString(1, x.length.asInstanceOf[Int]).getBytes
+          case x: String      => x.toCharArray.map(_.toByte)
         }
 
         require(bytes.length == 16)
@@ -191,8 +210,8 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
       require(hex.length == 32)
 
       UUID.fromString(
-        hex.substring( 0,  8) + "-" +
-          hex.substring( 8, 12) + "-" +
+        hex.substring(0, 8) + "-" +
+          hex.substring(8, 12) + "-" +
           hex.substring(12, 16) + "-" +
           hex.substring(16, 20) + "-" +
           hex.substring(20, 32)
@@ -204,37 +223,37 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def enumOption(column: String, e: Enumeration): Option[e.Value] = for {
     id <- intOption(column)
     value <- Try(e(id)).toOption
-  } yield(value)
+  } yield value
 
   protected def getResultSetOption[A](f: => A): Option[A] = {
     f match {
-      case x if (x == null || resultSet.wasNull()) => None
-      case x => Some(x)
+      case x if x == null || resultSet.wasNull() => None
+      case x                                     => Some(x)
     }
   }
 
   protected[relate] def extractOption[A](column: String)(f: (Any) => A): Option[A] = {
     resultSet.getObject(column).asInstanceOf[Any] match {
-      case x if (x == null || resultSet.wasNull()) => None
-      case x => Some(f(x))
+      case x if x == null || resultSet.wasNull() => None
+      case x                                     => Some(f(x))
     }
   }
 }
 
 /**
-  * The SqlResultTypes object provides syntactic sugar for RowParser creation.
-  * {{{
-  * import com.lucidchart.relate._
-  * import com.lucidchart.relate.SqlResultTypes._
-  *
-  * val rowParser = RowParser { implicit row =>
-  *   (long("id"), string("name"))
-  * }
-  * }}}
-  *
-  * In this example, declaring "row" as implicit precludes the need to explicitly use the long and
-  * string methods on "row".
-  */
+ * The SqlResultTypes object provides syntactic sugar for RowParser creation.
+ * {{{
+ * import com.lucidchart.relate._
+ * import com.lucidchart.relate.SqlResultTypes._
+ *
+ * val rowParser = RowParser { implicit row =>
+ *   (long("id"), string("name"))
+ * }
+ * }}}
+ *
+ * In this example, declaring "row" as implicit precludes the need to explicitly use the long and string methods on
+ * "row".
+ */
 object SqlResultTypes {
   def strictArray(column: String)(implicit sr: SqlRow) = sr.strictArray(column)
   def strictArrayOption(column: String)(implicit sr: SqlRow) = sr.strictArrayOption(column)
@@ -277,7 +296,8 @@ object SqlResultTypes {
   def strictObject(column: String)(implicit sr: SqlRow) = sr.strictObject(column)
   def strictObjectOption(column: String)(implicit sr: SqlRow) = sr.strictObjectOption(column)
   def strictObject(column: String, map: Map[String, Class[_]])(implicit sr: SqlRow) = sr.strictObject(column, map)
-  def strictObjectOption(column: String, map: Map[String, Class[_]])(implicit sr: SqlRow) = sr.strictObjectOption(column, map)
+  def strictObjectOption(column: String, map: Map[String, Class[_]])(implicit sr: SqlRow) =
+    sr.strictObjectOption(column, map)
   def strictRef(column: String)(implicit sr: SqlRow) = sr.strictRef(column)
   def strictRefOption(column: String)(implicit sr: SqlRow) = sr.strictRefOption(column)
   def strictRowId(column: String)(implicit sr: SqlRow) = sr.strictRowId(column)
