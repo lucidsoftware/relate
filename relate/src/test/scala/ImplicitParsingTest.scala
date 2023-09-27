@@ -38,7 +38,7 @@ class ImplicitParsingTest extends Specification with Mockito {
 
       rs.getRow returns 0 thenReturns 1 thenReturns 2
       rs.next returns true thenReturns true thenReturns false
-      rs.getObject("name") returns "hello" thenReturns "world"
+      rs.getString("name") returns "hello" thenReturns "world"
 
       result.as[List[TestRecord]] mustEqual List(
         TestRecord("hello"),
@@ -53,7 +53,7 @@ class ImplicitParsingTest extends Specification with Mockito {
 
       rs.getRow returns 0 thenReturns 1 thenReturns 2
       rs.next returns true thenReturns true thenReturns false
-      rs.getObject("name") returns "hello" thenReturns "world"
+      rs.getString("name") returns "hello" thenReturns "world"
 
       result.as[Seq[TestRecord]] mustEqual Seq(
         TestRecord("hello"),
@@ -68,7 +68,7 @@ class ImplicitParsingTest extends Specification with Mockito {
 
       rs.getRow returns 0 thenReturns 1 thenReturns 2
       rs.next returns true thenReturns true thenReturns false
-      rs.getObject("name") returns "hello" thenReturns "world"
+      rs.getString("name") returns "hello" thenReturns "world"
 
       result.as[Iterable[TestRecord]] mustEqual Iterable(
         TestRecord("hello"),
@@ -83,7 +83,7 @@ class ImplicitParsingTest extends Specification with Mockito {
 
       rs.getRow returns 0 thenReturns 1 thenReturns 2
       rs.next returns true thenReturns true thenReturns false
-      rs.getObject("name") returns "hello" thenReturns "world"
+      rs.getString("name") returns "hello" thenReturns "world"
 
       result.as[Iterable[TestRecord]] mustEqual Iterable(
         TestRecord("hello"),
@@ -98,8 +98,8 @@ class ImplicitParsingTest extends Specification with Mockito {
 
       rs.getRow returns 0 thenReturns 1 thenReturns 2
       rs.next returns true thenReturns true thenReturns false
-      rs.getObject("name") returns "hello" thenReturns "world"
-      rs.getObject("key") returns "1" thenReturns "2"
+      rs.getString("name") returns "hello" thenReturns "world"
+      rs.getString("key") returns "1" thenReturns "2"
 
       result.as[Map[TestKey, TestRecord]] mustEqual Map(
         TestKey("1") -> TestRecord("hello"),
@@ -112,8 +112,8 @@ class ImplicitParsingTest extends Specification with Mockito {
 
       rs.getRow returns 0 thenReturns 1 thenReturns 2 thenReturns 3
       rs.next returns true thenReturns true thenReturns true thenReturns false
-      rs.getObject("name") returns "hello" thenReturns "world" thenReturns "relate"
-      rs.getObject("key") returns "1" thenReturns "2" thenReturns "1"
+      rs.getString("name") returns "hello" thenReturns "world" thenReturns "relate"
+      rs.getString("key") returns "1" thenReturns "2" thenReturns "1"
 
       result.as[Map[TestKey, Set[TestRecord]]] mustEqual Map(
         TestKey("1") -> Set(TestRecord("hello"), TestRecord("relate")),
@@ -126,7 +126,7 @@ class ImplicitParsingTest extends Specification with Mockito {
 
       rs.getRow returns 0 thenReturns 1 thenReturns 2 thenReturns 3
       rs.next returns true thenReturns true thenReturns true thenReturns false
-      rs.getObject("name") returns "hello" thenReturns "world" thenReturns "relate"
+      rs.getString("name") returns "hello" thenReturns "world" thenReturns "relate"
 
       result.as[Option[TestRecord]] mustEqual Some(TestRecord("hello"))
     }

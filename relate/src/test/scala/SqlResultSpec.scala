@@ -53,8 +53,8 @@ class SqlResultSpec extends Specification with Mockito {
 
       rs.getRow returns 0 thenReturn 1
       rs.next returns true thenReturns false
-      rs.getObject("id") returns (100L: java.lang.Long)
-      rs.getObject("name") returns "the name"
+      rs.getLong("id") returns (100L: java.lang.Long)
+      rs.getString("name") returns "the name"
 
       result.asSingle(parser) mustEqual TestRecord(100L, "the name")
     }
@@ -64,8 +64,8 @@ class SqlResultSpec extends Specification with Mockito {
 
       rs.getRow returns 0 thenReturn 1
       rs.next returns true thenReturns false
-      rs.getObject("id") returns (100L: java.lang.Long)
-      rs.getObject("name") returns "the name"
+      rs.getLong("id") returns (100L: java.lang.Long)
+      rs.getString("name") returns "the name"
 
       result.asSingle[TestRecord] mustEqual TestRecord(100L, "the name")
     }
@@ -75,8 +75,8 @@ class SqlResultSpec extends Specification with Mockito {
     def init(rs: java.sql.ResultSet, next: Boolean) = {
       rs.getRow returns 0 thenReturn 1
       rs.next returns next
-      rs.getObject("id") returns (100L: java.lang.Long)
-      rs.getObject("name") returns "the name"
+      rs.getLong("id") returns (100L: java.lang.Long)
+      rs.getString("name") returns "the name"
     }
 
     "return a single row with an explicit parser" in {
@@ -114,8 +114,8 @@ class SqlResultSpec extends Specification with Mockito {
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
       rs.next   returns true thenReturn true thenReturn true thenReturn false
-      rs.getObject("id") returns (100L: java.lang.Long)
-      rs.getObject("name") returns "the name"
+      rs.getLong("id") returns (100L: java.lang.Long)
+      rs.getString("name") returns "the name"
 
       result.asList(parser) mustEqual List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
     }
@@ -134,8 +134,8 @@ class SqlResultSpec extends Specification with Mockito {
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
       rs.next   returns true thenReturn true thenReturn true thenReturn false
-      rs.getObject("id") returns (100L: java.lang.Long)
-      rs.getObject("name") returns "the name"
+      rs.getLong("id") returns (100L: java.lang.Long)
+      rs.getString("name") returns "the name"
 
       result.asList[TestRecord] mustEqual List(TestRecord(100L, "the name"), TestRecord(100L, "the name"), TestRecord(100L, "the name"))
     }
@@ -153,12 +153,11 @@ class SqlResultSpec extends Specification with Mockito {
   "asMap" should {
     "return a map of 3 elements with an explicit parser" in {
       val (rs, _, result) = getMocks
-      import java.lang.{Long => L}
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
       rs.next   returns true thenReturn true thenReturn true thenReturn false
-      rs.getObject("id") returns (1: L) thenReturns (2: L) thenReturns (3: L)
-      rs.getObject("name") returns "the name"
+      rs.getLong("id") returns 1L thenReturns 2L thenReturns 3L
+      rs.getString("name") returns "the name"
 
       val res = result.asMap(pairparser)
       res(1L) mustEqual TestRecord(1L, "the name")
@@ -186,8 +185,8 @@ class SqlResultSpec extends Specification with Mockito {
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
       rs.next   returns true thenReturn true thenReturn true thenReturn false
-      rs.getObject("id") returns (1: L) thenReturns (2: L) thenReturns (3: L)
-      rs.getObject("name") returns "the name"
+      rs.getLong("id") returns (1: L) thenReturns (2: L) thenReturns (3: L)
+      rs.getString("name") returns "the name"
 
       val res = result.asMap[Long, TestRecord]
       res(1L) mustEqual TestRecord(1L, "the name")
@@ -210,8 +209,8 @@ class SqlResultSpec extends Specification with Mockito {
 
       rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3 thenReturn     4
       rs.next   returns true thenReturn true thenReturn true thenReturn true thenReturn false
-      rs.getObject("id") returns "1" thenReturns "2" thenReturns "1" thenReturns "2"
-      rs.getObject("name") returns "one" thenReturns "two" thenReturns "three" thenReturns "four"
+      rs.getString("id") returns "1" thenReturns "2" thenReturns "1" thenReturns "2"
+      rs.getString("name") returns "one" thenReturns "two" thenReturns "three" thenReturns "four"
 
       val res = result.asMultiMap { row =>
         row.string("id") -> row.string("name")
@@ -651,7 +650,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, row, _) = getMocks
 
       val res = "hello"
-      rs.getObject("string") returns res
+      rs.getString("string") returns res
       row.string("string") mustEqual res
       row.stringOption("string") must beSome(res)
     }
@@ -734,8 +733,8 @@ class SqlResultSpec extends Specification with Mockito {
     "return the correct value" in {
       val (rs, row, _) = getMocks
 
-      val res: Object = 100000L: java.lang.Long
-      rs.getObject("long") returns res
+      val res: java.lang.Long = 100000L
+      rs.getLong("long") returns res
       row.long("long") mustEqual res
       row.longOption("long") must beSome(res)
     }
@@ -775,23 +774,8 @@ class SqlResultSpec extends Specification with Mockito {
 
       val number = 1.013
 
-      val int: Object = number.toInt: java.lang.Integer
-      rs.getObject("bigDecimal") returns int
-      row.bigDecimal("bigDecimal") mustEqual BigDecimal(number.toInt)
-      row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number.toInt))
-
-      val long: Object = number.toLong: java.lang.Long
-      rs.getObject("bigDecimal") returns long
-      row.bigDecimal("bigDecimal") mustEqual BigDecimal(number.toLong)
-      row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number.toLong))
-
-      val string: Object = number.toString
-      rs.getObject("bigDecimal") returns string
-      row.bigDecimal("bigDecimal") mustEqual BigDecimal(number)
-      row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number))
-
-      val bigint: Object = new java.math.BigDecimal(number.toString)
-      rs.getObject("bigDecimal") returns bigint
+      val bigint = new java.math.BigDecimal(number.toString)
+      rs.getBigDecimal("bigDecimal") returns bigint
       row.bigDecimal("bigDecimal") mustEqual BigDecimal(number)
       row.bigDecimalOption("bigDecimal") must beSome(BigDecimal(number))
     }
@@ -802,21 +786,27 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, row, _) = getMocks
 
       val number = 1010101
+      val bigNumber = java.math.BigInteger.valueOf(number)
 
       val int: Object = number.toInt: java.lang.Integer
       rs.getObject("javaBigInteger") returns int
-      row.javaBigInteger("javaBigInteger") mustEqual new java.math.BigInteger(number.toString)
-      row.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
+      row.javaBigInteger("javaBigInteger") mustEqual bigNumber
+      row.javaBigIntegerOption("javaBigInteger") must beSome(bigNumber)
 
       val long: Object = number.toLong: java.lang.Long
       rs.getObject("javaBigInteger") returns long
-      row.javaBigInteger("javaBigInteger") mustEqual new java.math.BigInteger(number.toString)
-      row.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
+      row.javaBigInteger("javaBigInteger") mustEqual bigNumber
+      row.javaBigIntegerOption("javaBigInteger") must beSome(bigNumber)
 
       val bigint: Object = new java.math.BigInteger(number.toString)
       rs.getObject("javaBigInteger") returns bigint
-      row.javaBigInteger("javaBigInteger") mustEqual new java.math.BigInteger(number.toString)
-      row.javaBigIntegerOption("javaBigInteger") must beSome(new java.math.BigInteger(number.toString))
+      row.javaBigInteger("javaBigInteger") mustEqual bigNumber
+      row.javaBigIntegerOption("javaBigInteger") must beSome(bigNumber)
+
+      val str: Object = number.toString
+      rs.getObject("javaBigInteger") returns str
+      row.javaBigInteger("javaBigInteger") mustEqual bigNumber
+      row.javaBigIntegerOption("javaBigInteger") must beSome(bigNumber)
     }
   }
 
@@ -826,13 +816,8 @@ class SqlResultSpec extends Specification with Mockito {
 
       val number = 1
 
-      val double: Object = number.toDouble: java.lang.Double
-      rs.getObject("javaBigDecimal") returns double
-      row.javaBigDecimal("javaBigDecimal") mustEqual new java.math.BigDecimal(number.toString)
-      row.javaBigDecimalOption("javaBigDecimal") must beSome(new java.math.BigDecimal(number.toString))
-
-      val bigdec: Object = new java.math.BigDecimal(number.toString)
-      rs.getObject("javaBigDecimal") returns bigdec
+      val bigdec = java.math.BigDecimal.valueOf(number)
+      rs.getBigDecimal("javaBigDecimal") returns bigdec
       row.javaBigDecimal("javaBigDecimal") mustEqual new java.math.BigDecimal(number.toString)
       row.javaBigDecimalOption("javaBigDecimal") must beSome(new java.math.BigDecimal(number.toString))
     }
@@ -926,7 +911,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, row, _) = getMocks
 
       val res = "000102030405060708090a0b0c0d0e0f"
-      rs.getObject("uuidFromString") returns res
+      rs.getString("uuidFromString") returns res
       row.uuidFromString("uuidFromString") mustEqual new UUID(283686952306183L, 579005069656919567L)
       row.uuidFromStringOption("uuidFromString") must beSome(new UUID(283686952306183L, 579005069656919567L))
     }
