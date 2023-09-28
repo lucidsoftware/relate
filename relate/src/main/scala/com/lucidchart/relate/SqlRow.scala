@@ -4,10 +4,9 @@ import java.io.{InputStream, Reader}
 import java.net.URL
 import java.nio.ByteBuffer
 import java.sql.{Blob, Clob, NClob, Ref, RowId, SQLXML, Time, Timestamp}
-import java.time.Instant
-import java.util.{Calendar, Date, UUID}
+import java.time.{Instant, LocalDate}
+import java.util.{Calendar, UUID}
 import scala.collection.JavaConverters._
-import scala.language.higherKinds
 import scala.util.Try
 
 object SqlRow {
@@ -41,10 +40,10 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def strictCharacterStreamOption(column: String): Option[Reader] = getResultSetOption(resultSet.getCharacterStream(column))
   def strictClob(column: String): Clob = resultSet.getClob(column)
   def strictClobOption(column: String): Option[Clob] = getResultSetOption(resultSet.getClob(column))
-  def strictDate(column: String): Date = resultSet.getDate(column)
-  def strictDateOption(column: String): Option[Date] = getResultSetOption(resultSet.getDate(column))
-  def strictDate(column: String, cal: Calendar): Date = resultSet.getDate(column, cal)
-  def strictDateOption(column: String, cal: Calendar): Option[Date] = getResultSetOption(resultSet.getDate(column, cal))
+  def strictDate(column: String): java.sql.Date = resultSet.getDate(column)
+  def strictDateOption(column: String): Option[java.sql.Date] = getResultSetOption(resultSet.getDate(column))
+  def strictDate(column: String, cal: Calendar): java.sql.Date = resultSet.getDate(column, cal)
+  def strictDateOption(column: String, cal: Calendar): Option[java.sql.Date] = getResultSetOption(resultSet.getDate(column, cal))
   def strictDouble(column: String): Double = resultSet.getDouble(column)
   def strictDoubleOption(column: String): Option[Double] = getResultSetOption(resultSet.getDouble(column))
   def strictFloat(column: String): Float = resultSet.getFloat(column)
@@ -138,12 +137,16 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
   def javaBigDecimal(column: String): java.math.BigDecimal = javaBigDecimalOption(column).get
   def javaBigDecimalOption(column: String): Option[java.math.BigDecimal] = getResultSetOption(resultSet.getBigDecimal(column))
 
-  def date(column: String): Date = dateOption(column).get
+  def date(column: String): java.util.Date = dateOption(column).get
   // Timestamp documentation says that "it is recommended that code not view Timestamp values generically as an instance
   // of java.util.Date." Since this is typed as a Date we should probably return an instance of a Date.
   // `date == timestamp` can be true but `timestamp == date` is always false "the Timestamp.equals(Object) method is not
   // symmetric with respect to the java.util.Date.equals(Object)"
-  def dateOption(column: String): Option[Date] = getResultSetOption(resultSet.getTimestamp(column)).map(ts => new Date(ts.getTime))
+  def dateOption(column: String): Option[java.util.Date] =
+    getResultSetOption(resultSet.getTimestamp(column)).map(ts => new java.util.Date(ts.getTime))
+
+  def localDate(column: String): LocalDate = localDateOption(column).get
+  def localDateOption(column: String): Option[LocalDate] = strictDateOption(column).map(_.toLocalDate)
 
   def instant(column: String): Instant = instantOption(column).get
   def instantOption(column: String): Option[Instant] = getResultSetOption(resultSet.getTimestamp(column)).map(_.toInstant)
