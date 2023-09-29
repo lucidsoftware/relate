@@ -95,17 +95,13 @@ trait MultipleParameter extends Parameter {
 }
 
 class TupleParameter(val params: Iterable[SingleParameter]) extends MultipleParameter {
-  def appendPlaceholders(stringBuilder: StringBuilder) = {
-    val length = params.size
-    if(length > 0) {
-      stringBuilder.append("?")
-      var i = 1
-      while (i < length) {
-        stringBuilder.append(",?")
-        i += 1
+  def appendPlaceholders(stringBuilder: StringBuilder) =
+    params.zipWithIndex.foreach { case (param, index) =>
+      if (0 < index) {
+        stringBuilder.append(",")
       }
+      param.appendPlaceholders(stringBuilder)
     }
-  }
 }
 
 object TupleParameter {
