@@ -17,6 +17,19 @@ class ParameterizationTest extends Specification {
       val querySql = sql"INSERT INTO myTable (foo) VALUES ($longArrayParam)"
       querySql.toString mustEqual("INSERT INTO myTable (foo) VALUES (?,?,?)")
     }
+
+    "convert Array[Array[Byte]] into a tuple of single parameter" in {
+      val byteArrayListParam: Parameter = Array[Array[Byte]](Array[Byte](5, 7), Array[Byte](11, 13))
+      val querySql = sql"INSERT INTO myTable (foo) VALUES ($byteArrayListParam)"
+      querySql.toString mustEqual "INSERT INTO myTable (foo) VALUES (?,?)"
+    }
+
+    "convert List[Array[Byte]] into a tuple of single parameter" in {
+      val byteArrayListParam: Parameter = List[Array[Byte]](Array[Byte](5, 7), Array[Byte](11, 13))
+      val querySql = sql"INSERT INTO myTable (foo) VALUES ($byteArrayListParam)"
+      querySql.toString mustEqual "INSERT INTO myTable (foo) VALUES (?,?)"
+    }
+
   }
 
   "tuple paramater" should {
