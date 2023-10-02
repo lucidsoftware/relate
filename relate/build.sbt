@@ -16,9 +16,6 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies ++= (CrossVersion.binaryScalaVersion(scalaVersion.value) match {
-  case "2.10" => Seq("com.typesafe.play" %% "anorm" % "2.4.0" % Benchmark)
-  case "2.11" => Seq("com.typesafe.play" %% "anorm" % "2.5.2" % Benchmark)
-  case "2.12" => Seq("com.typesafe.play" %% "anorm" % "2.6.0-M1" % Benchmark)
   case "2.13" => Seq("org.playframework.anorm" %% "anorm" % "2.6.7" % Benchmark)
 })
 
