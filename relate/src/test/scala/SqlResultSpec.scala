@@ -8,7 +8,7 @@ import java.time.Instant
 import java.util.{Calendar, Date, UUID}
 import org.specs2.mock.Mockito
 import org.specs2.mutable._
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 case class TestRecord(
   id: Long,
@@ -16,7 +16,7 @@ case class TestRecord(
 )
 
 object TestRecord {
-  implicit val TestRecordRowParser = new RowParser[TestRecord] {
+  implicit val TestRecordRowParser: RowParser[TestRecord] = new RowParser[TestRecord] {
     def parse(row: SqlRow): TestRecord = TestRecord(
       row.long("id"),
       row.string("name")
@@ -303,7 +303,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, row, _) = getMocks
 
       rs.getRow() returns 3
-      row.getRow mustEqual 3
+      row.getRow() mustEqual 3
     }
   }
 
@@ -312,7 +312,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, _, result) = getMocks
 
       rs.wasNull() returns true
-      result.wasNull mustEqual true
+      result.wasNull() mustEqual true
     }
   }
 

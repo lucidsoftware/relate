@@ -15,7 +15,7 @@ private[relate] class RowIterator[A](parser: SqlRow => A, stmt: PreparedStatemen
   /**
    * Make certain that all resources are closed
    */
-  override def finalize() {
+  override def finalize(): Unit = {
     close()
   }
 
@@ -24,7 +24,7 @@ private[relate] class RowIterator[A](parser: SqlRow => A, stmt: PreparedStatemen
    * @return
    *   whether there is another row
    */
-  override def hasNext(): Boolean = _hasNext
+  override def hasNext: Boolean = _hasNext
 
   /**
    * Parse the next row using the RowParser passed into the class

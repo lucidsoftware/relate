@@ -6,7 +6,7 @@ import java.nio.ByteBuffer
 import java.sql.{Blob, Clob, NClob, Ref, RowId, SQLXML, Time, Timestamp}
 import java.time.{Instant, LocalDate}
 import java.util.{Calendar, UUID}
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.util.Try
 
 object SqlRow {
@@ -219,11 +219,13 @@ class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
     }
   }
 
-  def enum(column: String, e: Enumeration) = enumOption(column, e).get
+  def `enum`(column: String, e: Enumeration) = enumOption(column, e).get
   def enumOption(column: String, e: Enumeration): Option[e.Value] = for {
     id <- intOption(column)
     value <- Try(e(id)).toOption
   } yield value
+  // alternative name that doesn't conflict with scala 3 keyword
+  def enumeration(column: String, e: Enumeration) = `enum`(column, e)
 
   protected def getResultSetOption[A](f: => A): Option[A] = {
     f match {
@@ -351,6 +353,6 @@ object SqlResultTypes {
   def uuidOption(column: String)(implicit sr: SqlRow) = sr.uuidOption(column)
   def uuidFromString(column: String)(implicit sr: SqlRow) = sr.uuidFromString(column)
   def uuidFromStringOption(column: String)(implicit sr: SqlRow) = sr.uuidFromStringOption(column)
-  def enum(column: String, e: Enumeration)(implicit sr: SqlRow) = sr.enum(column, e)
+  def `enum`(column: String, e: Enumeration)(implicit sr: SqlRow) = sr.`enum`(column, e)
   def enumOption(column: String, e: Enumeration)(implicit sr: SqlRow) = sr.enumOption(column, e)
 }
