@@ -60,7 +60,7 @@ private[relate] sealed trait StatementPreparer {
 }
 
 private[relate] trait BaseStatementPreparer extends StatementPreparer {
-  protected def applyParams(stmt: PreparedStatement)
+  protected def applyParams(stmt: PreparedStatement): Unit
   protected def parsedQuery: String
   protected def timeout: Option[Int] = None
 

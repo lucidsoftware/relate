@@ -16,8 +16,8 @@ package object macros {
   @implicitNotFound("A value of type ${A} is never allowed as an RecordOption")
   private trait RecordOptionValue[A]
   private object RecordOptionValue {
-    implicit val bool = new RecordOptionValue[Boolean] {}
-    implicit val map = new RecordOptionValue[Map[String, String]] {}
+    implicit val bool: RecordOptionValue[Boolean] = new RecordOptionValue[Boolean] {}
+    implicit val map: RecordOptionValue[Map[String, String]] = new RecordOptionValue[Map[String, String]] {}
   }
 
   case class RecordOption[A: RecordOptionValue] private (key: String, value: A)
