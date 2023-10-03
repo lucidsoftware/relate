@@ -22,11 +22,12 @@ class ParameterizationTest extends Specification {
   "tuple paramater" should {
     "use sub-parameter placeholders" in {
       class CustomParameter(value: Int) extends SingleParameter {
-        protected[this] def set(statement: PreparedStatement, i: Int) = implicitly[Parameterizable[Int]].set(statement, i, value)
+        protected[this] def set(statement: PreparedStatement, i: Int) =
+          implicitly[Parameterizable[Int]].set(statement, i, value)
         override def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder.append("?::smallint")
       }
       val querySql = sql"INSERT INTO myTable (foo, bar) VALUES (${(1, new CustomParameter(1))})"
-      querySql.toString mustEqual("INSERT INTO myTable (foo, bar) VALUES (?,?::smallint)")
+      querySql.toString mustEqual "INSERT INTO myTable (foo, bar) VALUES (?,?::smallint)"
     }
   }
 }

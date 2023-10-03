@@ -112,8 +112,8 @@ class SqlResultSpec extends Specification with Mockito {
     "return a list of 3 elements with an explicit parser" in {
       val (rs, _, result) = getMocks
 
-      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
-      rs.next   returns true thenReturn true thenReturn true thenReturn false
+      rs.getRow returns 0 thenReturn 1 thenReturn 2 thenReturn 3
+      rs.next returns true thenReturn true thenReturn true thenReturn false
       rs.getLong("id") returns (100L: java.lang.Long)
       rs.getString("name") returns "the name"
 
@@ -136,8 +136,8 @@ class SqlResultSpec extends Specification with Mockito {
     "return a list of 3 elements with an implicit parser" in {
       val (rs, _, result) = getMocks
 
-      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
-      rs.next   returns true thenReturn true thenReturn true thenReturn false
+      rs.getRow returns 0 thenReturn 1 thenReturn 2 thenReturn 3
+      rs.next returns true thenReturn true thenReturn true thenReturn false
       rs.getLong("id") returns (100L: java.lang.Long)
       rs.getString("name") returns "the name"
 
@@ -162,8 +162,8 @@ class SqlResultSpec extends Specification with Mockito {
     "return a map of 3 elements with an explicit parser" in {
       val (rs, _, result) = getMocks
 
-      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
-      rs.next   returns true thenReturn true thenReturn true thenReturn false
+      rs.getRow returns 0 thenReturn 1 thenReturn 2 thenReturn 3
+      rs.next returns true thenReturn true thenReturn true thenReturn false
       rs.getLong("id") returns 1L thenReturns 2L thenReturns 3L
       rs.getString("name") returns "the name"
 
@@ -191,8 +191,8 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, _, result) = getMocks
       import java.lang.{Long => L}
 
-      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3
-      rs.next   returns true thenReturn true thenReturn true thenReturn false
+      rs.getRow returns 0 thenReturn 1 thenReturn 2 thenReturn 3
+      rs.next returns true thenReturn true thenReturn true thenReturn false
       rs.getLong("id") returns (1: L) thenReturns (2: L) thenReturns (3: L)
       rs.getString("name") returns "the name"
 
@@ -215,8 +215,8 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, _, result) = getMocks
       import java.lang.{Long => L}
 
-      rs.getRow returns    0 thenReturn    1 thenReturn    2 thenReturn    3 thenReturn     4
-      rs.next   returns true thenReturn true thenReturn true thenReturn true thenReturn false
+      rs.getRow returns 0 thenReturn 1 thenReturn 2 thenReturn 3 thenReturn 4
+      rs.next returns true thenReturn true thenReturn true thenReturn true thenReturn false
       rs.getString("id") returns "1" thenReturns "2" thenReturns "1" thenReturns "2"
       rs.getString("name") returns "one" thenReturns "two" thenReturns "three" thenReturns "four"
 
