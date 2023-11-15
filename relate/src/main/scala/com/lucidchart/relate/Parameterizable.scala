@@ -8,12 +8,14 @@ import java.util.UUID
 
 trait Parameterizable[-A] {
   final def contraMap[B](f: B => A) = Parameterizable((statement, i, value: B) => set(statement, i, f(value)), setNull)
+
   /**
-   * Set the parameterized value at index {@code i} in the prepared  statement to the {@code value}.
+   * Set the parameterized value at index {@code i} in the prepared statement to the {@code value}.
    */
   def set(statement: PreparedStatement, i: Int, value: A)
+
   /**
-   * Set the parameterized value at index {@code i} in the prepared  statement to {@code null}.
+   * Set the parameterized value at index {@code i} in the prepared statement to {@code null}.
    */
   def setNull(statement: PreparedStatement, i: Int)
   final def setOption(statement: PreparedStatement, i: Int, value: Option[A]) =
@@ -21,6 +23,7 @@ trait Parameterizable[-A] {
 }
 
 object Parameterizable {
+
   /**
    * Create new Parameterizable instance from functions for set and setNull
    *
@@ -29,17 +32,20 @@ object Parameterizable {
    * @param g
    *   The function to implement [[Parameterizable#setNull]] with
    */
-  def apply[A](f: (PreparedStatement, Int, A) => Unit, g: (PreparedStatement, Int) => Unit) = new Parameterizable [A] {
+  def apply[A](f: (PreparedStatement, Int, A) => Unit, g: (PreparedStatement, Int) => Unit) = new Parameterizable[A] {
     def set(statement: PreparedStatement, i: Int, value: A) = f(statement, i, value)
     def setNull(statement: PreparedStatement, i: Int) = g(statement, i)
   }
 
-  def from[A, B : Parameterizable](f: A => B) = implicitly[Parameterizable[B]].contraMap(f)
+  def from[A, B: Parameterizable](f: A => B) = implicitly[Parameterizable[B]].contraMap(f)
 
   implicit val array = apply(_.setArray(_, _: Array), _.setNull(_, Types.ARRAY))
   // ideally, this would be named jBigDecimal, but that wouldn't be  backwards compatibility
   implicit val bigDecimal = apply(_.setBigDecimal(_, _: java.math.BigDecimal), _.setNull(_, Types.DECIMAL))
-  implicit val scalaBigDecimal = apply((stmt: PreparedStatement, i: Int, v: scala.math.BigDecimal) => stmt.setBigDecimal(i, v.bigDecimal), _.setNull(_, Types.DECIMAL))
+  implicit val scalaBigDecimal = apply(
+    (stmt: PreparedStatement, i: Int, v: scala.math.BigDecimal) => stmt.setBigDecimal(i, v.bigDecimal),
+    _.setNull(_, Types.DECIMAL)
+  )
   implicit val blob = apply(_.setBlob(_, _: Blob), _.setNull(_, Types.BLOB))
   implicit val boolean = apply(_.setBoolean(_, _: Boolean), _.setNull(_, Types.BOOLEAN))
   implicit val byte = apply(_.setByte(_, _: Byte), _.setNull(_, Types.TINYINT))

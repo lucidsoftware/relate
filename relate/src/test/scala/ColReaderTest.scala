@@ -67,14 +67,14 @@ object RecordA extends Mockito {
     row.javaBigDecimalOption("jbd") returns Some(new java.math.BigDecimal(10))
     row.javaBigIntegerOption("jbi") returns Some(java.math.BigInteger.valueOf(10))
     row.boolOption("bool") returns Some(true)
-    row.byteArrayOption("ba") returns Some(Array[Byte](1,2,3))
-    row.byteOption("byte") returns Some((1: Byte))
-    row.dateOption("date") returns Some((new Date(timeMillis)))
+    row.byteArrayOption("ba") returns Some(Array[Byte](1, 2, 3))
+    row.byteOption("byte") returns Some(1: Byte)
+    row.dateOption("date") returns Some(new Date(timeMillis))
     row.instantOption("instant") returns Some(Instant.ofEpochMilli(timeMillis))
     row.doubleOption("double") returns Some(1.1)
     row.intOption("int") returns Some(10)
     row.longOption("long") returns Some(100L)
-    row.shortOption("short") returns Some((5: Short))
+    row.shortOption("short") returns Some(5: Short)
     row.stringOption("str") returns Some("hello")
     row.uuidOption("uuid") returns Some(uuid)
     row.intOption("thing") returns Some(1)
@@ -167,7 +167,7 @@ class ColReaderTest extends Specification with Mockito {
       // Arrays use reference equality so we have to check this
       // independently of all the other values
       val bytes = parsed.ba
-      bytes === Array[Byte](1,2,3)
+      bytes === Array[Byte](1, 2, 3)
 
       parsed.copy(ba = null) mustEqual RecordA(
         bd = BigDecimal(10),
@@ -220,7 +220,7 @@ class ColReaderTest extends Specification with Mockito {
       // Arrays use reference equality so we have to check this
       // independantly of all the other values
       val bytes: Array[Byte] = parsed.ba.get
-      bytes === Array[Byte](1,2,3)
+      bytes === Array[Byte](1, 2, 3)
 
       parsed.copy(ba = None) mustEqual RecordB(
         bd = Some(BigDecimal(10)),
@@ -247,7 +247,8 @@ class ColReaderTest extends Specification with Mockito {
     "parse a byte array" in {
       val rs = mock[java.sql.ResultSet]
       val row = SqlRow(rs)
-      rs.getObject("col") returns Array[Byte]('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
+      rs.getObject("col") returns Array[Byte]('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+        'f')
 
       ColReader.uuidReader.read("col", row) mustEqual Some(new UUID(3472611983179986487L, 4051376414998685030L))
     }

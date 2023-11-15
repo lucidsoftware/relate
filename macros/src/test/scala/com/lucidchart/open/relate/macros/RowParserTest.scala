@@ -42,7 +42,6 @@ case class Big(
   def m2: Int = 0
 }
 
-
 class RowParserTest extends Specification with Mockito {
   class MockableRow extends SqlRow(null) {
     final override def apply[A: ColReader](col: String): A = super.apply(col)
@@ -57,7 +56,7 @@ class RowParserTest extends Specification with Mockito {
 
       val p = generateParser[Thing]
 
-      p.parse(row) mustEqual(Thing("hi", Some(20)))
+      p.parse(row) mustEqual (Thing("hi", Some(20)))
     }
 
     "generate parser w/snake_case columns" in {
@@ -67,14 +66,16 @@ class RowParserTest extends Specification with Mockito {
 
       val p = generateSnakeParser[Thing]
 
-      p.parse(row) mustEqual(Thing("gregg", Some(20)))
+      p.parse(row) mustEqual (Thing("gregg", Some(20)))
     }
 
     "remap column names" in {
-      val p = generateParser[User](Map(
-        "firstName" -> "fname",
-        "lastName" -> "lname"
-      ))
+      val p = generateParser[User](
+        Map(
+          "firstName" -> "fname",
+          "lastName" -> "lname"
+        )
+      )
 
       val row = mock[MockableRow]
       row.stringOption("fname") returns Some("gregg")
@@ -84,10 +85,12 @@ class RowParserTest extends Specification with Mockito {
     }
 
     "remap column names w/normal tuple syntax" in {
-      val p = generateParser[User](Map(
-        ("firstName", "fname"),
-        ("lastName", "lname")
-      ))
+      val p = generateParser[User](
+        Map(
+          ("firstName", "fname"),
+          ("lastName", "lname")
+        )
+      )
 
       val row = mock[MockableRow]
       row.stringOption("fname") returns Some("gregg")
@@ -97,9 +100,11 @@ class RowParserTest extends Specification with Mockito {
     }
 
     "remap some column names" in {
-      val p = generateParser[User](Map(
-        "firstName" -> "fname"
-      ))
+      val p = generateParser[User](
+        Map(
+          "firstName" -> "fname"
+        )
+      )
 
       val row = mock[MockableRow]
       row.stringOption("fname") returns Some("gregg")
@@ -110,18 +115,39 @@ class RowParserTest extends Specification with Mockito {
 
     "generate parser for a case class > 22 fields" in {
       val row = mock[MockableRow]
-      for (i <- (1 to 9)) { row.intOption(s"f${i}") returns Some(i) }
-      for (i <- (10 to 19)) { row.intOption(s"z${i}") returns Some(i) }
-      for (i <- (20 to 25)) { row.intOption(s"a${i}") returns Some(i) }
-
+      for (i <- 1 to 9) { row.intOption(s"f${i}") returns Some(i) }
+      for (i <- 10 to 19) { row.intOption(s"z${i}") returns Some(i) }
+      for (i <- 20 to 25) { row.intOption(s"a${i}") returns Some(i) }
 
       val p = generateParser[Big]
 
-      p.parse(row) mustEqual(Big(
-        1, Some(2), 3, 4, 5, 6, 7, 8, 9, 10,
-        11, 12, 13, 14, 15, 16, 17, 18, 19,
-        20, 21, 22, 23, Some(24), 25)
-      )
+      p.parse(row) mustEqual (Big(
+        1,
+        Some(2),
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        Some(24),
+        25
+      ))
     }
 
     "fail to compile with non-literals" in {

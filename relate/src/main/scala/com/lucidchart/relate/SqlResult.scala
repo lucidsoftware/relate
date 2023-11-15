@@ -11,15 +11,13 @@ object SqlResult {
 /**
  * The SqlResult class is a wrapper around Java's ResultSet class.
  *
- * It provides methods to allows users to retrieve specific columns by name and datatype,
- * but also provides methods that can, given a [[com.lucidchart.relate.RowParser RowParser]],
- * parse the entire result set as a collection of records returned by the parser. These methods are
- * also defined in the Sql trait, and are most conveniently used when chained with parameter
- * insertion. For how to do this, see the [[com.lucidchart.relate.Sql Sql]] trait
- * documentation.
+ * It provides methods to allows users to retrieve specific columns by name and datatype, but also provides methods that
+ * can, given a [[com.lucidchart.relate.RowParser RowParser]], parse the entire result set as a collection of records
+ * returned by the parser. These methods are also defined in the Sql trait, and are most conveniently used when chained
+ * with parameter insertion. For how to do this, see the [[com.lucidchart.relate.Sql Sql]] trait documentation.
  *
- * The extraction methods (int, string, long, etc.) also have "strict" counterparts. The "strict"
- * methods are slightly faster, but do not do type checking or handle null values.
+ * The extraction methods (int, string, long, etc.) also have "strict" counterparts. The "strict" methods are slightly
+ * faster, but do not do type checking or handle null values.
  */
 class SqlResult(val resultSet: java.sql.ResultSet) extends ResultSetWrapper with CollectionsSqlResult {
 
@@ -55,15 +53,15 @@ class SqlResult(val resultSet: java.sql.ResultSet) extends ResultSetWrapper with
   def asScalarOption[A](): Option[A] = {
     if (resultSet.next()) {
       Some(resultSet.getObject(1).asInstanceOf[A])
-    }
-    else {
+    } else {
       None
     }
   }
 
   /**
    * Get the metadata for the java.sql.ResultSet that underlies this SqlResult
-   * @return the metadata
+   * @return
+   *   the metadata
    */
   def getMetaData(): ResultSetMetaData = resultSet.getMetaData()
 }

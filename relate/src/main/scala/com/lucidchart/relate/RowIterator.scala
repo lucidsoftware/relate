@@ -3,10 +3,12 @@ package com.lucidchart.relate
 import java.sql.PreparedStatement
 
 private[relate] object RowIterator {
-  def apply[A](parser: SqlRow => A, stmt: PreparedStatement, resultSet: SqlResult) = new RowIterator(parser, stmt, resultSet)
+  def apply[A](parser: SqlRow => A, stmt: PreparedStatement, resultSet: SqlResult) =
+    new RowIterator(parser, stmt, resultSet)
 }
 
-private[relate] class RowIterator[A](parser: SqlRow => A, stmt: PreparedStatement, result: SqlResult) extends Iterator[A] {
+private[relate] class RowIterator[A](parser: SqlRow => A, stmt: PreparedStatement, result: SqlResult)
+    extends Iterator[A] {
 
   private var _hasNext = result.next()
 
@@ -19,13 +21,15 @@ private[relate] class RowIterator[A](parser: SqlRow => A, stmt: PreparedStatemen
 
   /**
    * Determine whether there is another row or not
-   * @return whether there is another row
+   * @return
+   *   whether there is another row
    */
   override def hasNext(): Boolean = _hasNext
 
   /**
    * Parse the next row using the RowParser passed into the class
-   * @return the parsed record
+   * @return
+   *   the parsed record
    */
   override def next(): A = {
     val ret = parser(result.asRow)
@@ -33,7 +37,7 @@ private[relate] class RowIterator[A](parser: SqlRow => A, stmt: PreparedStatemen
       _hasNext = result.next()
     }
 
-    //if we've iterated through the whole thing, close resources
+    // if we've iterated through the whole thing, close resources
     if (!_hasNext) {
       close()
     }

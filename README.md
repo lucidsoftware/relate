@@ -2,7 +2,7 @@
 http://lucidsoftware.github.io/relate/
 
 [![Build Status](https://travis-ci.com/lucidsoftware/relate.svg)](https://travis-ci.com/lucidsoftware/relate)
-[![Maven Version](https://img.shields.io/maven-central/v/com.lucidchart/relate_2.12.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.lucidchart%22%20AND%20a%3A%22relate_2.12%22)
+[![Maven Version](https://img.shields.io/maven-central/v/com.lucidchart/relate_2.13.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.lucidchart%22%20AND%20a%3A%22relate_2.13%22)
 [![Join the chat at https://gitter.im/lucidsoftware/relate](https://badges.gitter.im/lucidsoftware/relate.svg)](https://gitter.im/lucidsoftware/relate?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Relate is a lightweight, blazingly fast database access layer for Scala that abstracts the idiosyncricies of the JDBC while keeping complete control over the SQL.
