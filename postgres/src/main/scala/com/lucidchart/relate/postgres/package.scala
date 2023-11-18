@@ -6,10 +6,10 @@ import scala.concurrent.duration.FiniteDuration
 
 package object postgres {
 
-  implicit val pgIntervalParameterizable =
+  implicit val pgIntervalParameterizable: Parameterizable[PGInterval] =
     Parameterizable(_.setObject(_, _: PGInterval), _.setNull(_, Types.JAVA_OBJECT))
 
-  implicit val finiteDurationParameterizable =
-    Parameterizable.from((value: FiniteDuration) => new PGInterval(0, 0, 0, 0, 0, value.toSeconds))
+  implicit val finiteDurationParameterizable: Parameterizable[FiniteDuration] =
+    Parameterizable.from((value: FiniteDuration) => new PGInterval(0, 0, 0, 0, 0, value.toSeconds.toDouble))
 
 }

@@ -40,7 +40,8 @@ inScope(Global)(Seq(
   licenses += "Apache License 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"),
   scalacOptions ++= Seq(
     "-deprecation",
-    "-feature"
+    "-feature",
+    "-Werror"
   ),
   scmInfo := Some(ScmInfo(url("https://github.com/lucidsoftware/relate"), "scm:git:git@github.com:lucidsoftware/relate.git")),
   Benchmark / test / tags += benchmarkTag -> 1,
@@ -49,5 +50,5 @@ inScope(Global)(Seq(
   version := sys.props.getOrElse("build.version", "0-SNAPSHOT")
 ))
 
-skip in publish := true
+publish / skip := true
 publishTo := sonatypePublishToBundle.value

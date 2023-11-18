@@ -12,7 +12,6 @@ libraryDependencies ++= Seq(
   "com.h2database" % "h2" % "1.4.191" % "test",
   "com.storm-enroute" %% "scalameter" % "0.19" % Benchmark,
   "com.storm-enroute" %% "scalameter" % "0.19" % Regression,
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.6"
 )
 
 libraryDependencies ++= (CrossVersion.binaryScalaVersion(scalaVersion.value) match {

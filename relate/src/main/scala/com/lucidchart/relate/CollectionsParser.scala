@@ -1,6 +1,6 @@
 package com.lucidchart.relate
 
-import scala.collection.compat._
+import scala.collection.Factory
 import scala.language.higherKinds
 
 trait CollectionsParser {
@@ -14,19 +14,19 @@ trait CollectionsParser {
         }
       }
 
-      builder.result
+      builder.result()
     }
 
-  implicit def option[B: RowParser] = RowParser[Option[B]] { result =>
+  implicit def option[B: RowParser]: RowParser[Option[B]] = RowParser[Option[B]] { result =>
     limitedCollection[B, List](1).parse(result).headOption
   }
 
-  implicit def collection[B: RowParser, Col[_]](implicit factory: Factory[B, Col[B]]) =
+  implicit def collection[B: RowParser, Col[_]](implicit factory: Factory[B, Col[B]]): RowParser[Col[B]] =
     limitedCollection[B, Col](Long.MaxValue)
 
   implicit def pairCollection[Key: RowParser, Value: RowParser, PairCol[_, _]](implicit
     factory: Factory[(Key, Value), PairCol[Key, Value]]
-  ) =
+  ): RowParser[PairCol[Key, Value]] =
     RowParser { result =>
 
       val builder = factory.newBuilder
@@ -37,6 +37,6 @@ trait CollectionsParser {
         }
       }
 
-      builder.result
+      builder.result()
     }
 }

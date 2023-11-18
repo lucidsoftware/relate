@@ -28,7 +28,7 @@ trait Sql extends CollectionsSql {
   self =>
 
   protected val parsedQuery: String
-  protected def applyParams(stmt: PreparedStatement)
+  protected def applyParams(stmt: PreparedStatement): Unit
 
   protected[relate] class BaseStatement(val connection: Connection) {
     protected val parsedQuery = self.parsedQuery
@@ -150,8 +150,8 @@ trait Sql extends CollectionsSql {
    * @return
    *   the auto-incremented key
    */
-  def executeInsertSingle[U](parser: SqlRow => U)(implicit connection: Connection): U =
-    insertionStatement.execute(_.asSingle(parser))
+  def executeInsertSingle[U](parser: RowParser[U])(implicit connection: Connection): U =
+    insertionStatement.execute(_.asSingle[U](parser))
 
   def as[A: RowParser]()(implicit connection: Connection): A = normalStatement.execute(_.as[A])
 
@@ -165,7 +165,7 @@ trait Sql extends CollectionsSql {
    *   the results as a single record
    */
   def asSingle[A](parser: SqlRow => A)(implicit connection: Connection): A = normalStatement.execute(_.asSingle(parser))
-  def asSingle[A: RowParser]()(implicit connection: Connection): A = normalStatement.execute(_.asSingle[A])
+  def asSingle[A: RowParser](implicit connection: Connection): A = normalStatement.execute(_.asSingle[A])
 
   /**
    * Execute this query and get back the result as an optional single record
@@ -178,7 +178,7 @@ trait Sql extends CollectionsSql {
    */
   def asSingleOption[A](parser: SqlRow => A)(implicit connection: Connection): Option[A] =
     normalStatement.execute(_.asSingleOption(parser))
-  def asSingleOption[A: RowParser]()(implicit connection: Connection): Option[A] =
+  def asSingleOption[A: RowParser](implicit connection: Connection): Option[A] =
     normalStatement.execute(_.asSingleOption[A])
 
   /**
@@ -249,7 +249,7 @@ trait Sql extends CollectionsSql {
 
   def asMultiMap[U, V](parser: SqlRow => (U, V))(implicit connection: Connection): Map[U, Set[V]] =
     normalStatement.execute(_.asMultiMap(parser))
-  def asMultiMap[U, V]()(implicit connection: Connection, p: RowParser[(U, V)]): Map[U, Set[V]] =
+  def asMultiMap[U, V](implicit connection: Connection, p: RowParser[(U, V)]): Map[U, Set[V]] =
     normalStatement.execute(_.asMultiMap[U, V])
 
   /**
@@ -260,7 +260,7 @@ trait Sql extends CollectionsSql {
    * @return
    *   the results as a single value
    */
-  def asScalar[A]()(implicit connection: Connection): A = normalStatement.execute(_.asScalar[A]())
+  def asScalar[A](implicit connection: Connection): A = normalStatement.execute(_.asScalar[A])
 
   /**
    * Execute this query and get back the result as an optional single value. Assumes that there is only one row and one
@@ -272,7 +272,7 @@ trait Sql extends CollectionsSql {
    * @return
    *   the results as an optional single value
    */
-  def asScalarOption[A]()(implicit connection: Connection): Option[A] = normalStatement.execute(_.asScalarOption[A]())
+  def asScalarOption[A](implicit connection: Connection): Option[A] = normalStatement.execute(_.asScalarOption[A])
 
   /**
    * The asIterator method returns an Iterator that will stream data out of the database. This avoids an

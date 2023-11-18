@@ -21,36 +21,30 @@ object SqlResult {
  */
 class SqlResult(val resultSet: java.sql.ResultSet) extends ResultSetWrapper with CollectionsSqlResult {
 
-  def as[A: RowParser](): A = implicitly[RowParser[A]].parse(asRow)
+  def as[A: RowParser]: A = implicitly[RowParser[A]].parse(asRow)
 
-  def asSingle[A: RowParser](): A = asCollection[A, Seq](1).head
-  def asSingle[A](parser: SqlRow => A): A = asCollection[A, Seq](parser, 1).head
-  def asSingleOption[A: RowParser](): Option[A] = asCollection[A, Seq](1).headOption
-  def asSingleOption[A](parser: SqlRow => A): Option[A] = asCollection[A, Seq](parser, 1).headOption
-  def asSet[A: RowParser](): Set[A] = asCollection[A, Set](Long.MaxValue)
-  def asSet[A](parser: SqlRow => A): Set[A] = asCollection[A, Set](parser, Long.MaxValue)
-  def asSeq[A: RowParser](): Seq[A] = asCollection[A, Seq](Long.MaxValue)
-  def asSeq[A](parser: SqlRow => A): Seq[A] = asCollection[A, Seq](parser, Long.MaxValue)
-  def asIterable[A: RowParser](): Iterable[A] = asCollection[A, Iterable](Long.MaxValue)
-  def asIterable[A](parser: SqlRow => A): Iterable[A] = asCollection[A, Iterable](parser, Long.MaxValue)
-  def asList[A: RowParser](): List[A] = asCollection[A, List](Long.MaxValue)
-  def asList[A](parser: SqlRow => A): List[A] = asCollection[A, List](parser, Long.MaxValue)
-  def asMap[U, V]()(implicit p: RowParser[(U, V)]): Map[U, V] = asPairCollection[U, V, Map](Long.MaxValue)
-  def asMap[U, V](parser: SqlRow => (U, V)): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
-  def asMultiMap[U, V]()(implicit p: RowParser[(U, V)]): Map[U, Set[V]] = asMultiMap(p.parse)
-  def asMultiMap[U, V](parser: SqlRow => (U, V)): Map[U, Set[V]] = {
-    val mm: mutable.MultiMap[U, V] = new mutable.HashMap[U, mutable.Set[V]] with mutable.MultiMap[U, V]
+  def asSingle[A: RowParser]: A = asCollection[A, Seq](1).head
+  def asSingleOption[A: RowParser]: Option[A] = asCollection[A, Seq](1).headOption
+  def asSet[A: RowParser]: Set[A] = asCollection[A, Set](Long.MaxValue)
+  def asSeq[A: RowParser]: Seq[A] = asCollection[A, Seq](Long.MaxValue)
+  def asIterable[A: RowParser]: Iterable[A] = asCollection[A, Iterable](Long.MaxValue)
+  def asList[A: RowParser]: List[A] = asCollection[A, List](Long.MaxValue)
+  def asMap[U, V](implicit p: RowParser[(U, V)]): Map[U, V] = asPairCollection[U, V, Map](Long.MaxValue)
+  def asMultiMap[U, V](implicit p: RowParser[(U, V)]): Map[U, Set[V]] = {
+    val mm = new mutable.HashMap[U, mutable.Builder[V, Set[V]]]
     withResultSet { resultSet =>
       while (resultSet.next()) {
-        val parsed = parser(asRow)
-        mm.addBinding(parsed._1, parsed._2)
+        val (key, value) = p.parse(asRow)
+        mm.updateWith(key) { vOpt =>
+          Some(vOpt.getOrElse(Set.newBuilder).addOne(value))
+        }
       }
     }
-    mm.toMap.map(x => x._1 -> x._2.toSet)
+    mm.view.mapValues(_.result()).toMap
   }
 
-  def asScalar[A](): A = asScalarOption.get
-  def asScalarOption[A](): Option[A] = {
+  def asScalar[A]: A = asScalarOption.get
+  def asScalarOption[A]: Option[A] = {
     if (resultSet.next()) {
       Some(resultSet.getObject(1).asInstanceOf[A])
     } else {
