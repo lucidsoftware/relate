@@ -1,8 +1,6 @@
 package com.lucidchart.relate
 
-import java.sql.ResultSetMetaData
 import scala.collection.Factory
-import scala.collection.mutable
 import scala.language.higherKinds
 
 trait CollectionsSqlResult { self: SqlResult =>

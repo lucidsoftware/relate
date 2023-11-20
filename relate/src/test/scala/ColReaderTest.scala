@@ -1,7 +1,8 @@
 package com.lucidchart.relate
 
-import org.specs2.mock.Mockito
 import org.specs2.mutable._
+import org.mockito.Mockito.*
+import org.mockito.ArgumentMatchers.any
 
 import java.time.Instant
 import java.util.{Date, UUID}
@@ -33,7 +34,7 @@ class MockableRow extends SqlRow(null) {
   final override def opt[A: ColReader](col: String): Option[A] = super.opt(col)
 }
 
-object RecordA extends Mockito {
+object RecordA {
   implicit val reader: RowParser[RecordA] = new RowParser[RecordA] {
     def parse(row: SqlRow): RecordA = {
       RecordA(
@@ -61,23 +62,25 @@ object RecordA extends Mockito {
   val uuid: UUID = UUID.fromString("01020304-0506-0708-090a-0b0c0d0e0f10")
 
   val mockRow = {
-    val row = mock[MockableRow]
-    row.bigDecimalOption("bd") returns Some(BigDecimal(10))
-    row.bigIntOption("bi") returns Some(BigInt(10))
-    row.javaBigDecimalOption("jbd") returns Some(new java.math.BigDecimal(10))
-    row.javaBigIntegerOption("jbi") returns Some(java.math.BigInteger.valueOf(10))
-    row.boolOption("bool") returns Some(true)
-    row.byteArrayOption("ba") returns Some(Array[Byte](1, 2, 3))
-    row.byteOption("byte") returns Some(1: Byte)
-    row.dateOption("date") returns Some(new Date(timeMillis))
-    row.instantOption("instant") returns Some(Instant.ofEpochMilli(timeMillis))
-    row.doubleOption("double") returns Some(1.1)
-    row.intOption("int") returns Some(10)
-    row.longOption("long") returns Some(100L)
-    row.shortOption("short") returns Some(5: Short)
-    row.stringOption("str") returns Some("hello")
-    row.uuidOption("uuid") returns Some(uuid)
-    row.intOption("thing") returns Some(1)
+    val row = mock(classOf[MockableRow])
+    when(row.apply(any())(any())).thenCallRealMethod()
+    when(row.opt(any())(any())).thenCallRealMethod()
+    when(row.bigDecimalOption("bd")).thenReturn(Some(BigDecimal(10)))
+    when(row.bigIntOption("bi")).thenReturn(Some(BigInt(10)))
+    when(row.javaBigDecimalOption("jbd")).thenReturn(Some(new java.math.BigDecimal(10)))
+    when(row.javaBigIntegerOption("jbi")).thenReturn(Some(java.math.BigInteger.valueOf(10)))
+    when(row.boolOption("bool")).thenReturn(Some(true))
+    when(row.byteArrayOption("ba")).thenReturn(Some(Array[Byte](1, 2, 3)))
+    when(row.byteOption("byte")).thenReturn(Some(1: Byte))
+    when(row.dateOption("date")).thenReturn(Some(new Date(timeMillis)))
+    when(row.instantOption("instant")).thenReturn(Some(Instant.ofEpochMilli(timeMillis)))
+    when(row.doubleOption("double")).thenReturn(Some(1.1))
+    when(row.intOption("int")).thenReturn(Some(10))
+    when(row.longOption("long")).thenReturn(Some(100L))
+    when(row.shortOption("short")).thenReturn(Some(5: Short))
+    when(row.stringOption("str")).thenReturn(Some("hello"))
+    when(row.uuidOption("uuid")).thenReturn(Some(uuid))
+    when(row.intOption("thing")).thenReturn(Some(1))
     row
   }
 
@@ -102,7 +105,7 @@ case class RecordB(
   thing: Option[Things.Value]
 )
 
-object RecordB extends Mockito {
+object RecordB {
   implicit val reader: RowParser[RecordB] = new RowParser[RecordB] {
     def parse(row: SqlRow): RecordB = {
       RecordB(
@@ -127,23 +130,25 @@ object RecordB extends Mockito {
   }
 
   val mockRow = {
-    val row = mock[MockableRow]
-    row.bigDecimalOption("bd") returns None
-    row.bigIntOption("bi") returns None
-    row.javaBigDecimalOption("jbd") returns None
-    row.javaBigIntegerOption("jbi") returns None
-    row.boolOption("bool") returns None
-    row.byteArrayOption("ba") returns None
-    row.byteOption("byte") returns None
-    row.dateOption("date") returns None
-    row.instantOption("instant") returns None
-    row.doubleOption("double") returns None
-    row.intOption("int") returns None
-    row.longOption("long") returns None
-    row.shortOption("short") returns None
-    row.stringOption("str") returns None
-    row.uuidOption("uuid") returns None
-    row.intOption("thing") returns None
+    val row = mock(classOf[MockableRow])
+    when(row.apply(any())(any())).thenCallRealMethod()
+    when(row.opt(any())(any())).thenCallRealMethod()
+    when(row.bigDecimalOption("bd")).thenReturn(None)
+    when(row.bigIntOption("bi")).thenReturn(None)
+    when(row.javaBigDecimalOption("jbd")).thenReturn(None)
+    when(row.javaBigIntegerOption("jbi")).thenReturn(None)
+    when(row.boolOption("bool")).thenReturn(None)
+    when(row.byteArrayOption("ba")).thenReturn(None)
+    when(row.byteOption("byte")).thenReturn(None)
+    when(row.dateOption("date")).thenReturn(None)
+    when(row.instantOption("instant")).thenReturn(None)
+    when(row.doubleOption("double")).thenReturn(None)
+    when(row.intOption("int")).thenReturn(None)
+    when(row.longOption("long")).thenReturn(None)
+    when(row.shortOption("short")).thenReturn(None)
+    when(row.stringOption("str")).thenReturn(None)
+    when(row.uuidOption("uuid")).thenReturn(None)
+    when(row.intOption("thing")).thenReturn(None)
     row
   }
 
@@ -156,7 +161,7 @@ object Things extends Enumeration {
   implicit val colReader: ColReader[Value] = ColReader.enumReader(this)
 }
 
-class ColReaderTest extends Specification with Mockito {
+class ColReaderTest extends Specification {
   val mockedInstant = Instant.EPOCH.plusMillis(RecordA.timeMillis)
 
   "ColReader" should {
@@ -169,13 +174,13 @@ class ColReaderTest extends Specification with Mockito {
       val bytes = parsed.ba
       bytes === Array[Byte](1, 2, 3)
 
-      parsed.copy(ba = null) mustEqual RecordA(
+      parsed must beEqualTo(RecordA(
         bd = BigDecimal(10),
         bigInt = BigInt(10),
         jBigDecimal = new java.math.BigDecimal(10),
         jBigInt = java.math.BigInteger.valueOf(10),
         bool = true,
-        ba = null,
+        ba = parsed.ba,
         byte = 1,
         date = new Date(mockedInstant.toEpochMilli),
         instant = mockedInstant,
@@ -186,14 +191,14 @@ class ColReaderTest extends Specification with Mockito {
         str = "hello",
         uuid = RecordA.uuid,
         thing = Things.One
-      )
+      ))
     }
 
     "parse Nones when" in {
       val row = RecordB.mockRow
       val parsed = RecordB.reader.parse(row)
 
-      parsed mustEqual RecordB(
+      parsed must beEqualTo(RecordB(
         bd = None,
         bigInt = None,
         jBigDecimal = None,
@@ -210,7 +215,7 @@ class ColReaderTest extends Specification with Mockito {
         str = None,
         uuid = None,
         thing = None
-      )
+      ))
     }
 
     "parse Somes" in {
@@ -222,7 +227,7 @@ class ColReaderTest extends Specification with Mockito {
       val bytes: Array[Byte] = parsed.ba.get
       bytes === Array[Byte](1, 2, 3)
 
-      parsed.copy(ba = None) mustEqual RecordB(
+      parsed.copy(ba = None) must beEqualTo(RecordB(
         bd = Some(BigDecimal(10)),
         bigInt = Some(BigInt(10)),
         jBigDecimal = Some(new java.math.BigDecimal(10)),
@@ -239,26 +244,26 @@ class ColReaderTest extends Specification with Mockito {
         str = Some("hello"),
         uuid = Some(UUID.fromString("01020304-0506-0708-090a-0b0c0d0e0f10")),
         thing = Some(Things.One)
-      )
+      ))
     }
   }
 
   "uuidReader" should {
     "parse a byte array" in {
-      val rs = mock[java.sql.ResultSet]
+      val rs = mock(classOf[java.sql.ResultSet])
       val row = SqlRow(rs)
-      rs.getObject("col") returns Array[Byte]('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+      when(rs.getObject("col")) thenReturn Array[Byte]('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
         'f')
 
-      ColReader.uuidReader.read("col", row) mustEqual Some(new UUID(3472611983179986487L, 4051376414998685030L))
+      ColReader.uuidReader.read("col", row) must beSome(new UUID(3472611983179986487L, 4051376414998685030L))
     }
 
     "parse a uuid" in {
-      val rs = mock[java.sql.ResultSet]
+      val rs = mock(classOf[java.sql.ResultSet])
       val row = SqlRow(rs)
-      rs.getObject("col") returns new UUID(3472611983179986487L, 4051376414998685030L)
+      when(rs.getObject("col")) thenReturn new UUID(3472611983179986487L, 4051376414998685030L)
 
-      ColReader.uuidReader.read("col", row) mustEqual Some(new UUID(3472611983179986487L, 4051376414998685030L))
+      ColReader.uuidReader.read("col", row) must beSome(new UUID(3472611983179986487L, 4051376414998685030L))
     }
   }
 }

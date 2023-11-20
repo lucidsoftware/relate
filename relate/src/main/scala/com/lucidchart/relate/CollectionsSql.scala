@@ -1,6 +1,6 @@
 package com.lucidchart.relate
 
-import java.sql.{Connection, PreparedStatement, ResultSet}
+import java.sql.Connection
 import scala.collection.Factory
 import scala.language.higherKinds
 

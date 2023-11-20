@@ -67,7 +67,7 @@ private[relate] trait BaseStatementPreparer extends StatementPreparer {
   protected def setTimeout(stmt: PreparedStatement): Unit = for {
     seconds <- timeout
     stmt <- Option(stmt)
-  } yield stmt.setQueryTimeout(seconds)
+  } stmt.setQueryTimeout(seconds)
 }
 
 private[relate] trait NormalStatementPreparer extends BaseStatementPreparer {

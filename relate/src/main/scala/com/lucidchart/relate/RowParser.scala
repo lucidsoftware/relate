@@ -36,7 +36,7 @@ object RowParser extends CollectionsParser {
           val key = implicitly[RowParser[Key]].parse(result)
           val value = implicitly[RowParser[Value]].parse(result)
 
-          mm.updateWith(key) { vOpt =>
+          val _ = mm.updateWith(key) { vOpt =>
             Some(vOpt.getOrElse(Set.newBuilder).addOne(value))
           }
         }

@@ -35,7 +35,7 @@ class SqlResult(val resultSet: java.sql.ResultSet) extends ResultSetWrapper with
     withResultSet { resultSet =>
       while (resultSet.next()) {
         val (key, value) = p.parse(asRow)
-        mm.updateWith(key) { vOpt =>
+        val _ = mm.updateWith(key) { vOpt =>
           Some(vOpt.getOrElse(Set.newBuilder).addOne(value))
         }
       }

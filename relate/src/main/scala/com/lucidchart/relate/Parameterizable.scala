@@ -74,7 +74,7 @@ object Parameterizable {
   implicit val localDate: Parameterizable[LocalDate] = date.contraMap(Date.valueOf)
   implicit val localTime: Parameterizable[LocalTime] = time.contraMap(Time.valueOf)
   implicit val instant: Parameterizable[java.time.Instant] = timestamp.contraMap(Timestamp.from)
-  implicit val uuid: Parameterizable[UUID] = from { uuid: UUID =>
+  implicit val uuid: Parameterizable[UUID] = from { (uuid: UUID) =>
     val bb = ByteBuffer.wrap(new scala.Array[Byte](16))
     bb.putLong(uuid.getMostSignificantBits)
     bb.putLong(uuid.getLeastSignificantBits)

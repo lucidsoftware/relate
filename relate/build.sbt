@@ -7,11 +7,9 @@ inConfig(Benchmark)(Defaults.testSettings)
 inConfig(Regression)(Defaults.testSettings)
 
 libraryDependencies ++= Seq(
-  "org.specs2" %% "specs2-core" % "4.6.0" % Test,
-  "org.specs2" %% "specs2-mock" % "4.6.0" % Test,
-  "com.h2database" % "h2" % "1.4.191" % "test",
-  "com.storm-enroute" %% "scalameter" % "0.19" % Benchmark,
-  "com.storm-enroute" %% "scalameter" % "0.19" % Regression,
+  "org.specs2" %% "specs2-core" % "5.4.0" % Test,
+  ("org.scalamock" %% "scalamock" % "5.1.0" % Test).cross(CrossVersion.for3Use2_13),
+  "com.h2database" % "h2" % "2.2.224" % "test",
 )
 
 libraryDependencies ++= (CrossVersion.binaryScalaVersion(scalaVersion.value) match {

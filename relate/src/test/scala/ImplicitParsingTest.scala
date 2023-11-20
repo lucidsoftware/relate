@@ -1,12 +1,12 @@
 package com.lucidchart.relate
 
 import java.sql.Connection
-import org.specs2.mock.Mockito
+import org.mockito.Mockito.*
 import org.specs2.mutable._
 
-class ImplicitParsingTest extends Specification with Mockito {
+class ImplicitParsingTest extends Specification {
   def getMocks = {
-    val rs = mock[java.sql.ResultSet]
+    val rs = mock(classOf[java.sql.ResultSet])
     (rs, SqlResult(rs))
   }
 
@@ -32,111 +32,102 @@ class ImplicitParsingTest extends Specification with Mockito {
     }
   }
 
+  /**
+   * Set up default mocking for a ResultSet
+   */
+  def mockResultSet(rs: java.sql.ResultSet): Unit = {
+      when(rs.getRow).thenReturn(0).thenReturn(1).thenReturn(2)
+      when(rs.next).thenReturn(true).thenReturn(true).thenReturn(false)
+      when(rs.getString("name")).thenReturn("hello").thenReturn("world")
+  }
+
   "RowParser" should {
     "build a list" in {
       val (rs, result) = getMocks
 
-      rs.getRow returns 0 thenReturns 1 thenReturns 2
-      rs.next returns true thenReturns true thenReturns false
-      rs.getString("name") returns "hello" thenReturns "world"
+      mockResultSet(rs)
 
-      result.as[List[TestRecord]] mustEqual List(
+      result.as[List[TestRecord]] must beEqualTo(List(
         TestRecord("hello"),
         TestRecord("world")
-      )
-
-      success
+      ))
     }
 
     "build a seq" in {
       val (rs, result) = getMocks
 
-      rs.getRow returns 0 thenReturns 1 thenReturns 2
-      rs.next returns true thenReturns true thenReturns false
-      rs.getString("name") returns "hello" thenReturns "world"
+      mockResultSet(rs)
 
-      result.as[Seq[TestRecord]] mustEqual Seq(
+      result.as[Seq[TestRecord]] must beEqualTo(Seq(
         TestRecord("hello"),
         TestRecord("world")
-      )
-
-      success
+      ))
     }
 
     "build an iterable" in {
       val (rs, result) = getMocks
 
-      rs.getRow returns 0 thenReturns 1 thenReturns 2
-      rs.next returns true thenReturns true thenReturns false
-      rs.getString("name") returns "hello" thenReturns "world"
+      mockResultSet(rs)
 
-      result.as[Iterable[TestRecord]] mustEqual Iterable(
+      result.as[Iterable[TestRecord]] must beEqualTo(Iterable(
         TestRecord("hello"),
         TestRecord("world")
-      )
-
-      success
+      ))
     }
 
     "build an iterable" in {
       val (rs, result) = getMocks
 
-      rs.getRow returns 0 thenReturns 1 thenReturns 2
-      rs.next returns true thenReturns true thenReturns false
-      rs.getString("name") returns "hello" thenReturns "world"
+      mockResultSet(rs)
 
-      result.as[Iterable[TestRecord]] mustEqual Iterable(
+      result.as[Iterable[TestRecord]] must beEqualTo(Iterable(
         TestRecord("hello"),
         TestRecord("world")
-      )
-
-      success
+      ))
     }
 
     "build a map" in {
       val (rs, result) = getMocks
 
-      rs.getRow returns 0 thenReturns 1 thenReturns 2
-      rs.next returns true thenReturns true thenReturns false
-      rs.getString("name") returns "hello" thenReturns "world"
-      rs.getString("key") returns "1" thenReturns "2"
+      mockResultSet(rs)
+      when(rs.getString("key")) thenReturn "1" thenReturn "2"
 
-      result.as[Map[TestKey, TestRecord]] mustEqual Map(
+      result.as[Map[TestKey, TestRecord]] must beEqualTo(Map(
         TestKey("1") -> TestRecord("hello"),
         TestKey("2") -> TestRecord("world")
-      )
+      ))
     }
 
     "build a multi-map" in {
       val (rs, result) = getMocks
 
-      rs.getRow returns 0 thenReturns 1 thenReturns 2 thenReturns 3
-      rs.next returns true thenReturns true thenReturns true thenReturns false
-      rs.getString("name") returns "hello" thenReturns "world" thenReturns "relate"
-      rs.getString("key") returns "1" thenReturns "2" thenReturns "1"
+      when(rs.getRow) thenReturn 0 thenReturn 1 thenReturn 2 thenReturn 3
+      when(rs.next) thenReturn true thenReturn true thenReturn true thenReturn false
+      when(rs.getString("name")) thenReturn "hello" thenReturn "world" thenReturn "relate"
+      when(rs.getString("key")) thenReturn "1" thenReturn "2" thenReturn "1"
 
-      result.as[Map[TestKey, Set[TestRecord]]] mustEqual Map(
+      result.as[Map[TestKey, Set[TestRecord]]] must beEqualTo(Map(
         TestKey("1") -> Set(TestRecord("hello"), TestRecord("relate")),
         TestKey("2") -> Set(TestRecord("world"))
-      )
+      ))
     }
 
     "build an option of something" in {
       val (rs, result) = getMocks
 
-      rs.getRow returns 0 thenReturns 1 thenReturns 2 thenReturns 3
-      rs.next returns true thenReturns true thenReturns true thenReturns false
-      rs.getString("name") returns "hello" thenReturns "world" thenReturns "relate"
+      when(rs.getRow) thenReturn 0 thenReturn 1 thenReturn 2 thenReturn 3
+      when(rs.next) thenReturn true thenReturn true thenReturn true thenReturn false
+      when(rs.getString("name")) thenReturn "hello" thenReturn "world" thenReturn "relate"
 
-      result.as[Option[TestRecord]] mustEqual Some(TestRecord("hello"))
+      result.as[Option[TestRecord]] must beSome(TestRecord("hello"))
     }
 
     "build a None of something" in {
       val (rs, result) = getMocks
 
-      rs.next returns false
+      when(rs.next) thenReturn false
 
-      result.as[Option[TestRecord]] mustEqual None
+      result.as[Option[TestRecord]] must beNone
     }
   }
 }

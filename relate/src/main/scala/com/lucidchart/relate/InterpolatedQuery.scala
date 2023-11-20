@@ -8,7 +8,10 @@ class InterpolatedQuery(protected val parsedQuery: String, protected val params:
 
   def +(query: InterpolatedQuery) = new InterpolatedQuery(parsedQuery + query.parsedQuery, params ++ query.params)
 
-  protected def applyParams(stmt: PreparedStatement) = parameterize(stmt, 1)
+  override protected def applyParams(stmt: PreparedStatement): Unit = {
+    parameterize(stmt, 1)
+    ()
+  }
 
   def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder ++= parsedQuery
 
