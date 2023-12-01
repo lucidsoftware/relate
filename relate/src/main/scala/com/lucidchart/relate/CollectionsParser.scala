@@ -1,7 +1,6 @@
 package com.lucidchart.relate
 
 import scala.collection.Factory
-import scala.language.higherKinds
 
 trait CollectionsParser {
   def limitedCollection[B: RowParser, Col[_]](maxRows: Long)(implicit factory: Factory[B, Col[B]]) =

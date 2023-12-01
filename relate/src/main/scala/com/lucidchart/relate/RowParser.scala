@@ -3,8 +3,6 @@ package com.lucidchart.relate
 import java.util.Date
 import java.time.Instant
 import scala.collection.mutable
-import scala.language.higherKinds
-import scala.language.implicitConversions
 
 trait RowParser[A] extends (SqlRow => A) {
   def parse(row: SqlRow): A

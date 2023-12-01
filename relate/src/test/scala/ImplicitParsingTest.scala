@@ -1,7 +1,7 @@
 package com.lucidchart.relate
 
 import java.sql.Connection
-import org.mockito.Mockito.*
+import org.mockito.Mockito._
 import org.specs2.mutable._
 
 class ImplicitParsingTest extends Specification {

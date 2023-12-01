@@ -1,7 +1,6 @@
 package com.lucidchart.relate
 
 import scala.collection.Factory
-import scala.language.higherKinds
 
 trait CollectionsSqlResult { self: SqlResult =>
 

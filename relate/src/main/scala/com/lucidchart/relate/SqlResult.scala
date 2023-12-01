@@ -2,7 +2,6 @@ package com.lucidchart.relate
 
 import java.sql.ResultSetMetaData
 import scala.collection.mutable
-import scala.language.higherKinds
 
 object SqlResult {
   def apply(resultSet: java.sql.ResultSet) = new SqlResult(resultSet)

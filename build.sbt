@@ -1,24 +1,27 @@
-ThisBuild / scalaVersion := "2.13.12"
+ThisBuild / scalaVersion := "3.3.1"
 
 lazy val macros = project.in(file("macros")).dependsOn(relate.jvm("2.13.12")).settings(
-  publish / skip := true
+  scalaVersion := "2.13.12",
 )
 
 lazy val relate = (projectMatrix in file("relate")).settings(
-  scalaVersion := "3.3.1",
-  publish / skip := true,
   libraryDependencies ++= Seq(
-    "org.specs2" %% "specs2-core" % "5.4.0" % Test,
+    "org.specs2" %% "specs2-core" % "4.20.3" % Test,
     // use scalamock instead once it supports scala 3: https://github.com/paulbutcher/ScalaMock/issues/429
     //("org.scalamock" %% "scalamock" % "5.1.0" % Test).cross(CrossVersion.for3Use2_13),
     "org.mockito" % "mockito-core" % "5.7.0" % Test,
     "com.h2database" % "h2" % "2.2.224" % Test,
-  )
+  ),
+  publishTo := sonatypePublishToBundle.value
 ).jvmPlatform(scalaVersions = Seq("3.3.1", "2.13.12"))
 
-lazy val postgres = project.in(file("postgres")).dependsOn(relate.jvm("2.13.12")).settings(
-  publish / skip := true
-)
+lazy val postgres = (projectMatrix in file("postgres")).dependsOn(relate).settings(
+  moduleName := "relate-postgres",
+  libraryDependencies ++= Seq(
+    "org.postgresql" % "postgresql" % "42.7.0"
+  ),
+  publishTo := sonatypePublishToBundle.value
+).jvmPlatform(scalaVersions = Seq("3.3.1", "2.13.12"))
 
 val benchmarkTag = Tags.Tag("benchmark")
 

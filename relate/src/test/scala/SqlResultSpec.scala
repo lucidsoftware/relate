@@ -7,9 +7,8 @@ import java.sql.{Blob, Clob, Connection, NClob, Ref, RowId, SQLXML, Time, Timest
 import java.time.Instant
 import java.util.{Calendar, Date, UUID}
 import org.specs2.mutable._
-import org.specs2.matcher._
 // currently use vanilla mockito, because the scala libraries don't support scala 3
-import org.mockito.Mockito.*
+import org.mockito.Mockito._
 import scala.jdk.CollectionConverters._
 
 case class TestRecord(

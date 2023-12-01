@@ -3,7 +3,6 @@ package com.lucidchart.relate
 import java.sql.{Connection, DriverManager, SQLException}
 import java.util.Properties
 import org.specs2.mutable._
-import org.specs2.specification._
 import org.specs2.specification.core.Fragments
 
 trait Db {

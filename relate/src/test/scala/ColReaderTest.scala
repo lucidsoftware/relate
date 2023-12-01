@@ -1,7 +1,7 @@
 package com.lucidchart.relate
 
 import org.specs2.mutable._
-import org.mockito.Mockito.*
+import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers.any
 
 import java.time.Instant

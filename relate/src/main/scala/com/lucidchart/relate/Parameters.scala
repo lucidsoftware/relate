@@ -1,7 +1,6 @@
 package com.lucidchart.relate
 
 import java.sql.PreparedStatement
-import scala.language.implicitConversions
 
 /*
  * Does not support

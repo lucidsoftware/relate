@@ -2,7 +2,6 @@ package com.lucidchart.relate
 
 import java.sql.Connection
 import scala.collection.Factory
-import scala.language.higherKinds
 
 /**
  * CollectionsSql is a trait for collection SQL queries.

@@ -1,7 +1,6 @@
 package com.lucidchart.relate
 
-import scala.annotation.{compileTimeOnly, implicitNotFound, StaticAnnotation}
-import scala.language.implicitConversions
+import scala.annotation.{compileTimeOnly, implicitNotFound, nowarn, StaticAnnotation}
 
 package object macros {
   def generateSnakeParser[A]: RowParser[A] =
@@ -15,6 +14,7 @@ package object macros {
 
   @implicitNotFound("A value of type ${A} is never allowed as an RecordOption")
   private trait RecordOptionValue[A]
+  @nowarn
   private object RecordOptionValue {
     implicit val bool: RecordOptionValue[Boolean] = new RecordOptionValue[Boolean] {}
     implicit val map: RecordOptionValue[Map[String, String]] = new RecordOptionValue[Map[String, String]] {}
