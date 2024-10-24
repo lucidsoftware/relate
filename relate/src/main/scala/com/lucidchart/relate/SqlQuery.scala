@@ -153,8 +153,6 @@ trait Sql extends CollectionsSql {
   def executeInsertSingle[U](parser: SqlRow => U)(implicit connection: Connection): U =
     insertionStatement.execute(_.asSingle(parser))
 
-  def as[A: RowParser]()(implicit connection: Connection): A = normalStatement.execute(_.as[A])
-
   /**
    * Execute this query and get back the result as a single record
    * @param parser

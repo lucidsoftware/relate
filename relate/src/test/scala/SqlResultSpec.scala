@@ -307,15 +307,6 @@ class SqlResultSpec extends Specification with Mockito {
     }
   }
 
-  "wasNull" should {
-    "return true if the last read was null" in {
-      val (rs, _, result) = getMocks
-
-      rs.wasNull() returns true
-      result.wasNull mustEqual true
-    }
-  }
-
   "strictArray" should {
     "properly pass through the call to ResultSet" in {
       val (rs, row, _) = getMocks

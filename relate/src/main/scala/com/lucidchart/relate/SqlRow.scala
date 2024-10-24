@@ -13,7 +13,7 @@ object SqlRow {
   def apply(rs: java.sql.ResultSet): SqlRow = new SqlRow(rs)
 }
 
-class SqlRow(val resultSet: java.sql.ResultSet) extends ResultSetWrapper {
+class SqlRow(resultSet: java.sql.ResultSet) {
 
   /**
    * Get the number of the row the SqlResult is currently on

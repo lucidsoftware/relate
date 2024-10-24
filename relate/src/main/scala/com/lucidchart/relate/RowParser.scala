@@ -11,7 +11,7 @@ trait RowParser[A] extends (SqlRow => A) {
   def apply(row: SqlRow) = parse(row)
 }
 
-object RowParser extends CollectionsParser {
+object RowParser {
   def apply[A](f: (SqlRow) => A) = new RowParser[A] {
     def parse(row: SqlRow) = f(row)
   }
@@ -25,24 +25,4 @@ object RowParser extends CollectionsParser {
 
   private[relate] val insertInt = (row: SqlRow) => row.strictInt(1)
   private[relate] val insertLong = (row: SqlRow) => row.strictLong(1)
-
-  implicit def multiMap[Key: RowParser, Value: RowParser] = RowParser[Map[Key, Set[Value]]] { result =>
-    val mm: mutable.Map[Key, Set[Value]] = new mutable.HashMap[Key, Set[Value]]
-
-    result.withResultSet { resultSet =>
-      while (resultSet.next()) {
-        val key = implicitly[RowParser[Key]].parse(result)
-        val value = implicitly[RowParser[Value]].parse(result)
-
-        mm.get(key)
-          .map { foundValue =>
-            mm += (key -> (foundValue + value))
-          }
-          .getOrElse {
-            mm += (key -> Set(value))
-          }
-      }
-    }
-    mm.toMap
-  }
 }

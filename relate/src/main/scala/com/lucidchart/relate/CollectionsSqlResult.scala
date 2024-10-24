@@ -18,7 +18,7 @@ trait CollectionsSqlResult { self: SqlResult =>
 
     withResultSet { resultSet =>
       while (resultSet.getRow < maxRows && resultSet.next()) {
-        builder += parser(asRow)
+        builder += parser(SqlRow(resultSet))
       }
     }
 
@@ -41,7 +41,7 @@ trait CollectionsSqlResult { self: SqlResult =>
 
     withResultSet { resultSet =>
       while (resultSet.getRow < maxRows && resultSet.next()) {
-        builder += parser(asRow)
+        builder += parser(SqlRow(resultSet))
       }
     }
 

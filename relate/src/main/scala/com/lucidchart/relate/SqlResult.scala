@@ -3,6 +3,7 @@ package com.lucidchart.relate
 import java.sql.ResultSetMetaData
 import scala.collection.mutable
 import scala.language.higherKinds
+import scala.util.Using
 
 object SqlResult {
   def apply(resultSet: java.sql.ResultSet) = new SqlResult(resultSet)
@@ -19,9 +20,8 @@ object SqlResult {
  * The extraction methods (int, string, long, etc.) also have "strict" counterparts. The "strict" methods are slightly
  * faster, but do not do type checking or handle null values.
  */
-class SqlResult(val resultSet: java.sql.ResultSet) extends ResultSetWrapper with CollectionsSqlResult {
-
-  def as[A: RowParser](): A = implicitly[RowParser[A]].parse(asRow)
+class SqlResult(private[relate] val resultSet: java.sql.ResultSet) extends CollectionsSqlResult {
+  private[relate] def withResultSet[A](f: (java.sql.ResultSet) => A) = Using.resource(resultSet)(f)
 
   def asSingle[A: RowParser](): A = asCollection[A, Seq](1).head
   def asSingle[A](parser: SqlRow => A): A = asCollection[A, Seq](parser, 1).head
@@ -42,7 +42,7 @@ class SqlResult(val resultSet: java.sql.ResultSet) extends ResultSetWrapper with
     val mm: mutable.MultiMap[U, V] = new mutable.HashMap[U, mutable.Set[V]] with mutable.MultiMap[U, V]
     withResultSet { resultSet =>
       while (resultSet.next()) {
-        val parsed = parser(asRow)
+        val parsed = parser(SqlRow(resultSet))
         mm.addBinding(parsed._1, parsed._2)
       }
     }
