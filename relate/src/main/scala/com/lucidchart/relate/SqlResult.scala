@@ -50,12 +50,8 @@ class SqlResult(private[relate] val resultSet: java.sql.ResultSet) extends Colle
   }
 
   def asScalar[A](): A = asScalarOption.get
-  def asScalarOption[A](): Option[A] = {
-    if (resultSet.next()) {
-      Some(resultSet.getObject(1).asInstanceOf[A])
-    } else {
-      None
-    }
+  def asScalarOption[A](): Option[A] = withResultSet { resultSet =>
+    Option.when(resultSet.next())(resultSet.getObject(1).asInstanceOf[A])
   }
 
   /**
