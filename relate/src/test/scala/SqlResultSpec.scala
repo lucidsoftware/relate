@@ -256,6 +256,27 @@ class SqlResultSpec extends Specification with Mockito {
 
       result.asScalarOption[Long] must_== None
     }
+
+    "close the ResultSet" in {
+      val (rs, _, result) = getMocks
+
+      rs.next returns true
+      rs.getObject(1) returns (2: java.lang.Long)
+
+      result.asScalar[Long] mustEqual 2L
+
+      there was one(rs).close()
+    }
+
+    "close the ResultSet if it was empty" in {
+      val (rs, _, result) = getMocks
+
+      rs.next returns false
+
+      result.asScalarOption[Long] must beNone
+
+      there was one(rs).close()
+    }
   }
 
   "extractOption" should {
@@ -304,15 +325,6 @@ class SqlResultSpec extends Specification with Mockito {
 
       rs.getRow() returns 3
       row.getRow mustEqual 3
-    }
-  }
-
-  "wasNull" should {
-    "return true if the last read was null" in {
-      val (rs, _, result) = getMocks
-
-      rs.wasNull() returns true
-      result.wasNull mustEqual true
     }
   }
 

@@ -10,7 +10,7 @@ private[relate] object RowIterator {
 private[relate] class RowIterator[A](parser: SqlRow => A, stmt: PreparedStatement, result: SqlResult)
     extends Iterator[A] {
 
-  private var _hasNext = result.next()
+  private var _hasNext = result.resultSet.next()
 
   /**
    * Make certain that all resources are closed
@@ -32,9 +32,9 @@ private[relate] class RowIterator[A](parser: SqlRow => A, stmt: PreparedStatemen
    *   the parsed record
    */
   override def next(): A = {
-    val ret = parser(result.asRow)
+    val ret = parser(SqlRow(result.resultSet))
     if (_hasNext) {
-      _hasNext = result.next()
+      _hasNext = result.resultSet.next()
     }
 
     // if we've iterated through the whole thing, close resources
