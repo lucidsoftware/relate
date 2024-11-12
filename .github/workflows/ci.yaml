@@ -75,5 +75,4 @@ jobs:
         run: |
           set -x
           tag="${GITHUB_REF#refs/tags/}"
-          targets=($(printf -- "-a %s " */target/**/*.jar))
-          gh release create "$tag" -n "Release $tag" "${targets[@]}"
+          gh release create "$tag" -n "Release $tag" */target/**/*.jar
