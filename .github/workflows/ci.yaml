@@ -40,7 +40,7 @@ jobs:
           path: '*/target/**/*.jar'
           retention-days: 1
   publish:
-    if: github.event_name != 'pull_request' && (github.repository == 'lucidsoftware/java-thread-context')
+    if: github.event_name != 'pull_request' && (github.repository == 'lucidsoftware/relate')
     needs: build
     runs-on: ubuntu-22.04
     steps:
