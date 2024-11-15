@@ -634,7 +634,9 @@ trait MultipleParameter extends Parameter {
 
 class TupleParameter(val params: Iterable[SingleParameter]) extends MultipleParameter {
   def appendPlaceholders(stringBuilder: StringBuilder) =
-    params.zipWithIndex.foreach { case (param, index) =>
+    // if we don't use the iterator, we won't necessarily get a consistent iteration order: the element with index 0
+    // according to zipWithIndex might not be the first element handled by the foreach
+    params.iterator.zipWithIndex.foreach { case (param, index) =>
       if (0 < index) {
         stringBuilder.append(",")
       }
