@@ -10,7 +10,7 @@ class InterpolatedQuery(protected val parsedQuery: String, protected val params:
 
   protected def applyParams(stmt: PreparedStatement) = parameterize(stmt, 1)
 
-  def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder ++= parsedQuery
+  def placeholder = parsedQuery
 
   def withTimeout(seconds: Int): InterpolatedQuery = new InterpolatedQuery(parsedQuery, params) {
     override protected def normalStatement(implicit conn: Connection) = new BaseStatement(conn)
@@ -37,13 +37,8 @@ class InterpolatedQuery(protected val parsedQuery: String, protected val params:
 object InterpolatedQuery {
 
   def fromParts(parts: Seq[String], params: Seq[Parameter]) = {
-    val stringBuilder = new StringBuilder()
-    parts.zip(params).foreach { case (part, param) =>
-      stringBuilder ++= part
-      param.appendPlaceholders(stringBuilder)
-    }
-    stringBuilder ++= parts.last
-    new InterpolatedQuery(stringBuilder.toString(), params)
+    val query = StringContext.standardInterpolator(identity, params.map(_.placeholder), parts)
+    new InterpolatedQuery(query, params)
   }
 
 }

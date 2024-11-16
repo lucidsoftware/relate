@@ -31,7 +31,7 @@ import scala.language.implicitConversions
  */
 
 trait Parameter {
-  def appendPlaceholders(stringBuilder: StringBuilder)
+  def placeholder: String
   def parameterize(statement: PreparedStatement, i: Int): Int
 }
 
@@ -616,7 +616,7 @@ object Parameter {
 trait SingleParameter extends Parameter {
   protected[this] def set(statement: PreparedStatement, i: Int)
 
-  def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder.append("?")
+  def placeholder = "?"
   def parameterize(statement: PreparedStatement, i: Int) = {
     set(statement, i)
     i + 1
@@ -633,15 +633,7 @@ trait MultipleParameter extends Parameter {
 }
 
 class TupleParameter(val params: Iterable[SingleParameter]) extends MultipleParameter {
-  def appendPlaceholders(stringBuilder: StringBuilder) =
-    // if we don't use the iterator, we won't necessarily get a consistent iteration order: the element with index 0
-    // according to zipWithIndex might not be the first element handled by the foreach
-    params.iterator.zipWithIndex.foreach { case (param, index) =>
-      if (0 < index) {
-        stringBuilder.append(",")
-      }
-      param.appendPlaceholders(stringBuilder)
-    }
+  def placeholder = params.iterator.map(_.placeholder).mkString(",")
 }
 
 object TupleParameter {
@@ -649,14 +641,5 @@ object TupleParameter {
 }
 
 class TuplesParameter(val params: Iterable[TupleParameter]) extends MultipleParameter {
-  def appendPlaceholders(stringBuilder: StringBuilder) = {
-    if (params.nonEmpty) {
-      params.foreach { param =>
-        stringBuilder.append("(")
-        param.appendPlaceholders(stringBuilder)
-        stringBuilder.append("),")
-      }
-      stringBuilder.setLength(stringBuilder.length - 1)
-    }
-  }
+  def placeholder = if (params.isEmpty) "" else params.map(_.placeholder).mkString("(", "),(", ")")
 }

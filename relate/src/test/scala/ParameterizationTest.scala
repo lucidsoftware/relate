@@ -20,11 +20,7 @@ class ParameterizationTest extends Specification {
     }
 
     "interpolate HashSets properly" in {
-      // note that HashSets don't iterate consistently: zipWithIndex and head get different "first" elements
-      // (also that zipWithIndex on a HashSet returns another HashSet)
       val hashSet: Set[Int] = scala.collection.immutable.HashSet(1, 2, 3)
-      hashSet.zipWithIndex.head._2 mustNotEqual 0
-      // even so, we should interpolate it correctly
       val querySql = sql"SELECT * FROM myTable WHERE id IN ($hashSet)"
       querySql.toString mustEqual "SELECT * FROM myTable WHERE id IN (?,?,?)"
     }
@@ -35,7 +31,7 @@ class ParameterizationTest extends Specification {
       class CustomParameter(value: Int) extends SingleParameter {
         protected[this] def set(statement: PreparedStatement, i: Int) =
           implicitly[Parameterizable[Int]].set(statement, i, value)
-        override def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder.append("?::smallint")
+        override def placeholder = "?::smallint"
       }
       val querySql = sql"INSERT INTO myTable (foo, bar) VALUES (${(1, new CustomParameter(1))})"
       querySql.toString mustEqual "INSERT INTO myTable (foo, bar) VALUES (?,?::smallint)"
