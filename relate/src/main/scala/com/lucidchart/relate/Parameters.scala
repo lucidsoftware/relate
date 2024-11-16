@@ -632,7 +632,9 @@ trait MultipleParameter extends Parameter {
   }
 }
 
-class TupleParameter(val params: Iterable[SingleParameter]) extends MultipleParameter {
+class TupleParameter(_params: Iterable[SingleParameter]) extends MultipleParameter {
+  // get a `Seq` to make sure placeholder and parameterize get the same ordering
+  override protected val params = _params.toSeq
   def placeholder = params.iterator.map(_.placeholder).mkString(",")
 }
 
@@ -640,6 +642,7 @@ object TupleParameter {
   def apply(params: SingleParameter*) = new TupleParameter(params)
 }
 
-class TuplesParameter(val params: Iterable[TupleParameter]) extends MultipleParameter {
+class TuplesParameter(_params: Iterable[TupleParameter]) extends MultipleParameter {
+  override protected val params = _params.toSeq
   def placeholder = if (params.isEmpty) "" else params.map(_.placeholder).mkString("(", "),(", ")")
 }

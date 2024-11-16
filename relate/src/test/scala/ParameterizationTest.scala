@@ -24,6 +24,23 @@ class ParameterizationTest extends Specification {
       val querySql = sql"SELECT * FROM myTable WHERE id IN ($hashSet)"
       querySql.toString mustEqual "SELECT * FROM myTable WHERE id IN (?,?,?)"
     }
+
+    "provide placeholders and parameters in the same order" in {
+      val setParams = scala.collection.mutable.Map.empty[Int, Int]
+      case class Param(int: Int) extends SingleParameter {
+        protected[this] def set(statement: PreparedStatement, i: Int) = setParams(i) = int
+        override def placeholder = int.toString
+      }
+
+      val paramsSet: Parameter = Set(Param(1), Param(2), Param(3))
+      paramsSet.parameterize(null, 1)
+      val query = sql"SELECT * FROM myTable WHERE id IN ($paramsSet)".toString
+
+      setParams must haveSize(3)
+      val order = setParams.toSeq.sortBy(_._1).map(_._2).mkString(",")
+      // the order of the "placeholders" should match the order of the parameters
+      query mustEqual s"SELECT * FROM myTable WHERE id IN ($order)"
+    }
   }
 
   "tuple paramater" should {
