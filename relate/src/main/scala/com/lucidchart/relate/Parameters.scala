@@ -31,7 +31,7 @@ import scala.language.implicitConversions
  */
 
 trait Parameter {
-  def appendPlaceholders(stringBuilder: StringBuilder)
+  def placeholder: String
   def parameterize(statement: PreparedStatement, i: Int): Int
 }
 
@@ -616,7 +616,7 @@ object Parameter {
 trait SingleParameter extends Parameter {
   protected[this] def set(statement: PreparedStatement, i: Int)
 
-  def appendPlaceholders(stringBuilder: StringBuilder) = stringBuilder.append("?")
+  def placeholder = "?"
   def parameterize(statement: PreparedStatement, i: Int) = {
     set(statement, i)
     i + 1
@@ -632,29 +632,17 @@ trait MultipleParameter extends Parameter {
   }
 }
 
-class TupleParameter(val params: Iterable[SingleParameter]) extends MultipleParameter {
-  def appendPlaceholders(stringBuilder: StringBuilder) =
-    params.zipWithIndex.foreach { case (param, index) =>
-      if (0 < index) {
-        stringBuilder.append(",")
-      }
-      param.appendPlaceholders(stringBuilder)
-    }
+class TupleParameter(_params: Iterable[SingleParameter]) extends MultipleParameter {
+  // get a `Seq` to make sure placeholder and parameterize get the same ordering
+  override protected val params = _params.toSeq
+  def placeholder = params.iterator.map(_.placeholder).mkString(",")
 }
 
 object TupleParameter {
   def apply(params: SingleParameter*) = new TupleParameter(params)
 }
 
-class TuplesParameter(val params: Iterable[TupleParameter]) extends MultipleParameter {
-  def appendPlaceholders(stringBuilder: StringBuilder) = {
-    if (params.nonEmpty) {
-      params.foreach { param =>
-        stringBuilder.append("(")
-        param.appendPlaceholders(stringBuilder)
-        stringBuilder.append("),")
-      }
-      stringBuilder.setLength(stringBuilder.length - 1)
-    }
-  }
+class TuplesParameter(_params: Iterable[TupleParameter]) extends MultipleParameter {
+  override protected val params = _params.toSeq
+  def placeholder = if (params.isEmpty) "" else params.map(_.placeholder).mkString("(", "),(", ")")
 }
