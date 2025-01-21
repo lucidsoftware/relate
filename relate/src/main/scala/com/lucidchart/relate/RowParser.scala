@@ -5,10 +5,16 @@ import java.time.Instant
 import scala.collection.mutable
 import scala.language.higherKinds
 
-trait RowParser[A] extends (SqlRow => A) {
+trait RowParser[A] extends (SqlRow => A) { self =>
   def parse(row: SqlRow): A
 
   def apply(row: SqlRow) = parse(row)
+
+  override def andThen[B](g: A => B): RowParser[B] = new RowParser[B] {
+    def parse(row: SqlRow): B = g(self.parse(row))
+  }
+
+  def map[B](f: A => B): RowParser[B] = andThen(f)
 }
 
 object RowParser {
