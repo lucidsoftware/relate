@@ -5,6 +5,10 @@ Relate.sublime-workspace
 .bsp
 .idea*
 lib_managed/*
+.bloop
+.metals
+project/metals.sbt
 
 #built files
 target/
+project/project/

@@ -136,7 +136,7 @@ trait Db {
 
 class RelateITSpec extends Specification with Db {
 
-  override def map(tests: => Fragments) = step(createDb) ^ tests ^ step(deleteDb)
+  override def map(tests: => Fragments) = step(createDb()) ^ tests ^ step(deleteDb())
 
   def streamConnection = DriverManager.getConnection(url, props)
   def streamConnection2 = DriverManager.getConnection(url, props)
@@ -237,7 +237,7 @@ class RelateITSpec extends Specification with Db {
       val id = sql"""
         INSERT INTO pokedex (name, description)
         VALUES ('Charmander', 'as adorable as a fire lizard can be')
-      """.executeInsertLong
+      """.executeInsertLong()
       true
     }
 
@@ -459,7 +459,7 @@ class RelateITSpec extends Specification with Db {
       def insertOnSelect = sql"""
         SELECT id, name, description
         FROM pokedex
-      """.executeInsertLong
+      """.executeInsertLong()
 
       insertOnSelect must throwA[SQLException]
     }

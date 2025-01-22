@@ -239,7 +239,7 @@ class RowParserTest extends Specification with Mockito {
 
     "fail to compile for anything besides a case class" in {
       illTyped("@Record() class Thing", "@Record must be used on a case class")
-      illTyped("@Record() def f()", "@Record must be used on a case class")
+      illTyped("@Record() def f(): Unit", "@Record must be used on a case class")
       illTyped("@Record() object Thing {}", "@Record must be used on a case class")
       illTyped("@Record() trait Thing", "@Record must be used on a case class")
 

@@ -2,13 +2,13 @@ package com.lucidchart.relate
 
 import com.lucidchart.relate.SqlResultTypes._
 import java.io.{ByteArrayInputStream, Reader}
-import java.net.URL
+import java.net.URI
 import java.sql.{Blob, Clob, Connection, NClob, Ref, RowId, SQLXML, Time, Timestamp}
 import java.time.Instant
 import java.util.{Calendar, Date, UUID}
 import org.specs2.mock.Mockito
 import org.specs2.mutable._
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 case class TestRecord(
   id: Long,
@@ -16,7 +16,7 @@ case class TestRecord(
 )
 
 object TestRecord {
-  implicit val TestRecordRowParser = new RowParser[TestRecord] {
+  implicit val TestRecordRowParser: RowParser[TestRecord] = new RowParser[TestRecord] {
     def parse(row: SqlRow): TestRecord = TestRecord(
       row.long("id"),
       row.string("name")
@@ -67,7 +67,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getLong("id") returns (100L: java.lang.Long)
       rs.getString("name") returns "the name"
 
-      result.asSingle[TestRecord] mustEqual TestRecord(100L, "the name")
+      result.asSingle[TestRecord]() mustEqual TestRecord(100L, "the name")
     }
   }
 
@@ -97,14 +97,14 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, _, result) = getMocks
       init(rs, true)
 
-      result.asSingleOption[TestRecord] must beSome(TestRecord(100L, "the name"))
+      result.asSingleOption[TestRecord]() must beSome(TestRecord(100L, "the name"))
     }
 
     "return a None with an implicit parser" in {
       val (rs, _, result) = getMocks
       init(rs, false)
 
-      result.asSingleOption[TestRecord] must beNone
+      result.asSingleOption[TestRecord]() must beNone
     }
   }
 
@@ -141,7 +141,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getLong("id") returns (100L: java.lang.Long)
       rs.getString("name") returns "the name"
 
-      result.asList[TestRecord] mustEqual List(
+      result.asList[TestRecord]() mustEqual List(
         TestRecord(100L, "the name"),
         TestRecord(100L, "the name"),
         TestRecord(100L, "the name")
@@ -154,7 +154,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getRow returns 0
       rs.next returns false
 
-      result.asList[TestRecord] mustEqual List()
+      result.asList[TestRecord]() mustEqual List()
     }
   }
 
@@ -196,7 +196,7 @@ class SqlResultSpec extends Specification with Mockito {
       rs.getLong("id") returns (1: L) thenReturns (2: L) thenReturns (3: L)
       rs.getString("name") returns "the name"
 
-      val res = result.asMap[Long, TestRecord]
+      val res = result.asMap[Long, TestRecord]()
       res(1L) mustEqual TestRecord(1L, "the name")
       res(2L) mustEqual TestRecord(2L, "the name")
       res(3L) mustEqual TestRecord(3L, "the name")
@@ -206,7 +206,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, _, result) = getMocks
       rs.getRow returns 0
       rs.next returns false
-      result.asMap[Long, TestRecord] mustEqual Map()
+      result.asMap[Long, TestRecord]() mustEqual Map()
     }
   }
 
@@ -324,7 +324,7 @@ class SqlResultSpec extends Specification with Mockito {
       val (rs, row, _) = getMocks
 
       rs.getRow() returns 3
-      row.getRow mustEqual 3
+      row.getRow() mustEqual 3
     }
   }
 
@@ -657,7 +657,7 @@ class SqlResultSpec extends Specification with Mockito {
     "properly pass through the call to ResultSet" in {
       val (rs, row, _) = getMocks
 
-      val res = new URL("http://localhost")
+      val res = new URI("http://localhost").toURL
       rs.getURL("strictURL") returns res
       row.strictURL("strictURL") mustEqual res
       row.strictURLOption("strictURL") must beSome(res)

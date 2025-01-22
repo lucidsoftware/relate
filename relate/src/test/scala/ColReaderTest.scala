@@ -34,7 +34,7 @@ class MockableRow extends SqlRow(null) {
 }
 
 object RecordA extends Mockito {
-  implicit val reader = new RowParser[RecordA] {
+  implicit val reader: RowParser[RecordA] = new RowParser[RecordA] {
     def parse(row: SqlRow): RecordA = {
       RecordA(
         row[BigDecimal]("bd"),
@@ -103,7 +103,7 @@ case class RecordB(
 )
 
 object RecordB extends Mockito {
-  implicit val reader = new RowParser[RecordB] {
+  implicit val reader: RowParser[RecordB] = new RowParser[RecordB] {
     def parse(row: SqlRow): RecordB = {
       RecordB(
         row.opt[BigDecimal]("bd"),
