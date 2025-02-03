@@ -54,10 +54,12 @@ trait Sql extends CollectionsSql {
   override def toString = parsedQuery
 
   /**
-   * Calls [[PreparedStatement#toString]], which for many JDBC implementations is the SQL query after parameter
+   * Calls `toString` on [PreparedStatement][1], which for many JDBC implementations is the SQL query after parameter
    * substitution. This is intended primarily for ad-hoc debugging.
    *
    * For more routine logging, consider other solutions, such as [[https://code.google.com/p/log4jdbc/ log4jdbc]].
+   *
+   * [1]: https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/PreparedStatement.html
    */
   def statementString(implicit connection: Connection) = {
     val stmt = normalStatement.stmt
