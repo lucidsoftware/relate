@@ -51,9 +51,9 @@ trait CollectionsSql { self: Sql =>
    * @return
    *   the results as an arbitrary collection of records
    */
-  // def asCollection[U, T[_]](parser: SqlRow => U)(implicit factory: Factory[U, T[U]], connection: Connection): T[U] =
-  //   normalStatement.execute(_.asCollection(parser))
-  def asCollection[U: RowParser, T[_]](implicit factory: Factory[U, T[U]], connection: Connection): T[U] =
+  def asCollection[U, T[_]](parser: SqlRow => U)(implicit factory: Factory[U, T[U]], connection: Connection): T[U] =
+    normalStatement.execute(_.asCollection(parser))
+  def asCollection[U: RowParser, T[_]]()(implicit factory: Factory[U, T[U]], connection: Connection): T[U] =
     normalStatement.execute(_.asCollection[U, T])
 
   /**
@@ -65,11 +65,11 @@ trait CollectionsSql { self: Sql =>
    * @return
    *   the results as an arbitrary collection of key value pairs
    */
-  // def asPairCollection[U, V, T[_, _]](
-  //   parser: SqlRow => (U, V)
-  // )(implicit factory: Factory[(U, V), T[U, V]], connection: Connection): T[U, V] =
-  //   normalStatement.execute(_.asPairCollection(parser))
-  def asPairCollection[U, V, T[_, _]](implicit
+  def asPairCollection[U, V, T[_, _]](
+    parser: SqlRow => (U, V)
+  )(implicit factory: Factory[(U, V), T[U, V]], connection: Connection): T[U, V] =
+    normalStatement.execute(_.asPairCollection(parser))
+  def asPairCollection[U, V, T[_, _]]()(implicit
     factory: Factory[(U, V), T[U, V]],
     connection: Connection,
     p: RowParser[(U, V)]
