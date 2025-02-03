@@ -39,18 +39,20 @@ class SqlResult(private[relate] val resultSet: java.sql.ResultSet) extends Colle
   def asMap[U, V](parser: SqlRow => (U, V)): Map[U, V] = asPairCollection[U, V, Map](parser, Long.MaxValue)
   def asMultiMap[U, V]()(implicit p: RowParser[(U, V)]): Map[U, Set[V]] = asMultiMap(p.parse)
   def asMultiMap[U, V](parser: SqlRow => (U, V)): Map[U, Set[V]] = {
-    val mm: mutable.MultiMap[U, V] = new mutable.HashMap[U, mutable.Set[V]] with mutable.MultiMap[U, V]
+    val mm = new mutable.HashMap[U, mutable.Builder[V, Set[V]]]
     withResultSet { resultSet =>
       while (resultSet.next()) {
-        val parsed = parser(SqlRow(resultSet))
-        mm.addBinding(parsed._1, parsed._2)
+        val (key, value) = parser(SqlRow(resultSet))
+        mm.updateWith(key) { vOpt =>
+          Some(vOpt.getOrElse(Set.newBuilder).addOne(value))
+        }
       }
     }
-    mm.toMap.map(x => x._1 -> x._2.toSet)
+    mm.view.mapValues(_.result()).toMap
   }
 
-  def asScalar[A](): A = asScalarOption.get
-  def asScalarOption[A](): Option[A] = withResultSet { resultSet =>
+  def asScalar[A]: A = asScalarOption.get
+  def asScalarOption[A]: Option[A] = withResultSet { resultSet =>
     Option.when(resultSet.next())(resultSet.getObject(1).asInstanceOf[A])
   }
 

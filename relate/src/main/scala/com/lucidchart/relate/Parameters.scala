@@ -46,33 +46,52 @@ object Parameter {
   }
 
   type SP[T] = T => SingleParameter
-  implicit def fromByteArray(it: Array[Byte]) = single(it)
-  implicit def fromArray[A](it: Array[A])(implicit sp: SP[A]) = new TupleParameter(it.map(sp))
-  implicit def fromIterable[A](it: Iterable[A])(implicit sp: SP[A]) = new TupleParameter(it.map(sp))
-  implicit def fromTuple1[T1](t: Tuple1[T1])(implicit sp1: SP[T1]) = TupleParameter(sp1(t._1))
-  implicit def fromTuple2[T1, T2](t: Tuple2[T1, T2])(implicit sp1: SP[T1], sp2: SP[T2]) =
+  implicit def fromByteArray(it: Array[Byte]): SingleParameter = single(it)
+  implicit def fromArray[A](it: Array[A])(implicit sp: SP[A]): TupleParameter = new TupleParameter(it.map(sp))
+  implicit def fromIterable[A](it: Iterable[A])(implicit sp: SP[A]): TupleParameter = new TupleParameter(it.map(sp))
+  implicit def fromTuple1[T1](t: Tuple1[T1])(implicit sp1: SP[T1]): TupleParameter = TupleParameter(sp1(t._1))
+  implicit def fromTuple2[T1, T2](t: Tuple2[T1, T2])(implicit sp1: SP[T1], sp2: SP[T2]): TupleParameter =
     TupleParameter(sp1(t._1), sp2(t._2))
-  implicit def fromTuple3[T1, T2, T3](t: Tuple3[T1, T2, T3])(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3]) =
+  implicit def fromTuple3[T1, T2, T3](
+    t: Tuple3[T1, T2, T3]
+  )(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3]): TupleParameter =
     TupleParameter(sp1(t._1), sp2(t._2), sp3(t._3))
   implicit def fromTuple4[T1, T2, T3, T4](
     t: Tuple4[T1, T2, T3, T4]
-  )(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3], sp4: SP[T4]) =
+  )(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3], sp4: SP[T4]): TupleParameter =
     TupleParameter(sp1(t._1), sp2(t._2), sp3(t._3), sp4(t._4))
   implicit def fromTuple5[T1, T2, T3, T4, T5](
     t: Tuple5[T1, T2, T3, T4, T5]
-  )(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3], sp4: SP[T4], sp5: SP[T5]) =
+  )(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3], sp4: SP[T4], sp5: SP[T5]): TupleParameter =
     TupleParameter(sp1(t._1), sp2(t._2), sp3(t._3), sp4(t._4), sp5(t._5))
   implicit def fromTuple6[T1, T2, T3, T4, T5, T6](
     t: Tuple6[T1, T2, T3, T4, T5, T6]
-  )(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3], sp4: SP[T4], sp5: SP[T5], sp6: SP[T6]) =
+  )(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3], sp4: SP[T4], sp5: SP[T5], sp6: SP[T6]): TupleParameter =
     TupleParameter(sp1(t._1), sp2(t._2), sp3(t._3), sp4(t._4), sp5(t._5), sp6(t._6))
   implicit def fromTuple7[T1, T2, T3, T4, T5, T6, T7](
     t: Tuple7[T1, T2, T3, T4, T5, T6, T7]
-  )(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3], sp4: SP[T4], sp5: SP[T5], sp6: SP[T6], sp7: SP[T7]) =
+  )(implicit
+    sp1: SP[T1],
+    sp2: SP[T2],
+    sp3: SP[T3],
+    sp4: SP[T4],
+    sp5: SP[T5],
+    sp6: SP[T6],
+    sp7: SP[T7]
+  ): TupleParameter =
     TupleParameter(sp1(t._1), sp2(t._2), sp3(t._3), sp4(t._4), sp5(t._5), sp6(t._6), sp7(t._7))
   implicit def fromTuple8[T1, T2, T3, T4, T5, T6, T7, T8](
     t: Tuple8[T1, T2, T3, T4, T5, T6, T7, T8]
-  )(implicit sp1: SP[T1], sp2: SP[T2], sp3: SP[T3], sp4: SP[T4], sp5: SP[T5], sp6: SP[T6], sp7: SP[T7], sp8: SP[T8]) =
+  )(implicit
+    sp1: SP[T1],
+    sp2: SP[T2],
+    sp3: SP[T3],
+    sp4: SP[T4],
+    sp5: SP[T5],
+    sp6: SP[T6],
+    sp7: SP[T7],
+    sp8: SP[T8]
+  ): TupleParameter =
     TupleParameter(sp1(t._1), sp2(t._2), sp3(t._3), sp4(t._4), sp5(t._5), sp6(t._6), sp7(t._7), sp8(t._8))
   implicit def fromTuple9[T1, T2, T3, T4, T5, T6, T7, T8, T9](t: Tuple9[T1, T2, T3, T4, T5, T6, T7, T8, T9])(implicit
     sp1: SP[T1],
@@ -84,7 +103,8 @@ object Parameter {
     sp7: SP[T7],
     sp8: SP[T8],
     sp9: SP[T9]
-  ) = TupleParameter(sp1(t._1), sp2(t._2), sp3(t._3), sp4(t._4), sp5(t._5), sp6(t._6), sp7(t._7), sp8(t._8), sp9(t._9))
+  ): TupleParameter =
+    TupleParameter(sp1(t._1), sp2(t._2), sp3(t._3), sp4(t._4), sp5(t._5), sp6(t._6), sp7(t._7), sp8(t._8), sp9(t._9))
   implicit def fromTuple10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](
     t: Tuple10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]
   )(implicit
@@ -98,7 +118,7 @@ object Parameter {
     sp8: SP[T8],
     sp9: SP[T9],
     sp10: SP[T10]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -124,7 +144,7 @@ object Parameter {
     sp9: SP[T9],
     sp10: SP[T10],
     sp11: SP[T11]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -152,7 +172,7 @@ object Parameter {
     sp10: SP[T10],
     sp11: SP[T11],
     sp12: SP[T12]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -182,7 +202,7 @@ object Parameter {
     sp11: SP[T11],
     sp12: SP[T12],
     sp13: SP[T13]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -214,7 +234,7 @@ object Parameter {
     sp12: SP[T12],
     sp13: SP[T13],
     sp14: SP[T14]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -248,7 +268,7 @@ object Parameter {
     sp13: SP[T13],
     sp14: SP[T14],
     sp15: SP[T15]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -284,7 +304,7 @@ object Parameter {
     sp14: SP[T14],
     sp15: SP[T15],
     sp16: SP[T16]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -322,7 +342,7 @@ object Parameter {
     sp15: SP[T15],
     sp16: SP[T16],
     sp17: SP[T17]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -362,7 +382,7 @@ object Parameter {
     sp16: SP[T16],
     sp17: SP[T17],
     sp18: SP[T18]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -404,7 +424,7 @@ object Parameter {
     sp17: SP[T17],
     sp18: SP[T18],
     sp19: SP[T19]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -448,7 +468,7 @@ object Parameter {
     sp18: SP[T18],
     sp19: SP[T19],
     sp20: SP[T20]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -514,7 +534,7 @@ object Parameter {
     sp19: SP[T19],
     sp20: SP[T20],
     sp21: SP[T21]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -585,7 +605,7 @@ object Parameter {
     sp20: SP[T20],
     sp21: SP[T21],
     sp22: SP[T22]
-  ) = TupleParameter(
+  ): TupleParameter = TupleParameter(
     sp1(t._1),
     sp2(t._2),
     sp3(t._3),
@@ -610,11 +630,13 @@ object Parameter {
     sp22(t._22)
   )
 
-  implicit def fromTuples[A](seq: Seq[A])(implicit tp: A => TupleParameter) = new TuplesParameter(seq.map(tp))
+  implicit def fromTuples[A](seq: Seq[A])(implicit tp: A => TupleParameter): TuplesParameter = new TuplesParameter(
+    seq.map(tp)
+  )
 }
 
 trait SingleParameter extends Parameter {
-  protected[this] def set(statement: PreparedStatement, i: Int)
+  protected[this] def set(statement: PreparedStatement, i: Int): Unit
 
   def placeholder = "?"
   def parameterize(statement: PreparedStatement, i: Int) = {
