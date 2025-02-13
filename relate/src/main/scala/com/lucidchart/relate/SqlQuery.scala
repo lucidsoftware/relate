@@ -82,6 +82,22 @@ trait Sql extends CollectionsSql {
   def results()(implicit connection: Connection): ResultSet = normalStatement.results()
 
   /**
+    * Provides a java.sql.ResultSet that streams records from the database.
+    * This allows for interacting with large data sets with less risk of OutOfMemoryErrors.
+    * Many JDBC connectors will not allow for additional queries to the connection until the
+    * returned ResultSet has been closed.
+    * @param fetchSize the number of rows to fetch at a time, defaults to 100. If the JDBC Driver
+    * is MySQL, the fetchSize will always default to Int.MinValue, as MySQL's JDBC implementation
+    * ignores all other fetchSize values and only streams if fetchSize is Int.MinValue
+    * @param connection the db connection to use when executing the query
+    * @return java.sql.ResultSet that streams data from the database
+    */
+  def streamingResults(fetchSize: Int)(implicit connection: Connection): ResultSet = {
+    val prepared = streamedStatement(fetchSize)
+    prepared.results()
+  }
+
+  /**
    * Execute a statement
    * @param connection
    *   the db connection to use when executing the query

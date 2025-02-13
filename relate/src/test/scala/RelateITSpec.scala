@@ -471,6 +471,23 @@ class RelateITSpec extends Specification with Db {
     }
   }
 
+  "results" should {
+    val ids = Array(1L, 2L, 3L)
+    "work from ResultSet" in withConnection { implicit connection =>
+      val resultSet = sql"SELECT * FROM pokedex WHERE id in ($ids)".results()
+      val pokemonNames = SqlResult(resultSet).asList(pokedexParser).map(_.name)
+
+      (pokemonNames must contain("Squirtle")) and (pokemonNames must contain("Wartortle")) and (pokemonNames must contain("Blastoise"))
+    }
+
+    "work from streaming ResultSet" in withConnection { implicit connection =>
+      val resultSet = sql"SELECT * FROM pokedex WHERE id in ($ids)".streamingResults(1)
+      val pokemonNames = SqlResult(resultSet).asList(pokedexParser).map(_.name)
+
+      (pokemonNames must contain("Squirtle")) and (pokemonNames must contain("Wartortle")) and (pokemonNames must contain("Blastoise"))
+    }
+  }
+
   "update" should {
     "update matched rows and not update unmatched rows" in withConnection { implicit connection =>
       val correct = List(
